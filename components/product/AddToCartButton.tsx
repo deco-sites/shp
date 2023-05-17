@@ -25,7 +25,7 @@ function AddToCartButton(
 
   return (
     <Button data-deco="add-to-cart" {...props} class="w-full">
-      Adicionar à Sacola
+      Comprar
     </Button>
   );
 }
