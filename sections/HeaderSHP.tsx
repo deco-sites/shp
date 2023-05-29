@@ -1,3 +1,5 @@
+let lupinha:string;
+
 export interface Props {
   categ: Array<{
     name: string;
@@ -28,7 +30,7 @@ const HeaderSHP = ({ categ = [], logoUrl = "", cta = [] }: Props) => {
           <input className="" type="text" name="search" id="nav-search" />
           <button>
             <img
-              src="https://shopinfo.vteximg.com.br/arquivos/icon-search.png"
+              src={lupinha}
               alt="lupinha"
             />
           </button>
