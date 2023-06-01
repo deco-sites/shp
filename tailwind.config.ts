@@ -58,6 +58,13 @@ export default {
           },
         },
       },
+      screens:{
+        're1':'768px',
+        're2':'1280px',
+        're3':'1366px',
+        're4':'1600px',
+        're5':'1800px'
+      }
     },
   },
 };
