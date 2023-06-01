@@ -7,12 +7,13 @@ import { DecoManifest } from "$live/types.ts";
 import * as $$$$0 from "./routes/api/[...catchall].tsx";
 import * as $$$$1 from "./routes/_app.tsx";
 import * as $$$$$0 from "./islands/AddToCartButton.tsx";
-import * as $$$$$1 from "./islands/HeaderIsland.tsx";
-import * as $$$$$2 from "./islands/ProductImageZoom.tsx";
-import * as $$$$$3 from "./islands/SearchControls.tsx";
-import * as $$$$$4 from "./islands/ShippingSimulation.tsx";
-import * as $$$$$5 from "./islands/SliderJS.tsx";
-import * as $$$$$6 from "./islands/WishlistButton.tsx";
+import * as $$$$$1 from "./islands/BannerItem.tsx";
+import * as $$$$$2 from "./islands/HeaderIsland.tsx";
+import * as $$$$$3 from "./islands/ProductImageZoom.tsx";
+import * as $$$$$4 from "./islands/SearchControls.tsx";
+import * as $$$$$5 from "./islands/ShippingSimulation.tsx";
+import * as $$$$$6 from "./islands/SliderJS.tsx";
+import * as $$$$$7 from "./islands/WishlistButton.tsx";
 import * as $$$$$$$$0 from "./sections/BannerGrid.tsx";
 import * as $$$$$$$$1 from "./sections/BannerPLP.tsx";
 import * as $$$$$$$$2 from "./sections/Carousel.tsx";
@@ -157,12 +158,13 @@ const manifest = {
   },
   "islands": {
     "./islands/AddToCartButton.tsx": $$$$$0,
-    "./islands/HeaderIsland.tsx": $$$$$1,
-    "./islands/ProductImageZoom.tsx": $$$$$2,
-    "./islands/SearchControls.tsx": $$$$$3,
-    "./islands/ShippingSimulation.tsx": $$$$$4,
-    "./islands/SliderJS.tsx": $$$$$5,
-    "./islands/WishlistButton.tsx": $$$$$6,
+    "./islands/BannerItem.tsx": $$$$$1,
+    "./islands/HeaderIsland.tsx": $$$$$2,
+    "./islands/ProductImageZoom.tsx": $$$$$3,
+    "./islands/SearchControls.tsx": $$$$$4,
+    "./islands/ShippingSimulation.tsx": $$$$$5,
+    "./islands/SliderJS.tsx": $$$$$6,
+    "./islands/WishlistButton.tsx": $$$$$7,
   },
   "sections": {
     "$live/sections/PageInclude.tsx": i2$$$$0,

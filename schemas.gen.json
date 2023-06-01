@@ -59,6 +59,7 @@
               "deco-sites/std/loaders/vtex/user.ts",
               "deco-sites/std/loaders/vtex/wishlist.ts",
               "./islands/AddToCartButton.tsx",
+              "./islands/BannerItem.tsx",
               "./islands/HeaderIsland.tsx",
               "./islands/ProductImageZoom.tsx",
               "./islands/SearchControls.tsx",
@@ -6751,6 +6752,79 @@
       ],
       "title": "deco-sites/std/packs/vtex/loaders/wishlist.ts@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Banner": {
+      "type": "object",
+      "properties": {
+        "desktop": {
+          "type": "string",
+          "description": "desktop otimized image",
+          "title": "Desktop"
+        },
+        "mobile": {
+          "type": "string",
+          "description": "mobile otimized image",
+          "title": "Mobile"
+        },
+        "alt": {
+          "type": "string",
+          "description": "Image's alt text",
+          "title": "Alt"
+        },
+        "action": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string",
+              "title": "Href"
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "title": "Action"
+        }
+      },
+      "required": [
+        "desktop",
+        "mobile",
+        "alt"
+      ],
+      "title": "Banner"
+    },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Banner[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Banner"
+      },
+      "title": "Banner[]"
+    },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Props": {
+      "type": "object",
+      "properties": {
+        "images": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Banner[]",
+          "title": "Images"
+        },
+        "preload": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Check this option when this banner is the biggest image on the screen for image optimizations",
+          "title": "Preload"
+        },
+        "interval": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Autoplay interval",
+          "description": "time (in seconds) to start the carousel autoplay"
+        }
+      },
+      "required": [],
+      "title": "deco-sites/shp/components/ui/BannerCarousel.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC90eXBlcy50cw==@SKU": {
       "type": "object",
       "properties": {
@@ -7399,94 +7473,6 @@
       },
       "required": [],
       "title": "deco-sites/shp/components/ui/BannerPLP.tsx@Props"
-    },
-    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Banner": {
-      "type": "object",
-      "properties": {
-        "desktop": {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy90eXBlcy50cw==@Image",
-          "description": "desktop otimized image",
-          "title": "Desktop"
-        },
-        "mobile": {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tcG9uZW50cy90eXBlcy50cw==@Image",
-          "description": "mobile otimized image",
-          "title": "Mobile"
-        },
-        "alt": {
-          "type": "string",
-          "description": "Image's alt text",
-          "title": "Alt"
-        },
-        "action": {
-          "type": "object",
-          "properties": {
-            "href": {
-              "type": "string",
-              "title": "Href"
-            },
-            "title": {
-              "type": "string",
-              "title": "Title"
-            },
-            "subTitle": {
-              "type": "string",
-              "title": "Sub Title"
-            },
-            "label": {
-              "type": "string",
-              "title": "Label"
-            }
-          },
-          "required": [
-            "href",
-            "title",
-            "subTitle",
-            "label"
-          ],
-          "title": "Action"
-        }
-      },
-      "required": [
-        "desktop",
-        "mobile",
-        "alt"
-      ],
-      "title": "Banner"
-    },
-    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Banner[]": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Banner"
-      },
-      "title": "Banner[]"
-    },
-    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Props": {
-      "type": "object",
-      "properties": {
-        "images": {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Banner[]",
-          "title": "Images"
-        },
-        "preload": {
-          "type": [
-            "boolean",
-            "null"
-          ],
-          "description": "Check this option when this banner is the biggest image on the screen for image optimizations",
-          "title": "Preload"
-        },
-        "interval": {
-          "type": [
-            "number",
-            "null"
-          ],
-          "title": "Autoplay interval",
-          "description": "time (in seconds) to start the carousel autoplay"
-        }
-      },
-      "required": [],
-      "title": "deco-sites/shp/components/ui/BannerCarousel.tsx@Props"
     },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRGVzaWduU3lzdGVtLnRzeA==@Colors": {
       "type": "object",
@@ -10489,6 +10475,27 @@
         }
       }
     },
+    "Li9pc2xhbmRzL0Jhbm5lckl0ZW0udHN4": {
+      "title": "./islands/BannerItem.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9CYW5uZXJDYXJvdXNlbC50c3g=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/BannerItem.tsx"
+          ],
+          "default": "./islands/BannerItem.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL0hlYWRlcklzbGFuZC50c3g=": {
       "title": "./islands/HeaderIsland.tsx",
       "type": "object",
@@ -12199,6 +12206,9 @@
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL0FkZFRvQ2FydEJ1dHRvbi50c3g="
+        },
+        {
+          "$ref": "#/definitions/Li9pc2xhbmRzL0Jhbm5lckl0ZW0udHN4"
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL0hlYWRlcklzbGFuZC50c3g="
