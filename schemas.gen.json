@@ -87,6 +87,7 @@
               "deco-sites/shp/sections/LinkTree.tsx",
               "deco-sites/shp/sections/ProductDetails.tsx",
               "deco-sites/shp/sections/ProductShelf.tsx",
+              "deco-sites/shp/sections/ReturnH1.tsx",
               "deco-sites/shp/sections/SearchResult.tsx",
               "deco-sites/shp/sections/WhatsApp.tsx",
               "deco-sites/shp/sections/WishlistGallery.tsx",
@@ -8414,6 +8415,19 @@
       ],
       "title": "deco-sites/shp/components/product/ProductShelf.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUmV0dXJuSDEudHN4@Props": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Title"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "title": "deco-sites/shp/sections/ReturnH1.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1Byb2R1Y3RHYWxsZXJ5LnRzeA==@Columns": {
       "type": "object",
       "properties": {
@@ -11037,6 +11051,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUmV0dXJuSDEudHN4": {
+      "title": "deco-sites/shp/sections/ReturnH1.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUmV0dXJuSDEudHN4@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/ReturnH1.tsx"
+          ],
+          "default": "deco-sites/shp/sections/ReturnH1.tsx"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VhcmNoUmVzdWx0LnRzeA==": {
       "title": "deco-sites/shp/sections/SearchResult.tsx",
       "type": "object",
@@ -12272,6 +12307,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdFNoZWxmLnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUmV0dXJuSDEudHN4"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VhcmNoUmVzdWx0LnRzeA=="
