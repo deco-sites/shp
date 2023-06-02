@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import Icon from "deco-sites/fashion/components/ui/Icon.tsx";
 import Button from "deco-sites/fashion/components/ui/Button.tsx";
 import Slider from "deco-sites/fashion/components/ui/Slider.tsx";
@@ -82,6 +82,11 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
 }
 
 function Dots({ images, interval = 0 }: Props) {
+  const [animationKey, setAnimationKey]=useState(0)
+  useEffect(()=>{
+    setAnimationKey(prevKey=>prevKey+1)
+  },[interval])
+
   return (
     <>
       <style
@@ -103,6 +108,7 @@ function Dots({ images, interval = 0 }: Props) {
                 <div
                   class="w-16 sm:w-20 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-base-100 from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]"
                   style={{ animationDuration: `${interval}s` }}
+                  key={animationKey}
                 />
               </div>
             </Slider.Dot>
@@ -113,15 +119,10 @@ function Dots({ images, interval = 0 }: Props) {
   );
 }
 
-function Buttons() {
-  return (
-    <>
-    </>
-  );
-}
 
 function BannerCarousel({ images, preload, interval }: Props) {
   const id = useId();
+  const [pause,setPause]=useState(false)
 
   return (
     <div
@@ -161,11 +162,20 @@ function BannerCarousel({ images, preload, interval }: Props) {
         </div>
       </div>
     
-      <div className="absolute  top-[78vw] re2:top-[340px] re3:top-[370px] re4:top-[430px] re5:top-[470px] w-full">
-        <Dots images={images} interval={interval} />
+      <div className="absolute flex justify-center items-center gap-1 top-[75vw] re2:top-[340px] re3:top-[370px] re4:top-[430px] re5:top-[470px] w-full">
+        <Dots images={images} interval={!pause? interval : 0} />
+        <button class="btn rounded-[50%] glass max-w-[30px] min-w-[30px] max-h-[30px] min-h-[30px] p-0 pl-[1px]" onClick={()=>{
+          pause ? setPause(false) : setPause(true)
+        }}>
+          {!pause?
+            (<svg xmlns="http://www.w3.org/2000/svg"  version="1.1" width="15" height="15" x="0" y="0" viewBox="0 0 47.607 47.607" style="enable-background:new 0 0 512 512"><g><path d="M17.991 40.976a6.631 6.631 0 0 1-13.262 0V6.631a6.631 6.631 0 0 1 13.262 0v34.345zM42.877 40.976a6.631 6.631 0 0 1-13.262 0V6.631a6.631 6.631 0 0 1 13.262 0v34.345z" fill="#fff" data-original="#000000"/></g></svg>)
+            :
+            (<svg xmlns="http://www.w3.org/2000/svg"  version="1.1" width="15" height="15" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"><g><path fill-rule="evenodd" d="M468.8 235.007 67.441 3.277A24.2 24.2 0 0 0 55.354-.008h-.07A24.247 24.247 0 0 0 43.19 3.279a24 24 0 0 0-12.11 20.992v463.456a24.186 24.186 0 0 0 36.36 20.994L468.8 276.99a24.238 24.238 0 0 0 0-41.983z" fill="#ffffff" data-original="#000000"/></g></svg>)
+          }
+        </button>
       </div>
 
-      <SliderJS rootId={id} interval={interval && interval * 1e3} infinite />
+      <SliderJS rootId={id} interval={!pause? interval && interval * 1e3 : 0} infinite />
     </div>
   );
 }
