@@ -43,6 +43,7 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
 
   const [Mobile, setMobile] = useState(window.innerWidth <= 768 ? true : false);
 
+  // deno-lint-ignore no-window-prefix
   window.addEventListener("resize", () => {
     window.innerWidth <= 768 ? setMobile(true) : setMobile(false);
   });
@@ -129,7 +130,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
       class="flex flex-col"
     >
       <div class="flex justify-center items-center">
-        <div class="hidden re1:flex items-center justify-center relative z-[2] -right-12">
+        <div class="hidden re1:flex items-center justify-center z-[2] absolute left-[150px]">
           <Slider.PrevButton class="btn btn-circle glass">
             <Icon
               class="text-base-100"
@@ -148,7 +149,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
           ))}
         </Slider>
 
-        <div class="hidden re1:flex items-center justify-center relative z-[2] -left-12">
+        <div class="hidden re1:flex items-center justify-center absolute z-[2] right-[150px]">
           <Slider.NextButton class="btn btn-circle glass">
             <Icon
               class="text-base-100"
@@ -160,7 +161,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
         </div>
       </div>
     
-      <div className="absolute re1:top-[30rem] top-[23rem] w-full">
+      <div className="absolute  top-[78vw] re2:top-[340px] re3:top-[370px] re4:top-[430px] re5:top-[470px] w-full">
         <Dots images={images} interval={interval} />
       </div>
 
