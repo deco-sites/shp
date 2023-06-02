@@ -79,6 +79,7 @@
               "$live/sections/UseSlot.tsx",
               "deco-sites/shp/sections/BannerGrid.tsx",
               "deco-sites/shp/sections/BannerPLP.tsx",
+              "deco-sites/shp/sections/Benefits.tsx",
               "deco-sites/shp/sections/Carousel.tsx",
               "deco-sites/shp/sections/CookieConsent.tsx",
               "deco-sites/shp/sections/DesignSystem.tsx",
@@ -7474,6 +7475,34 @@
       "required": [],
       "title": "deco-sites/shp/components/ui/BannerPLP.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmVuZWZpdHMudHN4@Props": {
+      "type": "object",
+      "properties": {
+        "Benefit": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "iconUrl": {
+                "type": "string",
+                "title": "Icon Url"
+              },
+              "text": {
+                "type": "string",
+                "title": "Text"
+              }
+            },
+            "required": [
+              "iconUrl",
+              "text"
+            ]
+          },
+          "title": " Benefit"
+        }
+      },
+      "required": [],
+      "title": "deco-sites/shp/sections/Benefits.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRGVzaWduU3lzdGVtLnRzeA==@Colors": {
       "type": "object",
       "properties": {
@@ -10874,6 +10903,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmVuZWZpdHMudHN4": {
+      "title": "deco-sites/shp/sections/Benefits.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmVuZWZpdHMudHN4@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/Benefits.tsx"
+          ],
+          "default": "deco-sites/shp/sections/Benefits.tsx"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ2Fyb3VzZWwudHN4": {
       "title": "deco-sites/shp/sections/Carousel.tsx",
       "type": "object",
@@ -12290,6 +12340,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmFubmVyUExQLnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmVuZWZpdHMudHN4"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ2Fyb3VzZWwudHN4"
