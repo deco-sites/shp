@@ -85,6 +85,7 @@
               "deco-sites/shp/sections/Categories.tsx",
               "deco-sites/shp/sections/CookieConsent.tsx",
               "deco-sites/shp/sections/DesignSystem.tsx",
+              "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx",
               "deco-sites/shp/sections/Features.tsx",
               "deco-sites/shp/sections/Footer.tsx",
               "deco-sites/shp/sections/Highlights.tsx",
@@ -7498,6 +7499,41 @@
       "required": [],
       "title": "deco-sites/shp/components/ui/BannerPLP.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ2F0ZWdvcmllcy50c3g=@Props": {
+      "type": "object",
+      "properties": {
+        "Categs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "categImg": {
+                "type": "string",
+                "title": "Categ Img"
+              },
+              "linkTo": {
+                "type": "string",
+                "title": "Link To"
+              },
+              "name": {
+                "type": "string",
+                "title": "Name"
+              }
+            },
+            "required": [
+              "categImg",
+              "linkTo",
+              "name"
+            ]
+          },
+          "title": " Categs"
+        }
+      },
+      "required": [
+        "Categs"
+      ],
+      "title": "deco-sites/shp/sections/Categories.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRGVzaWduU3lzdGVtLnRzeA==@Colors": {
       "type": "object",
       "properties": {
@@ -7819,6 +7855,58 @@
       },
       "required": [],
       "title": "deco-sites/shp/sections/DesignSystem.tsx@Props"
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVQQ0dhbWVySWRlYWwudHN4@Props": {
+      "type": "object",
+      "properties": {
+        "peca": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "iconUrl": {
+                "type": "string",
+                "title": "Icon Url"
+              },
+              "name": {
+                "type": "string",
+                "title": "Name"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "placeholder": {
+                      "type": "string",
+                      "title": "Placeholder"
+                    },
+                    "value": {
+                      "type": "string",
+                      "title": "Value"
+                    }
+                  },
+                  "required": [
+                    "placeholder",
+                    "value"
+                  ]
+                },
+                "title": "Options"
+              }
+            },
+            "required": [
+              "iconUrl",
+              "name",
+              "options"
+            ]
+          },
+          "title": "Peca"
+        }
+      },
+      "required": [
+        "peca"
+      ],
+      "title": "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx@Props"
     },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9GZWF0dXJlcy50c3g=@Feature": {
       "type": "object",
@@ -8928,9 +9016,8 @@
           "type": "string",
           "title": "The audience name (will be used on cookies).",
           "description": "Add a meaningful short word for the audience name.",
-          "maxLength": 40,
           "minLength": 3,
-          "pattern": "^[A-Za-z0-9_]+$"
+          "pattern": "^[A-Za-z0-9_-]+$"
         },
         "routes": {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]",
@@ -9046,7 +9133,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@2cf9aa699880ab31d05645e09a8b21b4|WorkflowRef": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|b3aa45aaff3f13a27398fcac99067685": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -9064,13 +9151,13 @@
           ]
         }
       ],
-      "title": "2cf9aa699880ab31d05645e09a8b21b4|WorkflowRef"
+      "title": "WorkflowRef|b3aa45aaff3f13a27398fcac99067685"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@2cf9aa699880ab31d05645e09a8b21b4|WorkflowRef",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|b3aa45aaff3f13a27398fcac99067685",
           "title": "Workflow"
         },
         "id": {
@@ -10938,6 +11025,11 @@
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ2F0ZWdvcmllcy50c3g=": {
       "title": "deco-sites/shp/sections/Categories.tsx",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ2F0ZWdvcmllcy50c3g=@Props"
+        }
+      ],
       "required": [
         "__resolveType"
       ],
@@ -10985,6 +11077,27 @@
             "deco-sites/shp/sections/DesignSystem.tsx"
           ],
           "default": "deco-sites/shp/sections/DesignSystem.tsx"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVQQ0dhbWVySWRlYWwudHN4": {
+      "title": "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVQQ0dhbWVySWRlYWwudHN4@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx"
+          ],
+          "default": "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx"
         }
       }
     },
@@ -12361,6 +12474,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRGVzaWduU3lzdGVtLnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVQQ0dhbWVySWRlYWwudHN4"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRmVhdHVyZXMudHN4"
