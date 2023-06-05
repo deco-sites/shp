@@ -82,6 +82,7 @@
               "deco-sites/shp/sections/BannerPLP.tsx",
               "deco-sites/shp/sections/Benefits.tsx",
               "deco-sites/shp/sections/Carousel.tsx",
+              "deco-sites/shp/sections/Categories.tsx",
               "deco-sites/shp/sections/CookieConsent.tsx",
               "deco-sites/shp/sections/DesignSystem.tsx",
               "deco-sites/shp/sections/Features.tsx",
@@ -2627,6 +2628,7 @@
             "null"
           ],
           "description": "FullText term",
+          "$comment": "https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search",
           "title": "Ft"
         },
         "fq": {
@@ -2634,6 +2636,7 @@
             "string",
             "null"
           ],
+          "$comment": "https://developers.vtex.com/docs/api-reference/search-api#get-/api/catalog_system/pub/products/search",
           "title": "Fq"
         },
         "map": {
@@ -6907,6 +6910,14 @@
           ],
           "description": "the base path of the url.",
           "title": "Base Path"
+        },
+        "host": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Host that should be used when proxying the request",
+          "title": "Host"
         }
       },
       "required": [
@@ -7019,7 +7030,7 @@
           "$ref": "#/definitions/JGxpdmUvZmxhZ3MvZXZlcnlvbmUudHM="
         }
       ],
-      "title": "15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag"
+      "title": "Audiences"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@15b1ddc7b4bb6e032bd22948a3dc02c4|9cc5443ad72a10e9797a691a19b4ce81|Flag[]": {
       "type": "array",
@@ -7486,34 +7497,6 @@
       },
       "required": [],
       "title": "deco-sites/shp/components/ui/BannerPLP.tsx@Props"
-    },
-    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmVuZWZpdHMudHN4@Props": {
-      "type": "object",
-      "properties": {
-        "Benefit": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "iconUrl": {
-                "type": "string",
-                "title": "Icon Url"
-              },
-              "text": {
-                "type": "string",
-                "title": "Text"
-              }
-            },
-            "required": [
-              "iconUrl",
-              "text"
-            ]
-          },
-          "title": " Benefit"
-        }
-      },
-      "required": [],
-      "title": "deco-sites/shp/sections/Benefits.tsx@Props"
     },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRGVzaWduU3lzdGVtLnRzeA==@Colors": {
       "type": "object",
@@ -8945,7 +8928,7 @@
           "type": "string",
           "title": "The audience name (will be used on cookies).",
           "description": "Add a meaningful short word for the audience name.",
-          "maxLength": 22,
+          "maxLength": 40,
           "minLength": 3,
           "pattern": "^[A-Za-z0-9_]+$"
         },
@@ -9063,7 +9046,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@14b4154785a44defd208d2d8628613b2|WorkflowRef": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@2cf9aa699880ab31d05645e09a8b21b4|WorkflowRef": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -9081,13 +9064,13 @@
           ]
         }
       ],
-      "title": "14b4154785a44defd208d2d8628613b2|WorkflowRef"
+      "title": "2cf9aa699880ab31d05645e09a8b21b4|WorkflowRef"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@14b4154785a44defd208d2d8628613b2|WorkflowRef",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@2cf9aa699880ab31d05645e09a8b21b4|WorkflowRef",
           "title": "Workflow"
         },
         "id": {
@@ -10918,11 +10901,6 @@
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmVuZWZpdHMudHN4": {
       "title": "deco-sites/shp/sections/Benefits.tsx",
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmVuZWZpdHMudHN4@Props"
-        }
-      ],
       "required": [
         "__resolveType"
       ],
@@ -10954,6 +10932,22 @@
             "deco-sites/shp/sections/Carousel.tsx"
           ],
           "default": "deco-sites/shp/sections/Carousel.tsx"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ2F0ZWdvcmllcy50c3g=": {
+      "title": "deco-sites/shp/sections/Categories.tsx",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/Categories.tsx"
+          ],
+          "default": "deco-sites/shp/sections/Categories.tsx"
         }
       }
     },
@@ -12358,6 +12352,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ2Fyb3VzZWwudHN4"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ2F0ZWdvcmllcy50c3g="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ29va2llQ29uc2VudC50c3g="
