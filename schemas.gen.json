@@ -94,6 +94,7 @@
               "deco-sites/shp/sections/ProductShelf.tsx",
               "deco-sites/shp/sections/ReturnH1.tsx",
               "deco-sites/shp/sections/SearchResult.tsx",
+              "deco-sites/shp/sections/Vitrine.tsx",
               "deco-sites/shp/sections/WhatsApp.tsx",
               "deco-sites/shp/sections/WishlistGallery.tsx",
               "deco-sites/std/sections/Analytics.tsx",
@@ -8581,6 +8582,149 @@
       ],
       "title": "deco-sites/shp/components/search/SearchResult.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Nome"
+        },
+        "imgUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Img Url"
+        },
+        "placa": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Placa"
+        },
+        "processador": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Processador"
+        },
+        "memoria": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Memoria"
+        },
+        "armazenamento": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Armazenamento"
+        },
+        "precoPIX": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Preco P I X"
+        },
+        "preco10": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Preco10"
+        },
+        "discountFlag": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Discount Flag"
+        }
+      },
+      "required": [],
+      "title": "PCProps"
+    },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9Qcm9kLnRzeA==@ProdProps": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Nome"
+        },
+        "imgUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Img Url"
+        },
+        "precoPIX": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Preco P I X"
+        },
+        "preco10": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Preco10"
+        },
+        "discountFlag": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Discount Flag"
+        }
+      },
+      "required": [],
+      "title": "ProdProps"
+    },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps|ProdProps": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9Qcm9kLnRzeA==@ProdProps"
+        }
+      ],
+      "title": "PCProps|ProdProps"
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@vitrineProps": {
+      "type": "object",
+      "properties": {
+        "PcGamer": {
+          "type": "boolean",
+          "title": " Pc Gamer"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps|ProdProps"
+          },
+          "title": "Products"
+        }
+      },
+      "required": [
+        "PcGamer"
+      ],
+      "title": "deco-sites/shp/sections/Vitrine.tsx@vitrineProps"
+    },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9XaGF0c0FwcC50c3g=@Props": {
       "type": "object",
       "properties": {
@@ -11269,6 +11413,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=": {
+      "title": "deco-sites/shp/sections/Vitrine.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@vitrineProps"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/Vitrine.tsx"
+          ],
+          "default": "deco-sites/shp/sections/Vitrine.tsx"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvV2hhdHNBcHAudHN4": {
       "title": "deco-sites/shp/sections/WhatsApp.tsx",
       "type": "object",
@@ -12501,6 +12666,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VhcmNoUmVzdWx0LnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvV2hhdHNBcHAudHN4"

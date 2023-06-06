@@ -30,8 +30,9 @@ import * as $$$$$$$$12 from "./sections/ProductDetails.tsx";
 import * as $$$$$$$$13 from "./sections/ProductShelf.tsx";
 import * as $$$$$$$$14 from "./sections/ReturnH1.tsx";
 import * as $$$$$$$$15 from "./sections/SearchResult.tsx";
-import * as $$$$$$$$16 from "./sections/WhatsApp.tsx";
-import * as $$$$$$$$17 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$$$16 from "./sections/Vitrine.tsx";
+import * as $$$$$$$$17 from "./sections/WhatsApp.tsx";
+import * as $$$$$$$$18 from "./sections/WishlistGallery.tsx";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
 import * as $live_invoke from "$live/routes/live/invoke/index.ts";
@@ -189,8 +190,9 @@ const manifest = {
     "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$13,
     "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$14,
     "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$15,
-    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$16,
-    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$17,
+    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$16,
+    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$17,
+    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$18,
     "deco-sites/std/sections/Analytics.tsx": i2$$$$3,
     "deco-sites/std/sections/configButterCMS.global.tsx": i2$$$$4,
     "deco-sites/std/sections/configOCC.global.tsx": i2$$$$5,

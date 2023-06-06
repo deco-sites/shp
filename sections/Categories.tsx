@@ -14,14 +14,16 @@ const Categories = ({ Categs }: Props) => {
         {Categs?.map((categ) => (
           <a
             href={categ.linkTo}
-            className="min-h-[115px] min-w-[115px] bg-[#262626] text-center border-transparent border-[2px] rounded-lg hover:border-[#dd1f26]  hover:shadow-[0_0_5px_2px]
-        hover:shadow-[#dd1f26]/30 transition-all duration-700 font-bold text-xs text-[#3d3d3d] flex flex-col justify-around items-center"
+            className="min-h-[40px] min-w-[90px] bg-[#d3d2d2] text-center border-transparent border-[2px] rounded-lg
+        hover:re1:bg-black hover:re1:test-white transition-all duration-700 font-bold text-xs text-[#3d3d3d] flex flex-col justify-around items-center"
           >
-            <img
+            {
+              /* <img
               src={categ.categImg}
               alt="Batata"
               className="w-[90px] h-[75px]"
-            />
+            /> */
+            }
             <p>{categ.name}</p>
           </a>
         ))}

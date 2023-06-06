@@ -1,0 +1,95 @@
+export interface PCProps {
+  nome?: string;
+  imgUrl?: string;
+  placa?: string;
+  processador?: string;
+  memoria?: string;
+  armazenamento?: string;
+  precoPIX?: string;
+  preco10?: string;
+  discountFlag?: number;
+}
+
+const PC = ({ ...props }: PCProps) => {
+  if (props) {
+    return (
+      <div className="flex flex-col min-w-[160px] bg-white rounded-lg p-2 min-h-[326px]">
+        <div className="flex flex-col items-center -mb-5">
+          <label className="w-4/5 flex justify-between bottom-0">
+            <div className="bg-green-500 text-white text-sm font-bold">
+              {props.discountFlag}%
+            </div>
+            <div>Frete</div>
+            <img
+              src="https://shopinfo.vteximg.com.br/arquivos/heartRed.png"
+              alt="like"
+            />
+          </label>
+          <img
+            className="w-[130px] relative -top-5"
+            src={props.imgUrl}
+            alt="Pc image"
+          />
+        </div>
+
+        <span className="text-sm text-black font-bold">{props.nome}</span>
+
+        <div className="text-[11px] text-[#B1B1B1] flex flex-col gap-1">
+          <label className="flex items-center gap-1">
+            <img
+              className="w-[15px] h-[15px]"
+              src="https://shopinfo.vteximg.com.br/arquivos/icon-placadevideo.svg"
+              alt=""
+            />
+            <p className="font-bold">{props.placa}</p>
+          </label>
+          <label className="flex items-center gap-1">
+            <img
+              className="w-[15px] h-[15px]"
+              src="https://shopinfo.vteximg.com.br/arquivos/icon-processador.svg"
+              alt=""
+            />
+            <p>{props.processador}</p>
+          </label>
+          <label className="flex items-center gap-1">
+            <img
+              className="w-[15px] h-[15px]"
+              src="https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg"
+              alt=""
+            />
+            <p>{props.memoria}</p>
+          </label>
+          <label className="flex items-center gap-1">
+            <img
+              className="w-[15px] h-[15px]"
+              src="https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg"
+              alt=""
+            />
+            <p>{props.armazenamento}</p>
+          </label>
+        </div>
+
+        <div className="flex flex-col">
+          <span className="text-lg text-[#dd1f26] font-bold">
+            10x R$ {props.preco10}
+          </span>
+          <p className="text-xs">ou por R$ {props.precoPIX} no Pix</p>
+        </div>
+
+        <label htmlFor="compare" className="flex gap-1">
+          <input
+            type="checkbox"
+            name="compare"
+            id="compare"
+            className="checked:rounded-full checked:bg-red-500"
+          />
+          <p>Compare</p>
+        </label>
+      </div>
+    );
+  }
+
+  return <div>Batata</div>;
+};
+
+export default PC;
