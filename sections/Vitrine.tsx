@@ -4,7 +4,9 @@ import PC from "deco-sites/shp/components/ProductsSHP/PC.tsx";
 import type { ProdProps } from "deco-sites/shp/components/ProductsSHP/Prod.tsx";
 import Prod from "deco-sites/shp/components/ProductsSHP/Prod.tsx";
 
-//import KeenSlider from 'npm:keen-slider/react'
+import {useRef, useEffect} from 'preact/hooks'
+
+import {useKeenSlider} from 'useKeenSlider'
 
 export interface vitrineProps {
   PcGamer: boolean;
@@ -12,17 +14,17 @@ export interface vitrineProps {
 }
 
 const Shelf = ({ PcGamer, products = [] }: vitrineProps) => {
-  // const [sliderRef, instanceRef]=KeenSlider.useKeenSlider(
-  //   {
-  //     slideChanged(){
-  //       console.log('slide changed')
-  //     },
-  //   },
-  //   []
-  // )
+const [sliderRef, instanceRed]=useKeenSlider(
+  {
+    created(){
+      console.log('batata')
+    },
+},[]
+)
+  
   if (products) {
     return (
-      <div className="flex gap-2">
+      <div ref={sliderRef} className="flex gap-2 keen-slider">
         {PcGamer
           ? products.map((element: PCProps) => (
             <PC
