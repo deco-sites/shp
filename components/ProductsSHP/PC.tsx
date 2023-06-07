@@ -13,7 +13,7 @@ export interface PCProps {
 const PC = ({ ...props }: PCProps) => {
   if (props) {
     return (
-      <div className="flex flex-col min-w-[160px] bg-white rounded-lg p-2 min-h-[326px]">
+      <div className="flex flex-col min-w-[160px] max-w-[160px] bg-white rounded-lg p-2 min-h-[326px] max-h-[326px]">
         <div className="flex flex-col items-center -mb-5">
           <label className="w-4/5 flex justify-between bottom-0">
             <div className="bg-green-500 text-white text-sm font-bold">

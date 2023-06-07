@@ -12,6 +12,7 @@
     "@preact/signals-core": "https://esm.sh/@preact/signals-core@1.2.3",
     "std/": "https://deno.land/std@0.181.0/",
     "partytown/": "https://denopkg.com/deco-cx/partytown@0.3.0/",
-    "useKeenSlider":"npm:keen-slider/react.es"
+    "preact-flicking":"https://esm.sh/@egjs/preact-flicking",
+    "preact-css": "https://unpkg.com/@egjs/flicking@4.10.7/dist/flicking-inline.css"
   }
 }

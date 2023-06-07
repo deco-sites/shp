@@ -1,24 +1,24 @@
-import { useEffect, useRef, useState } from "preact/hooks";
-import MenuItem from "./MenuItem.tsx";
-import MenuItemDesk from "./MenuItemDesktop.tsx";
+import { useEffect, useRef, useState } from "preact/hooks"
+import MenuItem from "./MenuItem.tsx"
+import MenuItemDesk from "./MenuItemDesktop.tsx"
 
 const HeaderSHP = () => {
-  const close = useRef<HTMLSpanElement>(null);
+  const close = useRef<HTMLSpanElement>(null)
   close.current && close.current.addEventListener("click", () => {
-    setMenuMobileClass("hidden");
-  });
+    setMenuMobileClass("hidden")
+  })
 
-  const [menuMobileClass, setMenuMobileClass] = useState("hidden");
+  const [menuMobileClass, setMenuMobileClass] = useState("hidden")
 
   const handleClick = () => {
     setMenuMobileClass(
       "flex flex-col w-[80%] h-screen absolute top-0 bg-zinc-800",
-    );
-  };
+    )
+  }
 
-  const divInputSearchMobile = useRef<HTMLDivElement>(null);
+  const divInputSearchMobile = useRef<HTMLDivElement>(null)
 
-  const [search, setSearch] = useState("hidden");
+  const [search, setSearch] = useState("hidden")
 
   //useEffect input search
   useEffect(() => {
@@ -29,95 +29,95 @@ const HeaderSHP = () => {
             !divInputSearchMobile.current.contains(event.target as Node) &&
             search === " "
           ) {
-            setSearch("hidden");
+            setSearch("hidden")
             if (
               divInputSearchMobile.current.firstChild &&
               divInputSearchMobile.current.firstChild instanceof
                 HTMLInputElement
             ) {
-              divInputSearchMobile.current.firstChild.value = "";
+              divInputSearchMobile.current.firstChild.value = ""
             }
           }
         }
-      };
+      }
 
-      document.addEventListener("click", outsideClick);
+      document.addEventListener("click", outsideClick)
 
       return () => {
-        document.removeEventListener("click", outsideClick);
-      };
+        document.removeEventListener("click", outsideClick)
+      }
     }
-  }, [search]);
+  }, [search])
 
   const handleOpenSearch = () => {
     if (window.innerWidth <= 768) {
-      setSearch(" ");
+      setSearch(" ")
     } else {
       // executa o search caso seja PC
     }
-  };
+  }
 
   const hideAll = () => {
-    setOpenGamer("hidden");
-    setBorderGamer("");
-    setOpenOffice("hidden");
-    setBorderOffice("");
-    setOpenWork("hidden");
-    setBorderWork("");
-    setOpenPeri("hidden");
-    setBorderPeri("");
-    setOpenHard("hidden");
-    setBorderHard("");
-  };
+    setOpenGamer("hidden")
+    setBorderGamer("")
+    setOpenOffice("hidden")
+    setBorderOffice("")
+    setOpenWork("hidden")
+    setBorderWork("")
+    setOpenPeri("hidden")
+    setBorderPeri("")
+    setOpenHard("hidden")
+    setBorderHard("")
+  }
 
-  const [openGamer, setOpenGamer] = useState("hidden");
-  const [borderGamer, setBorderGamer] = useState("");
+  const [openGamer, setOpenGamer] = useState("hidden")
+  const [borderGamer, setBorderGamer] = useState("")
 
   const gamerHover = () => {
     openGamer === "hidden" &&
-      hideAll();
-    setOpenGamer("flex"), setBorderGamer("border-b-2 border-[#dd1f26]");
-  };
+      hideAll()
+    setOpenGamer("flex"), setBorderGamer("border-b-2 border-[#dd1f26]")
+  }
 
-  const [openOffice, setOpenOffice] = useState("hidden");
-  const [borderOffice, setBorderOffice] = useState("");
+  const [openOffice, setOpenOffice] = useState("hidden")
+  const [borderOffice, setBorderOffice] = useState("")
 
   const officeHover = () => {
     openOffice === "hidden" &&
-      hideAll();
-    setOpenOffice("flex"), setBorderOffice("border-b-2 border-[#dd1f26]");
-  };
+      hideAll()
+    setOpenOffice("flex"), setBorderOffice("border-b-2 border-[#dd1f26]")
+  }
 
-  const [openWork, setOpenWork] = useState("hidden");
-  const [borderWork, setBorderWork] = useState("");
+  const [openWork, setOpenWork] = useState("hidden")
+  const [borderWork, setBorderWork] = useState("")
 
   const workHover = () => {
     openWork === "hidden" &&
-      hideAll();
-    setOpenWork("flex"), setBorderWork("border-b-2 border-[#dd1f26]");
-  };
+      hideAll()
+    setOpenWork("flex"), setBorderWork("border-b-2 border-[#dd1f26]")
+  }
 
-  const [openPeri, setOpenPeri] = useState("hidden");
-  const [borderPeri, setBorderPeri] = useState("");
+  const [openPeri, setOpenPeri] = useState("hidden")
+  const [borderPeri, setBorderPeri] = useState("")
 
   const periHover = () => {
     openPeri === "hidden" &&
-      hideAll();
-    setOpenPeri("flex"), setBorderPeri("border-b-2 border-[#dd1f26]");
-  };
+      hideAll()
+    setOpenPeri("flex"), setBorderPeri("border-b-2 border-[#dd1f26]")
+  }
 
-  const [openHard, setOpenHard] = useState("hidden");
-  const [borderHard, setBorderHard] = useState("");
+  const [openHard, setOpenHard] = useState("hidden")
+  const [borderHard, setBorderHard] = useState("")
 
   const hardHover = () => {
     openHard === "hidden" &&
-      hideAll();
-    setOpenHard("flex"), setBorderHard("border-b-2 border-[#dd1f26]");
-  };
+      hideAll()
+    setOpenHard("flex"), setBorderHard("border-b-2 border-[#dd1f26]")
+  }
 
   return (
-    <div className="z-30 relative">
-      <div className="w-full h-16 flex p-4 re2:text-sm re3:text-base bg-zinc-900 items-center justify-center re1:py-4 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-24 re1:justify-around">
+    <div className="z-30 relative top-0">
+      <div className="w-screen h-16 flex p-4 re2:text-sm re3:text-base bg-zinc-900 items-center justify-center re1:py-4 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-24 re1:justify-around">
         <button /* menuBar */
           className="w-fit h-fit mr-auto re1:hidden"
           onClick={handleClick}
@@ -247,7 +247,7 @@ const HeaderSHP = () => {
 
       <div
         onMouseOut={() => {
-          setOpenGamer("hidden"), setBorderGamer("");
+          setOpenGamer("hidden"), setBorderGamer("")
         }}
       >
         <MenuItemDesk
@@ -284,7 +284,7 @@ const HeaderSHP = () => {
 
       <div
         onMouseOut={() => {
-          setOpenOffice("hidden"), setBorderOffice("");
+          setOpenOffice("hidden"), setBorderOffice("")
         }}
       >
         <MenuItemDesk
@@ -306,7 +306,7 @@ const HeaderSHP = () => {
 
       <div
         onMouseOut={() => {
-          setOpenWork("hidden"), setBorderWork("");
+          setOpenWork("hidden"), setBorderWork("")
         }}
       >
         <MenuItemDesk
@@ -338,7 +338,7 @@ const HeaderSHP = () => {
 
       <div
         onMouseOut={() => {
-          setOpenPeri("hidden"), setBorderPeri("");
+          setOpenPeri("hidden"), setBorderPeri("")
         }}
       >
         <MenuItemDesk
@@ -394,7 +394,7 @@ const HeaderSHP = () => {
 
       <div
         onMouseOut={() => {
-          setOpenHard("hidden"), setBorderHard("");
+          setOpenHard("hidden"), setBorderHard("")
         }}
       >
         <MenuItemDesk
@@ -710,7 +710,7 @@ const HeaderSHP = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default HeaderSHP;
+export default HeaderSHP

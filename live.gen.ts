@@ -13,7 +13,8 @@ import * as $$$$$3 from "./islands/ProductImageZoom.tsx";
 import * as $$$$$4 from "./islands/SearchControls.tsx";
 import * as $$$$$5 from "./islands/ShippingSimulation.tsx";
 import * as $$$$$6 from "./islands/SliderJS.tsx";
-import * as $$$$$7 from "./islands/WishlistButton.tsx";
+import * as $$$$$7 from "./islands/VitrineIsland.tsx";
+import * as $$$$$8 from "./islands/WishlistButton.tsx";
 import * as $$$$$$$$0 from "./sections/BannerGrid.tsx";
 import * as $$$$$$$$1 from "./sections/BannerPLP.tsx";
 import * as $$$$$$$$2 from "./sections/Benefits.tsx";
@@ -168,7 +169,8 @@ const manifest = {
     "./islands/SearchControls.tsx": $$$$$4,
     "./islands/ShippingSimulation.tsx": $$$$$5,
     "./islands/SliderJS.tsx": $$$$$6,
-    "./islands/WishlistButton.tsx": $$$$$7,
+    "./islands/VitrineIsland.tsx": $$$$$7,
+    "./islands/WishlistButton.tsx": $$$$$8,
   },
   "sections": {
     "$live/sections/PageInclude.tsx": i2$$$$0,

@@ -9,7 +9,7 @@ export interface ProdProps {
 const Prod = ({ ...props }: ProdProps) => {
   if (props) {
     return (
-      <div className="flex flex-col min-w-[160px] min-h-[326px] rounded-lg bg-white">
+      <div className="flex flex-col min-w-[160px] max-w-[160px] max-h-[326px] min-h-[326px] rounded-lg bg-white">
         <div className="flex flex-col items-center -mb-5">
           <label className="w-4/5 flex relative justify-between bottom-0">
             <div className="bg-green-500 text-white text-sm font-bold">

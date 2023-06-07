@@ -66,6 +66,7 @@
               "./islands/SearchControls.tsx",
               "./islands/ShippingSimulation.tsx",
               "./islands/SliderJS.tsx",
+              "./islands/VitrineIsland.tsx",
               "./islands/WishlistButton.tsx",
               "$live/handlers/devPage.ts",
               "$live/handlers/fresh.ts",
@@ -6871,6 +6872,149 @@
       ],
       "title": "deco-sites/shp/components/ui/ShippingSimulation.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Nome"
+        },
+        "imgUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Img Url"
+        },
+        "placa": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Placa"
+        },
+        "processador": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Processador"
+        },
+        "memoria": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Memoria"
+        },
+        "armazenamento": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Armazenamento"
+        },
+        "precoPIX": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Preco P I X"
+        },
+        "preco10": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Preco10"
+        },
+        "discountFlag": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Discount Flag"
+        }
+      },
+      "required": [],
+      "title": "PCProps"
+    },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9Qcm9kLnRzeA==@ProdProps": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Nome"
+        },
+        "imgUrl": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Img Url"
+        },
+        "precoPIX": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Preco P I X"
+        },
+        "preco10": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Preco10"
+        },
+        "discountFlag": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Discount Flag"
+        }
+      },
+      "required": [],
+      "title": "ProdProps"
+    },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps|ProdProps": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9Qcm9kLnRzeA==@ProdProps"
+        }
+      ],
+      "title": "PCProps|ProdProps"
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@vitrineProps": {
+      "type": "object",
+      "properties": {
+        "PcGamer": {
+          "type": "boolean",
+          "title": " Pc Gamer"
+        },
+        "products": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps|ProdProps"
+          },
+          "title": "Products"
+        }
+      },
+      "required": [
+        "PcGamer"
+      ],
+      "title": "deco-sites/shp/sections/Vitrine.tsx@vitrineProps"
+    },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL2RldlBhZ2UudHM=@DevConfig": {
       "type": "object",
       "properties": {
@@ -8581,149 +8725,6 @@
         "columns"
       ],
       "title": "deco-sites/shp/components/search/SearchResult.tsx@Props"
-    },
-    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps": {
-      "type": "object",
-      "properties": {
-        "nome": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Nome"
-        },
-        "imgUrl": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Img Url"
-        },
-        "placa": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Placa"
-        },
-        "processador": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Processador"
-        },
-        "memoria": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Memoria"
-        },
-        "armazenamento": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Armazenamento"
-        },
-        "precoPIX": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Preco P I X"
-        },
-        "preco10": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Preco10"
-        },
-        "discountFlag": {
-          "type": [
-            "number",
-            "null"
-          ],
-          "title": "Discount Flag"
-        }
-      },
-      "required": [],
-      "title": "PCProps"
-    },
-    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9Qcm9kLnRzeA==@ProdProps": {
-      "type": "object",
-      "properties": {
-        "nome": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Nome"
-        },
-        "imgUrl": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Img Url"
-        },
-        "precoPIX": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Preco P I X"
-        },
-        "preco10": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "title": "Preco10"
-        },
-        "discountFlag": {
-          "type": [
-            "number",
-            "null"
-          ],
-          "title": "Discount Flag"
-        }
-      },
-      "required": [],
-      "title": "ProdProps"
-    },
-    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps|ProdProps": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9Qcm9kLnRzeA==@ProdProps"
-        }
-      ],
-      "title": "PCProps|ProdProps"
-    },
-    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@vitrineProps": {
-      "type": "object",
-      "properties": {
-        "PcGamer": {
-          "type": "boolean",
-          "title": " Pc Gamer"
-        },
-        "products": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Qcm9kdWN0c1NIUC9QQy50c3g=@PCProps|ProdProps"
-          },
-          "title": "Products"
-        }
-      },
-      "required": [
-        "PcGamer"
-      ],
-      "title": "deco-sites/shp/sections/Vitrine.tsx@vitrineProps"
     },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9XaGF0c0FwcC50c3g=@Props": {
       "type": "object",
@@ -10836,6 +10837,27 @@
         }
       }
     },
+    "Li9pc2xhbmRzL1ZpdHJpbmVJc2xhbmQudHN4": {
+      "title": "./islands/VitrineIsland.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@vitrineProps"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/VitrineIsland.tsx"
+          ],
+          "default": "./islands/VitrineIsland.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL1dpc2hsaXN0QnV0dG9uLnRzeA==": {
       "title": "./islands/WishlistButton.tsx",
       "type": "object",
@@ -12558,6 +12580,9 @@
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL1NsaWRlckpTLnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/Li9pc2xhbmRzL1ZpdHJpbmVJc2xhbmQudHN4"
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL1dpc2hsaXN0QnV0dG9uLnRzeA=="
