@@ -1,13 +1,13 @@
 export interface PCProps {
-  nome?: string;
-  imgUrl?: string;
-  placa?: string;
-  processador?: string;
-  memoria?: string;
-  armazenamento?: string;
-  precoPIX?: string;
-  preco10?: string;
-  discountFlag?: number;
+  nome?: string
+  imgUrl?: string
+  placa?: string
+  processador?: string
+  memoria?: string
+  armazenamento?: string
+  precoPIX?: string
+  preco10?: string
+  discountFlag?: number
 }
 
 const PC = ({ ...props }: PCProps) => {
@@ -86,10 +86,10 @@ const PC = ({ ...props }: PCProps) => {
           <p>Compare</p>
         </label>
       </div>
-    );
+    )
   }
 
-  return <div>Batata</div>;
-};
+  return <div>Batata</div>
+}
 
-export default PC;
+export default PC
