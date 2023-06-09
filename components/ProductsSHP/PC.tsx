@@ -5,15 +5,15 @@ export interface PCProps {
   processador?: string
   memoria?: string
   armazenamento?: string
-  precoPIX?: string
-  preco10?: string
+  precoPIX?: number
+  preco10?: number
   discountFlag?: number
 }
 
 const PC = ({ ...props }: PCProps) => {
   if (props) {
     return (
-      <div className="flex flex-col min-w-[160px] max-w-[160px] bg-white rounded-lg p-2 min-h-[326px] max-h-[326px]">
+      <div className="flex flex-col min-w-[160px] max-w-[160px] bg-white rounded-lg p-2 min-h-[326px] max-h-[326px] re1:min-w-[200px] re1:max-w-[200px]">
         <div className="flex flex-col items-center -mb-5">
           <label className="w-4/5 flex justify-between bottom-0">
             <div className="bg-green-500 text-white text-sm font-bold">
@@ -32,7 +32,7 @@ const PC = ({ ...props }: PCProps) => {
           />
         </div>
 
-        <span className="text-sm text-black font-bold">{props.nome}</span>
+        <span className="text-sm text-black font-bold truncate">{props.nome}</span>
 
         <div className="text-[11px] text-[#B1B1B1] flex flex-col gap-1">
           <label className="flex items-center gap-1">

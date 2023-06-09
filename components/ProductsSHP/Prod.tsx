@@ -1,15 +1,15 @@
 export interface ProdProps {
   nome?: string;
   imgUrl?: string;
-  precoPIX?: string;
-  preco10?: string;
+  precoPIX?: number;
+  preco10?: number;
   discountFlag?: number;
 }
 
 const Prod = ({ ...props }: ProdProps) => {
   if (props) {
     return (
-      <div className="flex flex-col min-w-[160px] max-w-[160px] max-h-[326px] min-h-[326px] rounded-lg bg-white">
+      <div className="flex flex-col min-w-[160px] max-w-[160px] max-h-[326px] min-h-[326px] re1:min-w-[200px] re1:max-w-[200px] rounded-lg bg-white">
         <div className="flex flex-col items-center -mb-5">
           <label className="w-4/5 flex relative justify-between bottom-0">
             <div className="bg-green-500 text-white text-sm font-bold">
@@ -30,7 +30,7 @@ const Prod = ({ ...props }: ProdProps) => {
           />
         </div>
 
-        <span className="text-sm text-black font-bold">{props.nome}</span>
+        <span className="text-sm text-black font-bold truncate">{props.nome}</span>
 
         <div className="flex flex-col">
           <span className="text-lg text-[#dd1f26] font-bold">
