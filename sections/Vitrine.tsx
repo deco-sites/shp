@@ -1,7 +1,4 @@
-import type { PCProps } from "deco-sites/shp/components/ProductsSHP/PC.tsx";
 import PC from "deco-sites/shp/components/ProductsSHP/PC.tsx";
-
-import type { ProdProps } from "deco-sites/shp/components/ProductsSHP/Prod.tsx";
 import Prod from "deco-sites/shp/components/ProductsSHP/Prod.tsx";
 
 import type { LoaderReturnType } from "$live/types.ts";

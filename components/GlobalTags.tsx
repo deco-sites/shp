@@ -6,6 +6,8 @@ function GlobalTags() {
       {/* Enable View Transitions API */}
       <meta name="view-transition" content="same-origin" />
 
+      <meta name="theme-color" content="#dd1f26"/>
+
       {/* Tailwind v3 CSS file */}
       <link href={asset("/tailwind.css")} rel="stylesheet" />
 

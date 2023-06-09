@@ -62,6 +62,7 @@
               "./islands/AddToCartButton.tsx",
               "./islands/BannerItem.tsx",
               "./islands/HeaderIsland.tsx",
+              "./islands/PCNivelGamerIsland.tsx",
               "./islands/ProductImageZoom.tsx",
               "./islands/SearchControls.tsx",
               "./islands/ShippingSimulation.tsx",
@@ -91,6 +92,7 @@
               "deco-sites/shp/sections/Footer.tsx",
               "deco-sites/shp/sections/Highlights.tsx",
               "deco-sites/shp/sections/LinkTree.tsx",
+              "deco-sites/shp/sections/PCNivelGamer.tsx",
               "deco-sites/shp/sections/ProductDetails.tsx",
               "deco-sites/shp/sections/ProductShelf.tsx",
               "deco-sites/shp/sections/ReturnH1.tsx",
@@ -10643,6 +10645,22 @@
         }
       }
     },
+    "Li9pc2xhbmRzL1BDTml2ZWxHYW1lcklzbGFuZC50c3g=": {
+      "title": "./islands/PCNivelGamerIsland.tsx",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/PCNivelGamerIsland.tsx"
+          ],
+          "default": "./islands/PCNivelGamerIsland.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL1Byb2R1Y3RJbWFnZVpvb20udHN4": {
       "title": "./islands/ProductImageZoom.tsx",
       "type": "object",
@@ -11223,6 +11241,22 @@
             "deco-sites/shp/sections/LinkTree.tsx"
           ],
           "default": "deco-sites/shp/sections/LinkTree.tsx"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUENOaXZlbEdhbWVyLnRzeA==": {
+      "title": "deco-sites/shp/sections/PCNivelGamer.tsx",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/PCNivelGamer.tsx"
+          ],
+          "default": "deco-sites/shp/sections/PCNivelGamer.tsx"
         }
       }
     },
@@ -12445,6 +12479,9 @@
           "$ref": "#/definitions/Li9pc2xhbmRzL0hlYWRlcklzbGFuZC50c3g="
         },
         {
+          "$ref": "#/definitions/Li9pc2xhbmRzL1BDTml2ZWxHYW1lcklzbGFuZC50c3g="
+        },
+        {
           "$ref": "#/definitions/Li9pc2xhbmRzL1Byb2R1Y3RJbWFnZVpvb20udHN4"
         },
         {
@@ -12554,6 +12591,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvTGlua1RyZWUudHN4"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUENOaXZlbEdhbWVyLnRzeA=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdERldGFpbHMudHN4"
