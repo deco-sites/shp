@@ -11,7 +11,7 @@ export interface Props {
 
 const PCGamerIdeal = ({ peca = [] }: Props) => {
   return (
-    <>
+    <div className="my-5">
       <p className="text-center text-2xl font-bold text-[#3d3d3d]">
         Encontre seu Pc Gamer Ideal
       </p>
@@ -54,7 +54,7 @@ const PCGamerIdeal = ({ peca = [] }: Props) => {
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="50" height="20" x="0" y="0" viewBox="0 0 512.009 512.009" style="enable-background:new 0 0 512 512" class=""><g><path d="M508.625 247.801 392.262 131.437c-4.18-4.881-11.526-5.45-16.407-1.269-4.881 4.18-5.45 11.526-1.269 16.407.39.455.814.88 1.269 1.269l96.465 96.582H11.636C5.21 244.426 0 249.636 0 256.063s5.21 11.636 11.636 11.636H472.32l-96.465 96.465c-4.881 4.18-5.45 11.526-1.269 16.407s11.526 5.45 16.407 1.269c.455-.39.88-.814 1.269-1.269l116.364-116.364c4.511-4.537 4.511-11.867-.001-16.406z" fill="#ffffff" data-original="#000000"/></g></svg>
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

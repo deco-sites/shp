@@ -137,23 +137,23 @@ const HeaderSHP = () => {
 
         <div className="hidden re1:flex gap-4">
           <div onMouseOver={gamerHover} className={borderGamer}>
-            <p className="font-bold text-white">PC Gamer</p>
+            <p className="font-bold text-white text-sm cursor-pointer">PC Gamer</p>
           </div>
 
           <div onMouseOver={officeHover} className={borderOffice}>
-            <p className="font-bold text-white">Home Office</p>
+            <p className="font-bold text-white text-sm cursor-pointer">Home Office</p>
           </div>
 
           <div onMouseOver={workHover} className={borderWork}>
-            <p className="font-bold text-white">Workstation</p>
+            <p className="font-bold text-white text-sm cursor-pointer">Workstation</p>
           </div>
 
           <div onMouseOver={periHover} className={borderPeri}>
-            <p className="font-bold text-white">Periféricos</p>
+            <p className="font-bold text-white text-sm cursor-pointer">Periféricos</p>
           </div>
 
           <div onMouseOver={hardHover} className={borderHard}>
-            <p className="font-bold text-white">Hardware</p>
+            <p className="font-bold text-white text-sm cursor-pointer">Hardware</p>
           </div>
         </div>
 
@@ -186,7 +186,7 @@ const HeaderSHP = () => {
               src="https://shopinfo.vteximg.com.br/arquivos/frete-icon.png"
               alt="caminhão"
             />
-            <div className="hover:text-white text-neutral-500 font-bold">
+            <div className="hover:text-white text-neutral-500 font-bold text-sm">
               Rastreio
             </div>
           </a>
@@ -197,7 +197,7 @@ const HeaderSHP = () => {
               src="https://shopinfo.vteximg.com.br/arquivos/icon-user.png"
               alt="conta"
             />
-            <div className="hover:text-white text-neutral-500 font-bold">
+            <div className="hover:text-white text-neutral-500 font-bold text-sm">
               Minha Conta
             </div>
           </a>
@@ -209,7 +209,7 @@ const HeaderSHP = () => {
                 alt="carrinho"
               />
             </div>
-            <div className="hover:text-white text-neutral-500 font-bold">
+            <div className="hover:text-white text-neutral-500 font-bold text-sm">
               Carrinho
             </div>
           </a>

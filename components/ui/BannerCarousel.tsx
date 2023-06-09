@@ -127,7 +127,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
       id={id}
       class="flex flex-col"
     >
-      <div class="flex justify-center items-center">
+      <div class="flex justify-center items-center my-5">
         <div class="hidden re1:flex items-center justify-center z-[2] absolute left-[150px]">
           <Slider.PrevButton class="btn btn-circle glass">
             <Icon
@@ -140,9 +140,9 @@ function BannerCarousel({ images, preload, interval }: Props) {
         </div>
 
        
-          <Slider class="carousel carousel-center scrollbar-none">
+          <Slider class="carousel carousel-center scrollbar-none w-[90vw] rounded-lg">
             {images?.map((image, index) => (
-              <Slider.Item index={index} class="carousel-item w-[100vw] h-fit">
+              <Slider.Item index={index} class="carousel-item w-[90vw] h-fit">
                 <BannerItem image={image} lcp={index === 0 && preload} />
               </Slider.Item>
             ))}

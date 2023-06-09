@@ -1,7 +1,7 @@
 export interface ProdProps {
   nome?: string;
   imgUrl?: string;
-  precoPIX?: number;
+  precoPIX?: string|number;
   preco10?: number;
   discountFlag?: number;
 }
@@ -9,18 +9,21 @@ export interface ProdProps {
 const Prod = ({ ...props }: ProdProps) => {
   if (props) {
     return (
-      <div className="flex flex-col min-w-[160px] max-w-[160px] max-h-[326px] min-h-[326px] re1:min-w-[200px] re1:max-w-[200px] rounded-lg bg-white">
+      <div className="flex flex-col min-w-[160px] max-w-[160px] max-h-[326px] min-h-[326px] re1:min-w-[200px] re1:max-w-[200px] justify-around rounded-lg bg-white p-2">
         <div className="flex flex-col items-center -mb-5">
-          <label className="w-4/5 flex relative justify-between bottom-0">
-            <div className="bg-green-500 text-white text-sm font-bold">
+          <label className="w-11/12 flex justify-between bottom-0 z-10">
+            <div className="flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg">
               {props.discountFlag}%
             </div>
-            <div>Frete</div>
-            <img
-              className=""
-              src="https://shopinfo.vteximg.com.br/arquivos/heartRed.png"
-              alt="like"
-            />
+            <div className="flex justify-center items-center gap-1">
+              <div className="w-[25px] h-[25px] re1:w-[30px] re1:h-[30px] bg-[#c44604] flex items-center p-1 rounded-lg">
+                <img src="https://shopinfo.vteximg.com.br/arquivos/icon-truck-frete.png" alt="frete" />
+              </div>
+              <img
+                src="https://shopinfo.vteximg.com.br/arquivos/heartRed.png"
+                alt="like"
+                />
+            </div>
           </label>
 
           <img
