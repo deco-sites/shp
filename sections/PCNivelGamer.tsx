@@ -3,7 +3,16 @@ import Slider from "deco-sites/shp/components/ui/Slider.tsx"
 import SliderJS from "deco-sites/shp/components/ui/SliderJS.tsx"
 import Icon from "deco-sites/fashion/components/ui/Icon.tsx"
 
-const PCNivelGamer = () => {
+export interface Props{
+  items:Array<{
+    imgUrl:string
+    title:string
+    subTitle:string
+    href:string
+  }>
+}
+
+const PCNivelGamer = ({items=[]}:Props) => {
   const [isMobile, setIsMobile] = useState(false)
   const id=useId()
 
@@ -24,65 +33,75 @@ const PCNivelGamer = () => {
   }, [])
 
   return (
-    <div className="my-5">
+    <div className="my-5 text-white font-bold">
       {isMobile
         ? (
-          <>
-            <div className="flex flex-col gap-4 justify-center items-center">
-              <h1>ESCOLHA SEU PC GAMER</h1>
-              <p>de acordo com seu nível de jogo</p>
-              <div className="w-[100px] bg-[#dd1f26] h-1" />
+          <div className="bg-[url('https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background-mobile.jpg')] bg-no-repeat bg-center bg-cover py-16">
+            <div className="flex flex-col justify-center items-center">
+              <h1 className="text-2xl ">ESCOLHA SEU PC GAMER</h1>
+              <p className="text-lg">de acordo com seu nível de jogo</p>
+              <div className="w-[100px] bg-[#dd1f26] h-1 mt-4"/>
             </div>
-            <div id={id} className="flex justify-center items-center">
-              <div className="flex justify-center items-center">
-                <Slider.PrevButton class="btn bg-none border-none">
+            <div id={id} className="flex justify-center items-center my-4">
+              <div className="flex justify-center items-center prev">
+                <Slider.PrevButton class="btn bg-transparent hover:bg-transparent border-none relative bottom-8">
                   <Icon
                     class="text-[#dd1f26]"
-                    size={15}
+                    size={25}
                     id="ChevronLeft"
-                    strokeWidth={3}
+                    strokeWidth={5}
                   />
                 </Slider.PrevButton>
               </div>
 
-              <Slider className="carousel carousel-center scrollbar-none w-[300px]">
-                <Slider.Item index={0} class="min-w-[300px]">
-                  <div className="w-[300px] flex justify-center items-center">1</div>
-                </Slider.Item>
-
-                <Slider.Item index={1} class="min-w-[300px]">
-                  <div className="w-[300px] flex justify-center items-center">2</div>
-                </Slider.Item>
-
-                <Slider.Item index={2} class="min-w-[300px]">
-                  <div className="w-[300px] flex justify-center items-center">3</div>
-                </Slider.Item>
-
-                <Slider.Item index={3} class="min-w-[300px]">
-                  <div className="w-[300px] flex justify-center items-center">4</div>
-                </Slider.Item>
+              <Slider className="carousel carousel-center scrollbar-none w-[70vw]">
+                {items.map((item,index)=>(
+                  <Slider.Item index={index} class="carousel-item min-w-full max-w-full">
+                    <div className="flex flex-col gap-4 justify-center items-center mx-auto">
+                      <img src={item.imgUrl} />
+                      <h2 className="text-xl">{item.title}</h2>
+                      <p className="text-center text-base">{item.subTitle}</p>
+                      <a className="text-[#dd1f26]" href={item.href}>Ver soluções&gt;</a>
+                    </div>
+                  </Slider.Item>
+                ))}
               </Slider>
 
-              <div class="flex items-center justify-center ">
-                <Slider.NextButton class="btn bg-none border-none">
+              <div class="flex items-center justify-center next">
+                <Slider.NextButton class="btn bg-transparent hover:bg-transparent border-none relative bottom-8">
                   <Icon
                     class="text-[#dd1f26]"
-                    size={15}
+                    size={25}
                     id="ChevronRight"
-                    strokeWidth={3}
+                    strokeWidth={5}
                   />
                 </Slider.NextButton>
               </div>
 
               <SliderJS rootId={id} infinite={true} />
             </div>
-          </>
+          </div>
         )
         : (
-          <>
-            <h1>Desktop</h1>
-            {/* Coloque aqui o conteúdo adicional específico para desktops */}
-          </>
+          <div className="bg-[url('https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background.jpg')] bg-no-repeat bg-center bg-cover py-5">
+            <div className="flex flex-col justify-center items-center">
+              <h1 className="text-2xl ">ESCOLHA SEU PC GAMER</h1>
+              <p className="text-lg">de acordo com seu nível de jogo</p>
+              <div className="w-[100px] bg-[#dd1f26] h-1 mt-4"/>
+            </div>
+
+            <div className="flex gap-5 justify-center items-start mt-5">
+            {items.map((item)=>(
+              <div className="flex flex-col gap-6 justify-center items-center border-transparent border-2 hover:border-[#dd1f26] hover:shadow-[0_0_5px_2px]
+               hover:shadow-[#dd1f26]/30 rounded-lg p-5">
+                <img src={item.imgUrl} />
+                <h2 className="text-xl">{item.title}</h2>
+                <p className="text-center text-base w-64">{item.subTitle}</p>
+                <a className="text-[#dd1f26]" href={item.href}>Ver soluções&gt;</a>
+              </div>
+            ))}
+            </div>
+          </div>
         )}
     </div>
   )

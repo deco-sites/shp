@@ -8478,6 +8478,46 @@
       "required": [],
       "title": "deco-sites/shp/components/ui/LinkTree.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUENOaXZlbEdhbWVyLnRzeA==@Props": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "imgUrl": {
+                "type": "string",
+                "title": "Img Url"
+              },
+              "title": {
+                "type": "string",
+                "title": "Title"
+              },
+              "subTitle": {
+                "type": "string",
+                "title": "Sub Title"
+              },
+              "href": {
+                "type": "string",
+                "title": "Href"
+              }
+            },
+            "required": [
+              "imgUrl",
+              "title",
+              "subTitle",
+              "href"
+            ]
+          },
+          "title": "Items"
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "title": "deco-sites/shp/sections/PCNivelGamer.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1Byb2R1Y3REZXRhaWxzLnRzeA==@Props": {
       "type": "object",
       "properties": {
@@ -9155,7 +9195,7 @@
       ],
       "title": "WorkflowRef"
     },
-    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|b3aa45aaff3f13a27398fcac99067685": {
+    "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@334b1e8b1a9b72929b472c12d844039f|WorkflowRef": {
       "anyOf": [
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef"
@@ -9173,13 +9213,13 @@
           ]
         }
       ],
-      "title": "WorkflowRef|b3aa45aaff3f13a27398fcac99067685"
+      "title": "334b1e8b1a9b72929b472c12d844039f|WorkflowRef"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@Props": {
       "type": "object",
       "properties": {
         "workflow": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@WorkflowRef|b3aa45aaff3f13a27398fcac99067685",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3N0YXJ0LnRz@334b1e8b1a9b72929b472c12d844039f|WorkflowRef",
           "title": "Workflow"
         },
         "id": {
@@ -11247,6 +11287,11 @@
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUENOaXZlbEdhbWVyLnRzeA==": {
       "title": "deco-sites/shp/sections/PCNivelGamer.tsx",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUENOaXZlbEdhbWVyLnRzeA==@Props"
+        }
+      ],
       "required": [
         "__resolveType"
       ],

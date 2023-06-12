@@ -1,44 +1,43 @@
-import PC from "deco-sites/shp/components/ProductsSHP/PC.tsx";
-import Prod from "deco-sites/shp/components/ProductsSHP/Prod.tsx";
+import PC from "deco-sites/shp/components/ProductsSHP/PC.tsx"
+import Prod from "deco-sites/shp/components/ProductsSHP/Prod.tsx"
 
-import type { LoaderReturnType } from "$live/types.ts";
-import Slider from "deco-sites/shp/components/ui/Slider.tsx";
-import SliderJS from "deco-sites/shp/components/ui/SliderJS.tsx";
-import type { Product } from "deco-sites/std/commerce/types.ts";
+import type { LoaderReturnType } from "$live/types.ts"
+import Slider from "deco-sites/shp/components/ui/Slider.tsx"
+import SliderJS from "deco-sites/shp/components/ui/SliderJS.tsx"
+import type { Product } from "deco-sites/std/commerce/types.ts"
 
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 
-import { useEffect, useId, useState } from "preact/hooks";
+import { useEffect, useId, useState } from "preact/hooks"
 
 export interface vitrineProps {
-  PcGamer: boolean;
-  // products?: Array<PCProps | ProdProps>;
+  PcGamer: boolean
   produtos:LoaderReturnType<Product[] | null>
 }
 
 const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
+      setIsMobile(window.innerWidth <= 768)
+    }
 
-    handleResize();
+    handleResize()
 
     // deno-lint-ignore no-window-prefix
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize)
 
     return () => {
       // deno-lint-ignore no-window-prefix
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
 
-  const id = useId();
+  const id = useId()
 
   if (!produtos || produtos.length === 0) {
-    return null;
+    return null
   }
 
   return (
@@ -106,7 +105,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
         : (
           <div className="grid grid-cols-4 gap-x-3 gap-y-3 w-fit mx-auto">
             {PcGamer
-              ? produtos?.map((element) => {
+              ? produtos.map((element) => {
                 const pecas:string[]=['Memória','SSD','HD','Processador','Placa de vídeo']
                 const pecaArray=element.isVariantOf?.additionalProperty
                 const pecasObj: Record<string, string|undefined>={}
@@ -137,7 +136,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
                   discountFlag={15}
                 />
               )})
-              : produtos?.map((element) => 
+              : produtos.map((element) => 
                  (
                 <Prod
                   imgUrl={element.image && element.image[0].url}
@@ -150,7 +149,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
           </div>
         )}
     </div>
-  );
-};
+  )
+}
 
-export default Shelf;
+export default Shelf

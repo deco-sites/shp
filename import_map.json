@@ -3,7 +3,7 @@
     "deco-sites/shp/": "./",
     "deco-sites/fashion/": "./",
     "deco-sites/std/": "https://denopkg.com/deco-sites/std@8a0be4a1ac3e0b7935938d8bdd707e67d6d2510e/",
-    "$live/": "https://denopkg.com/deco-cx/live@1.9.12/",
+    "$live/": "https://denopkg.com/deco-cx/live@1.9.15/",
     "$fresh/": "https://deno.land/x/fresh@1.1.5/",
     "preact": "https://esm.sh/preact@10.13.2",
     "preact/": "https://esm.sh/preact@10.13.2/",
@@ -12,7 +12,7 @@
     "@preact/signals-core": "https://esm.sh/@preact/signals-core@1.2.3",
     "std/": "https://deno.land/std@0.181.0/",
     "partytown/": "https://denopkg.com/deco-cx/partytown@0.3.0/",
-    "preact-flicking":"https://esm.sh/@egjs/preact-flicking",
+    "preact-flicking": "https://esm.sh/@egjs/preact-flicking",
     "preact-css": "https://unpkg.com/@egjs/flicking@4.10.7/dist/flicking-inline.css"
   }
 }
