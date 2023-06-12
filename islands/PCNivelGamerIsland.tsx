@@ -1,1 +1,1 @@
-export {default} from "deco-sites/shp/sections/PCNivelGamer.tsx"
+export {default} from "deco-sites/shp/components/ui/PCNivelGamer.tsx"
