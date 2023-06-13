@@ -4,16 +4,23 @@ export interface Props {
   precoPIX?: string | number
   preco10?: number
   discountFlag?: number
+  timeRemaining?:string[]
 }
 
-const ProdFogo = ({ ...props }: Props) => {
+
+const ProdFogo = ({...props}: Props) => {
+  const [days,hours,minutes,seconds] = props.timeRemaining ? props.timeRemaining : ['00','00','00','00'] 
+
   return (
     <div className="flex flex-col w-72 justify-between rounded-lg bg-white p-2 h-44">
       <label className="flex h-8 justify-between z-10">
-        <div className="bg-[#dd1f26] rounded-lg flex justify-around p-1 items-center w-28">
-          <img className="w-4 h-5" src="https://shopinfo.vteximg.com.br/arquivos/icon-esquenta-black.png" alt="" />
+        <div className="bg-[#dd1f26] rounded-lg flex justify-around p-1 items-center w-40">
+          <img className="w-4 h-5" src="https://shopinfo.vteximg.com.br/arquivos/icon-esquenta-black.png"/>
           <label>
-            <p>Contador</p>
+            <p className="flex flex-col text-white">
+              <p className="text-[10px]">A OFERTA EXPIRA EM</p>
+              <span className="font-bold text-sm">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
+            </p>
           </label>
         </div>
         <div className="flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg">
@@ -21,10 +28,10 @@ const ProdFogo = ({ ...props }: Props) => {
         </div>
       </label>
       <div className="flex items-center my-auto">
-        <img className="w-[85px] h-auto" src={props.imgUrl} alt="" />
+        <img className="w-[85px] h-auto" src={props.imgUrl} />
 
         <div className="flex flex-col max-w-[200px] overflow-hidden">
-          <span className="text-xs max-h- text-black font-bold">
+          <span className="text-xs  text-black font-bold">
             {props.nome}
           </span>
 

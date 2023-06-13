@@ -2,12 +2,12 @@
   "deno.enable": true,
   "deno.lint": true,
   "deno.unstable": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
-  },
+  // "[typescript]": {
+  //   "editor.defaultFormatter": "denoland.vscode-deno"
+  // },
+  // "[typescriptreact]": {
+  //   "editor.defaultFormatter": "denoland.vscode-deno"
+  // },
   "editor.suggest.showStatusBar": true,
   "editor.quickSuggestions": {
     "strings": true

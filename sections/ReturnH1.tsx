@@ -1,9 +1,9 @@
 export interface Props {
-  title: string;
+  title: string
 }
 
 const H1 = ({ title }: Props) => {
-  return <h1>{title}</h1>;
-};
+  return <h1>{title}</h1>
+}
 
-export default H1;
+export default H1
