@@ -1,1 +1,0 @@
-export {default} from "deco-sites/shp/components/ui/PCNivelGamer.tsx"

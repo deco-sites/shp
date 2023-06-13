@@ -50,7 +50,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
                 ? produtos.map((element, index) =>{ 
                   const pecas:string[]=['Memória','SSD','HD','Processador','Placa de vídeo']
                   const pecaArray=element.isVariantOf?.additionalProperty
-                  const pecasObj: Record<string, string|undefined>={}
+                  const pecasObj: Record<string, string|undefined> = {}
                   pecaArray?.forEach((pecaObj)=>{
                     if(pecas.includes(String(pecaObj.name))){
                       (pecaObj.name==="HD" || pecaObj.name==="SSD") ?

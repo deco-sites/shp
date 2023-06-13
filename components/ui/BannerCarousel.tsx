@@ -119,7 +119,7 @@ function Dots({ images, interval = 0 }: Props) {
 }
 
 function BannerCarousel({ images, preload, interval }: Props) {
-  const id = useId();
+  const id = useId()+'-bannerCarousel'
   const [pause, setPause] = useState(false);
 
   return (
