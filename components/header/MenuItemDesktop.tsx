@@ -24,9 +24,11 @@ const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
           <div className="w-fit h-fit border-2 border-zinc-800 hover:border-[#dd1f26] border-solid rounded-lg">
             <a href={img.linkTo}>
               <img
-                className="w-28 h-28 rounded-lg"
+                className="rounded-lg"
                 src={img.imgUrl}
                 alt="FotoCateg"
+                width={120}
+                height={120}
               />
             </a>
           </div>
@@ -40,7 +42,7 @@ const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
           <div className="grid grid-cols-3 gap-4">
             {subCategsNoImg.map((el)=>(
               <a href={el.linkTo} className="flex items-center content-center gap-2 hover:brightness-200">
-                <img className="w-[28px] h-[22px]" src={el.iconUrl} alt="icon" />
+                <img src={el.iconUrl} alt="icon" width={28} height={22}/>
                 <span className="text-[#828282] font-bold">{el.name}</span>
               </a>
             ))}

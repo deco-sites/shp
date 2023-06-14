@@ -19,7 +19,7 @@ const ProdFogo = ({...props}: Props) => {
           <label>
             <p className="flex flex-col text-white">
               <p className="text-[10px]">A OFERTA EXPIRA EM</p>
-              <span className="font-bold text-sm">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
+              <span className="font-bold text-sm leading-3">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
             </p>
           </label>
         </div>
@@ -28,7 +28,7 @@ const ProdFogo = ({...props}: Props) => {
         </div>
       </label>
       <div className="flex items-center my-auto">
-        <img className="w-[85px] h-auto" src={props.imgUrl} />
+        <img src={props.imgUrl} width={85} height={85}/>
 
         <div className="flex flex-col max-w-[200px] overflow-hidden">
           <span className="text-xs  text-black font-bold">
@@ -38,7 +38,7 @@ const ProdFogo = ({...props}: Props) => {
           <span className="text-lg text-[#dd1f26] font-bold">
             10x R$ {props.preco10}
           </span>
-          <p className="text-xs">ou por R$ {props.precoPIX} no Pix</p>
+          <p className="text-xs font-semibold">ou por R$ {props.precoPIX} no Pix</p>
         </div>
       </div>
     </div>

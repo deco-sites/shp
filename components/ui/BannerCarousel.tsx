@@ -149,7 +149,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
         </div>
       </div>
 
-      <div className='absolute flex justify-center items-center gap-2 top-[75vw] re2:top-[340px] re3:top-[370px] re4:top-[430px] re5:top-[490px] w-full'>
+      <div className='absolute flex justify-center items-center gap-2 top-[75vw] re2:top-[340px] re3:top-[370px] re4:top-[430px] re5:top-[450px] w-full'>
         <Dots images={images} interval={!pause ? interval : 0} />
         <button
           class='btn rounded-[50%] glass max-w-[20px] min-w-[20px] max-h-[20px] min-h-[20px] p-0 md:pl-[1px]'

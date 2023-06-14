@@ -47,23 +47,17 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
           <Slider class='carousel carousel-center gap-6 col-span-full row-start-2 row-end-5 scrollbar-none'>
             {PcGamer
               ? produtos.map((element, index) => {
-                  const pecas: string[] = [
-                    'Memória',
-                    'SSD',
-                    'HD',
-                    'Processador',
-                    'Placa de vídeo',
-                  ]
+                  const pecas: string[] = ['Memória','SSD','HD','Processador','Placa de vídeo']
                   const pecaArray = element.isVariantOf?.additionalProperty
                   const pecasObj: Record<string, string | undefined> = {}
                   pecaArray?.forEach((pecaObj) => {
                     if (pecas.includes(String(pecaObj.name))) {
-                      pecaObj.name === 'HD' || pecaObj.name === 'SSD'
-                        ? pecaObj.value?.includes(pecaObj.name)
-                          ? (pecasObj['armazenamento'] = pecaObj.value)
-                          : (pecasObj['armazenamento'] =
-                              pecaObj.name + ': ' + pecaObj.value)
-                        : (pecasObj[String(pecaObj.name)] = pecaObj.value)
+                      if(pecaObj.name === 'HD' || pecaObj.name === 'SSD'){
+                        pecaObj.value?.includes(pecaObj.name) 
+                        ? (pecasObj['armazenamento'] = pecaObj.value) : (pecasObj['armazenamento'] = pecaObj.name + ': ' + pecaObj.value)
+                      }else{
+                        pecasObj[String(pecaObj.name)] = pecaObj.value
+                      }
                     }
                   })
 
@@ -121,23 +115,17 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
         <div className='grid grid-cols-4 gap-x-3 gap-y-3 w-fit mx-auto'>
           {PcGamer
             ? produtos.map((element) => {
-                const pecas: string[] = [
-                  'Memória',
-                  'SSD',
-                  'HD',
-                  'Processador',
-                  'Placa de vídeo',
-                ]
+                const pecas: string[] = ['Memória','SSD','HD','Processador','Placa de vídeo']
                 const pecaArray = element.isVariantOf?.additionalProperty
                 const pecasObj: Record<string, string | undefined> = {}
                 pecaArray?.forEach((pecaObj) => {
                   if (pecas.includes(String(pecaObj.name))) {
-                    pecaObj.name === 'HD' || pecaObj.name === 'SSD'
-                      ? pecaObj.value?.includes(pecaObj.name)
-                        ? (pecasObj['armazenamento'] = pecaObj.value)
-                        : (pecasObj['armazenamento'] =
-                            pecaObj.name + ': ' + pecaObj.value)
-                      : (pecasObj[String(pecaObj.name)] = pecaObj.value)
+                    if(pecaObj.name === 'HD' || pecaObj.name === 'SSD'){
+                      pecaObj.value?.includes(pecaObj.name)
+                      ? (pecasObj['armazenamento'] = pecaObj.value) : (pecasObj['armazenamento'] = pecaObj.name + ': ' + pecaObj.value)
+                    }else{
+                      pecasObj[String(pecaObj.name)] = pecaObj.value
+                    }
                   }
                 })
 

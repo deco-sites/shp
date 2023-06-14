@@ -128,10 +128,11 @@ const HeaderSHP = () => {
           />
         </button>
 
-        <a href="/" className="w-[188px] h-auto mx-auto re1:mx-0">
+        <a href="/" className="w-[160px] h-auto mx-auto re1:mx-0">
           <img
             src="https://shopinfo.vteximg.com.br/arquivos/logoshopinfo-branco-188px.png"
             alt="logo"
+            width={160}
           />
         </a>
 
@@ -182,9 +183,10 @@ const HeaderSHP = () => {
         <div className="hidden re1:flex gap-2 items-center">
           <a href="/teste" className="flex items-center gap-1">
             <img
-              className="w-[26px] h-[18px]"
               src="https://shopinfo.vteximg.com.br/arquivos/frete-icon.png"
               alt="caminhão"
+              width={26}
+              height={18}
             />
             <div className="hover:text-white text-neutral-500 font-bold text-sm">
               Rastreio
@@ -193,9 +195,10 @@ const HeaderSHP = () => {
 
           <a href="/teste" className="flex items-center gap-1">
             <img
-              className="w-[21px] h-[25px]"
               src="https://shopinfo.vteximg.com.br/arquivos/icon-user.png"
               alt="conta"
+              width={21}
+              height={25}
             />
             <div className="hover:text-white text-neutral-500 font-bold text-sm">
               Minha Conta
@@ -215,9 +218,10 @@ const HeaderSHP = () => {
           </a>
 
           <img
-            className="w-[24px] h-[24px]"
             src="https://shopinfo.vteximg.com.br/arquivos/heartRed.png"
             alt="favorito"
+            height={24}
+            width={24}
           />
         </div>
 

@@ -74,7 +74,7 @@ const Modal = ({
       } ${props.class ?? ""}`}
       onClick={(e) =>
         (e.target as HTMLDialogElement).tagName === "SECTION" && onClose?.()}
-      // @ts-expect-error - This is a bug in types.
+      // @ts-expect-_-error - This is a bug in types.
       onClose={onClose}
     >
       <section
