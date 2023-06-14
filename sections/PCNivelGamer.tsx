@@ -99,7 +99,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
                 className='flex flex-col gap-6 justify-center items-center border-transparent border-2 hover:border-[#dd1f26] hover:shadow-[0_0_5px_2px]
                hover:shadow-[#dd1f26]/30 rounded-lg p-5'
               >
-                <img src={item.imgUrl} />
+                <img src={item.imgUrl} width={262} height={262}/>
                 <h2 className='text-xl'>{item.title}</h2>
                 <p className='text-center text-base w-64'>{item.subTitle}</p>
                 <a className='text-[#dd1f26]' href={item.href}>
