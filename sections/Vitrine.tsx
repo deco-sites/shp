@@ -10,6 +10,8 @@ import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 
 import { useEffect, useId, useState } from 'preact/hooks'
 
+import {putSizeInUrl} from 'deco-sites/shp/FunctionsSHP/AddSizeInUrl.ts'
+
 export interface vitrineProps {
   PcGamer: boolean
   produtos: LoaderReturnType<Product[] | null>
@@ -67,7 +69,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
                       class='carousel-item w-fit h-fit first:pl-6 last:pr-6 '
                     >
                       <PC
-                        imgUrl={element.image && element.image[0].url}
+                        imgUrl={element.image && (element.image[0].url && putSizeInUrl(element.image[0].url,[135,135]))}
                         nome={element.name}
                         placa={pecasObj['Placa de vídeo']}
                         processador={pecasObj.Processador}
@@ -94,7 +96,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
                     class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
                   >
                     <Prod
-                      imgUrl={element.image && element.image[0].url}
+                      imgUrl={element.image && (element.image[0].url && (putSizeInUrl(element.image[0].url,[135,135]) || element.image[0].url))}
                       nome={element.name}
                       preco10={
                         element.offers?.highPrice &&
@@ -131,7 +133,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
 
                 return (
                   <PC
-                    imgUrl={element.image && element.image[0].url}
+                    imgUrl={element.image && (element.image[0].url && (putSizeInUrl(element.image[0].url,[135,135]) || element.image[0].url))}
                     nome={element.name}
                     placa={pecasObj['Placa de vídeo']}
                     processador={pecasObj.Processador}
@@ -151,7 +153,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
               })
             : produtos.map((element) => (
                 <Prod
-                  imgUrl={element.image && element.image[0].url}
+                  imgUrl={element.image && (element.image[0].url && putSizeInUrl(element.image[0].url,[135,135]))}
                   nome={element.name}
                   preco10={
                     element.offers?.highPrice &&

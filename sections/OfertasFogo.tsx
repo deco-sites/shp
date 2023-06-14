@@ -10,6 +10,8 @@ import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 
 import { useEffect, useId, useState, useRef } from 'preact/hooks'
 
+import {putSizeInUrl} from 'deco-sites/shp/FunctionsSHP/AddSizeInUrl.ts'
+
 export interface Props {
   products: LoaderReturnType<Product[] | null>
   /** @description data no formato AAAA-MM-DD*/
@@ -126,7 +128,7 @@ const fireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
               class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
             >
               <ProdFogo
-                imgUrl={slide.image && slide.image[0].url}
+                imgUrl={slide.image && (slide.image[0].url && (putSizeInUrl(slide.image[0].url,[85,85]) || slide.image[0].url))}
                 nome={slide.name}
                 preco10={slide.offers?.highPrice && parseFloat((slide.offers?.highPrice / 10).toFixed(2))}
                 precoPIX={slide.offers && DescontoPIX(slide.offers.highPrice, 15)}
