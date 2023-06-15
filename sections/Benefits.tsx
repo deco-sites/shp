@@ -20,7 +20,7 @@ const Benefits = () => {
         <label className="min-w-[150px] text-center flex flex-col items-center gap-1">
           <Image
             preload decoding='sync' loading='eager' fetchPriority='high'
-            className="grayscale brightness-50" width={80} height={40} src="https://shopinfo.vteximg.com.br/arquivos/icone-home-beneficios-10x-.png" 
+            className="grayscale brightness-50" width={80} height={34} src="https://shopinfo.vteximg.com.br/arquivos/icone-home-beneficios-10x-.png" 
           />
           <p><b>10X</b> sem juros <br/> no cartão</p>
         </label>    
@@ -34,7 +34,7 @@ const Benefits = () => {
         <label className="min-w-[150px] text-center flex flex-col items-center gap-1">
           <Image
             preload decoding='sync' loading='eager' fetchPriority='high'
-            className="grayscale brightness-50" width={63} height={40} src="https://shopinfo.vteximg.com.br/arquivos/icon-truck-frete.png" 
+            className="grayscale brightness-50" width={63} height={36} src="https://shopinfo.vteximg.com.br/arquivos/icon-truck-frete.png" 
           />
           <p><b>Frete Grátis</b> <br/> Brasil em PCs</p>
         </label>

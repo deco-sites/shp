@@ -3,7 +3,8 @@ import ProdFogo from 'deco-sites/shp/components/ProductsSHP/ProdFogo.tsx'
 import type { LoaderReturnType } from '$live/types.ts'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
-import Icon from 'deco-sites/fashion/components/ui/Icon.tsx'
+import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
+import Image from 'deco-sites/std/components/Image.tsx'
 import type { Product } from 'deco-sites/std/commerce/types.ts'
 
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
@@ -81,11 +82,9 @@ const fireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
     <div className='re1:w-[60vw] w-[90vw] mx-auto'>
       <div className='flex mx-auto w-[90vw] re1:w-[50vw] gap-2 justify-center items-center mb-5'>
         <div className='flex gap-2 ml-auto items-center'>
-          <img
+          <Image
             src='https://shopinfo.vteximg.com.br/arquivos/icone-ofertas-fogo.png'
-            className="max-h-[30px] max-w-[30px]"
-            height={30}
-            width={30}
+            height={30} width={30} preload fetchPriority='low' decoding='async' loading='lazy' 
           />
           <span className='font-bold re1:text-2xl text-lg'>
             Suba de Nível no Arraiá Black da Shopinfo
@@ -128,7 +127,10 @@ const fireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
               class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
             >
               <ProdFogo
-                imgUrl={slide.image && (slide.image[0].url && (putSizeInUrl(slide.image[0].url,[85,85]) || slide.image[0].url))}
+                imgUrl={
+                  slide.image && slide.image[0] && slide.image[0].url ? 
+                  (putSizeInUrl(slide.image[0].url,[135,135]) || slide.image[0].url) : '#'
+                }
                 nome={slide.name}
                 preco10={slide.offers?.highPrice && parseFloat((slide.offers?.highPrice / 10).toFixed(2))}
                 precoPIX={slide.offers && DescontoPIX(slide.offers.highPrice, 15)}

@@ -1,6 +1,8 @@
+import Image from 'deco-sites/std/components/Image.tsx'
+
 export interface ProdProps {
   nome?: string
-  imgUrl?: string
+  imgUrl: string
   precoPIX?: string | number
   preco10?: number
   discountFlag?: number
@@ -16,27 +18,22 @@ const Prod = ({ ...props }: ProdProps) => {
               {props.discountFlag}%
             </div>
             <div className='flex justify-center items-center gap-1'>
-              <div className='w-[25px] h-[25px] re1:w-[30px] re1:h-[30px] bg-[#c44604] flex items-center p-1 rounded-lg'>
-                <img
-                  src='https://shopinfo.vteximg.com.br/arquivos/icon-truck-frete.png'
-                  alt='frete'
-                  width={25}
-                  height={25}
+              {/* <div className='w-[25px] h-[25px] re1:w-[30px] re1:h-[30px] bg-[#c44604] flex items-center p-1 rounded-lg'>
+                <Image
+                  src='https://shopinfo.vteximg.com.br/arquivos/icon-truck-frete.png' alt='frete' width={25} height={25}
+                  preload fetchPriority='low' decoding='async' loading='lazy'
                 />
-              </div>
-              <img
-                src='https://shopinfo.vteximg.com.br/arquivos/heartRed.png'
-                alt='like'
+              </div> */}
+              <Image
+                src='https://shopinfo.vteximg.com.br/arquivos/heartRed.png' alt='like' width={24} height={24}
+                preload fetchPriority='low' decoding='async' loading='lazy'
               />
             </div>
           </label>
 
-          <img
-            className='relative -top-5'
-            src={props.imgUrl}
-            alt='Pc image'
-            width={135}
-            height={135}
+          <Image
+            className='relative -top-5' src={props.imgUrl} alt='Pc image' width={135} height={135}
+            preload fetchPriority='low' decoding='async' loading='lazy'
           />
         </div>
 

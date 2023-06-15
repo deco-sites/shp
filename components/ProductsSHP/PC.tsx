@@ -1,6 +1,8 @@
+import Image from 'deco-sites/std/components/Image.tsx'
+
 export interface PCProps {
   nome?: string
-  imgUrl?: string
+  imgUrl: string
   placa?: string
   processador?: string
   memoria?: string
@@ -21,25 +23,28 @@ const PC = ({ ...props }: PCProps) => {
             </div>
             <div className='flex justify-center items-center gap-1'>
               <div className='w-[25px] h-[25px] re1:w-[30px] re1:h-[30px] bg-[#c44604] flex items-center p-1 rounded-lg'>
-                <img
+                <Image
                   src='https://shopinfo.vteximg.com.br/arquivos/icon-truck-frete.png'
                   alt='frete'
-                  width={25}
-                  height={25}
+                  width={22}
+                  height={13}
+                  preload fetchPriority='low' decoding='async' loading='lazy'
                 />
               </div>
-              <img
+              <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/heartRed.png'
-                alt='like'
+                alt='like' width={24} height={24}
+                preload fetchPriority='low' decoding='async' loading='lazy'
               />
             </div>
           </label>
-          <img
+          <Image
             className='relative -top-5'
             src={props.imgUrl}
             alt='Pc image'
             width={130}
             height={130}
+            preload fetchPriority='low' decoding='async' loading='lazy'
           />
         </div>
 
@@ -49,7 +54,7 @@ const PC = ({ ...props }: PCProps) => {
 
         <div className='text-[11px] text-[#B1B1B1] flex flex-col gap-1'>
           <label className='flex items-center gap-1'>
-            <img
+            <Image
               src='https://shopinfo.vteximg.com.br/arquivos/icon-placadevideo.svg'
               width={15}
               height={15}
@@ -57,26 +62,29 @@ const PC = ({ ...props }: PCProps) => {
             <p className='font-bold'>{props.placa}</p>
           </label>
           <label className='flex items-center gap-1'>
-            <img
+            <Image
               src='https://shopinfo.vteximg.com.br/arquivos/icon-processador.svg'
               width={15}
               height={15}
+              preload fetchPriority='low' decoding='async' loading='lazy'
             />
             <p>{props.processador}</p>
           </label>
           <label className='flex items-center gap-1'>
-            <img
+            <Image
               src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
               width={15}
               height={15}
+              preload fetchPriority='low' decoding='async' loading='lazy'
             />
             <p>{props.memoria}</p>
           </label>
           <label className='flex items-center gap-1'>
-            <img
+            <Image
               src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
               width={15}
               height={15}
+              preload fetchPriority='low' decoding='async' loading='lazy'
             />
             <p>{props.armazenamento}</p>
           </label>

@@ -1,6 +1,8 @@
+import Image from 'deco-sites/std/components/Image.tsx'
+
 export interface Props {
   nome?: string
-  imgUrl?: string
+  imgUrl: string
   precoPIX?: string | number
   preco10?: number
   discountFlag?: number
@@ -15,7 +17,9 @@ const ProdFogo = ({...props}: Props) => {
     <div className="flex flex-col w-72 justify-between rounded-lg bg-white p-2 h-44">
       <label className="flex h-8 justify-between z-10">
         <div className="bg-[#dd1f26] rounded-lg flex justify-around p-1 items-center w-40">
-          <img className="w-4 h-5" src="https://shopinfo.vteximg.com.br/arquivos/icon-esquenta-black.png"/>
+          <Image width={16} height={20} src="https://shopinfo.vteximg.com.br/arquivos/icon-esquenta-black.png"
+            preload fetchPriority='low' decoding='async' loading='lazy'
+          />
           <label>
             <p className="flex flex-col text-white">
               <p className="text-[10px]">A OFERTA EXPIRA EM</p>
@@ -28,7 +32,9 @@ const ProdFogo = ({...props}: Props) => {
         </div>
       </label>
       <div className="flex items-center my-auto">
-        <img src={props.imgUrl} width={85} height={85}/>
+        <Image src={props.imgUrl} width={85} height={85}
+          preload fetchPriority='low' decoding='async' loading='lazy'
+        />
 
         <div className="flex flex-col max-w-[200px] overflow-hidden">
           <span className="text-xs  text-black font-bold">

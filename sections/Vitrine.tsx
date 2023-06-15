@@ -69,7 +69,10 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
                       class='carousel-item w-fit h-fit first:pl-6 last:pr-6 '
                     >
                       <PC
-                        imgUrl={element.image && (element.image[0].url && putSizeInUrl(element.image[0].url,[135,135]))}
+                        imgUrl={
+                          element.image && element.image[0] && element.image[0].url ? 
+                          (putSizeInUrl(element.image[0].url,[135,135]) || element.image[0].url) : '#'
+                        }
                         nome={element.name}
                         placa={pecasObj['Placa de vídeo']}
                         processador={pecasObj.Processador}
@@ -96,7 +99,10 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
                     class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
                   >
                     <Prod
-                      imgUrl={element.image && (element.image[0].url && (putSizeInUrl(element.image[0].url,[135,135]) || element.image[0].url))}
+                      imgUrl={
+                        element.image && element.image[0] && element.image[0].url ? 
+                        (putSizeInUrl(element.image[0].url,[135,135]) || element.image[0].url) : '#'
+                      }
                       nome={element.name}
                       preco10={
                         element.offers?.highPrice &&
@@ -114,7 +120,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
           <SliderJS rootId={id} infinite />
         </div>
       ) : (
-        <div className='grid grid-cols-4 gap-x-3 gap-y-3 w-fit mx-auto'>
+        <div className={`grid ${(produtos.length%3===0 && produtos.length===6) ? 'grid-cols-3':'grid-cols-4'} gap-x-3 gap-y-3 w-fit mx-auto`}>
           {PcGamer
             ? produtos.map((element) => {
                 const pecas: string[] = ['Memória','SSD','HD','Processador','Placa de vídeo']
@@ -133,7 +139,10 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
 
                 return (
                   <PC
-                    imgUrl={element.image && (element.image[0].url && (putSizeInUrl(element.image[0].url,[135,135]) || element.image[0].url))}
+                    imgUrl={
+                      element.image && element.image[0] && element.image[0].url ? 
+                      (putSizeInUrl(element.image[0].url,[135,135]) || element.image[0].url) : '#'
+                    }
                     nome={element.name}
                     placa={pecasObj['Placa de vídeo']}
                     processador={pecasObj.Processador}
@@ -153,7 +162,10 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
               })
             : produtos.map((element) => (
                 <Prod
-                  imgUrl={element.image && (element.image[0].url && putSizeInUrl(element.image[0].url,[135,135]))}
+                  imgUrl={
+                    element.image && element.image[0] && element.image[0].url ? 
+                    (putSizeInUrl(element.image[0].url,[135,135]) || element.image[0].url) : '#'
+                  }
                   nome={element.name}
                   preco10={
                     element.offers?.highPrice &&

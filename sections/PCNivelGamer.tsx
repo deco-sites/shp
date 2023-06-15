@@ -1,7 +1,8 @@
 import { useEffect, useState, useId } from 'preact/hooks'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
-import Icon from 'deco-sites/fashion/components/ui/Icon.tsx'
+import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
+import Image from 'deco-sites/std/components/Image.tsx'
 
 export interface Props {
   items: Array<{
@@ -60,7 +61,9 @@ const PCNivelGamer = ({ items = [] }: Props) => {
                   class='carousel-item min-w-full max-w-full'
                 >
                   <div className='flex flex-col gap-4 justify-center items-center mx-auto'>
-                    <img src={item.imgUrl} />
+                    <Image src={item.imgUrl} width={265} height={262} preload
+                      decoding='async' loading='lazy' fetchPriority='low' 
+                    />
                     <h2 className='text-xl'>{item.title}</h2>
                     <p className='text-center text-base'>{item.subTitle}</p>
                     <a className='text-[#dd1f26]' href={item.href}>
@@ -99,7 +102,9 @@ const PCNivelGamer = ({ items = [] }: Props) => {
                 className='flex flex-col gap-6 justify-center items-center border-transparent border-2 hover:border-[#dd1f26] hover:shadow-[0_0_5px_2px]
                hover:shadow-[#dd1f26]/30 rounded-lg p-5'
               >
-                <img src={item.imgUrl} width={262} height={262}/>
+                <Image src={item.imgUrl} width={265} height={262} preload
+                  decoding='async' loading='lazy' fetchPriority='low' 
+                />
                 <h2 className='text-xl'>{item.title}</h2>
                 <p className='text-center text-base w-64'>{item.subTitle}</p>
                 <a className='text-[#dd1f26]' href={item.href}>
