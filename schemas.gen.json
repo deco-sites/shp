@@ -7947,7 +7947,7 @@
       "properties": {
         "fontFamily": {
           "type": "string",
-          "default": "'Albert Sans'",
+          "default": "'Montserrat'",
           "title": "Font Family"
         },
         "styleInnerHtml": {
