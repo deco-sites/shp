@@ -1,3 +1,5 @@
+import Image from 'deco-sites/std/components/Image.tsx'
+
 export interface Props {
   peca: Array<{
     iconUrl: string
@@ -19,10 +21,8 @@ const PCGamerIdeal = ({ peca = [] }: Props) => {
         {peca?.map((peca, index) => (
           <div className='flex flex-col justify-center items-center'>
             <label className='flex gap-1 items-center h-[25px]'>
-              <img
-                src={peca.iconUrl}
-                width={25}
-                height={20}
+              <Image
+                src={peca.iconUrl} width={25} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
               />
               <p className='text-sm re1:text-lg font-bold'>{peca.name}</p>
             </label>
