@@ -1,3 +1,5 @@
+import Image from 'deco-sites/std/components/Image.tsx'
+
 export interface Props {
   open: string;
 
@@ -12,7 +14,6 @@ export interface Props {
     linkTo: string;
   }>;
 }
-// {classnamePai, subCategs, subCategsNoImg}:Props
 
 const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
   return (
@@ -23,12 +24,9 @@ const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
         {subCategs.map((img) => (
           <div className="w-fit h-fit border-2 border-zinc-800 hover:border-[#dd1f26] border-solid rounded-lg">
             <a href={img.linkTo}>
-              <img
-                className="rounded-lg"
-                src={img.imgUrl}
-                alt="FotoCateg"
-                width={120}
-                height={120}
+              <Image
+                className="rounded-lg" src={img.imgUrl} alt="FotoCateg" width={120} height={120}
+                preload fetchPriority='high' decoding='sync' loading='lazy'
               />
             </a>
           </div>
@@ -42,7 +40,9 @@ const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
           <div className="grid grid-cols-3 gap-4">
             {subCategsNoImg.map((el)=>(
               <a href={el.linkTo} className="flex items-center content-center gap-2 hover:brightness-200">
-                <img src={el.iconUrl} alt="icon" width={28} height={22}/>
+                <Image src={el.iconUrl} alt="icon" width={28} height={22}             
+                  preload fetchPriority='high' decoding='sync' loading='lazy'
+                />
                 <span className="text-[#828282] font-bold">{el.name}</span>
               </a>
             ))}

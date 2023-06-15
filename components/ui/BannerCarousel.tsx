@@ -2,7 +2,7 @@ import { useEffect, useState } from 'preact/hooks'
 import Icon from 'deco-sites/fashion/components/ui/Icon.tsx'
 import Slider from 'deco-sites/fashion/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/fashion/islands/SliderJS.tsx'
-import { Picture } from 'deco-sites/std/components/Picture.tsx'
+import { Picture, Source } from 'deco-sites/std/components/Picture.tsx'
 import { useId } from 'preact/hooks'
 //import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
 
@@ -48,25 +48,27 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
       class='relative h-fit overflow-y-hidden w-full'
     >
       <Picture preload={lcp}>
-        {/* <Source
+        <Source
           media="(max-width: 767px)"
           fetchPriority={lcp ? "high" : "auto"}
           src={mobile}
-          width={360}
-          height={600}
+          width={351}
+          height={251}
         />
         <Source
           media="(min-width: 768px)"
           fetchPriority={lcp ? "high" : "auto"}
           src={desktop}
-          width={1440}
-          height={600}
-        /> */}
+          width={1691}
+          height={394}
+        />
         <img
           class='object-cover w-full'
           loading={lcp ? 'eager' : 'lazy'}
           src={Mobile ? mobile : desktop}
           alt={alt}
+          width={Mobile ? 351 : 1691}
+          height={Mobile ? 251 : 394}
         />
       </Picture>
     </a>

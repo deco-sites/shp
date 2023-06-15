@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks"
+import Image from 'deco-sites/std/components/Image.tsx'
 
 export interface Props {
   rounded?:string
@@ -21,7 +22,9 @@ const menuItem = ({ rounded ,iconLink, itemName, links }: Props) => {
     <>
       <button onClick={handleOpen} className={`flex w-[95%] bg-neutral-700 ${rounded} border-2 border-transparent h-12 text-white font-bold justify-between p-5 my-[2px] mx-auto items-center`}>
         <div className="flex gap-2">
-          <img className="h-auto my-auto" src={iconLink} alt="iconLink" />
+          <Image className="h-auto my-auto" src={iconLink} alt="iconLink" width={18} height={12}
+            preload fetchPriority='high' decoding='sync' loading='eager'
+          />
 
           <span>{itemName}</span>
         </div>
