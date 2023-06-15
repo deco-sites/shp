@@ -21,19 +21,19 @@ const Prod = ({ ...props }: ProdProps) => {
               {/* <div className='w-[25px] h-[25px] re1:w-[30px] re1:h-[30px] bg-[#c44604] flex items-center p-1 rounded-lg'>
                 <Image
                   src='https://shopinfo.vteximg.com.br/arquivos/icon-truck-frete.png' alt='frete' width={25} height={25}
-                  preload fetchPriority='low' decoding='async' loading='lazy'
+                  preload fetchPriority='low' loading='lazy'
                 />
               </div> */}
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/heartRed.png' alt='like' width={24} height={24}
-                preload fetchPriority='low' decoding='async' loading='lazy'
+                preload fetchPriority='low' loading='lazy'
               />
             </div>
           </label>
 
           <Image
             className='relative -top-5' src={props.imgUrl} alt='Pc image' width={135} height={135}
-            preload fetchPriority='low' decoding='async' loading='lazy'
+            preload fetchPriority='low' loading='lazy'
           />
         </div>
 

@@ -84,7 +84,7 @@ const fireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
         <div className='flex gap-2 ml-auto items-center'>
           <Image
             src='https://shopinfo.vteximg.com.br/arquivos/icone-ofertas-fogo.png'
-            height={30} width={30} preload fetchPriority='low' decoding='async' loading='lazy' 
+            height={30} width={30} preload fetchPriority='low' loading='lazy' 
           />
           <span className='font-bold re1:text-2xl text-lg'>
             Suba de Nível no Arraiá Black da Shopinfo

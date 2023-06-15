@@ -62,7 +62,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
                 >
                   <div className='flex flex-col gap-4 justify-center items-center mx-auto'>
                     <Image src={item.imgUrl} width={265} height={262} preload
-                      decoding='async' loading='lazy' fetchPriority='low' 
+                     loading='lazy' fetchPriority='low' 
                     />
                     <h2 className='text-xl'>{item.title}</h2>
                     <p className='text-center text-base'>{item.subTitle}</p>
@@ -103,7 +103,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
                hover:shadow-[#dd1f26]/30 rounded-lg p-5'
               >
                 <Image src={item.imgUrl} width={265} height={262} preload
-                  decoding='async' loading='lazy' fetchPriority='low' 
+                 loading='lazy' fetchPriority='low' 
                 />
                 <h2 className='text-xl'>{item.title}</h2>
                 <p className='text-center text-base w-64'>{item.subTitle}</p>
