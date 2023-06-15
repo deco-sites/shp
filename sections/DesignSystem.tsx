@@ -206,11 +206,11 @@ export interface Miscellaneous {
 
 export interface Font {
   /**
-   * @default 'Montserrat'
+   * @default 'Albert Sans'
    */
   fontFamily: string;
   /**
-   * @default @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+   * @default @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;700&display=swap');
    * \@format css
    */
   styleInnerHtml: string;
