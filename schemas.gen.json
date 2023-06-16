@@ -6939,7 +6939,7 @@
         },
         "finalDaOferta": {
           "type": "string",
-          "description": "data no formato AAAA-MM-DD",
+          "description": "formato AAAA-MM-DD",
           "title": "Final Da Oferta"
         },
         "interval": {
@@ -7032,24 +7032,6 @@
         "items"
       ],
       "title": "deco-sites/shp/components/ui/ShippingSimulation.tsx@Props"
-    },
-    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@vitrineProps": {
-      "type": "object",
-      "properties": {
-        "PcGamer": {
-          "type": "boolean",
-          "title": " Pc Gamer"
-        },
-        "produtos": {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Product[]|null",
-          "title": "Produtos"
-        }
-      },
-      "required": [
-        "PcGamer",
-        "produtos"
-      ],
-      "title": "deco-sites/shp/sections/Vitrine.tsx@vitrineProps"
     },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL2RldlBhZ2UudHM=@DevConfig": {
       "type": "object",
@@ -8711,6 +8693,24 @@
         "columns"
       ],
       "title": "deco-sites/shp/components/search/SearchResult.tsx@Props"
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@VitrineProps": {
+      "type": "object",
+      "properties": {
+        "PcGamer": {
+          "type": "boolean",
+          "title": " Pc Gamer"
+        },
+        "produtos": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Product[]|null",
+          "title": "Produtos"
+        }
+      },
+      "required": [
+        "PcGamer",
+        "produtos"
+      ],
+      "title": "deco-sites/shp/sections/Vitrine.tsx@VitrineProps"
     },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9XaGF0c0FwcC50c3g=@Props": {
       "type": "object",
@@ -10950,11 +10950,6 @@
     "Li9pc2xhbmRzL1ZpdHJpbmVJc2xhbmQudHN4": {
       "title": "./islands/VitrineIsland.tsx",
       "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@vitrineProps"
-        }
-      ],
       "required": [
         "__resolveType"
       ],
@@ -11592,7 +11587,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@vitrineProps"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@VitrineProps"
         }
       ],
       "required": [
