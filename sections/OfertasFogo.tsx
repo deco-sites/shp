@@ -1,13 +1,13 @@
-import { useEffect, useId, useState, useRef } from 'preact/hooks'
+import { useEffect, useState, useRef, useId } from 'preact/hooks'
 import { putSizeInUrl } from 'deco-sites/shp/FunctionsSHP/AddSizeInUrl.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import ProdFogo from 'deco-sites/shp/components/ProductsSHP/ProdFogo.tsx'
-import { LoaderReturnType } from '$live/types.ts'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import type { Product } from 'deco-sites/std/commerce/types.ts'
+import type { LoaderReturnType } from '$live/types.ts'
 
 export interface Props {
   products: LoaderReturnType<Product[] | null>
@@ -19,10 +19,20 @@ export interface Props {
 const calculateTimeRemaining = (startDate: Date, endDate: Date) => {
   const difference = endDate.getTime() - startDate.getTime()
 
-  const days = Math.floor(difference / (1000 * 60 * 60 * 24)).toString().padStart(2, '0')
-  const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0')
-  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')
-  const seconds = Math.floor((difference % (1000 * 60)) / 1000).toString().padStart(2, '0')
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+    .toString()
+    .padStart(2, '0')
+  const hours = Math.floor(
+    (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  )
+    .toString()
+    .padStart(2, '0')
+  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+    .toString()
+    .padStart(2, '0')
+  const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+    .toString()
+    .padStart(2, '0')
 
   return { days, hours, minutes, seconds }
 }
@@ -35,6 +45,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
   const [minutes, setMinutes] = useState('00')
   const [seconds, setSeconds] = useState('00')
 
+  const [startDate] = useState(() => new Date())
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
 
   const prev = useRef<HTMLDivElement>(null)
@@ -42,8 +53,9 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
 
   useEffect(() => {
     const timeOut = setInterval(() => {
-      const timeObj = finalDate && calculateTimeRemaining(new Date(), finalDate)
-      if (timeObj) {
+      if (finalDate) {
+        const timeObj =
+          finalDate && calculateTimeRemaining(startDate, finalDate)
         const { days, hours, minutes, seconds } = timeObj
         setDays(days)
         setHours(hours)
@@ -58,7 +70,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
   }, [])
 
   if (!products || products.length === 0) {
-    return null
+    return <></>
   }
 
   return (
