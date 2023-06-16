@@ -35,12 +35,23 @@ export interface Props {
 function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
   const { alt, mobile, desktop, action } = image
 
-  const [Mobile, setMobile] = useState(window.innerWidth <= 768 ? true : false)
+  const [Mobile, setMobile] = useState(window.innerWidth <= 768)
 
-  // deno-lint-ignore no-window-prefix
-  window.addEventListener('resize', () => {
-    window.innerWidth <= 768 ? setMobile(true) : setMobile(false)
-  })
+  useEffect(()=>{
+    const handleResize=() => {
+      setMobile(window.innerWidth <= 768)
+    }
+
+    handleResize()
+
+    // deno-lint-ignore no-window-prefix
+    window.addEventListener('resize', handleResize)
+
+    return ()=>{
+      // deno-lint-ignore no-window-prefix
+      window.removeEventListener('resize', handleResize)
+    }
+  },[])
 
   return (
     <a

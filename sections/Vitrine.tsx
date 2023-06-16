@@ -36,7 +36,8 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
     }
   }, [])
 
-  const id = useId()
+  const id = useId()+'-vitrine'
+  console.log(id)
 
   if (!produtos || produtos.length === 0) {
     return null
@@ -45,7 +46,7 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
   return (
     <div className='my-5'>
       {isMobile ? (
-        <div className='container grid grid-cols-[48px_1fr_48px] px-0'>
+        <div className='container grid grid-cols-[48px_1fr_48px] px-0' id={id}>
           <Slider class='carousel carousel-center gap-6 col-span-full row-start-2 row-end-5 scrollbar-none'>
             {PcGamer
               ? produtos.map((element, index) => {

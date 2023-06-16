@@ -38,6 +38,7 @@ const calculateTimeRemaining = (startDate: Date, endDate: Date) => {
 const fireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
   //const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const id = useId()+'-fogo'
+  console.log(id)
 
   const [days, setDays] = useState('00')
   const [hours, setHours] = useState('00')
@@ -79,9 +80,9 @@ const fireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
   if (!products || products.length === 0) return null
 
   return (
-    <div className='re1:w-[60vw] w-[90vw] mx-auto'>
-      <div className='flex mx-auto w-[90vw] re1:w-[50vw] gap-2 justify-center items-center mb-5'>
-        <div className='flex gap-2 ml-auto items-center'>
+    <div className='re1:w-[60vw] w-screen mx-auto'>
+      <div className='flex mx-auto w-full re1:w-[50vw] gap-2 justify-center items-center mb-5'>
+        <div className='flex gap-2 mx-auto items-center w-4/5'>
           <Image
             src='https://shopinfo.vteximg.com.br/arquivos/icone-ofertas-fogo.png'
             height={30} width={30} preload fetchPriority='low' loading='lazy' 
@@ -104,7 +105,7 @@ const fireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
           </button>
           <button
             className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-[#dd1f26] hover:border-[#dd1f26]'
-            onClick={() => (next.current &&next.current.firstChild instanceof HTMLButtonElement) && next.current.firstChild.click()}
+            onClick={() => (next.current && next.current.firstChild instanceof HTMLButtonElement) && next.current.firstChild.click()}
           >
             <Icon
               class='text-[#dd1f26]'
