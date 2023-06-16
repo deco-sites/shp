@@ -37,7 +37,6 @@ const Shelf = ({ PcGamer, produtos }: vitrineProps) => {
   }, [])
 
   const id = useId()+'-vitrine'
-  console.log(id)
 
   if (!produtos || produtos.length === 0) {
     return null

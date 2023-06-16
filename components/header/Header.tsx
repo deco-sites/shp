@@ -152,37 +152,40 @@ const HeaderSHP = () => {
           />
         </a>
 
-        <div className='hidden re1:flex gap-4'>
-          <div onMouseOver={gamerHover} className={borderGamer}>
-            <p className='font-bold text-white text-sm cursor-pointer'>
-              PC Gamer
-            </p>
-          </div>
+        {!isMobile && (
+          <div className='hidden re1:flex gap-4'>
+            <div onMouseOver={gamerHover} className={borderGamer}>
+              <p className='font-bold text-white text-sm cursor-pointer'>
+                PC Gamer
+              </p>
+            </div>
 
-          <div onMouseOver={officeHover} className={borderOffice}>
-            <p className='font-bold text-white text-sm cursor-pointer'>
-              Home Office
-            </p>
-          </div>
+            <div onMouseOver={officeHover} className={borderOffice}>
+              <p className='font-bold text-white text-sm cursor-pointer'>
+                Home Office
+              </p>
+            </div>
 
-          <div onMouseOver={workHover} className={borderWork}>
-            <p className='font-bold text-white text-sm cursor-pointer'>
-              Workstation
-            </p>
-          </div>
+            <div onMouseOver={workHover} className={borderWork}>
+              <p className='font-bold text-white text-sm cursor-pointer'>
+                Workstation
+              </p>
+            </div>
 
-          <div onMouseOver={periHover} className={borderPeri}>
-            <p className='font-bold text-white text-sm cursor-pointer'>
-              Periféricos
-            </p>
-          </div>
+            <div onMouseOver={periHover} className={borderPeri}>
+              <p className='font-bold text-white text-sm cursor-pointer'>
+                Periféricos
+              </p>
+            </div>
 
-          <div onMouseOver={hardHover} className={borderHard}>
-            <p className='font-bold text-white text-sm cursor-pointer'>
-              Hardware
-            </p>
+            <div onMouseOver={hardHover} className={borderHard}>
+              <p className='font-bold text-white text-sm cursor-pointer'>
+                Hardware
+              </p>
+            </div>
           </div>
-        </div>
+         )
+        }
 
         <div className='flex flex-row gap-2 re1:ml-60'>
           <div className='flex flex-row-reverse'>

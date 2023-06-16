@@ -38,7 +38,6 @@ const calculateTimeRemaining = (startDate: Date, endDate: Date) => {
 const fireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
   //const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const id = useId()+'-fogo'
-  console.log(id)
 
   const [days, setDays] = useState('00')
   const [hours, setHours] = useState('00')
