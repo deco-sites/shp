@@ -18,7 +18,7 @@ const ProdFogo = ({...props}: Props) => {
       <label className="flex h-8 justify-between z-10">
         <div className="bg-[#dd1f26] rounded-lg flex justify-around p-1 items-center w-40">
           <Image width={16} height={20} src="https://shopinfo.vteximg.com.br/arquivos/icon-esquenta-black.png"
-            preload fetchPriority='low' loading='lazy'
+            loading='lazy'
           />
           <label>
             <p className="flex flex-col text-white">

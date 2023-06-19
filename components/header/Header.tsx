@@ -15,6 +15,9 @@ const HeaderSHP = () => {
   }, [])
 
   useEffect(() => {
+
+    handleResize()
+    
     // deno-lint-ignore no-window-prefix
     window.addEventListener('resize', handleResize)
 

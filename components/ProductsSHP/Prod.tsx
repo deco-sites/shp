@@ -26,7 +26,7 @@ const Prod = ({ ...props }: ProdProps) => {
               </div> */}
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/heartRed.png' alt='like' width={24} height={24}
-                preload fetchPriority='low' loading='lazy'
+                loading='lazy'
               />
             </div>
           </label>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useId } from 'preact/hooks'
+import { useEffect, useState, useId, useCallback } from 'preact/hooks'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
@@ -17,10 +17,11 @@ const PCNivelGamer = ({ items = [] }: Props) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
   const id = useId() + '-PCNivelGamer'
 
+  const handleResize = useCallback(() => {
+    setIsMobile(window.innerWidth <= 768)
+  }, [])
+
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
 
     handleResize()
 

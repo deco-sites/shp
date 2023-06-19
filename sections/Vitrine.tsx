@@ -1,5 +1,6 @@
 // deno-lint-ignore-file no-window-prefix
-import { useEffect, useId, useState } from 'preact/hooks'
+import { useEffect, useId, useState, useCallback } from 'preact/hooks'
+import { memo } from 'preact/compat'
 import { putSizeInUrl } from 'deco-sites/shp/FunctionsSHP/AddSizeInUrl.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import PC from 'deco-sites/shp/components/ProductsSHP/PC.tsx'
@@ -18,11 +19,14 @@ const Shelf = ({ PcGamer, produtos }: VitrineProps) => {
   const [isMobile, setIsMobile] = useState(false)
   const id = useId() + '-vitrine'
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
+  const PCMemoized = memo(PC)
+  const ProdMemoized = memo(Prod)
 
+  const handleResize = useCallback(() => {
+    setIsMobile(window.innerWidth <= 768)
+  }, [])
+
+  useEffect(() => {
     handleResize()
 
     window.addEventListener('resize', handleResize)
@@ -79,7 +83,7 @@ const Shelf = ({ PcGamer, produtos }: VitrineProps) => {
           index={index}
           class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
         >
-          <PC
+          <PCMemoized
             {...commonProps}
             placa={pecasObj['Placa de vídeo']}
             processador={pecasObj.Processador}
@@ -94,7 +98,7 @@ const Shelf = ({ PcGamer, produtos }: VitrineProps) => {
           index={index}
           class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
         >
-          <Prod {...commonProps} />
+          <ProdMemoized {...commonProps} />
         </Slider.Item>
       )
     }

@@ -28,13 +28,13 @@ const PC = ({ ...props }: PCProps) => {
                   alt='frete'
                   width={22}
                   height={13}
-                  preload fetchPriority='low' loading='lazy'
+                  loading='lazy'
                 />
               </div>
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/heartRed.png'
                 alt='like' width={24} height={24}
-                preload fetchPriority='low' loading='lazy'
+                loading='lazy'
               />
             </div>
           </label>
@@ -58,6 +58,7 @@ const PC = ({ ...props }: PCProps) => {
               src='https://shopinfo.vteximg.com.br/arquivos/icon-placadevideo.svg'
               width={15}
               height={15}
+              loading='lazy'
             />
             <p className='font-bold'>{props.placa}</p>
           </label>
@@ -66,7 +67,7 @@ const PC = ({ ...props }: PCProps) => {
               src='https://shopinfo.vteximg.com.br/arquivos/icon-processador.svg'
               width={15}
               height={15}
-              preload fetchPriority='low' loading='lazy'
+              loading='lazy'
             />
             <p>{props.processador}</p>
           </label>
@@ -75,7 +76,7 @@ const PC = ({ ...props }: PCProps) => {
               src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
               width={15}
               height={15}
-              preload fetchPriority='low' loading='lazy'
+              loading='lazy'
             />
             <p>{props.memoria}</p>
           </label>
@@ -84,7 +85,7 @@ const PC = ({ ...props }: PCProps) => {
               src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
               width={15}
               height={15}
-              preload fetchPriority='low' loading='lazy'
+              loading='lazy'
             />
             <p>{props.armazenamento}</p>
           </label>
