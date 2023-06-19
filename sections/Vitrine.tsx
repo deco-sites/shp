@@ -15,12 +15,77 @@ export interface VitrineProps {
   produtos: LoaderReturnType<Product[] | null>
 }
 
-const Shelf = ({ PcGamer, produtos }: VitrineProps) => {
-  const [isMobile, setIsMobile] = useState(false)
-  const id = useId() + '-vitrine'
+const renderProduct = (element: Product, index: number, PcGamer:boolean) => {
 
   const PCMemoized = memo(PC)
   const ProdMemoized = memo(Prod)
+
+  const pecas: string[] = [
+    'Memória',
+    'SSD',
+    'HD',
+    'Processador',
+    'Placa de vídeo',
+  ]
+  const pecaArray = element.isVariantOf?.additionalProperty
+  const pecasObj: Record<string, string | undefined> = {}
+
+  pecaArray?.forEach(({name, value}) => {
+    if (pecas.includes(String(name))) {
+      if (name === 'HD' || name === 'SSD') {
+        value?.includes(name)
+          ? (pecasObj['armazenamento'] = value)
+          : (pecasObj['armazenamento'] = `${name}: ${value}`)
+      } else {
+        pecasObj[String(name)] = value
+      }
+    }
+  })
+
+  const commonProps = {
+    imgUrl:
+      element.image && element.image[0] && element.image[0].url
+        ? putSizeInUrl(element.image[0].url, [135, 135]) ||
+          element.image[0].url
+        : '#',
+    nome: element.name,
+    preco10:
+      element.offers?.highPrice &&
+      parseFloat((element.offers?.highPrice / 10).toFixed(2)),
+    precoPIX: element.offers && DescontoPIX(element.offers.highPrice, 15),
+    discountFlag: 15,
+  }
+
+  if (PcGamer) {
+    return (
+      <Slider.Item
+        index={index}
+        class='carousel-item w-fit h-fit first:pl-6 last:pr-6 re1:first:pl-0 re1:pr-0'
+      >
+        <PCMemoized
+          {...commonProps}
+          placa={pecasObj['Placa de vídeo']}
+          processador={pecasObj.Processador}
+          memoria={pecasObj.Memória}
+          armazenamento={pecasObj.armazenamento}
+        />
+      </Slider.Item>
+    )
+  } else {
+    return (
+      <Slider.Item
+        index={index}
+        class='carousel-item w-fit h-fit first:pl-6 last:pr-6 re1:first:pl-0 re1:pr-0'
+      >
+        <ProdMemoized {...commonProps} />
+      </Slider.Item>
+    )
+  }
+}
+
+const Shelf = ({ PcGamer, produtos }: VitrineProps) => {
+  const [isMobile, setIsMobile] = useState(false)
+  const id = useId() + '-vitrine'
 
   const handleResize = useCallback(() => {
     setIsMobile(window.innerWidth <= 768)
@@ -40,76 +105,12 @@ const Shelf = ({ PcGamer, produtos }: VitrineProps) => {
     return null
   }
 
-  const renderProduct = (element: Product, index: number) => {
-    const pecas: string[] = [
-      'Memória',
-      'SSD',
-      'HD',
-      'Processador',
-      'Placa de vídeo',
-    ]
-    const pecaArray = element.isVariantOf?.additionalProperty
-    const pecasObj: Record<string, string | undefined> = {}
-
-    pecaArray?.forEach((pecaObj) => {
-      if (pecas.includes(String(pecaObj.name))) {
-        if (pecaObj.name === 'HD' || pecaObj.name === 'SSD') {
-          pecaObj.value?.includes(pecaObj.name)
-            ? (pecasObj['armazenamento'] = pecaObj.value)
-            : (pecasObj['armazenamento'] = `${pecaObj.name}: ${pecaObj.value}`)
-        } else {
-          pecasObj[String(pecaObj.name)] = pecaObj.value
-        }
-      }
-    })
-
-    const commonProps = {
-      imgUrl:
-        element.image && element.image[0] && element.image[0].url
-          ? putSizeInUrl(element.image[0].url, [135, 135]) ||
-            element.image[0].url
-          : '#',
-      nome: element.name,
-      preco10:
-        element.offers?.highPrice &&
-        parseFloat((element.offers?.highPrice / 10).toFixed(2)),
-      precoPIX: element.offers && DescontoPIX(element.offers.highPrice, 15),
-      discountFlag: 15,
-    }
-
-    if (PcGamer) {
-      return (
-        <Slider.Item
-          index={index}
-          class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
-        >
-          <PCMemoized
-            {...commonProps}
-            placa={pecasObj['Placa de vídeo']}
-            processador={pecasObj.Processador}
-            memoria={pecasObj.Memória}
-            armazenamento={pecasObj.armazenamento}
-          />
-        </Slider.Item>
-      )
-    } else {
-      return (
-        <Slider.Item
-          index={index}
-          class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
-        >
-          <ProdMemoized {...commonProps} />
-        </Slider.Item>
-      )
-    }
-  }
-
   return (
     <div className='my-5'>
       {isMobile ? (
         <div className='container grid grid-cols-[48px_1fr_48px] px-0' id={id}>
           <Slider class='carousel carousel-center gap-6 col-span-full row-start-2 row-end-5 scrollbar-none'>
-            {produtos.map(renderProduct)}
+            {produtos.map((element,index)=>renderProduct(element, index, PcGamer))}
           </Slider>
           <SliderJS rootId={id} infinite />
         </div>
@@ -121,7 +122,7 @@ const Shelf = ({ PcGamer, produtos }: VitrineProps) => {
               : 'grid-cols-4'
           } gap-x-3 gap-y-3 w-fit mx-auto`}
         >
-          {produtos.map(renderProduct)}
+          {produtos.map((element,index)=>renderProduct(element, index, PcGamer))}
         </div>
       )}
     </div>
