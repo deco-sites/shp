@@ -3,7 +3,6 @@ import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/islands/SliderJS.tsx'
 import { Picture, Source } from 'deco-sites/std/components/Picture.tsx'
-import Image from 'deco-sites/std/components/Image.tsx'
 import { useId } from 'preact/hooks'
 //import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
 
@@ -59,7 +58,7 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
       href={action?.href ?? '#'}
       class='relative h-fit overflow-y-hidden w-full'
     >
-      {/* <Picture preload={lcp}>
+      <Picture preload={lcp}>
         <Source
           media="(max-width: 767px)"
           fetchPriority={lcp ? "high" : "auto"}
@@ -73,18 +72,16 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
           src={desktop}
           width={1691}
           height={394}
-        /> */}
-        <Image
+        />
+        <img
           class='object-cover w-full'
-          loading={'eager'}
+          loading={lcp ? 'eager' : 'lazy'}
           src={Mobile ? mobile : desktop}
           alt={alt}
           width={Mobile ? 351 : 1691}
           height={Mobile ? 251 : 394}
-          fetchPriority='high'
-          preload
         />
-      {/* </Picture> */}
+      </Picture>
     </a>
   )
 }
