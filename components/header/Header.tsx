@@ -409,7 +409,7 @@ const HeaderSHP = () => {
                 {
                   name: 'Mousepad Gamer',
                   iconUrl:
-                    '#',
+                    'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
                 {
@@ -420,12 +420,12 @@ const HeaderSHP = () => {
                 },
                 {
                   name: 'Monitor Gamer',
-                  iconUrl: '',
+                  iconUrl: 'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
                 {
                   name: 'Adaptadores',
-                  iconUrl: '',
+                  iconUrl: 'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
               ]}
@@ -465,43 +465,43 @@ const HeaderSHP = () => {
                 {
                   name: 'Cooler',
                   iconUrl:
-                    '#',
+                    'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
                 {
                   name: 'Fonte',
                   iconUrl:
-                    '#',
+                    'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
                 {
                   name: 'HD',
                   iconUrl:
-                    '#',
+                    'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
                 {
                   name: 'SSD',
                   iconUrl:
-                    '#',
+                    'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
                 {
                   name: 'Placa de rede',
                   iconUrl:
-                    '#',
+                    'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
                 {
                   name: 'Placa mãe',
                   iconUrl:
-                    '#',
+                    'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
                 {
                   name: 'Kit Upgrade',
                   iconUrl:
-                    '#',
+                    'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
                   linkTo: '/teste',
                 },
               ]}

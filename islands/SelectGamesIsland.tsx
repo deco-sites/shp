@@ -1,1 +1,1 @@
-export {default} from 'deco-sites/shp/components/ComponentsSHP/SelectGames/Game.tsx'
+export {default} from 'deco-sites/shp/sections/EncontreSelectGames.tsx'

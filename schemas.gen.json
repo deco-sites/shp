@@ -7014,7 +7014,23 @@
         "gameName",
         "imgUrl"
       ],
-      "title": "deco-sites/shp/components/ComponentsSHP/SelectGames/Game.tsx@gameProps"
+      "title": "gameProps"
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVTZWxlY3RHYW1lcy50c3g=@Props": {
+      "type": "object",
+      "properties": {
+        "games": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Db21wb25lbnRzU0hQL1NlbGVjdEdhbWVzL0dhbWUudHN4@gameProps"
+          },
+          "title": "Games"
+        }
+      },
+      "required": [
+        "games"
+      ],
+      "title": "deco-sites/shp/sections/EncontreSelectGames.tsx@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC90eXBlcy50cw==@SKU": {
       "type": "object",
@@ -8061,22 +8077,6 @@
         "peca"
       ],
       "title": "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx@Props"
-    },
-    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVTZWxlY3RHYW1lcy50c3g=@Props": {
-      "type": "object",
-      "properties": {
-        "games": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Db21wb25lbnRzU0hQL1NlbGVjdEdhbWVzL0dhbWUudHN4@gameProps"
-          },
-          "title": "Games"
-        }
-      },
-      "required": [
-        "games"
-      ],
-      "title": "deco-sites/shp/sections/EncontreSelectGames.tsx@Props"
     },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9GZWF0dXJlcy50c3g=@Feature": {
       "type": "object",
@@ -10957,7 +10957,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Db21wb25lbnRzU0hQL1NlbGVjdEdhbWVzL0dhbWUudHN4@gameProps"
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVTZWxlY3RHYW1lcy50c3g=@Props"
         }
       ],
       "required": [
