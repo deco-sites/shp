@@ -2,14 +2,18 @@ import Game, {gameProps} from 'deco-sites/shp/components/ComponentsSHP/SelectGam
 import GameContextProvider, {useGameContext, GameContextType}  from 'deco-sites/shp/contexts/Games/GameContext.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
-import { useId } from 'preact/hooks'
+import { useId, useState } from 'preact/hooks'
+import { signal } from '@preact/signals'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 
 export interface Props{
   games:Array<gameProps>
 }
 
+const count=signal(1)
+
 const BTNFinal= () => {
+  
   const { games }: GameContextType = useGameContext()
 
   const handleButtonClick = () => {
@@ -18,6 +22,7 @@ const BTNFinal= () => {
     for(const [game, checked] of gamesMap){
       checked && gamesChecked.push(game)
     }
+    count.value+=1
     console.log(gamesChecked)
   }
 
@@ -38,23 +43,23 @@ const selectGames=({games=[]}:Props)=>{
           <h1 className='font-bold text-white text-3xl'>Encontre o PC Gamer Completo para seus Jogos</h1>
           <div className='flex items-center justify-center'>
             <label className='flex flex-col'>
-              <div className="flex rounded-full border border-white w-[40px] h-[40px] items-center justify-center text-white">1</div>
+              <div className={`flex rounded-full border border-white w-[40px] h-[40px] items-center justify-center text-white ${count.value>=1 && 'bg-[#dd1f26]'}`}>1</div>
               <p>Batata</p>
             </label>
             <label className='flex flex-col'>
-              <div className="flex rounded-full border border-white w-[40px] h-[40px] items-center justify-center text-white">2</div>
+              <div className={`flex rounded-full border border-white w-[40px] h-[40px] items-center justify-center text-white ${count.value>=2 && 'bg-[#dd1f26]'}`}>2</div>
               <p>Batata</p>
             </label>
             <label className='flex flex-col'>
-              <div className="flex rounded-full border border-white w-[40px] h-[40px] items-center justify-center text-white">3</div>
+              <div className={`flex rounded-full border border-white w-[40px] h-[40px] items-center justify-center text-white ${count.value>=3 && 'bg-[#dd1f26]'}`}>3</div>
               <p>Batata</p>
             </label>
           </div>
         </div>
 
-
         <GameContextProvider>
-          <div id={id} className="container grid grid-cols-[20px_1fr_20px] re1:grid-cols-[48px_1fr_48px] px-0 re1:px-5">
+        {count.value===1 && (
+          <div id={id} className='container grid grid-cols-[20px_1fr_20px] re1:grid-cols-[48px_1fr_48px] px-0 re1:px-5'>
             <div className='hidden re1:flex justify-center items-center prev'>
               <Slider.PrevButton class='btn bg-transparent hover:bg-transparent border-none relative'>
                 <Icon
@@ -62,7 +67,7 @@ const selectGames=({games=[]}:Props)=>{
                   size={25}
                   id='ChevronLeft'
                   strokeWidth={3}
-                />
+                  />
               </Slider.PrevButton>
             </div>
             <Slider className='carousel carousel-center scrollbar-none gap-6 re1:gap-0 col-start-2'>
@@ -79,14 +84,25 @@ const selectGames=({games=[]}:Props)=>{
                   size={25}
                   id='ChevronRight'
                   strokeWidth={3}
-                />
+                  />
               </Slider.NextButton>
             </div>
 
             <SliderJS rootId={id} infinite />
           </div>
+          )}
+
+          {count.value===2 && (
+            <>Batata2</>
+          )}  
+
+          {count.value===3 && (
+            <>Batata3</>
+          )}  
           <BTNFinal/>
         </GameContextProvider>
+
+        
       </div>
     </div>
   )
