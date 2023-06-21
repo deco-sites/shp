@@ -20,11 +20,11 @@ const Game=({gameName, imgUrl}:gameProps)=>{
   
 
   return (
-    <div className={`block relative border-[2px] w-[125px] h-[150px] ${checked ? 'border-[#dd1f26] shadow-[#dd1f26]/30 shadow-[0_0_5px_2px]' : 'border-transparent'} rounded-lg`}
-       onClick={handleClick}
+    <div className={`block relative border-[2px] w-[125px] h-[150px] ${checked ? 'border-[#dd1f26] shadow-[#dd1f26]/30 shadow-lg' : 'border-transparent'} rounded-lg`}
+      onClick={handleClick}
     >
       <Image
-        src={imgUrl} alt={gameName} loading='lazy' class='absolute top-0 left-0 w-full h-full object-cover'
+        src={imgUrl} alt={gameName} loading='lazy' class='absolute top-0 left-0 w-full h-full object-cover rounded-lg'
         width={125} height={150} fetchPriority='low' 
       />
 
