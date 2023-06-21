@@ -67,6 +67,7 @@
               "./islands/PCNivelGamer.tsx",
               "./islands/ProductImageZoom.tsx",
               "./islands/SearchControls.tsx",
+              "./islands/SelectGamesIsland.tsx",
               "./islands/ShippingSimulation.tsx",
               "./islands/SliderJS.tsx",
               "./islands/VitrineIsland.tsx",
@@ -90,6 +91,7 @@
               "deco-sites/shp/sections/CookieConsent.tsx",
               "deco-sites/shp/sections/DesignSystem.tsx",
               "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx",
+              "deco-sites/shp/sections/EncontreSelectGames.tsx",
               "deco-sites/shp/sections/Features.tsx",
               "deco-sites/shp/sections/Footer.tsx",
               "deco-sites/shp/sections/Highlights.tsx",
@@ -6639,7 +6641,7 @@
             "boolean",
             "null"
           ],
-          "description": "remove unavailable items from result",
+          "description": "remove unavailable items from result. This may result in slower websites",
           "title": "Hide Unavailable Items"
         }
       },
@@ -6701,7 +6703,8 @@
         "pathTemplate",
         "handler"
       ],
-      "title": "Route"
+      "title": "Route",
+      "titleBy": "pathTemplate"
     },
     "ZGVjby1jeC9saXZlL2ZsYWdzL2F1ZGllbmNlLnRz@Route[]": {
       "anyOf": [
@@ -6995,6 +6998,24 @@
       ],
       "title": "deco-sites/shp/sections/PCNivelGamer.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Db21wb25lbnRzU0hQL1NlbGVjdEdhbWVzL0dhbWUudHN4@gameProps": {
+      "type": "object",
+      "properties": {
+        "gameName": {
+          "type": "string",
+          "title": "Game Name"
+        },
+        "imgUrl": {
+          "type": "string",
+          "title": "Img Url"
+        }
+      },
+      "required": [
+        "gameName",
+        "imgUrl"
+      ],
+      "title": "deco-sites/shp/components/ComponentsSHP/SelectGames/Game.tsx@gameProps"
+    },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC90eXBlcy50cw==@SKU": {
       "type": "object",
       "properties": {
@@ -7033,6 +7054,24 @@
         "items"
       ],
       "title": "deco-sites/shp/components/ui/ShippingSimulation.tsx@Props"
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@VitrineProps": {
+      "type": "object",
+      "properties": {
+        "PcGamer": {
+          "type": "boolean",
+          "title": " Pc Gamer"
+        },
+        "produtos": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Product[]|null",
+          "title": "Produtos"
+        }
+      },
+      "required": [
+        "PcGamer",
+        "produtos"
+      ],
+      "title": "deco-sites/shp/sections/Vitrine.tsx@VitrineProps"
     },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL2RldlBhZ2UudHM=@DevConfig": {
       "type": "object",
@@ -8023,6 +8062,22 @@
       ],
       "title": "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVTZWxlY3RHYW1lcy50c3g=@Props": {
+      "type": "object",
+      "properties": {
+        "games": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Db21wb25lbnRzU0hQL1NlbGVjdEdhbWVzL0dhbWUudHN4@gameProps"
+          },
+          "title": "Games"
+        }
+      },
+      "required": [
+        "games"
+      ],
+      "title": "deco-sites/shp/sections/EncontreSelectGames.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9GZWF0dXJlcy50c3g=@Feature": {
       "type": "object",
       "properties": {
@@ -8695,24 +8750,6 @@
         "columns"
       ],
       "title": "deco-sites/shp/components/search/SearchResult.tsx@Props"
-    },
-    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@VitrineProps": {
-      "type": "object",
-      "properties": {
-        "PcGamer": {
-          "type": "boolean",
-          "title": " Pc Gamer"
-        },
-        "produtos": {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@Product[]|null",
-          "title": "Produtos"
-        }
-      },
-      "required": [
-        "PcGamer",
-        "produtos"
-      ],
-      "title": "deco-sites/shp/sections/Vitrine.tsx@VitrineProps"
     },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9XaGF0c0FwcC50c3g=@Props": {
       "type": "object",
@@ -10915,6 +10952,27 @@
         }
       }
     },
+    "Li9pc2xhbmRzL1NlbGVjdEdhbWVzSXNsYW5kLnRzeA==": {
+      "title": "./islands/SelectGamesIsland.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Db21wb25lbnRzU0hQL1NlbGVjdEdhbWVzL0dhbWUudHN4@gameProps"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/SelectGamesIsland.tsx"
+          ],
+          "default": "./islands/SelectGamesIsland.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL1NoaXBwaW5nU2ltdWxhdGlvbi50c3g=": {
       "title": "./islands/ShippingSimulation.tsx",
       "type": "object",
@@ -10955,6 +11013,11 @@
     "Li9pc2xhbmRzL1ZpdHJpbmVJc2xhbmQudHN4": {
       "title": "./islands/VitrineIsland.tsx",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@VitrineProps"
+        }
+      ],
       "required": [
         "__resolveType"
       ],
@@ -11374,6 +11437,27 @@
             "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx"
           ],
           "default": "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVTZWxlY3RHYW1lcy50c3g=": {
+      "title": "deco-sites/shp/sections/EncontreSelectGames.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVTZWxlY3RHYW1lcy50c3g=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/EncontreSelectGames.tsx"
+          ],
+          "default": "deco-sites/shp/sections/EncontreSelectGames.tsx"
         }
       }
     },
@@ -12737,6 +12821,9 @@
           "$ref": "#/definitions/Li9pc2xhbmRzL1NlYXJjaENvbnRyb2xzLnRzeA=="
         },
         {
+          "$ref": "#/definitions/Li9pc2xhbmRzL1NlbGVjdEdhbWVzSXNsYW5kLnRzeA=="
+        },
+        {
           "$ref": "#/definitions/Li9pc2xhbmRzL1NoaXBwaW5nU2ltdWxhdGlvbi50c3g="
         },
         {
@@ -12828,6 +12915,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVQQ0dhbWVySWRlYWwudHN4"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRW5jb250cmVTZWxlY3RHYW1lcy50c3g="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvRmVhdHVyZXMudHN4"

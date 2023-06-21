@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useId } from 'preact/hooks'
 import { putSizeInUrl } from 'deco-sites/shp/FunctionsSHP/AddSizeInUrl.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
-import ProdFogo from 'deco-sites/shp/components/ProductsSHP/ProdFogo.tsx'
+import ProdFogo from 'deco-sites/shp/components/ComponentsSHP/Products/ProdFogo.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
