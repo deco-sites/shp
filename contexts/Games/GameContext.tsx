@@ -2,7 +2,7 @@ import {  useState, useContext } from 'preact/hooks'
 import { createContext, FunctionalComponent } from 'preact'
 
 export interface GameContextType{
-  games: {[key:string]: boolean}
+  games: Map<string, boolean>
   setGameChecked: (gameName:string,checked:boolean) => void
 }
 
@@ -17,7 +17,7 @@ export const useGameContext=():GameContextType=>{
 }
 
 const GameContextProvider: FunctionalComponent=({children})=>{
-  const [games,setGames]=useState<{[key:string]:boolean}>({})
+  const [games,setGames]=useState<Map<string,boolean>>(new Map())
 
   const setGameChecked=(gameName:string, checked:boolean)=>{
     setGames((prevGames)=>({

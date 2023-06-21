@@ -1,5 +1,5 @@
 import Image from 'deco-sites/std/components/Image.tsx'
-import { useRef, useCallback } from 'preact/hooks'
+import { useCallback, useState } from 'preact/hooks'
 import { useGameContext, GameContextType}  from 'deco-sites/shp/contexts/Games/GameContext.tsx'
 
 export interface gameProps{
@@ -10,20 +10,18 @@ export interface gameProps{
 const Game=({gameName, imgUrl}:gameProps)=>{
   const { games, setGameChecked }:GameContextType=useGameContext()
 
-  const checked = games[gameName] || false
-
-  const game=useRef<HTMLDivElement>(null)
+  const [checked, setChecked] = useState(()=> games.get(gameName) || false)
 
   const handleClick=useCallback(()=>{
+    setChecked(!checked)
     setGameChecked(gameName,!checked)
-    console.log(games)
-  },[gameName, checked, setGameChecked])
+  },[gameName, checked, setGameChecked, games])
 
   
 
   return (
     <div className={`block relative border-[2px] w-[125px] h-[150px] ${checked ? 'border-[#dd1f26] shadow-[#dd1f26]/30 shadow-[0_0_5px_2px]' : 'border-transparent'} rounded-lg`}
-      ref={game} onClick={handleClick}
+       onClick={handleClick}
     >
       <Image
         src={imgUrl} alt={gameName} loading='lazy' class='absolute top-0 left-0 w-full h-full object-cover'
