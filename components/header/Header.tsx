@@ -31,12 +31,12 @@ const HeaderSHP = () => {
   
   useEffect(() => {
     if (close.current) {
-      close.current.addEventListener('click', closeClickHandler);
+      close.current.addEventListener('touchend', closeClickHandler);
     }
     
     return () => {
       if (close.current) {
-        close.current.removeEventListener('click', closeClickHandler);
+        close.current.removeEventListener('touchend', closeClickHandler);
       }
     }
   }, [closeClickHandler])

@@ -1,4 +1,4 @@
-import {  useState, useContext } from 'preact/hooks'
+import {  useState, useContext, useCallback } from 'preact/hooks'
 import { createContext, FunctionalComponent } from 'preact'
 
 export interface GameContextType{
@@ -19,12 +19,13 @@ export const useGameContext=():GameContextType=>{
 const GameContextProvider: FunctionalComponent=({children})=>{
   const [games,setGames]=useState<Map<string,boolean>>(new Map())
 
-  const setGameChecked=(gameName:string, checked:boolean)=>{
-    setGames((prevGames)=>({
-      ...prevGames,
-      [gameName]:checked
-    }))
-  }
+  const setGameChecked = useCallback((gameName: string, checked: boolean) => {
+    setGames((prevGames) => {
+      const newGames = new Map(prevGames)
+      newGames.set(gameName, checked)
+      return newGames
+    });
+  }, [])
 
   const value:GameContextType={
     games,
