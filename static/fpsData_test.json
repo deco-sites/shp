@@ -1,62 +1,62 @@
 {
-    "fps": [
-        {
-            "geforce_gtx_1050_ti_4gb": {
-                "i5-12400f": {
-                    "cyberpunk": 45,
-                    "wow": 115,
-                    "fortnite": 200,
-                    "csgo": 300,
-                    "lol": 300,
-                    "warzone": 90,
-                    "overwatch": 145,
-                    "valorant": 280,
-                    "minecraft": 300,
-                    "gta5": 120,
-                    "apex": 105,
-                    "freefire": 60,
-                    "pubg": 100,
-                    "newworld": 0,
-                    "rb6": 110,
-                    "asvalhalla": 50,
-                    "forza5": 0,
-                    "eldenring": 30,
-                    "genshinimpact": 60,
-                    "eurotruck": 120,
-                    "roblox": 140,
-                    "fifa23": 75,
-                    "godofwar": 55
-                }
-            }
-        },
-        {
-          "geforce_gtx_1650_4gb": {
-              "i3-12400f": {
-                  "cyberpunk": 40,
-                  "wow": 110,
-                  "fortnite": 200,
-                  "csgo": 300,
-                  "lol": 295,
-                  "warzone": 90,
-                  "overwatch": 140,
-                  "valorant": 280,
-                  "minecraft": 300,
-                  "gta5": 120,
-                  "apex": 105,
-                  "freefire": 60,
-                  "pubg": 100,
-                  "newworld": 0,
-                  "rb6": 110,
-                  "asvalhalla": 50,
-                  "forza5": 0,
-                  "eldenring": 30,
-                  "genshinimpact": 60,
-                  "eurotruck": 120,
-                  "roblox": 140,
-                  "fifa23": 75,
-                  "godofwar": 55
-              }
-          }
+  "fps": [
+    {
+      "placa": "geforce_gtx_1050_ti_4gb",
+      "processador": "i5-12400f",
+      "games": {
+        "cyberpunk": 45,
+        "wow": 115,
+        "fortnite": 200,
+        "csgo": 300,
+        "lol": 300,
+        "warzone": 90,
+        "overwatch": 145,
+        "valorant": 280,
+        "minecraft": 300,
+        "gta5": 120,
+        "apex": 105,
+        "freefire": 60,
+        "pubg": 100,
+        "newworld": 0,
+        "rb6": 110,
+        "asvalhalla": 50,
+        "forza5": 0,
+        "eldenring": 30,
+        "genshinimpact": 60,
+        "eurotruck": 120,
+        "roblox": 140,
+        "fifa23": 75,
+        "godofwar": 55
       }
-    ]
+    },
+    {
+      "placa":"geforce_gtx_1650_4gb",
+      "processador":"i3-12400f",
+      "games":{   
+        "cyberpunk": 144,
+        "wow": 110,
+        "fortnite": 200,
+        "csgo": 300,
+        "lol": 295,
+        "warzone": 90,
+        "overwatch": 140,
+        "valorant": 280,
+        "minecraft": 300,
+        "gta5": 120,
+        "apex": 105,
+        "freefire": 60,
+        "pubg": 100,
+        "newworld": 0,
+        "rb6": 110,
+        "asvalhalla": 50,
+        "forza5": 0,
+        "eldenring": 30,
+        "genshinimpact": 60,
+        "eurotruck": 120,
+        "roblox": 140,
+        "fifa23": 75,
+        "godofwar": 55
+      }
+    }
+  ]
 }

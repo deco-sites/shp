@@ -6,6 +6,8 @@ import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import { useId, useState, useEffect, useCallback } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
+import DataJson from 'deco-sites/shp/static/fpsData_test.json' assert { type: "json" } 
+
 
 export interface Props{
   Games:Array<gameProps>
@@ -18,17 +20,43 @@ const checkboxChecked=signal<string>('')
 const BTNFinal= () => {
   
   const { games }: GameContextType = useGameContext()
+  const [jogos, setJogos]=useState<string[]>([])
 
   const handleButtonClick = () => {
-    if(gamesChecked.value.length>=1){
-      count.value<3 && count.value++
-    }else{
-      alert('Você precisa selecionar um ou mais jogos!')
-    }
 
-    if(count.value>=3){
-      console.log(gamesChecked.value, checkboxChecked.value)
-    }
+    switch (count.value) {
+      case 1:
+        if(jogos.length>=1){
+          count.value===1 && (gamesChecked.value=jogos)
+          count.value++
+        }else{
+          alert('Você precisa selecionar um ou mais jogos!')
+        }
+        break;
+
+      case 2:
+        count.value++
+        break
+      
+      case 3:
+        if(checkboxChecked.value === ''){alert('Você precisa selecionar uma das opções!')
+        }else{
+          const minFps=checkboxChecked.value==='60+' ? 60 : 144
+          console.log(minFps)
+          const systems=DataJson.fps.filter(system=>{
+            for(const game of gamesChecked.value){
+              if(system.games[game as keyof typeof system.games]< minFps) return false
+            }
+            return true
+          })
+          systems.forEach((obj)=>console.log("Combinação que aceita: "+obj.placa+" + "+obj.processador))
+        }
+        
+        break;
+
+      default:
+        break;
+    } 
   }
 
   useEffect(()=>{
@@ -36,7 +64,7 @@ const BTNFinal= () => {
     for(const [game,checked] of games){
       checked && checkedGames.push(game)
     }
-    gamesChecked.value=checkedGames
+    setJogos(checkedGames)
   },[games])
 
   return (
@@ -245,15 +273,21 @@ const selectGames=({Games=[]}:Props)=>{
             <div className='flex items-center h-[300px]'>
               <div className='flex flex-col items-center justify-center text-white gap-6'>
                 <div className="flex gap-12 items-center justify-center">
-                  <label className='flex gap-2'>
-                    <p className='text-lg font-bold'>60+FPS</p>
+                  <label className='flex gap-2 items-center'>
+                    <div className='flex flex-col text-lg font-bold items-start'>
+                      <p>Acima de</p>
+                      <p>60FPS</p>
+                    </div>
                     <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
                       onClick={()=>checkboxChecked.value='60+'}
                     />
                   </label>
                   <hr className='w-[2px] h-[70px] bg-white'/>
-                  <label className='flex gap-2'>
-                    <p className='text-lg font-bold'>144+FPS</p>
+                  <label className='flex gap-2 items-center'>
+                    <div className='flex flex-col text-lg font-bold items-start'>
+                      <p>Acima de</p>
+                      <p>144+FPS</p>
+                    </div>
                     <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
                       onClick={()=>checkboxChecked.value='144+'}
                     />
