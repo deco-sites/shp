@@ -16,10 +16,11 @@ import * as $$$$$5 from "./islands/PCNivelGamer.tsx";
 import * as $$$$$6 from "./islands/ProductImageZoom.tsx";
 import * as $$$$$7 from "./islands/SearchControls.tsx";
 import * as $$$$$8 from "./islands/SelectGamesIsland.tsx";
-import * as $$$$$9 from "./islands/ShippingSimulation.tsx";
-import * as $$$$$10 from "./islands/SliderJS.tsx";
-import * as $$$$$11 from "./islands/VitrineIsland.tsx";
-import * as $$$$$12 from "./islands/WishlistButton.tsx";
+import * as $$$$$9 from "./islands/SeparadoIsland.tsx";
+import * as $$$$$10 from "./islands/ShippingSimulation.tsx";
+import * as $$$$$11 from "./islands/SliderJS.tsx";
+import * as $$$$$12 from "./islands/VitrineIsland.tsx";
+import * as $$$$$13 from "./islands/WishlistButton.tsx";
 import * as $$$$$$$$0 from "./sections/BannerGrid.tsx";
 import * as $$$$$$$$1 from "./sections/BannerPLP.tsx";
 import * as $$$$$$$$2 from "./sections/Benefits.tsx";
@@ -39,9 +40,10 @@ import * as $$$$$$$$15 from "./sections/ProductDetails.tsx";
 import * as $$$$$$$$16 from "./sections/ProductShelf.tsx";
 import * as $$$$$$$$17 from "./sections/ReturnH1.tsx";
 import * as $$$$$$$$18 from "./sections/SearchResult.tsx";
-import * as $$$$$$$$19 from "./sections/Vitrine.tsx";
-import * as $$$$$$$$20 from "./sections/WhatsApp.tsx";
-import * as $$$$$$$$21 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$$$19 from "./sections/Separado.tsx";
+import * as $$$$$$$$20 from "./sections/Vitrine.tsx";
+import * as $$$$$$$$21 from "./sections/WhatsApp.tsx";
+import * as $$$$$$$$22 from "./sections/WishlistGallery.tsx";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
 import * as $live_invoke from "$live/routes/live/invoke/index.ts";
@@ -186,10 +188,11 @@ const manifest = {
     "./islands/ProductImageZoom.tsx": $$$$$6,
     "./islands/SearchControls.tsx": $$$$$7,
     "./islands/SelectGamesIsland.tsx": $$$$$8,
-    "./islands/ShippingSimulation.tsx": $$$$$9,
-    "./islands/SliderJS.tsx": $$$$$10,
-    "./islands/VitrineIsland.tsx": $$$$$11,
-    "./islands/WishlistButton.tsx": $$$$$12,
+    "./islands/SeparadoIsland.tsx": $$$$$9,
+    "./islands/ShippingSimulation.tsx": $$$$$10,
+    "./islands/SliderJS.tsx": $$$$$11,
+    "./islands/VitrineIsland.tsx": $$$$$12,
+    "./islands/WishlistButton.tsx": $$$$$13,
   },
   "sections": {
     "$live/sections/Conditional_Beta.tsx": i1$$$$0,
@@ -216,9 +219,10 @@ const manifest = {
     "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$16,
     "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$17,
     "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$18,
-    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$19,
-    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$20,
-    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$21,
+    "deco-sites/shp/sections/Separado.tsx": $$$$$$$$19,
+    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$20,
+    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$21,
+    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$22,
     "deco-sites/std/sections/Analytics.tsx": i2$$$$3,
     "deco-sites/std/sections/configButterCMS.global.tsx": i2$$$$4,
     "deco-sites/std/sections/configOCC.global.tsx": i2$$$$5,

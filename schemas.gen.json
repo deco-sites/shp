@@ -68,6 +68,7 @@
               "./islands/ProductImageZoom.tsx",
               "./islands/SearchControls.tsx",
               "./islands/SelectGamesIsland.tsx",
+              "./islands/SeparadoIsland.tsx",
               "./islands/ShippingSimulation.tsx",
               "./islands/SliderJS.tsx",
               "./islands/VitrineIsland.tsx",
@@ -104,6 +105,7 @@
               "deco-sites/shp/sections/ProductShelf.tsx",
               "deco-sites/shp/sections/ReturnH1.tsx",
               "deco-sites/shp/sections/SearchResult.tsx",
+              "deco-sites/shp/sections/Separado.tsx",
               "deco-sites/shp/sections/Vitrine.tsx",
               "deco-sites/shp/sections/WhatsApp.tsx",
               "deco-sites/shp/sections/WishlistGallery.tsx",
@@ -9306,6 +9308,20 @@
         "page": {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage|null",
           "title": "Page"
+        },
+        "structuredData": {
+          "type": "object",
+          "properties": {
+            "useDataFromSEO": {
+              "type": [
+                "boolean",
+                "null"
+              ],
+              "title": "Use Data From S E O"
+            }
+          },
+          "required": [],
+          "title": "Structured Data"
         }
       },
       "required": [
@@ -9655,7 +9671,7 @@
       ],
       "title": "deco-cx/live/actions/workflows/cancel.ts@Props"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@41b657ef602f5b656d739c638740cfff&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@984c340e2b85bf44b5129917db123a21&Metadata": {
       "allOf": [
         {
           "type": "object",
@@ -9673,9 +9689,9 @@
           "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata"
         }
       ],
-      "title": "41b657ef602f5b656d739c638740cfff&Metadata"
+      "title": "984c340e2b85bf44b5129917db123a21&Metadata"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+41b657ef602f5b656d739c638740cfff&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+984c340e2b85bf44b5129917db123a21&Metadata": {
       "type": "object",
       "properties": {
         "results": {
@@ -9686,7 +9702,7 @@
           "title": "Execution Id"
         },
         "metadata": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@41b657ef602f5b656d739c638740cfff&Metadata",
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@984c340e2b85bf44b5129917db123a21&Metadata",
           "title": "Metadata"
         }
       },
@@ -9695,7 +9711,7 @@
         "executionId",
         "metadata"
       ],
-      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+41b657ef602f5b656d739c638740cfff&Metadata"
+      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+984c340e2b85bf44b5129917db123a21&Metadata"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3NpZ25hbC50cw==@Props": {
       "type": "object",
@@ -11375,6 +11391,22 @@
         }
       }
     },
+    "Li9pc2xhbmRzL1NlcGFyYWRvSXNsYW5kLnRzeA==": {
+      "title": "./islands/SeparadoIsland.tsx",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/SeparadoIsland.tsx"
+          ],
+          "default": "./islands/SeparadoIsland.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL1NoaXBwaW5nU2ltdWxhdGlvbi50c3g=": {
       "title": "./islands/ShippingSimulation.tsx",
       "type": "object",
@@ -12110,6 +12142,22 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VwYXJhZG8udHN4": {
+      "title": "deco-sites/shp/sections/Separado.tsx",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/Separado.tsx"
+          ],
+          "default": "deco-sites/shp/sections/Separado.tsx"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=": {
       "title": "deco-sites/shp/sections/Vitrine.tsx",
       "type": "object",
@@ -12683,7 +12731,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+41b657ef602f5b656d739c638740cfff&Metadata"
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+984c340e2b85bf44b5129917db123a21&Metadata"
         }
       ],
       "required": [
@@ -13285,6 +13333,9 @@
           "$ref": "#/definitions/Li9pc2xhbmRzL1NlbGVjdEdhbWVzSXNsYW5kLnRzeA=="
         },
         {
+          "$ref": "#/definitions/Li9pc2xhbmRzL1NlcGFyYWRvSXNsYW5kLnRzeA=="
+        },
+        {
           "$ref": "#/definitions/Li9pc2xhbmRzL1NoaXBwaW5nU2ltdWxhdGlvbi50c3g="
         },
         {
@@ -13415,6 +13466,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VhcmNoUmVzdWx0LnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VwYXJhZG8udHN4"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g="

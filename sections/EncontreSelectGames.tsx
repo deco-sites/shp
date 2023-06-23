@@ -12,18 +12,22 @@ export interface Props{
 }
 
 const count=signal(1)
+const gamesChecked=signal<string[]>([])
+const checkboxChecked=signal<string>('')
 
 const BTNFinal= () => {
   
   const { games }: GameContextType = useGameContext()
-  const [gamesChecked, setGamesChecked]=useState<string[]>([])
 
   const handleButtonClick = () => {
-    console.log(games)
-    if(gamesChecked.length>=1){
+    if(gamesChecked.value.length>=1){
       count.value<3 && count.value++
     }else{
       alert('Você precisa selecionar um ou mais jogos!')
+    }
+
+    if(count.value>=3){
+      console.log(gamesChecked.value, checkboxChecked.value)
     }
   }
 
@@ -32,7 +36,7 @@ const BTNFinal= () => {
     for(const [game,checked] of games){
       checked && checkedGames.push(game)
     }
-    setGamesChecked(checkedGames)
+    gamesChecked.value=checkedGames
   },[games])
 
   return (
@@ -89,23 +93,48 @@ const selectGames=({Games=[]}:Props)=>{
     }
   }, [])
 
-  const setVal10x=(string:string)=>{
-    const replacedFloat=parseFloat(string.replace(',','.'))
-    return String(replacedFloat*10 >= 10000 ? 10000 : replacedFloat*10).replace('.',',')
-  }
-
-  const percentRange=()=>{
-    return ((parseFloat(rangeVal) - parseFloat(rangeMin)) / (10000 - parseFloat(rangeMin)) * 100)
-  }
-
   const id=useId()+'-SelectGames'
+
   const rangeMin='2000'
   const [rangeVal, setRangeVal]=useState(rangeMin)
+  const [barVal, setBarVal]=useState(rangeMin)
+  
+  const percentRange=()=>{
+    if(parseFloat(barVal)>=10000){
+      return 100
+    }
 
-  useEffect(()=>console.log(rangeVal),[rangeVal])
+    if(parseFloat(barVal)<=parseFloat(rangeMin)){
+      return 0
+    }
+    return ((parseFloat(barVal) - parseFloat(rangeMin)) / (10000 - parseFloat(rangeMin)) * 100)
+  }
+
+  const handleKeyUp=(event: KeyboardEvent)=>{
+    setBarVal((event.target as HTMLInputElement).value.replace(/[^0-9]/g, ''))
+  }
+
+  const handleKeyPress=(event:KeyboardEvent)=>{
+    !/^[0-9]$/.test(event.key) && event.preventDefault()
+  }
+
+  const verifyVal=(val:string, min:string)=>{
+    if(parseFloat(val)<=parseFloat(min)){
+      return parseFloat(min)
+    }
+
+    if(parseFloat(val) >= 10000){
+      return 10000
+    }
+
+    return parseFloat(val)
+  }
+
+  useEffect(()=>{
+    setBarVal(String(verifyVal(rangeVal,rangeMin)))
+  },[rangeVal])
 
   Games.length<1 && null
-
 
   return(
     <div className='bg-[#272727] w-screen h-fit my-5 py-3'>
@@ -172,31 +201,40 @@ const selectGames=({Games=[]}:Props)=>{
             <div className='flex items-center h-[300px]'>
               <div className='flex flex-col items-center justify-center text-white gap-10'>
                 <div className="flex re1:gap-12 gap-3 items-center justify-between">
-                  <label className='flex items-center gap-2'>
-                    <input className='text-lg font-bold bg-transparent w-[6.75rem] appearance-none focus:outline-none text-green-500' type='text' onInput={(event)=>setRangeVal((event.target as HTMLInputElement).value.replace('R$ ',''))} value={`R$ ${parseFloat(rangeVal).toFixed(2).replace('.',',')}`}/>
+                  <label className='flex items-center text-green-500 text-lg font-bold'>
+                    <p>R$</p>
+                    <input className='bg-transparent text-end appearance-none focus:outline-none w-[60px]' type='text' 
+                      maxLength={5}
+                      onKeyUp={handleKeyUp}
+                      onKeyPress={handleKeyPress}
+                      onfocusout={(event)=>setRangeVal((event.target as HTMLInputElement).value)}
+                      value={barVal}
+                    />
+                    <p>,00</p>
                   </label>
                   <div className='self-center'>
                   <hr className='w-[2px] h-[70px] bg-white'/>
                   </div>
                   <label className='flex items-center gap-2'>
-                    <input type='text' onInput={(event)=>setRangeVal(setVal10x((event.target as HTMLInputElement).value.replace('R$ ','')))} className='text-lg font-bold bg-transparent w-[6.75rem] appearance-none focus:outline-none' value={`R$ ${(parseFloat(rangeVal)/10).toFixed(2).replace("." , ',')}`}/>
+                      <span className='text-lg font-bold'>
+                        {`R$ ${(parseFloat(barVal)/10).toFixed(2).replace("." , ',')}`}
+                      </span>
                       <span className='relative w-[50px] text-xs text-center'>10X sem juros</span>
                   </label>
                 </div>
-
+        
                 <label className='re1:w-[600px] w-[300px] flex flex-col items-start'>
-                  <div className='h-[4px] relative top-[4px] bg-[#dd1f26]' style={{width:`${ percentRange() >=10000 ? 100 : percentRange() }%`}}/>
+                  <div className='h-[4px] relative top-[4px] bg-[#dd1f26]' style={{width:`${percentRange()}%`}}/>
                   <input
                     type="range"
                     min={rangeMin}
                     max="10000"
                     step="1"
-                    value={rangeVal}
+                    value={barVal}
                     onInput={(event)=>setRangeVal((event.target as HTMLInputElement).value)}
                     className="appearance-none w-full h-[4px] bg-[#615d5d] rounded-md outline-none focus:outline-none
-                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-[20px] [&::-webkit-slider-thumb]:rounded-md [&::-webkit-slider-thumb]:w-[40px]
-                  [&::-webkit-slider-thumb]:bg-[#dd1f26] 
-                    "
+                    [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-[20px] [&::-webkit-slider-thumb]:rounded-md 
+                    [&::-webkit-slider-thumb]:w-[40px] [&::-webkit-slider-thumb]:bg-[#dd1f26] cursor-pointer"
                   />
                 </label>
               </div>
@@ -209,12 +247,16 @@ const selectGames=({Games=[]}:Props)=>{
                 <div className="flex gap-12 items-center justify-center">
                   <label className='flex gap-2'>
                     <p className='text-lg font-bold'>60+FPS</p>
-                    <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps'/>
+                    <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
+                      onClick={()=>checkboxChecked.value='60+'}
+                    />
                   </label>
                   <hr className='w-[2px] h-[70px] bg-white'/>
                   <label className='flex gap-2'>
                     <p className='text-lg font-bold'>144+FPS</p>
-                    <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps'/>
+                    <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
+                      onClick={()=>checkboxChecked.value='144+'}
+                    />
                   </label>
                 </div>
 
