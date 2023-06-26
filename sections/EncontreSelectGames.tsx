@@ -29,7 +29,7 @@ const BTNFinal= () => {
       key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
       props:{term:'&fq=C:/10/',
          count:1,
-         orderItems:'OrderByPriceASC'
+         sort:'OrderByPriceASC'
       }
     })
 
