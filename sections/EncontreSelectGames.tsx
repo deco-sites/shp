@@ -7,6 +7,7 @@ import { useId, useState, useEffect, useCallback } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import DataJson from 'deco-sites/shp/static/fpsData_test.json' assert { type: "json" } 
+import { Runtime } from 'deco-sites/std/runtime.ts'
 
 
 export interface Props{
@@ -16,11 +17,35 @@ export interface Props{
 const count=signal(1)
 const gamesChecked=signal<string[]>([])
 const checkboxChecked=signal<string>('')
+const minPrice=signal<string>('2000')
 
 const BTNFinal= () => {
   
   const { games }: GameContextType = useGameContext()
   const [jogos, setJogos]=useState<string[]>([])
+
+  const fetchPrice=useCallback(async ()=>{
+    const data= await Runtime.invoke({
+      key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
+      props:{term:'fq=C:/10',
+         count:1,
+         orderItems:'OrderByPriceASC'
+      }
+    })
+
+    console.log(data)
+    return data
+  },[])
+
+  const fetchData=useCallback(async (query:string)=>{
+    const data= await Runtime.invoke({
+      key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
+      props:{term:query, count:50}
+    })
+
+    console.log(data)
+    return data
+  },[])
 
   const handleButtonClick = () => {
 
@@ -35,6 +60,7 @@ const BTNFinal= () => {
         break;
 
       case 2:
+        fetchPrice()
         count.value++
         break
       
@@ -55,13 +81,11 @@ const BTNFinal= () => {
             }
             return true
           })
-          let query='https://www.shopinfo.com.br/api/catalog_system/pub/products/search/?fq=C:/10/'
-          systems.forEach(obj=>query+=`&fq=specificationFilter_20:${obj.placa}&fq=specificationFilter_19:${obj.processador}`)
-          console.log(query)
-          fetch('https://www.shopinfo.com.br/api/catalog_system/pub/products/search/?fq=C:/10/&fq=specificationFilter_20:GeForce GTX 1650&fq=specificationFilter_19:i5-12400f')
-            .then(response=>response.json())
-            .then(json=>console.log(json))
-            .catch(err=>console.error(err));
+          let term='?fq=C:/10/'
+          systems.forEach(obj=>term+=`&fq=specificationFilter_20:${obj.placa},specificationFilter_19:${obj.processador}`)
+          console.log(term)
+
+          fetchData(term)
         }
         
         break;
@@ -135,7 +159,7 @@ const selectGames=({Games=[]}:Props)=>{
 
   const id=useId()+'-SelectGames'
 
-  const rangeMin='2000'
+  const rangeMin=minPrice.value
   const [rangeVal, setRangeVal]=useState(rangeMin)
   const [barVal, setBarVal]=useState(rangeMin)
   

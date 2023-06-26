@@ -1,8 +1,8 @@
 {
   "fps": [
     {
-      "placa": "geforce_gtx_1050_ti_4gb",
-      "processador": "i5-12400f",
+      "placa": "GeForce GTX 1050Ti 4GB",
+      "processador": "I5-12400F",
       "games": {
         "cyberpunk": 45,
         "wow": 115,
@@ -30,8 +30,8 @@
       }
     },
     {
-      "placa":"geforce_gtx_1650_4gb",
-      "processador":"i3-13100f",
+      "placa":"GeForce GTX 1660",
+      "processador":"I3-10100F",
       "games":{   
         "cyberpunk": 144,
         "wow": 110,

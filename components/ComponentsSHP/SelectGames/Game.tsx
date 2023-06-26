@@ -20,7 +20,7 @@ const Game=({gameName, imgUrl}:gameProps)=>{
   
 
   return (
-    <div className={`block relative border-[2px] w-[125px] h-[150px] ${checked ? 'border-[#dd1f26] shadow-[#dd1f26]/30 shadow-lg' : 'border-transparent'} rounded-lg`}
+    <div className={`block relative border-[2px] w-[125px] h-[150px] cursor-pointer  ${checked ? 'border-[#dd1f26] shadow-[#dd1f26]/30 shadow-lg' : 'border-transparent'} rounded-lg`}
       onClick={handleClick}
     >
       <Image
