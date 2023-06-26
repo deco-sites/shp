@@ -108,6 +108,7 @@
               "deco-sites/shp/sections/ReturnH1.tsx",
               "deco-sites/shp/sections/SearchResult.tsx",
               "deco-sites/shp/sections/Separado.tsx",
+              "deco-sites/shp/sections/SignNewsletter.tsx",
               "deco-sites/shp/sections/Vitrine.tsx",
               "deco-sites/shp/sections/WhatsApp.tsx",
               "deco-sites/shp/sections/WishlistGallery.tsx",
@@ -12286,6 +12287,22 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2lnbk5ld3NsZXR0ZXIudHN4": {
+      "title": "deco-sites/shp/sections/SignNewsletter.tsx",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/SignNewsletter.tsx"
+          ],
+          "default": "deco-sites/shp/sections/SignNewsletter.tsx"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=": {
       "title": "deco-sites/shp/sections/Vitrine.tsx",
       "type": "object",
@@ -13582,6 +13599,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VwYXJhZG8udHN4"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2lnbk5ld3NsZXR0ZXIudHN4"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g="

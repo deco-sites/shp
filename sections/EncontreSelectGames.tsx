@@ -27,7 +27,7 @@ const BTNFinal= () => {
   const fetchPrice=useCallback(async ()=>{
     const data= await Runtime.invoke({
       key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
-      props:{term:'fq=C:/10',
+      props:{term:'&fq=C:/10/',
          count:1,
          orderItems:'OrderByPriceASC'
       }
