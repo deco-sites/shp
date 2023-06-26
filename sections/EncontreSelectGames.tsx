@@ -41,15 +41,27 @@ const BTNFinal= () => {
       case 3:
         if(checkboxChecked.value === ''){alert('Você precisa selecionar uma das opções!')
         }else{
-          const minFps=checkboxChecked.value==='60+' ? 60 : 144
-          console.log(minFps)
-          const systems=DataJson.fps.filter(system=>{
+          const systems=checkboxChecked.value==='60+' ? 
+          DataJson.fps.filter(system=>{
             for(const game of gamesChecked.value){
-              if(system.games[game as keyof typeof system.games]< minFps) return false
+              if(system.games[game as keyof typeof system.games] < 60 || system.games[game as keyof typeof system.games] >= 144) return false
             }
             return true
           })
-          systems.forEach((obj)=>console.log("Combinação que aceita: "+obj.placa+" + "+obj.processador))
+          :
+          DataJson.fps.filter(system=>{
+            for(const game of gamesChecked.value){
+              if(system.games[game as keyof typeof system.games] <= 144) return false
+            }
+            return true
+          })
+          let query='https://www.shopinfo.com.br/api/catalog_system/pub/products/search/?fq=C:/10/'
+          systems.forEach(obj=>query+=`&fq=specificationFilter_20:${obj.placa}&fq=specificationFilter_19:${obj.processador}`)
+          console.log(query)
+          fetch('https://www.shopinfo.com.br/api/catalog_system/pub/products/search/?fq=C:/10/&fq=specificationFilter_20:GeForce GTX 1650&fq=specificationFilter_19:i5-12400f')
+            .then(response=>response.json())
+            .then(json=>console.log(json))
+            .catch(err=>console.error(err));
         }
         
         break;
@@ -286,7 +298,7 @@ const selectGames=({Games=[]}:Props)=>{
                   <label className='flex gap-2 items-center'>
                     <div className='flex flex-col text-lg font-bold items-start'>
                       <p>Acima de</p>
-                      <p>144+FPS</p>
+                      <p>144FPS</p>
                     </div>
                     <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
                       onClick={()=>checkboxChecked.value='144+'}
