@@ -89,6 +89,7 @@
               "$live/sections/UseSlot.tsx",
               "deco-sites/shp/sections/BannerGrid.tsx",
               "deco-sites/shp/sections/BannerPLP.tsx",
+              "deco-sites/shp/sections/BannersColcha.tsx",
               "deco-sites/shp/sections/Benefits.tsx",
               "deco-sites/shp/sections/Carousel.tsx",
               "deco-sites/shp/sections/Categories.tsx",
@@ -3920,6 +3921,11 @@
         {
           "title": "VNDA Proxy Routes",
           "type": "object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz@Props"
+            }
+          ],
           "required": [
             "__resolveType"
           ],
@@ -3950,6 +3956,24 @@
           }
         }
       ]
+    },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz@Props": {
+      "type": "object",
+      "properties": {
+        "pagesToProxy": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "ex: /p/fale-conosco",
+          "title": "Pages To Proxy"
+        }
+      },
+      "required": [],
+      "title": "deco-sites/std/loaders/vnda/proxy.ts@Props"
     },
     "ZGVjby1zaXRlcy9zdGQvcGFja3MvdnRleC90eXBlcy50cw==@Fields": {
       "type": "object",
@@ -7949,6 +7973,41 @@
       "required": [],
       "title": "deco-sites/shp/components/ui/BannerPLP.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmFubmVyc0NvbGNoYS50c3g=@Props": {
+      "type": "object",
+      "properties": {
+        "Banners": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "desktop": {
+                "type": "string",
+                "title": "Desktop"
+              },
+              "mobile": {
+                "type": "string",
+                "title": "Mobile"
+              },
+              "link": {
+                "type": "string",
+                "title": "Link"
+              }
+            },
+            "required": [
+              "desktop",
+              "mobile",
+              "link"
+            ]
+          },
+          "title": " Banners"
+        }
+      },
+      "required": [
+        "Banners"
+      ],
+      "title": "deco-sites/shp/sections/BannersColcha.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQ2F0ZWdvcmllcy50c3g=@Props": {
       "type": "object",
       "properties": {
@@ -11007,6 +11066,11 @@
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz": {
       "title": "VNDA Proxy Routes",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92bmRhL3Byb3h5LnRz@Props"
+        }
+      ],
       "required": [
         "__resolveType"
       ],
@@ -11835,6 +11899,27 @@
             "deco-sites/shp/sections/BannerPLP.tsx"
           ],
           "default": "deco-sites/shp/sections/BannerPLP.tsx"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmFubmVyc0NvbGNoYS50c3g=": {
+      "title": "deco-sites/shp/sections/BannersColcha.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmFubmVyc0NvbGNoYS50c3g=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/BannersColcha.tsx"
+          ],
+          "default": "deco-sites/shp/sections/BannersColcha.tsx"
         }
       }
     },
@@ -13440,6 +13525,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmFubmVyUExQLnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmFubmVyc0NvbGNoYS50c3g="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvQmVuZWZpdHMudHN4"
