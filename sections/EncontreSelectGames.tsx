@@ -3,7 +3,7 @@ import Game, {gameProps} from 'deco-sites/shp/components/ComponentsSHP/SelectGam
 import GameContextProvider, {useGameContext, GameContextType}  from 'deco-sites/shp/contexts/Games/GameContext.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
-import { useId, useState, useEffect, useCallback } from 'preact/hooks'
+import { useId, useState, useEffect, useCallback, useRef } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import DataJson from 'deco-sites/shp/static/fpsData_test.json' assert { type: "json" } 
@@ -18,74 +18,93 @@ const count=signal(1)
 const gamesChecked=signal<string[]>([])
 const checkboxChecked=signal<string>('')
 const minPrice=signal<string>('2000')
+const block144=signal(false)
+const RangeVal=signal('')
 
 const BTNFinal= () => {
   
   const { games }: GameContextType = useGameContext()
   const [jogos, setJogos]=useState<string[]>([])
 
+  const [systems60,setSys60]=useState<typeof DataJson.fps>([])
+  const [systems144,setSys144]=useState<typeof DataJson.fps>([])
+  const [finalArr,setFinalArr]=useState<typeof DataJson.fps>([])
+
   const fetchPrice=useCallback(async ()=>{
     const data= await Runtime.invoke({
       key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
-      props:{term:'&fq=C:/10/',
-         count:1,
-         sort:'OrderByPriceASC'
+      props:{
+        query:'fq=C:/10/&O=OrderByPriceASC',
+        count:1
       }
     })
 
-    console.log(data)
-    return data
+    return data[0].offers.highPrice.toString().split('.')[0]
   },[])
 
   const fetchData=useCallback(async (query:string)=>{
     const data= await Runtime.invoke({
       key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
-      props:{term:query, count:50}
+      props:{query:query, count:50}
     })
 
-    console.log(data)
     return data
   },[])
 
   const handleButtonClick = () => {
-
     switch (count.value) {
       case 1:
         if(jogos.length>=1){
-          count.value===1 && (gamesChecked.value=jogos)
-          count.value++
+          (async()=>{
+            count.value===1 && (gamesChecked.value=jogos)
+            minPrice.value=await fetchPrice()
+            setSys60(DataJson.fps.filter(system => gamesChecked.value.some(game => system.games[game as keyof typeof system.games] > 60 && system.games[game as keyof typeof system.games] < 145)))
+            setSys144(DataJson.fps.filter(system => gamesChecked.value.some(game => system.games[game as keyof typeof system.games] > 144)))
+            count.value++
+          })()
         }else{
           alert('Você precisa selecionar um ou mais jogos!')
         }
         break;
 
       case 2:
-        fetchPrice()
-        count.value++
-        break
-      
-      case 3:
-        if(checkboxChecked.value === ''){alert('Você precisa selecionar uma das opções!')
+       { 
+        if(Object.keys(systems144).length===0){
+          setFinalArr(systems60)
+          block144.value=true
+          checkboxChecked.value='60+'
         }else{
-          const systems=checkboxChecked.value==='60+' ? 
-          DataJson.fps.filter(system=>{
-            for(const game of gamesChecked.value){
-              if(system.games[game as keyof typeof system.games] < 60 || system.games[game as keyof typeof system.games] >= 144) return false
+          setFinalArr([...systems60,...systems144].reduce<typeof DataJson.fps>((acc,current)=>{
+            const x= acc.find((item)=>(item.placa===current.placa && item.processador===current.processador))
+            if(!x){
+              return acc.concat([current])
+            }else{
+              return acc
             }
-            return true
-          })
-          :
-          DataJson.fps.filter(system=>{
-            for(const game of gamesChecked.value){
-              if(system.games[game as keyof typeof system.games] <= 144) return false
-            }
-            return true
-          })
-          let term='?fq=C:/10/'
-          systems.forEach(obj=>term+=`&fq=specificationFilter_20:${obj.placa},specificationFilter_19:${obj.processador}`)
-          console.log(term)
-
-          fetchData(term)
+          },[]))
+        }
+        count.value++
+      }
+        break;
+      case 3:
+        if(checkboxChecked.value === '' && !block144.value){alert('Você precisa selecionar uma das opções!')
+        }else{
+          (async()=>{
+            const term:string[]=[]
+            //trecho responsável pelo preco &fq=P:[${parseFloat(minPrice.value)} TO ${parseFloat(RangeVal.value)}]
+            finalArr?.forEach(obj=>term.push(`fq=C:/10/&fq=specificationFilter_20:${obj.placa},specificationFilter_19:${obj.processador}`))
+            console.log(term)
+            const arrayRespPromisses=term.map(req=>fetchData(req))
+            const arrayResp=await Promise.all(arrayRespPromisses)
+            const ids:string[]=[]
+            arrayResp.forEach(items=>items.forEach((item:Record<string,string>)=>ids.push(item.productID)))
+            //verifica se há duplicatas, caso o pc esteja presente em mais de um request
+            const verifiedIds=[...new Set(ids)]
+            console.log({
+              prices:[minPrice.value, RangeVal.value],
+              Ids: verifiedIds
+            })
+          })()
         }
         
         break;
@@ -153,25 +172,30 @@ const selectGames=({Games=[]}:Props)=>{
     window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', handleResize)  
     }
   }, [])
 
   const id=useId()+'-SelectGames'
 
-  const rangeMin=minPrice.value
-  const [rangeVal, setRangeVal]=useState(rangeMin)
-  const [barVal, setBarVal]=useState(rangeMin)
+  const [rangeVal, setRangeVal]=useState(minPrice.value)
+  const [barVal, setBarVal]=useState(minPrice.value)
+
+
+  useEffect(()=>{
+    setRangeVal(minPrice.value)
+    setBarVal(minPrice.value)
+  },[minPrice.value])
   
   const percentRange=()=>{
     if(parseFloat(barVal)>=10000){
       return 100
     }
 
-    if(parseFloat(barVal)<=parseFloat(rangeMin)){
+    if(parseFloat(barVal)<=parseFloat(minPrice.value)){
       return 0
     }
-    return ((parseFloat(barVal) - parseFloat(rangeMin)) / (10000 - parseFloat(rangeMin)) * 100)
+    return ((parseFloat(barVal) - parseFloat(minPrice.value)) / (10000 - parseFloat(minPrice.value)) * 100)
   }
 
   const handleKeyUp=(event: KeyboardEvent)=>{
@@ -195,8 +219,11 @@ const selectGames=({Games=[]}:Props)=>{
   }
 
   useEffect(()=>{
-    setBarVal(String(verifyVal(rangeVal,rangeMin)))
+    setBarVal(String(verifyVal(rangeVal,minPrice.value)))
+    RangeVal.value=String(verifyVal(rangeVal,minPrice.value))
   },[rangeVal])
+
+  const [tooltipStyle, setTooltipStyle]=useState('none')
 
   Games.length<1 && null
 
@@ -291,7 +318,7 @@ const selectGames=({Games=[]}:Props)=>{
                   <div className='h-[4px] relative top-[4px] bg-[#dd1f26]' style={{width:`${percentRange()}%`}}/>
                   <input
                     type="range"
-                    min={rangeMin}
+                    min={minPrice.value}
                     max="10000"
                     step="1"
                     value={barVal}
@@ -315,17 +342,25 @@ const selectGames=({Games=[]}:Props)=>{
                       <p>60FPS</p>
                     </div>
                     <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
-                      onClick={()=>checkboxChecked.value='60+'}
+                      onClick={()=>checkboxChecked.value='60+'} checked={block144.value}
                     />
                   </label>
                   <hr className='w-[2px] h-[70px] bg-white'/>
                   <label className='flex gap-2 items-center'>
-                    <div className='flex flex-col text-lg font-bold items-start'>
+                    {block144.value && (
+                      <div onMouseOver={()=>setTooltipStyle('block')} onMouseOut={()=>setTooltipStyle('none')}>
+                        <span className='text-3xl text-[#dd1f26] font-bold'>!</span>
+                        <div style={{display: tooltipStyle}} className='p-2 absolute text-white bg-black text-sm w-44 rounded-lg z-10'>
+                          <p>Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!</p>
+                        </div>
+                      </div>
+                    )}
+                    <div className={`flex flex-col text-lg font-bold items-start ${block144.value && 'brightness-50 cursor-not-allowed'}`}>
                       <p>Acima de</p>
                       <p>144FPS</p>
                     </div>
                     <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
-                      onClick={()=>checkboxChecked.value='144+'}
+                      onClick={()=>{if(!block144.value)checkboxChecked.value='144+'}} disabled={block144.value}
                     />
                   </label>
                 </div>
