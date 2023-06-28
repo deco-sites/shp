@@ -108,6 +108,7 @@
               "deco-sites/shp/sections/ReturnH1.tsx",
               "deco-sites/shp/sections/SearchResult.tsx",
               "deco-sites/shp/sections/Separado.tsx",
+              "deco-sites/shp/sections/Shelf.tsx",
               "deco-sites/shp/sections/SignNewsletter.tsx",
               "deco-sites/shp/sections/Vitrine.tsx",
               "deco-sites/shp/sections/WhatsApp.tsx",
@@ -6876,13 +6877,16 @@
           "description": "total number of items to display",
           "title": "Count"
         },
-        "query": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "description": "query, didn't use with sort, collection or term props",
-          "title": "Query"
+        "fq": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "fq's",
+          "title": "Fq"
         }
       },
       "required": [],
@@ -9203,6 +9207,17 @@
       ],
       "title": "deco-sites/shp/components/search/SearchResult.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4@Props": {
+      "type": "object",
+      "properties": {
+        "slug": {
+          "$ref": "#/definitions/QzovVXNlcnMvS2Zpb2xvL0Rlc2t0b3AvV29ya3NwYWNlL2RlY28vc3RkL2Z1bmN0aW9ucy9yZXF1ZXN0VG9QYXJhbS50cw==@RequestURLParam",
+          "title": "Slug"
+        }
+      },
+      "required": [],
+      "title": "deco-sites/shp/sections/Shelf.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9XaGF0c0FwcC50c3g=@Props": {
       "type": "object",
       "properties": {
@@ -9790,7 +9805,7 @@
       ],
       "title": "deco-cx/live/actions/workflows/cancel.ts@Props"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@63e0dc8518b7b95dcee9d0a023130ccd&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@0c107a8c44d7cf598140b2d65ad2cb8b&Metadata": {
       "allOf": [
         {
           "type": "object",
@@ -9808,9 +9823,9 @@
           "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata"
         }
       ],
-      "title": "63e0dc8518b7b95dcee9d0a023130ccd&Metadata"
+      "title": "0c107a8c44d7cf598140b2d65ad2cb8b&Metadata"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+63e0dc8518b7b95dcee9d0a023130ccd&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+0c107a8c44d7cf598140b2d65ad2cb8b&Metadata": {
       "type": "object",
       "properties": {
         "results": {
@@ -9821,7 +9836,7 @@
           "title": "Execution Id"
         },
         "metadata": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@63e0dc8518b7b95dcee9d0a023130ccd&Metadata",
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@0c107a8c44d7cf598140b2d65ad2cb8b&Metadata",
           "title": "Metadata"
         }
       },
@@ -9830,7 +9845,7 @@
         "executionId",
         "metadata"
       ],
-      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+63e0dc8518b7b95dcee9d0a023130ccd&Metadata"
+      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+0c107a8c44d7cf598140b2d65ad2cb8b&Metadata"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3NpZ25hbC50cw==@Props": {
       "type": "object",
@@ -12319,6 +12334,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4": {
+      "title": "deco-sites/shp/sections/Shelf.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/Shelf.tsx"
+          ],
+          "default": "deco-sites/shp/sections/Shelf.tsx"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2lnbk5ld3NsZXR0ZXIudHN4": {
       "title": "deco-sites/shp/sections/SignNewsletter.tsx",
       "type": "object",
@@ -12908,7 +12944,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+63e0dc8518b7b95dcee9d0a023130ccd&Metadata"
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+0c107a8c44d7cf598140b2d65ad2cb8b&Metadata"
         }
       ],
       "required": [
@@ -13652,6 +13688,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VwYXJhZG8udHN4"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2lnbk5ld3NsZXR0ZXIudHN4"

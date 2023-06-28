@@ -9,6 +9,7 @@ import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import DataJson from 'deco-sites/shp/static/fpsData_test.json' assert { type: "json" } 
 import { Runtime } from 'deco-sites/std/runtime.ts'
 
+//arrumar filtro de checkbox e de preco
 
 export interface Props{
   Games:Array<gameProps>
@@ -19,6 +20,7 @@ const gamesChecked=signal<string[]>([])
 const checkboxChecked=signal<string>('')
 const minPrice=signal<string>('2000')
 const block144=signal(false)
+const block60=signal(false)
 const RangeVal=signal('')
 
 const BTNFinal= () => {
@@ -28,13 +30,13 @@ const BTNFinal= () => {
 
   const [systems60,setSys60]=useState<typeof DataJson.fps>([])
   const [systems144,setSys144]=useState<typeof DataJson.fps>([])
-  const [finalArr,setFinalArr]=useState<typeof DataJson.fps>([])
 
   const fetchPrice=useCallback(async ()=>{
     const data= await Runtime.invoke({
       key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
       props:{
-        query:'fq=C:/10/&O=OrderByPriceASC',
+        fq:['C:/10/'],
+        sort:'OrderByPriceASC',
         count:1
       }
     })
@@ -42,14 +44,27 @@ const BTNFinal= () => {
     return data[0].offers.highPrice.toString().split('.')[0]
   },[])
 
-  const fetchData=useCallback(async (query:string)=>{
+  const fetchData=useCallback(async (fqs:string[])=>{
     const data= await Runtime.invoke({
       key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
-      props:{query:query, count:50}
+      props:{fq:fqs, count:50}
     })
 
     return data
   },[])
+
+  const callPromises=async(system:typeof DataJson.fps)=>{
+    const term:string[]=[]
+    system.forEach(obj=>term.push(`fq=C:/10/&fq=specificationFilter_20:${obj.placa},specificationFilter_19:${obj.processador}&fq=P:[${parseFloat(minPrice.value)} TO ${parseFloat(RangeVal.value)}]`)) 
+    console.log('Term:'+ term)
+    const arrayRespPromisses=term.map(req=>fetchData(req.replace('&','').split('fq=')))
+    const arrayResp=await Promise.all(arrayRespPromisses)
+    const ids:string[]=[]
+    arrayResp.forEach(items=>items.forEach((item:Record<string,string>)=>ids.push(item.productID)))
+    //verifica se há duplicatas, caso o pc esteja presente em mais de um request
+    const verifiedIds=[...new Set(ids)]
+    return verifiedIds
+  }
 
   const handleButtonClick = () => {
     switch (count.value) {
@@ -68,42 +83,42 @@ const BTNFinal= () => {
         break;
 
       case 2:
-       { 
-        if(Object.keys(systems144).length===0){
-          setFinalArr(systems60)
-          block144.value=true
-          checkboxChecked.value='60+'
-        }else{
-          setFinalArr([...systems60,...systems144].reduce<typeof DataJson.fps>((acc,current)=>{
-            const x= acc.find((item)=>(item.placa===current.placa && item.processador===current.processador))
-            if(!x){
-              return acc.concat([current])
-            }else{
-              return acc
-            }
-          },[]))
+        { 
+          if(Object.keys(systems144).length===0){
+            (async()=>{
+              block144.value=true
+              const Ids=await callPromises(systems60)
+              if(Ids.length<1){
+                block60.value=true
+              }else{
+                checkboxChecked.value='60+'
+                block60.value=false
+              }
+            })()
+            
+          }else{
+            (async()=>{
+              console.log('executou')
+              const Ids60=await callPromises(systems60)
+              const Ids144= await callPromises(systems144)
+              Ids60.length<1 ? block60.value=true : block60.value=false
+              Ids144.length<1 ? block144.value=true : block144.value=false
+            })()
+          }
+          
+          count.value++
         }
-        count.value++
-      }
         break;
       case 3:
-        if(checkboxChecked.value === '' && !block144.value){alert('Você precisa selecionar uma das opções!')
+        if(checkboxChecked.value === '' && !block144.value && !block60.value){alert('Você precisa selecionar uma das opções!')
         }else{
           (async()=>{
-            const term:string[]=[]
-            //trecho responsável pelo preco &fq=P:[${parseFloat(minPrice.value)} TO ${parseFloat(RangeVal.value)}]
-            finalArr?.forEach(obj=>term.push(`fq=C:/10/&fq=specificationFilter_20:${obj.placa},specificationFilter_19:${obj.processador}`))
-            console.log(term)
-            const arrayRespPromisses=term.map(req=>fetchData(req))
-            const arrayResp=await Promise.all(arrayRespPromisses)
-            const ids:string[]=[]
-            arrayResp.forEach(items=>items.forEach((item:Record<string,string>)=>ids.push(item.productID)))
-            //verifica se há duplicatas, caso o pc esteja presente em mais de um request
-            const verifiedIds=[...new Set(ids)]
+            const Ids=await callPromises((checkboxChecked.value!=='' && checkboxChecked.value==='60+') ? systems60 : systems144)
             console.log({
               prices:[minPrice.value, RangeVal.value],
-              Ids: verifiedIds
+              Ids
             })
+            window.location.href=`shelf/[${Ids}]`
           })()
         }
         
@@ -223,8 +238,6 @@ const selectGames=({Games=[]}:Props)=>{
     RangeVal.value=String(verifyVal(rangeVal,minPrice.value))
   },[rangeVal])
 
-  const [tooltipStyle, setTooltipStyle]=useState('none')
-
   Games.length<1 && null
 
   return(
@@ -337,25 +350,19 @@ const selectGames=({Games=[]}:Props)=>{
               <div className='flex flex-col items-center justify-center text-white gap-6'>
                 <div className="flex gap-12 items-center justify-center">
                   <label className='flex gap-2 items-center'>
-                    <div className='flex flex-col text-lg font-bold items-start'>
+                    {block60.value && (<span className='text-5xl text-[#dd1f26] font-bold tooltip tooltip-bottom mr-1' data-tip='Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!'>!</span>)}
+                    <div className={`flex flex-col text-sm re1:text-lg font-bold items-start ${block60.value && 'brightness-50 cursor-not-allowed'}`}>
                       <p>Acima de</p>
                       <p>60FPS</p>
                     </div>
                     <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
-                      onClick={()=>checkboxChecked.value='60+'} checked={block144.value}
+                      onClick={()=>{if(!block144.value)checkboxChecked.value='60+'}} disabled={block60.value}
                     />
                   </label>
                   <hr className='w-[2px] h-[70px] bg-white'/>
                   <label className='flex gap-2 items-center'>
-                    {block144.value && (
-                      <div onMouseOver={()=>setTooltipStyle('block')} onMouseOut={()=>setTooltipStyle('none')}>
-                        <span className='text-3xl text-[#dd1f26] font-bold'>!</span>
-                        <div style={{display: tooltipStyle}} className='p-2 absolute text-white bg-black text-sm w-44 rounded-lg z-10'>
-                          <p>Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!</p>
-                        </div>
-                      </div>
-                    )}
-                    <div className={`flex flex-col text-lg font-bold items-start ${block144.value && 'brightness-50 cursor-not-allowed'}`}>
+                    {block144.value && (<span className='text-[#dd1f26] font-bold text-5xl tooltip tooltip-bottom mr-1' data-tip='Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!'>!</span>)}
+                    <div className={`flex flex-col text-sm re1:text-lg font-bold items-start ${block144.value && 'brightness-50 cursor-not-allowed'}`}>
                       <p>Acima de</p>
                       <p>144FPS</p>
                     </div>

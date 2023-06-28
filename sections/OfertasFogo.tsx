@@ -54,8 +54,8 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
   useEffect(() => {
     const timeOut = setInterval(() => {
       if (finalDate) {
-        const timeObj =
-          finalDate && calculateTimeRemaining(startDate, finalDate)
+        console.log('Papa')
+        const timeObj = finalDate && calculateTimeRemaining(startDate, finalDate)
         const { days, hours, minutes, seconds } = timeObj
         setDays(days)
         setHours(hours)
@@ -68,6 +68,8 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
       clearInterval(timeOut)
     }
   }, [])
+
+  useEffect(()=>console.log('mudou'),[seconds])
 
   if (!products || products.length === 0) {
     return <></>

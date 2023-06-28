@@ -83,7 +83,7 @@ const renderProduct = (element: Product, index: number, PcGamer:boolean) => {
   }
 }
 
-const Shelf = ({ PcGamer, produtos }: VitrineProps) => {
+const Vitrine = ({ PcGamer, produtos }: VitrineProps) => {
   const [isMobile, setIsMobile] = useState(false)
   const id = useId() + '-vitrine'
 
@@ -129,4 +129,4 @@ const Shelf = ({ PcGamer, produtos }: VitrineProps) => {
   )
 }
 
-export default Shelf
+export default Vitrine
