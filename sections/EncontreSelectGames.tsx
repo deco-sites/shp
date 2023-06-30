@@ -3,7 +3,7 @@ import Game, {gameProps} from 'deco-sites/shp/components/ComponentsSHP/SelectGam
 import GameContextProvider, {useGameContext, GameContextType}  from 'deco-sites/shp/contexts/Games/GameContext.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
-import { useId, useState, useEffect, useCallback, useRef } from 'preact/hooks'
+import { useId, useState, useEffect, useCallback } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import DataJson from 'deco-sites/shp/static/fpsData_test.json' assert { type: "json" } 
@@ -50,6 +50,7 @@ const BTNFinal= () => {
       props:{fq:fqs, count:50}
     })
 
+    console.log(data)
     return data
   },[])
 
@@ -59,11 +60,11 @@ const BTNFinal= () => {
     console.log('Term:'+ term)
     const arrayRespPromisses=term.map(req=>fetchData(req.replace('&','').split('fq=')))
     const arrayResp=await Promise.all(arrayRespPromisses)
-    const ids:string[]=[]
-    arrayResp.forEach(items=>items.forEach((item:Record<string,string>)=>ids.push(item.productID)))
+    const sku:string[]=[]
+    arrayResp.forEach(items=>items.forEach((item:Record<string,string>)=>sku.push(item.sku)))
     //verifica se há duplicatas, caso o pc esteja presente em mais de um request
-    const verifiedIds=[...new Set(ids)]
-    return verifiedIds
+    const verifiedSku=[...new Set(sku)]
+    return verifiedSku
   }
 
   const handleButtonClick = () => {
@@ -73,7 +74,7 @@ const BTNFinal= () => {
           (async()=>{
             count.value===1 && (gamesChecked.value=jogos)
             minPrice.value=await fetchPrice()
-            setSys60(DataJson.fps.filter(system => gamesChecked.value.some(game => system.games[game as keyof typeof system.games] > 60 && system.games[game as keyof typeof system.games] < 145)))
+            setSys60(DataJson.fps.filter(system => gamesChecked.value.some(game => system.games[game as keyof typeof system.games] > 60)))
             setSys144(DataJson.fps.filter(system => gamesChecked.value.some(game => system.games[game as keyof typeof system.games] > 144)))
             count.value++
           })()
@@ -113,12 +114,12 @@ const BTNFinal= () => {
         if(checkboxChecked.value === '' && !block144.value && !block60.value){alert('Você precisa selecionar uma das opções!')
         }else{
           (async()=>{
-            const Ids=await callPromises((checkboxChecked.value!=='' && checkboxChecked.value==='60+') ? systems60 : systems144)
+            const Skus=await callPromises((checkboxChecked.value!=='' && checkboxChecked.value==='60+') ? systems60 : systems144)
             console.log({
               prices:[minPrice.value, RangeVal.value],
-              Ids
+              Skus
             })
-            window.location.href=`shelf/[${Ids}]`
+            window.location.href=`shelf/?q=${Skus}`
           })()
         }
         

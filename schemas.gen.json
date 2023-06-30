@@ -69,7 +69,7 @@
               "./islands/ProductImageZoom.tsx",
               "./islands/SearchControls.tsx",
               "./islands/SelectGamesIsland.tsx",
-              "./islands/SeparadoIsland.tsx",
+              "./islands/ShelfIsland.tsx",
               "./islands/ShippingSimulation.tsx",
               "./islands/SliderJS.tsx",
               "./islands/VitrineIsland.tsx",
@@ -107,7 +107,6 @@
               "deco-sites/shp/sections/ProductShelf.tsx",
               "deco-sites/shp/sections/ReturnH1.tsx",
               "deco-sites/shp/sections/SearchResult.tsx",
-              "deco-sites/shp/sections/Separado.tsx",
               "deco-sites/shp/sections/Shelf.tsx",
               "deco-sites/shp/sections/SignNewsletter.tsx",
               "deco-sites/shp/sections/Vitrine.tsx",
@@ -7309,6 +7308,9 @@
       ],
       "title": "deco-sites/shp/sections/EncontreSelectGames.tsx@Props"
     },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@SectionProps": {
+      "title": "deco-cx/live/blocks/section.ts@SectionProps"
+    },
     "QzovVXNlcnMvS2Zpb2xvL0Rlc2t0b3AvV29ya3NwYWNlL2RlY28vc3RkL3BhY2tzL3Z0ZXgvdHlwZXMudHM=@SKU": {
       "type": "object",
       "properties": {
@@ -9210,12 +9212,14 @@
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4@Props": {
       "type": "object",
       "properties": {
-        "slug": {
-          "$ref": "#/definitions/QzovVXNlcnMvS2Zpb2xvL0Rlc2t0b3AvV29ya3NwYWNlL2RlY28vc3RkL2Z1bmN0aW9ucy9yZXF1ZXN0VG9QYXJhbS50cw==@RequestURLParam",
-          "title": "Slug"
+        "fqType": {
+          "type": "string",
+          "title": "Fq Type"
         }
       },
-      "required": [],
+      "required": [
+        "fqType"
+      ],
       "title": "deco-sites/shp/sections/Shelf.tsx@Props"
     },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9XaGF0c0FwcC50c3g=@Props": {
@@ -9805,7 +9809,7 @@
       ],
       "title": "deco-cx/live/actions/workflows/cancel.ts@Props"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@0c107a8c44d7cf598140b2d65ad2cb8b&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&e2d6f464cb69f6b6e7272997a795ae7a": {
       "allOf": [
         {
           "type": "object",
@@ -9823,9 +9827,9 @@
           "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata"
         }
       ],
-      "title": "0c107a8c44d7cf598140b2d65ad2cb8b&Metadata"
+      "title": "Metadata&e2d6f464cb69f6b6e7272997a795ae7a"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+0c107a8c44d7cf598140b2d65ad2cb8b&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&e2d6f464cb69f6b6e7272997a795ae7a": {
       "type": "object",
       "properties": {
         "results": {
@@ -9836,7 +9840,7 @@
           "title": "Execution Id"
         },
         "metadata": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@0c107a8c44d7cf598140b2d65ad2cb8b&Metadata",
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata&e2d6f464cb69f6b6e7272997a795ae7a",
           "title": "Metadata"
         }
       },
@@ -9845,7 +9849,7 @@
         "executionId",
         "metadata"
       ],
-      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+0c107a8c44d7cf598140b2d65ad2cb8b&Metadata"
+      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+Metadata&e2d6f464cb69f6b6e7272997a795ae7a"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3NpZ25hbC50cw==@Props": {
       "type": "object",
@@ -11546,9 +11550,14 @@
         }
       }
     },
-    "Li9pc2xhbmRzL1NlcGFyYWRvSXNsYW5kLnRzeA==": {
-      "title": "./islands/SeparadoIsland.tsx",
+    "Li9pc2xhbmRzL1NoZWxmSXNsYW5kLnRzeA==": {
+      "title": "./islands/ShelfIsland.tsx",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@SectionProps"
+        }
+      ],
       "required": [
         "__resolveType"
       ],
@@ -11556,9 +11565,9 @@
         "__resolveType": {
           "type": "string",
           "enum": [
-            "./islands/SeparadoIsland.tsx"
+            "./islands/ShelfIsland.tsx"
           ],
-          "default": "./islands/SeparadoIsland.tsx"
+          "default": "./islands/ShelfIsland.tsx"
         }
       }
     },
@@ -12318,22 +12327,6 @@
         }
       }
     },
-    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VwYXJhZG8udHN4": {
-      "title": "deco-sites/shp/sections/Separado.tsx",
-      "type": "object",
-      "required": [
-        "__resolveType"
-      ],
-      "properties": {
-        "__resolveType": {
-          "type": "string",
-          "enum": [
-            "deco-sites/shp/sections/Separado.tsx"
-          ],
-          "default": "deco-sites/shp/sections/Separado.tsx"
-        }
-      }
-    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4": {
       "title": "deco-sites/shp/sections/Shelf.tsx",
       "type": "object",
@@ -12944,7 +12937,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+0c107a8c44d7cf598140b2d65ad2cb8b&Metadata"
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+Metadata&e2d6f464cb69f6b6e7272997a795ae7a"
         }
       ],
       "required": [
@@ -13549,7 +13542,7 @@
           "$ref": "#/definitions/Li9pc2xhbmRzL1NlbGVjdEdhbWVzSXNsYW5kLnRzeA=="
         },
         {
-          "$ref": "#/definitions/Li9pc2xhbmRzL1NlcGFyYWRvSXNsYW5kLnRzeA=="
+          "$ref": "#/definitions/Li9pc2xhbmRzL1NoZWxmSXNsYW5kLnRzeA=="
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL1NoaXBwaW5nU2ltdWxhdGlvbi50c3g="
@@ -13685,9 +13678,6 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VhcmNoUmVzdWx0LnRzeA=="
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2VwYXJhZG8udHN4"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4"
