@@ -39,18 +39,17 @@ const BTNFinal= () => {
         sort:'OrderByPriceASC',
         count:1
       }
-    })
+    }) || []
 
-    return data[0].offers.highPrice.toString().split('.')[0]
+    return data[0].offers ? data[0].offers.highPrice.toString().split('.')[0] : '2000'
   },[])
 
   const fetchData=useCallback(async (fqs:string[])=>{
     const data= await Runtime.invoke({
       key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
       props:{fq:fqs, count:50}
-    })
+    }) || []
 
-    console.log(data)
     return data
   },[])
 
@@ -61,7 +60,7 @@ const BTNFinal= () => {
     const arrayRespPromisses=term.map(req=>fetchData(req.replace('&','').split('fq=')))
     const arrayResp=await Promise.all(arrayRespPromisses)
     const sku:string[]=[]
-    arrayResp.forEach(items=>items.forEach((item:Record<string,string>)=>sku.push(item.sku)))
+    arrayResp.forEach(items=>items.forEach((item)=>sku.push(item.sku)))
     //verifica se há duplicatas, caso o pc esteja presente em mais de um request
     const verifiedSku=[...new Set(sku)]
     return verifiedSku
