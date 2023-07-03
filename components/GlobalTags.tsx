@@ -8,8 +8,8 @@ function GlobalTags() {
 
       <meta name="theme-color" content="#dd1f26"/>
 
-      {/* Tailwind v3 CSS file  substituir dps pra styles.css*/}
-      <link href={asset("/tailwind.css")} rel="stylesheet" />
+      {/* Tailwind v3 CSS file */}
+      <link href={asset("/styles.css")} rel="stylesheet" />
 
       {/* Icons */}
       <link
