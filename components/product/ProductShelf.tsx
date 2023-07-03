@@ -2,9 +2,7 @@ import ProductCard from "deco-sites/fashion/components/product/ProductCard.tsx";
 import SliderJS from "deco-sites/fashion/islands/SliderJS.tsx";
 import Icon from "deco-sites/fashion/components/ui/Icon.tsx";
 import Slider from "deco-sites/fashion/components/ui/Slider.tsx";
-import { SendEventOnLoad } from "deco-sites/fashion/sdk/analytics.tsx";
 import { useId } from "preact/hooks";
-import { mapProductToAnalyticsItem } from "deco-sites/std/commerce/utils/productToAnalyticsItem.ts";
 import { useOffer } from "deco-sites/fashion/sdk/useOffer.ts";
 import type { LoaderReturnType } from "$live/types.ts";
 import type { Product } from "deco-sites/std/commerce/types.ts";
@@ -23,6 +21,8 @@ function ProductShelf({
 
   if (!products || products.length === 0) {
     return null;
+  }else{
+    console.log(products)
   }
 
   return (
@@ -58,7 +58,7 @@ function ProductShelf({
         </div>
       </>
       <SliderJS rootId={id} />
-      <SendEventOnLoad
+      {/* <SendEventOnLoad
         event={{
           name: "view_item_list",
           params: {
@@ -71,7 +71,7 @@ function ProductShelf({
             ),
           },
         }}
-      />
+      /> */}
     </div>
   );
 }

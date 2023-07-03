@@ -139,7 +139,7 @@ function ProductInfo({ page }: { page: ProductDetailsPage }) {
         </span>
       </div>
       {/* Analytics Event */}
-      <SendEventOnLoad
+      {/* <SendEventOnLoad
         event={{
           name: "view_item",
           params: {
@@ -153,7 +153,7 @@ function ProductInfo({ page }: { page: ProductDetailsPage }) {
             ],
           },
         }}
-      />
+      /> */}
     </>
   );
 }

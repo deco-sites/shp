@@ -56,9 +56,9 @@ function ProductCard({ product, preload, itemListName }: Props) {
   return (
     <div
       class="card card-compact card-bordered border-transparent hover:border-base-200 group w-full"
-      data-deco="view-product"
+      // data-deco="view-product"
       id={`product-card-${productID}`}
-      {...sendEventOnClick(clickEvent)}
+      // {...sendEventOnClick(clickEvent)}
     >
       <figure class="relative " style={{ aspectRatio: `${WIDTH} / ${HEIGHT}` }}>
         {/* Wishlist button */}
