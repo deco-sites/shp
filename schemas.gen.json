@@ -9221,31 +9221,15 @@
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage|null",
           "title": "Page"
         },
-        "variant": {
-          "anyOf": [
-            {
-              "type": "string",
-              "const": "front-back",
-              "default": "front-back"
-            },
-            {
-              "type": "string",
-              "const": "slider",
-              "default": "slider"
-            },
-            {
-              "type": "string",
-              "const": "auto",
-              "default": "auto"
-            }
-          ],
-          "type": "string",
-          "title": "Product view",
-          "description": "Ask for the developer to remove this option since this is here to help development only and should not be used in production"
+        "pix": {
+          "type": "number",
+          "description": "Desconto pix, caso não haja coloque 1",
+          "title": "Pix"
         }
       },
       "required": [
-        "page"
+        "page",
+        "pix"
       ],
       "title": "deco-sites/shp/components/product/ProductDetails.tsx@Props"
     },
@@ -9967,7 +9951,7 @@
       ],
       "title": "deco-cx/live/actions/workflows/cancel.ts@Props"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@507352d4562990dd46b22ffc3dafea4f&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@05a2cc66449ee3cc43ad1783938e3940&Metadata": {
       "allOf": [
         {
           "type": "object",
@@ -9985,9 +9969,9 @@
           "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@Metadata"
         }
       ],
-      "title": "507352d4562990dd46b22ffc3dafea4f&Metadata"
+      "title": "05a2cc66449ee3cc43ad1783938e3940&Metadata"
     },
-    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+507352d4562990dd46b22ffc3dafea4f&Metadata": {
+    "ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+05a2cc66449ee3cc43ad1783938e3940&Metadata": {
       "type": "object",
       "properties": {
         "results": {
@@ -9998,7 +9982,7 @@
           "title": "Execution Id"
         },
         "metadata": {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@507352d4562990dd46b22ffc3dafea4f&Metadata",
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2NvbnRleHQudHM=@05a2cc66449ee3cc43ad1783938e3940&Metadata",
           "title": "Metadata"
         }
       },
@@ -10007,7 +9991,7 @@
         "executionId",
         "metadata"
       ],
-      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+507352d4562990dd46b22ffc3dafea4f&Metadata"
+      "title": "deco-cx/durable/handler.ts@RunRequest+Arg+05a2cc66449ee3cc43ad1783938e3940&Metadata"
     },
     "ZGVjby1jeC9saXZlL2FjdGlvbnMvd29ya2Zsb3dzL3NpZ25hbC50cw==@Props": {
       "type": "object",
@@ -13233,7 +13217,7 @@
       "type": "object",
       "allOf": [
         {
-          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+507352d4562990dd46b22ffc3dafea4f&Metadata"
+          "$ref": "#/definitions/ZGVjby1jeC9kdXJhYmxlL2hhbmRsZXIudHM=@RunRequest+Arg+05a2cc66449ee3cc43ad1783938e3940&Metadata"
         }
       ],
       "required": [

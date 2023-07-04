@@ -21,8 +21,6 @@ function ProductShelf({
 
   if (!products || products.length === 0) {
     return null;
-  }else{
-    console.log(products)
   }
 
   return (

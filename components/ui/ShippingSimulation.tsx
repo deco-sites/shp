@@ -3,6 +3,7 @@ import { useCallback } from "preact/hooks";
 import Button from "deco-sites/fashion/components/ui/Button.tsx";
 import { formatPrice } from "deco-sites/fashion/sdk/format.ts";
 import { useCart } from "deco-sites/std/packs/vtex/hooks/useCart.ts";
+import Image from 'deco-sites/std/components/Image.tsx'
 import type {
   SimulationOrderForm,
   SKU,
@@ -98,9 +99,11 @@ function ShippingSimulation({ items }: Props) {
   return (
     <div class="flex flex-col gap-2">
       <div class="flex flex-col">
-        <span>Calcular frete</span>
-        <span>
-          Informe seu CEP para consultar os prazos de entrega
+        <span className='flex gap-2'>
+          <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-shipping-truck-icon.png'
+            width={24} height={20} loading='eager' decoding='auto' fetchPriority='high'
+          />
+          Calcular frete e prazo de entrega
         </span>
       </div>
       <div>
@@ -116,15 +119,17 @@ function ShippingSimulation({ items }: Props) {
               as="input"
               type="text"
               class="input input-bordered"
-              placeholder="Seu cep aqui"
+              placeholder="Digite seu cep"
               value={postalCode.value}
               maxLength={8}
               onChange={(e: { currentTarget: { value: string } }) => {
                 postalCode.value = e.currentTarget.value;
               }}
             />
-            <Button type="submit" loading={loading.value}>
-              Calcular
+            <Button type="submit" loading={loading.value} class='bg-[#dd1f26] border-[#dd1f26] hover:border-[#dd1f26] hover:bg-[#dd1f26]'>
+              <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-arrow-right.png'
+                width={16} height={12} loading='eager' decoding='auto' fetchPriority='high'
+              />
             </Button>
           </div>
         </form>

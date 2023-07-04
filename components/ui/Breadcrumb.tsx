@@ -1,25 +1,28 @@
-import type { BreadcrumbList } from "deco-sites/std/commerce/types.ts";
+import type { BreadcrumbList } from 'deco-sites/std/commerce/types.ts'
 
 interface Props {
-  itemListElement: BreadcrumbList["itemListElement"];
+  itemListElement: BreadcrumbList['itemListElement']
 }
 
 function Breadcrumb({ itemListElement = [] }: Props) {
-  const items = [{ name: "Home", item: "/" }, ...itemListElement];
+  const items = [{ name: 'Home', item: '/' }, ...itemListElement]
+  const itemsFiltered = items.filter(({ name, item }) => name && item)
 
   return (
-    <div class="text-caption breadcrumbs">
+    <div class='text-caption hidden re1:breadcrumbs'>
       <ul>
-        {items
-          .filter(({ name, item }) => name && item)
-          .map(({ name, item }) => (
+        {itemsFiltered.map(({ name, item }, index) => 
+          index === itemsFiltered.length - 1 ? (
             <li>
-              <a href={item}>{name}</a>
+              <p className='truncate w-60 font-bold'>{name}</p>
             </li>
-          ))}
+          ) : (
+            <li className='underline decoration-solid'><a href={item}>{name}</a></li>
+          )
+        )}
       </ul>
     </div>
-  );
+  )
 }
 
-export default Breadcrumb;
+export default Breadcrumb
