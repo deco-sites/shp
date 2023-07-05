@@ -6,12 +6,13 @@ export interface ProdProps {
   precoPIX?: string | number
   preco10?: number
   discountFlag?: number
+  productUrl?:string
 }
 
 const Prod = ({ ...props }: ProdProps) => {
   if (props) {
     return (
-      <div className='flex flex-col min-w-[160px] max-w-[160px] max-h-[326px] min-h-[326px] re1:min-w-[200px] re1:max-w-[200px] justify-around rounded-lg bg-white p-2'>
+      <a href={props.productUrl} className='flex flex-col min-w-[160px] max-w-[160px] max-h-[326px] min-h-[326px] re1:min-w-[200px] re1:max-w-[200px] justify-around rounded-lg bg-white p-2'>
         <div className='flex flex-col items-center -mb-5'>
           <label className='w-11/12 flex justify-between bottom-0 z-10'>
             <div className='flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>
@@ -57,7 +58,7 @@ const Prod = ({ ...props }: ProdProps) => {
           />
           <p>Compare</p>
         </label>
-      </div>
+      </a>
     )
   }
 

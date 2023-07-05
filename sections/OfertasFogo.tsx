@@ -154,6 +154,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
                   }
                   discountFlag={15}
                   timeRemaining={[days, hours, minutes, seconds]}
+                  productUrl={slide.url}
                 />
               </Slider.Item>
             )

@@ -7,6 +7,7 @@ export interface Props {
   preco10?: number
   discountFlag?: number
   timeRemaining?:string[]
+  productUrl?:string
 }
 
 
@@ -14,7 +15,7 @@ const ProdFogo = ({...props}: Props) => {
   const [days,hours,minutes,seconds] = props.timeRemaining ? props.timeRemaining : ['00','00','00','00'] 
 
   return (
-    <div className="flex flex-col w-72 justify-between rounded-lg bg-white p-2 h-44">
+    <a href={props.productUrl} className="flex flex-col w-72 justify-between rounded-lg bg-white p-2 h-44">
       <label className="flex h-8 justify-between z-10">
         <div className="bg-[#dd1f26] rounded-lg flex justify-around p-1 items-center w-40">
           <Image width={16} height={20} src="https://shopinfo.vteximg.com.br/arquivos/icon-esquenta-black.png"
@@ -47,7 +48,7 @@ const ProdFogo = ({...props}: Props) => {
           <p className="text-xs font-semibold">ou por R$ {props.precoPIX} no Pix</p>
         </div>
       </div>
-    </div>
+    </a>
   )
 }
 

@@ -39,8 +39,8 @@ export interface Props {
 
 const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDoCliente=[], FormasPagamento=[] }: Props) => {
   return (
-    <footer className='bg-[#111] px-[10%]'>
-      <div className='hidden re1:flex divider w-screen h-0 before:bg-[#dd1f26] after:bg-[#dd1f26] absolute left-0 m-0'/>
+    <footer className='bg-[#111] px-[10%] overflow-x-hidden'>
+      <div className='hidden re1:flex divider w-screen h-0 before:bg-[#dd1f26] after:bg-[#dd1f26] -ml-[12.5%]'/>
       <div className='flex flex-col re1:flex-row re1:gap-4 re1:pt-4'>
         <div className='text-white re1:text-sm my-5 re1:my-0'>
           <h1 className='text-xl font-bold'>Atendimento</h1>

@@ -100,9 +100,11 @@ function ShippingSimulation({ items }: Props) {
     <div class="flex flex-col gap-2">
       <div class="flex flex-col">
         <span className='flex gap-2'>
-          <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-shipping-truck-icon.png'
-            width={24} height={20} loading='eager' decoding='auto' fetchPriority='high'
-          />
+          <div className='flex items-center justify-center'>
+            <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-shipping-truck-icon.png'
+              width={24} height={18} loading='eager' decoding='auto' fetchPriority='high'
+            />
+          </div>
           Calcular frete e prazo de entrega
         </span>
       </div>
@@ -118,7 +120,7 @@ function ShippingSimulation({ items }: Props) {
             <input
               as="input"
               type="text"
-              class="input input-bordered"
+              class="input input-bordered outline-none"
               placeholder="Digite seu cep"
               value={postalCode.value}
               maxLength={8}
