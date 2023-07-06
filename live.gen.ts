@@ -20,6 +20,7 @@ import * as $$$$$10 from "./islands/ShippingSimulation.tsx";
 import * as $$$$$11 from "./islands/SliderJS.tsx";
 import * as $$$$$12 from "./islands/VitrineIsland.tsx";
 import * as $$$$$13 from "./islands/WishlistButton.tsx";
+import * as $$$$$14 from "./islands/YoutubeEmbedIsland.tsx";
 import * as $$$$$$$$0 from "./sections/BannerGrid.tsx";
 import * as $$$$$$$$1 from "./sections/BannerPLP.tsx";
 import * as $$$$$$$$2 from "./sections/BannersColcha.tsx";
@@ -203,6 +204,7 @@ const manifest = {
     "./islands/SliderJS.tsx": $$$$$11,
     "./islands/VitrineIsland.tsx": $$$$$12,
     "./islands/WishlistButton.tsx": $$$$$13,
+    "./islands/YoutubeEmbedIsland.tsx": $$$$$14,
   },
   "sections": {
     "$live/sections/Conditional_Beta.tsx": i2$$$$$0,

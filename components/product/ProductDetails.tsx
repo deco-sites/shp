@@ -19,6 +19,7 @@ import Share from './ShareButton.tsx'
 import ProductSelector from './ProductVariantSelector.tsx'
 import ProductImageZoom from 'deco-sites/fashion/islands/ProductImageZoom.tsx'
 import WishlistButton from '../wishlist/WishlistButton.tsx'
+import YoutubeEmbed from 'deco-sites/shp/components/product/YoutubeDivEmbed.tsx'
 
 export type Variant = 'front-back' | 'slider' | 'auto'
 
@@ -59,7 +60,6 @@ function ProductInfo({ page, pix }: { page: ProductDetailsPage, pix:number }) {
 
   return (
     <>
-    
       {PCGamer && <div className='block re1:hidden'><PcSpec page={page} /></div>}
       <div className='flex re1:flex-col'>
         <div>
@@ -372,7 +372,6 @@ function Details({ page, pix }: { page: ProductDetailsPage, pix:number }) {
   )
   const PCGamer = categoriesId?.some((item) => item === '10')
   const urlReview=isVariantOf?.additionalProperty?.find((item)=>item.name==='Review')?.value
-  console.log(urlReview?.split('v=')[1].split('&')[0])
   /**
    * Product slider variant
    *
@@ -381,8 +380,7 @@ function Details({ page, pix }: { page: ProductDetailsPage, pix:number }) {
    * we rearrange each cell with col-start- directives
    */
   return (
-    <>
-    <iframe width="560" height="315" src={`https://www.youtube.com/embed/${urlReview?.split('v=')[1].split('&')[0]}` }title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+    <>     
       <div className='ml-[16%] mb-4 hidden re1:block'> 
         {/* Breadcrumb */}
         <Breadcrumb itemListElement={breadcrumbList?.itemListElement} />
@@ -405,39 +403,51 @@ function Details({ page, pix }: { page: ProductDetailsPage, pix:number }) {
             </div>
           </div>
           <Slider class='carousel gap-6'>
-            {images.map((img, index) => (
-              <Slider.Item
-                index={index}
-                class='carousel-item min-w-[100vw] re1:min-w-[30vw] justify-center'
-              >
-                <Picture 
-                  // Preload LCP image for better web vitals
-                  preload={index === 0 ? true : false}
+            {images.map((img, index) => {
+              if(index!==images.length-1){
+                return(
+                  <Slider.Item
+                    index={index}
+                    class='carousel-item min-w-[100vw] re1:min-w-[30vw] justify-center'
+                  >
+                    <Picture 
+                      // Preload LCP image for better web vitals
+                      preload={index === 0 ? true : false}
+                    >
+                      <Source
+                        src={img.url!}
+                        media='(max-width:768px)'
+                        width={300}
+                        height={300}
+                      />
+                      <Source
+                        src={img.url!}
+                        media='(min-width:768px)'
+                        width={400}
+                        height={400}
+                      />
+    
+                    <img
+                      style={{ aspectRatio: ASPECT_RATIO }}
+                      src={img.url!}
+                      alt={img.alternateName}
+                      width={WIDTH}
+                      height={HEIGHT}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      />
+                    </Picture>
+                  </Slider.Item>
+                )
+              }else if(urlReview){
+                <Slider.Item
+                  index={index}
+                  class='carousel-item min-w-[100vw] re1:min-w-[30vw] justify-center'
                 >
-                  <Source
-                    src={img.url!}
-                    media='(max-width:768px)'
-                    width={300}
-                    height={300}
-                  />
-                  <Source
-                    src={img.url!}
-                    media='(min-width:768px)'
-                    width={400}
-                    height={400}
-                  />
-
-                <img
-                  style={{ aspectRatio: ASPECT_RATIO }}
-                  src={img.url!}
-                  alt={img.alternateName}
-                  width={WIDTH}
-                  height={HEIGHT}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  />
-                </Picture>
-              </Slider.Item>
-            ))}
+                  <YoutubeEmbed videoId={urlReview.split('v=')[1].split('&')[0]} wMob={300} wDesk={300} hMob={400} hDesk={400}/>
+                </Slider.Item>
+                console.log(urlReview)
+              }
+            })}
           </Slider>
 
           {PCGamer && <div className='hidden re1:block'><PcSpec page={page} /></div>}

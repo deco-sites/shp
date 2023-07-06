@@ -78,6 +78,7 @@
               "./islands/SliderJS.tsx",
               "./islands/VitrineIsland.tsx",
               "./islands/WishlistButton.tsx",
+              "./islands/YoutubeEmbedIsland.tsx",
               "$live/handlers/devPage.ts",
               "$live/handlers/fresh.ts",
               "$live/handlers/proxy.ts",
@@ -7576,6 +7577,39 @@
       ],
       "title": "deco-sites/shp/sections/Vitrine.tsx@VitrineProps"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1lvdXR1YmVEaXZFbWJlZC50c3g=@Props": {
+      "type": "object",
+      "properties": {
+        "videoId": {
+          "type": "string",
+          "title": "Video Id"
+        },
+        "wDesk": {
+          "type": "number",
+          "title": "W Desk"
+        },
+        "hDesk": {
+          "type": "number",
+          "title": "H Desk"
+        },
+        "wMob": {
+          "type": "number",
+          "title": "W Mob"
+        },
+        "hMob": {
+          "type": "number",
+          "title": "H Mob"
+        }
+      },
+      "required": [
+        "videoId",
+        "wDesk",
+        "hDesk",
+        "wMob",
+        "hMob"
+      ],
+      "title": "deco-sites/shp/components/product/YoutubeDivEmbed.tsx@Props"
+    },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL2RldlBhZ2UudHM=@DevConfig": {
       "type": "object",
       "properties": {
@@ -9354,6 +9388,18 @@
           },
           "description": "google tag manager container id. For more info: https://developers.google.com/tag-platform/tag-manager/web#standard_web_page_installation .",
           "title": "Tracking Ids"
+        },
+        "googleAnalyticsIds": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": "GA Measurement Ids",
+          "label": "measurement id",
+          "description": "the google analytics property measurement id. For more info: https://support.google.com/analytics/answer/9539598"
         },
         "src": {
           "type": [
@@ -11839,6 +11885,27 @@
         }
       }
     },
+    "Li9pc2xhbmRzL1lvdXR1YmVFbWJlZElzbGFuZC50c3g=": {
+      "title": "./islands/YoutubeEmbedIsland.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1lvdXR1YmVEaXZFbWJlZC50c3g=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/YoutubeEmbedIsland.tsx"
+          ],
+          "default": "./islands/YoutubeEmbedIsland.tsx"
+        }
+      }
+    },
     "JGxpdmUvaGFuZGxlcnMvZGV2UGFnZS50cw==": {
       "title": "Private Fresh Page",
       "description": "Useful for pages under development.",
@@ -13792,6 +13859,9 @@
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL1dpc2hsaXN0QnV0dG9uLnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/Li9pc2xhbmRzL1lvdXR1YmVFbWJlZElzbGFuZC50c3g="
         }
       ]
     },
