@@ -110,17 +110,16 @@ function ShippingSimulation({ items }: Props) {
       </div>
       <div>
         <form
-          class="form-control input-group"
+          class="flex justify-between re1:w-80"
           onSubmit={(e) => {
             e.preventDefault();
             handleSimulation();
           }}
         >
-          <div class="input-group">
             <input
               as="input"
               type="text"
-              class="input input-bordered outline-none"
+              class="input input-bordered focus:outline-none bg-[#272727] w-4/5"
               placeholder="Digite seu cep"
               value={postalCode.value}
               maxLength={8}
@@ -133,7 +132,6 @@ function ShippingSimulation({ items }: Props) {
                 width={16} height={12} loading='eager' decoding='auto' fetchPriority='high'
               />
             </Button>
-          </div>
         </form>
       </div>
       <div>

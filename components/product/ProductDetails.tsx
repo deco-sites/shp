@@ -31,7 +31,6 @@ export interface Props {
 const WIDTH = 400
 const HEIGHT = 400
 const ASPECT_RATIO = `${WIDTH} / ${HEIGHT}`
-
 /**
  * Rendered when a not found is returned by any of the loaders run on this page
  */
@@ -50,11 +49,18 @@ function NotFound() {
 
 function ProductInfo({ page, pix }: { page: ProductDetailsPage, pix:number }) {
   const {  product } = page
-  const { description, productID, offers, name, isVariantOf, brand } = product
+  const { description, productID, offers, name, isVariantOf, brand, additionalProperty } = product
   const { price, listPrice, seller, installments } = useOffer(offers)
+  const categoriesId = additionalProperty?.map((item) =>
+    item.name === 'category' ? item.propertyID : undefined
+  )
+  const PCGamer = categoriesId?.some((item) => item === '10')
+
 
   return (
     <>
+    
+      {PCGamer && <div className='block re1:hidden'><PcSpec page={page} /></div>}
       <div className='flex re1:flex-col'>
         <div>
           Flags
@@ -189,8 +195,8 @@ function PcSpec({ page }: { page: ProductDetailsPage }) {
 
   return (
     <div className='flex justify-evenly items-start re1:mt-6'>
-      <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
-        <div className="hidden re1:flex h-[30px] w-[30px] mb-auto">
+      <div className='hidden re1:flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
+        <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto">
           <Picture preload>
             <Source
               media='(max-width:768px)'
@@ -213,7 +219,7 @@ function PcSpec({ page }: { page: ProductDetailsPage }) {
         </div>
       </div>
       <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
-        <div className="flex h-[30px] w-[30px] mb-auto">
+        <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto">
           <Picture preload>
             <Source
               media='(max-width:768px)'
@@ -236,7 +242,7 @@ function PcSpec({ page }: { page: ProductDetailsPage }) {
         </div>
       </div>
       <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
-        <div className="flex h-[30px] w-[30px] mb-auto">
+        <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto">
           <Picture preload>
             <Source
               media='(max-width:768px)'
@@ -259,7 +265,7 @@ function PcSpec({ page }: { page: ProductDetailsPage }) {
         </div>
       </div>
       <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
-        <div className="flex h-[30px] w-[30px] mb-auto">
+        <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto">
           <Picture preload>
             <Source
               media='(max-width:768px)'
@@ -365,7 +371,8 @@ function Details({ page, pix }: { page: ProductDetailsPage, pix:number }) {
     item.name === 'category' ? item.propertyID : undefined
   )
   const PCGamer = categoriesId?.some((item) => item === '10')
-
+  const urlReview=isVariantOf?.additionalProperty?.find((item)=>item.name==='Review')?.value
+  console.log(urlReview?.split('v=')[1].split('&')[0])
   /**
    * Product slider variant
    *
@@ -375,6 +382,7 @@ function Details({ page, pix }: { page: ProductDetailsPage, pix:number }) {
    */
   return (
     <>
+    <iframe width="560" height="315" src={`https://www.youtube.com/embed/${urlReview?.split('v=')[1].split('&')[0]}` }title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
       <div className='ml-[16%] mb-4 hidden re1:block'> 
         {/* Breadcrumb */}
         <Breadcrumb itemListElement={breadcrumbList?.itemListElement} />
@@ -432,17 +440,17 @@ function Details({ page, pix }: { page: ProductDetailsPage, pix:number }) {
             ))}
           </Slider>
 
-          {PCGamer && <PcSpec page={page} />}
+          {PCGamer && <div className='hidden re1:block'><PcSpec page={page} /></div>}
 
           <Slider.PrevButton
-            class='no-animation absolute left-2 top-1/2 btn btn-circle'
+            class='absolute left-2 top-1/2 bg-transparent border-none disabled:grayscale active:hue-rotate-[350deg]'
             disabled
           >
             <Icon size={20} id='ChevronLeft' strokeWidth={3} class='text-[#dd1f26]'/>
           </Slider.PrevButton>
 
           <Slider.NextButton
-            class='no-animation absolute right-2 top-1/2 btn btn-circle'
+            class='absolute right-2 top-1/2 bg-transparent border-none disabled:grayscale active:hue-rotate-[350deg]'
             disabled={images.length < 2}
           >
             <Icon size={20} id='ChevronRight' strokeWidth={3} class='text-[#dd1f26]'/>
@@ -458,7 +466,7 @@ function Details({ page, pix }: { page: ProductDetailsPage, pix:number }) {
         </div>
 
         {/* Dots */}
-        <ul class='hidden re1:flex gap-2 justify-center re1:justify-start overflow-auto px-4 re1:px-0 re1:flex-col re1:col-start-1 re1:col-span-1 re1:row-start-1'>
+        <ul class='flex gap-2 justify-center re1:justify-start overflow-auto px-4 re1:px-0 re1:flex-col re1:col-start-1 re1:col-span-1 re1:row-start-1'>
           {images.map((img, index) => (
             <li class='min-w-[70px]'>
               <Slider.Dot index={index}>
