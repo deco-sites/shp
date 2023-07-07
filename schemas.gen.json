@@ -67,6 +67,7 @@
               "deco-sites/std/loaders/vtex/wishlist.ts",
               "./islands/AddToCartButton.tsx",
               "./islands/BannerItem.tsx",
+              "./islands/DetailsIsland.tsx",
               "./islands/HeaderIsland.tsx",
               "./islands/OfertasFogoIsland.tsx",
               "./islands/PCNivelGamer.tsx",
@@ -78,7 +79,6 @@
               "./islands/SliderJS.tsx",
               "./islands/VitrineIsland.tsx",
               "./islands/WishlistButton.tsx",
-              "./islands/YoutubeEmbedIsland.tsx",
               "$live/handlers/devPage.ts",
               "$live/handlers/fresh.ts",
               "$live/handlers/proxy.ts",
@@ -7422,6 +7422,48 @@
       "required": [],
       "title": "deco-sites/shp/components/ui/BannerCarousel.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L0RldGFpbHMudHN4@Props": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage",
+          "title": "Page"
+        },
+        "pix": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Desconto pix, caso não haja coloque 1",
+          "title": "Pix"
+        },
+        "aspectRatio": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "title": "Aspect Ratio"
+        },
+        "height": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Height"
+        },
+        "width": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "Width"
+        }
+      },
+      "required": [
+        "page"
+      ],
+      "title": "deco-sites/shp/components/product/Details.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvT2ZlcnRhc0ZvZ28udHN4@Props": {
       "type": "object",
       "properties": {
@@ -7576,39 +7618,6 @@
         "produtos"
       ],
       "title": "deco-sites/shp/sections/Vitrine.tsx@VitrineProps"
-    },
-    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1lvdXR1YmVEaXZFbWJlZC50c3g=@Props": {
-      "type": "object",
-      "properties": {
-        "videoId": {
-          "type": "string",
-          "title": "Video Id"
-        },
-        "wDesk": {
-          "type": "number",
-          "title": "W Desk"
-        },
-        "hDesk": {
-          "type": "number",
-          "title": "H Desk"
-        },
-        "wMob": {
-          "type": "number",
-          "title": "W Mob"
-        },
-        "hMob": {
-          "type": "number",
-          "title": "H Mob"
-        }
-      },
-      "required": [
-        "videoId",
-        "wDesk",
-        "hDesk",
-        "wMob",
-        "hMob"
-      ],
-      "title": "deco-sites/shp/components/product/YoutubeDivEmbed.tsx@Props"
     },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL2RldlBhZ2UudHM=@DevConfig": {
       "type": "object",
@@ -11684,6 +11693,27 @@
         }
       }
     },
+    "Li9pc2xhbmRzL0RldGFpbHNJc2xhbmQudHN4": {
+      "title": "./islands/DetailsIsland.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L0RldGFpbHMudHN4@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/DetailsIsland.tsx"
+          ],
+          "default": "./islands/DetailsIsland.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL0hlYWRlcklzbGFuZC50c3g=": {
       "title": "./islands/HeaderIsland.tsx",
       "type": "object",
@@ -11882,27 +11912,6 @@
             "./islands/WishlistButton.tsx"
           ],
           "default": "./islands/WishlistButton.tsx"
-        }
-      }
-    },
-    "Li9pc2xhbmRzL1lvdXR1YmVFbWJlZElzbGFuZC50c3g=": {
-      "title": "./islands/YoutubeEmbedIsland.tsx",
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1lvdXR1YmVEaXZFbWJlZC50c3g=@Props"
-        }
-      ],
-      "required": [
-        "__resolveType"
-      ],
-      "properties": {
-        "__resolveType": {
-          "type": "string",
-          "enum": [
-            "./islands/YoutubeEmbedIsland.tsx"
-          ],
-          "default": "./islands/YoutubeEmbedIsland.tsx"
         }
       }
     },
@@ -13828,6 +13837,9 @@
           "$ref": "#/definitions/Li9pc2xhbmRzL0Jhbm5lckl0ZW0udHN4"
         },
         {
+          "$ref": "#/definitions/Li9pc2xhbmRzL0RldGFpbHNJc2xhbmQudHN4"
+        },
+        {
           "$ref": "#/definitions/Li9pc2xhbmRzL0hlYWRlcklzbGFuZC50c3g="
         },
         {
@@ -13859,9 +13871,6 @@
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL1dpc2hsaXN0QnV0dG9uLnRzeA=="
-        },
-        {
-          "$ref": "#/definitions/Li9pc2xhbmRzL1lvdXR1YmVFbWJlZElzbGFuZC50c3g="
         }
       ]
     },
