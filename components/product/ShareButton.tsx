@@ -12,7 +12,7 @@ const Share = () => {
         className={`grid grid-cols-2 gap-2 p-[10px] rounded-lg -top-[4%] right-[12%] bg-[#272727]/80 absolute  ${!open && 'hidden'}`}
       >
         <li>
-          <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Twitter'>
+          <a href='/' className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Twitter'>
             <Image
               loading='lazy'
               fetchPriority='high'
@@ -24,7 +24,7 @@ const Share = () => {
           </a>
         </li>
         <li>
-          <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Whatsapp'>
+          <a href='/' className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Whatsapp'>
             <Image
               loading='lazy'
               fetchPriority='high'
@@ -36,7 +36,7 @@ const Share = () => {
           </a>
         </li>
         <li>
-          <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Facebook'>
+          <a href='/' className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Facebook'>
             <Image
               loading='lazy'
               fetchPriority='high'
@@ -48,7 +48,7 @@ const Share = () => {
           </a>
         </li>
         <li>
-          <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Email'>
+          <a href='/' className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Email'>
             <Image
               loading='lazy'
               fetchPriority='high'

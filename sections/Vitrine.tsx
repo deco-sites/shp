@@ -54,7 +54,7 @@ const renderProduct = (element: Product, index: number, PcGamer:boolean) => {
       parseFloat((element.offers?.highPrice / 10).toFixed(2)),
     precoPIX: element.offers && DescontoPIX(element.offers.highPrice, 15),
     discountFlag: 15,
-    productUrl: element.url
+    productUrl: element.isVariantOf?.url
   }
 
   if (PcGamer) {

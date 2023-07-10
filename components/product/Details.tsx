@@ -122,7 +122,7 @@ export interface Props {
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-placadevideo.svg'
                 media='(min-width:768px)'
                 width={30}
-                height={30}
+                height={21}
               />
               <img src="https://shopinfo.vteximg.com.br/arquivos/icon-placadevideo.svg" loading='eager'/>
             </Picture>
@@ -133,19 +133,19 @@ export interface Props {
           </div>
         </div>
         <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
-          <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto">
+          <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] mt-auto re1:mb-auto re1:mt-0">
             <Picture preload>
               <Source
                 media='(max-width:768px)'
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
                 width={15}
-                height={15}
+                height={10}
                 />
               <Source
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
                 media='(min-width:768px)'
                 width={30}
-                height={30}
+                height={20}
               />
               <img src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg' loading='eager'/>
             </Picture>
@@ -179,19 +179,19 @@ export interface Props {
           </div>
         </div>
         <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
-          <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto">
+          <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] mt-auto re1:mb-auto re1:mt-0">
             <Picture preload>
               <Source
                 media='(max-width:768px)'
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
                 width={15}
-                height={15}
+                height={10}
               />
               <Source
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
                 media='(min-width:768px)'
                 width={30}
-                height={30}
+                height={21}
               />
               <img src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg' loading='eager'/>
             </Picture>
@@ -204,28 +204,65 @@ export interface Props {
       </div>
     )
   }
-function ProductInfo({ page, pix }: Props) {
-  const [renderizado, setRenderizado]=useState(false)
-  useEffect(()=>setRenderizado(true))
 
+async function loaderTrustvox(productId:string, storeId:string){
+  const url=`https://trustvox.com.br/widget/shelf/v2/products_rates?codes[]=${productId}&store_id=${storeId}`
+  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
+  return data
+}
+
+function ProductInfo({ page, pix }: Props) {
     const {  product } = page
     const { description, productID, offers, name, isVariantOf, brand, additionalProperty } = product
     const { price, listPrice, seller, installments } = useOffer(offers)
     const categoriesId = additionalProperty?.map((item) =>
       item.name === 'category' ? item.propertyID : undefined
     )
+    const Flags =additionalProperty?.map((item) =>
+      item.hasOwnProperty('description') && (item.description==='highlight' && item)
+    ).filter(item=>(item!==false && !item.value?.includes('Coleção'))).map(item=>item!==false && item.value) || []
+
+
     const PCGamer = categoriesId?.some((item) => item === '10')
   
-  
+    const [objTrust,setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
+    const [trustPercent, setTrustPercent]=useState(0)
+
+    const [renderizado, setRenderizado]=useState(false)
+    useEffect(()=>{
+      
+      (async()=>{
+        setRenderizado(true)
+        const { products_rates }=await loaderTrustvox(isVariantOf!.productGroupID, '79497')
+        const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
+        setTrustPercent(obj.average*20)
+        setObjTrust(obj)
+      })()
+    },[])
+
     return (
       <>
-        {PCGamer && <div className='block re1:hidden'><PcSpec page={page} /></div>}
-        <div className='flex re1:flex-col'>
+        {PCGamer && <div className='block re1:hidden mb-4'><PcSpec page={page} /></div>}
+        <div className='flex flex-col gap-3'>
           <div>
-            Flags
+            <ul className='flex gap-[10px] overflow-x-scroll re1:overflow-x-auto whitespace-nowrap scrollbar-none'>
+              <li className='flex items-center justify-center bg-[#3d3d3d] border border-[#828282] hover:border-[#dd1f26] py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>12% no PIX Junho</li>
+              {Flags.map(flag=><li className='flex items-center justify-center bg-[#3d3d3d] border border-[#828282] hover:border-[#dd1f26] py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>{flag}</li>)}
+            </ul>
           </div>
           <div className='flex gap-2'>
-            <p>Trustvox</p>
+            <div className='flex items-center gap-3'>
+              {/* Trustvox */}
+              {objTrust?.average ===0 ? null :
+                <>
+                  <span className='text-yellow-300'>{objTrust?.average} de 5</span>
+                  <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
+                    <div style={{width:`${trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
+                  </div>
+                  <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
+                </>
+              }
+            </div>
             <p className='text-green-500 text-lg'>{brand}</p>
           </div>
         </div>
@@ -344,11 +381,9 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
 
   const handleResize = useCallback(() => {
     setIsMobile(window.innerWidth <= 768)
-    console.log('setMobile')
   }, [])
 
   const { product, breadcrumbList } = page
-  console.log(product)
   const id = `product-image-gallery:${useId()}`
   const images = useStableImages(product)
   const {
@@ -406,6 +441,25 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
       observer.disconnect()
     }
   }, [])
+
+  function zoom(event:MouseEvent) {
+    const image = event.target as HTMLImageElement
+    const rect = image.getBoundingClientRect()
+  
+    const offsetX = event.clientX - rect.left
+    const offsetY = event.clientY - rect.top
+  
+    const percentX = offsetX / rect.width
+    const percentY = offsetY / rect.height
+  
+    image.style.transformOrigin = `${percentX * 100}% ${percentY * 100}%`
+  }
+  
+  function resetZoom(event:MouseEvent) {
+    const image = event.target as HTMLImageElement
+    image.style.transformOrigin = 'center'
+  }
+
   /**
    * Product slider variant
    *
@@ -426,12 +480,18 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
         {/* Image Slider */}
         <div class='relative re1:col-start-2 re1:col-span-1 re1:row-start-1'>
           <div className='flex re1:h-14 justify-between items-center px-[10%]'>
-            <div className='flex'>
-              <div className='flex items-center justify-center bg-green-500 text-white text-lg p-1 font-bold h-[35px] rounded-lg'>
+            <div className='flex gap-1'>
+              <div className='flex items-center justify-center bg-green-500 text-white text-lg p-1 font-bold h-[30px] rounded-lg'>
                 <p className='before:content-["-"]'>
                   {(price && listPrice) && tagDiscount(price, listPrice, pix)}%
                 </p>
               </div>
+              {PCGamer && 
+              <div className='flex items-center justify-center h-[30px] rounded-lg'>
+                <Image src='https://shopinfo.vteximg.com.br/arquivos/pdp-pc-frete-gratis.gif'
+                  width={74} height={30} fetchPriority='high' decoding='sync' loading='eager'
+                />
+              </div>}
             </div>
             <div className='flex'>
               <Share />
@@ -451,6 +511,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
                   >
                     <Picture 
                       // Preload LCP image for better web vitals
+                      
                       preload={index === 0 ? true : false}
                     >
                       <Source
@@ -467,6 +528,9 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
                       />
     
                     <img
+                      className='overflow-hidden hover:scale-150 transition-transform'
+                      onMouseMove={zoom}
+                      onMouseLeave={resetZoom}
                       style={{ aspectRatio: aspectRatio }}
                       src={img.url!}
                       alt={img.alternateName}
@@ -534,18 +598,18 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
             </li>
           ))}
           {urlReview && (
-            <li class='min-w-[90px] re1:min-w-[70px]'>
+            <li class='min-w-[70px]'>
               <Slider.Dot index={images.length}>
                 <div className='flex re1:flex-col gap-1 items-center py-1 px-2 re1:p-0 bg-[#3d3d3d] re1:bg-transparent justify-center rounded-lg  
                   re1:static group-disabled:border-[#dd1f26] re1:group-disabled:border-b-[#dd1f26] re1:group-disabled:border-l-transparent 
-                  re1:group-disabled:border-r-transparent re1:group-disabled:border-t-transparent w-[90px] re1:w-[70px] border re1:border-b-transparent border-transparent 
-                  group-disabled:shadow-[0_2px_2px_0] group-disabled:shadow-[#dd1f26]/30'
+                  re1:group-disabled:border-r-transparent re1:group-disabled:border-t-transparent w-[70px] border re1:border-b-transparent border-transparent 
+                  group-disabled:shadow-[0_2px_2px_0] group-disabled:shadow-[#dd1f26]/30 mt-1 re1:mt-0'
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width={isMobile ? 15 : 30} height={isMobile ? 15 : 30} viewBox="0 0 50 50" fill="none">
                     <path d="M35 25L20 33.6603V16.3397L35 25Z" fill="#C2C2C2"></path>
                     <circle cx="25" cy="25" r="24.5" stroke="#C2C2C2"></circle>
                   </svg>
-                  <p className='text-sm re1:text-base'>Video</p>
+                  <p className='text-xs re1:text-base'>Video</p>
                 </div>
               </Slider.Dot>
             </li>
