@@ -524,6 +524,8 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
   const handleTouchMove = (event: TouchEvent) => {
     event.preventDefault();
 
+    if (currentScale === 1) return;
+
     if (!isZoomed && event.touches.length === 2) {
       const touchDistance = getDistance(event.touches[0], event.touches[1]);
       if (touchDistance < lastTouchDistance && currentScale > 1) {
@@ -613,7 +615,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
             {images.map((img, index) => (
               <li class='min-w-[60px]'>
                 <div data-dot={index}>
-                  <div className='group-disabled:border-b-[#dd1f26] w-[60px] re1:w-[70px] border border-b-[#3d3d3d] re1:border-b-transparent border-transparent group-disabled:shadow-[0_2px_2px_0] group-disabled:shadow-[#dd1f26]/30'>
+                  <div className='disabled:border-b-[#dd1f26] w-[60px] re1:w-[70px] border border-b-[#3d3d3d] re1:border-b-transparent border-transparent disabled:shadow-[0_2px_2px_0] group-disabled:shadow-[#dd1f26]/30'>
                     <Image
                       style={{ aspectRatio: aspectRatio }}
                       width={70}
@@ -622,10 +624,11 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
                       alt={img.alternateName}
                       onClick={(event)=>{
                         const image=event.target as HTMLImageElement
-                        const dotIndex=image.parentElement!.parentElement
+                        const dotIndex=image.parentElement!
+                        Array.from(dotIndex!.parentElement!.parentElement!.parentElement!.querySelectorAll('div[disabled="true"]')).forEach(item=>item.setAttribute('disabled','false'))
                         dotIndex!.setAttribute('disabled','true')
                         setImageZoom(image)
-                        setDotIndex(dotIndex!.getAttribute('data-dot'))
+                        setDotIndex(dotIndex!.parentElement!.getAttribute('data-dot'))
                       }}
                     />
                   </div>
