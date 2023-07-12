@@ -476,6 +476,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
 
     setImageZoom(image)
 
+
     modal.current && (
       modal.current.showModal()
     )
@@ -507,13 +508,11 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
       setIsZoomed(!isZoomed);
     }
 
-    if (event.touches.length === 2) {
-      // Inicia o pinch
+    if (!isZoomed && event.touches.length === 2) {
       const touchDistance = getDistance(event.touches[0], event.touches[1]);
       setInitialDistance(touchDistance);
       setLastTouchDistance(touchDistance);
     } else {
-      // Inicia o arrastar
       const touchPosition: TouchPosition = {
         x: event.touches[0].clientX,
         y: event.touches[0].clientY,
@@ -525,14 +524,14 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
   const handleTouchMove = (event: TouchEvent) => {
     event.preventDefault();
 
-    if (event.touches.length === 2) {
-      // Pinch para zoom
+    if (!isZoomed && event.touches.length === 2) {
       const touchDistance = getDistance(event.touches[0], event.touches[1]);
-      const scale = (touchDistance / initialDistance) * currentScale;
+      if (touchDistance < lastTouchDistance && currentScale > 1) {
+        const scale = (touchDistance / initialDistance) * currentScale;
+        setCurrentScale(scale);
+      }
       setLastTouchDistance(touchDistance);
-      setCurrentScale(scale);
     } else {
-      // Arrastar para mover
       const touchPosition: TouchPosition = {
         x: event.touches[0].clientX,
         y: event.touches[0].clientY,
