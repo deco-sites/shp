@@ -571,7 +571,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
   },[dotIndex])
 
   useEffect(() => {
-    isZoomed ?  setCurrentScale(2) : setCurrentScale(1)
+    isZoomed ?  setCurrentScale(2) : (setCurrentScale(1), setTranslate({ x: 0, y: 0 }))
   }, [isZoomed]);
   /**
    * Product slider variant
@@ -584,7 +584,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
     <>
       <dialog ref={modal} className='bg-[#111] min-h-screen min-w-[100vw]'>
         <form method="dialog" className='flex flex-col h-[95vh] justify-end'>
-          <button className="btn btn-sm btn-circle absolute right-2 top-2"
+          <button className="btn btn-sm btn-circle absolute right-2 top-2 z-40"
             onClick={()=>modal.current && (
               modal.current.close()
             )}
@@ -609,7 +609,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
             }
           </div>
 
-          <ul class='flex gap-2 justify-center overflow-auto px-4'>
+          <ul class='flex gap-2 justify-center overflow-auto px-4 z-40'>
             {images.map((img, index) => (
               <li class='min-w-[60px]'>
                 <div data-dot={index}>
