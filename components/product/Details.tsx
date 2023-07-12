@@ -16,6 +16,7 @@ import { mapProductToAnalyticsItem } from 'deco-sites/std/commerce/utils/product
 import AddToCartButton from 'deco-sites/fashion/islands/AddToCartButton.tsx'
 import ShippingSimulation from 'deco-sites/fashion/islands/ShippingSimulation.tsx'
 import ProductSelector from './ProductVariantSelector.tsx'
+import ProductImageZoom from 'deco-sites/fashion/islands/ProductImageZoom.tsx'
 
 
 export interface Props {
@@ -376,6 +377,11 @@ function ProductInfo({ page, pix }: Props) {
     )
   }
 
+  interface TouchPosition{
+    x:number
+    y:number
+  }
+
 function Details({ page, pix, aspectRatio, height, width }: Props) {
   const [isMobile, setIsMobile] = useState(false)
 
@@ -401,7 +407,6 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
   const urlReview=isVariantOf?.additionalProperty?.find((item)=>item.name==='Review')?.value
 
   const { price, listPrice} = useOffer(offers)
-  console.log(price, listPrice)
   const tagDiscount=(price:number, listPrice:number, pix?:number)=>{
     const precoOriginal = listPrice
     const precoComDesconto  = pix ? price-(price*(pix/100)) : price
@@ -461,7 +466,10 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
   }
 
   const modal=useRef<HTMLDialogElement>(null)
+  const dots=useRef<HTMLUListElement>(null)
+
   const [imageZoom,setImageZoom]=useState<HTMLImageElement | null>(null)
+  const [dotIndex, setDotIndex]=useState<string | null>(null)
 
   function touchZoom(event:TouchEvent){
     const image=event.target as HTMLImageElement
@@ -469,13 +477,103 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
     setImageZoom(image)
 
     modal.current && (
-      modal.current.showModal(),
-      modal.current.classList.add('modal-open')
+      modal.current.showModal()
     )
   }
 
-  useEffect(()=>console.log(imageZoom),[imageZoom])
+  const lastTap = useRef(0);
+  const [isZoomed, setIsZoomed] = useState(false);
 
+  const imgRef = useRef<HTMLImageElement>(null);
+  const [initialDistance, setInitialDistance] = useState(0);
+  const [lastTouchDistance, setLastTouchDistance] = useState(0);
+  const [lastTouchPosition, setLastTouchPosition] = useState<TouchPosition>({ x: 0, y: 0 });
+  const [currentScale, setCurrentScale] = useState(1);
+  const [translate, setTranslate] = useState<TouchPosition>({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (imgRef.current) {
+      const img = imgRef.current;
+      img.style.transform = `scale(${currentScale}) translate(${translate.x}px, ${translate.y}px)`;
+    }
+  }, [currentScale, translate]);
+
+  const handleTouchStart = (event: TouchEvent) => {
+    const currentTime = Date.now();
+    const tapLength = currentTime - lastTap.current;
+    lastTap.current = currentTime;
+
+    if (tapLength < 300 && tapLength > 0) {
+      setIsZoomed(!isZoomed);
+    }
+
+    if (event.touches.length === 2) {
+      // Inicia o pinch
+      const touchDistance = getDistance(event.touches[0], event.touches[1]);
+      setInitialDistance(touchDistance);
+      setLastTouchDistance(touchDistance);
+    } else {
+      // Inicia o arrastar
+      const touchPosition: TouchPosition = {
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY,
+      };
+      setLastTouchPosition(touchPosition);
+    }
+  };
+
+  const handleTouchMove = (event: TouchEvent) => {
+    event.preventDefault();
+
+    if (event.touches.length === 2) {
+      // Pinch para zoom
+      const touchDistance = getDistance(event.touches[0], event.touches[1]);
+      const scale = (touchDistance / initialDistance) * currentScale;
+      setLastTouchDistance(touchDistance);
+      setCurrentScale(scale);
+    } else {
+      // Arrastar para mover
+      const touchPosition: TouchPosition = {
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY,
+      };
+      const delta = {
+        x: touchPosition.x - lastTouchPosition.x,
+        y: touchPosition.y - lastTouchPosition.y,
+      };
+      setLastTouchPosition(touchPosition);
+
+      setTranslate(prevTranslate => ({
+        x: prevTranslate.x + delta.x,
+        y: prevTranslate.y + delta.y,
+      }));
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (initialDistance !== 0) {
+      setCurrentScale(currentScale * (lastTouchDistance / initialDistance));
+    }
+    setInitialDistance(0);
+    setLastTouchDistance(0);
+  };
+
+  const getDistance = (touch1: Touch, touch2: Touch) => {
+    return Math.hypot(
+      touch1.clientX - touch2.clientX,
+      touch1.clientY - touch2.clientY
+    );
+  };
+
+  useEffect(()=>{
+    (dots.current && dotIndex) && (
+      (dots.current.querySelector(`button[data-dot="${dotIndex}"]`)! as HTMLButtonElement).click()
+    )
+  },[dotIndex])
+
+  useEffect(() => {
+    isZoomed ?  setCurrentScale(2) : setCurrentScale(1)
+  }, [isZoomed]);
   /**
    * Product slider variant
    *
@@ -485,23 +583,57 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
    */
   return (
     <>
-      <dialog ref={modal} className="modal min-h-screen min-w-[100vw]">
-        <form method="dialog" className="modal-box">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+      <dialog ref={modal} className='bg-[#111] min-h-screen min-w-[100vw]'>
+        <form method="dialog" className='flex flex-col h-[95vh] justify-end'>
+          <button className="btn btn-sm btn-circle absolute right-2 top-2"
             onClick={()=>modal.current && (
-              modal.current.close(),
-              modal.current.classList.remove('modal-open')
+              modal.current.close()
             )}
           >✕</button>
-          <div className="py-4">
+
+          <div className='m-auto'>
             {imageZoom && 
               <Image src={imageZoom.src}
-                width={imageZoom.width}
-                height={imageZoom.height}
+                ref={imgRef}
+                width={300}
+                height={300}
                 loading={imageZoom.loading}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                style={{
+                  touchAction: 'none',
+                  transformOrigin: '0 0',
+                  transform: `scale(${currentScale}) translate(${translate.x}px, ${translate.y}px)`,
+                }}
               />
             }
           </div>
+
+          <ul class='flex gap-2 justify-center overflow-auto px-4'>
+            {images.map((img, index) => (
+              <li class='min-w-[60px]'>
+                <div data-dot={index}>
+                  <div className='group-disabled:border-b-[#dd1f26] w-[60px] re1:w-[70px] border border-b-[#3d3d3d] re1:border-b-transparent border-transparent group-disabled:shadow-[0_2px_2px_0] group-disabled:shadow-[#dd1f26]/30'>
+                    <Image
+                      style={{ aspectRatio: aspectRatio }}
+                      width={70}
+                      height={70}
+                      src={img.url!}
+                      alt={img.alternateName}
+                      onClick={(event)=>{
+                        const image=event.target as HTMLImageElement
+                        const dotIndex=image.parentElement!.parentElement
+                        dotIndex!.setAttribute('disabled','true')
+                        setImageZoom(image)
+                        setDotIndex(dotIndex!.getAttribute('data-dot'))
+                      }}
+                    />
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </form>
       </dialog> 
       <div className='ml-[16%] mb-4 hidden re1:block'> 
@@ -584,7 +716,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
               index={images.length}
               class='carousel-item min-w-[100vw] re1:min-w-[30vw] justify-center'
             >
-              <iframe ref={iframe} key={iframeKey} width={isMobile ? 300 : 400} height={isMobile ? 300 : 400} src={`https://www.youtube.com/embed/${urlReview.split('v=')[1].split('&')[0]}`} title="Conheça a Shopinfo | A Melhor Loja de PC Gamer do Brasil" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+              <iframe ref={iframe} key={iframeKey} width={isMobile ? 300 : 400} height={isMobile ? 300 : 400} src={`https://www.youtube.com/embed/${urlReview.split('v=')[1].split('&')[0]}`} title="Conheça a Shopinfo | A Melhor Loja de PC Gamer do Brasil" allow="accelerometer autoplay clipboard-write encrypted-media gyroscope picture-in-picture web-share"></iframe>
             </Slider.Item>
             )
           }
@@ -616,7 +748,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
         </div>
 
         {/* Dots */}
-        <ul class='flex gap-2 justify-center re1:justify-start overflow-auto px-4 re1:px-0 re1:flex-col re1:col-start-1 re1:col-span-1 re1:row-start-1'>
+        <ul ref={dots} class='flex gap-2 justify-center re1:justify-start overflow-auto px-4 re1:px-0 re1:flex-col re1:col-start-1 re1:col-span-1 re1:row-start-1'>
           {images.map((img, index) => (
             <li class='min-w-[60px] re1:min-w-[70px]' ref={liVideo}>
               <Slider.Dot index={index}>
