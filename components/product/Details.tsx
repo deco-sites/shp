@@ -452,13 +452,29 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
     const percentX = offsetX / rect.width
     const percentY = offsetY / rect.height
   
-    image.style.transformOrigin = `${percentX * 100}% ${percentY * 100}%`
+    window.innerWidth > 768 && (image.style.transformOrigin = `${percentX * 100}% ${percentY * 100}%`)
   }
   
   function resetZoom(event:MouseEvent) {
     const image = event.target as HTMLImageElement
-    image.style.transformOrigin = 'center'
+    window.innerWidth > 768 && (image.style.transformOrigin = 'center')
   }
+
+  const modal=useRef<HTMLDialogElement>(null)
+  const [imageZoom,setImageZoom]=useState<HTMLImageElement | null>(null)
+
+  function touchZoom(event:TouchEvent){
+    const image=event.target as HTMLImageElement
+
+    setImageZoom(image)
+
+    modal.current && (
+      modal.current.showModal(),
+      modal.current.classList.add('modal-open')
+    )
+  }
+
+  useEffect(()=>console.log(imageZoom),[imageZoom])
 
   /**
    * Product slider variant
@@ -468,7 +484,26 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
    * we rearrange each cell with col-start- directives
    */
   return (
-    <>     
+    <>
+      <dialog ref={modal} className="modal min-h-screen min-w-[100vw]">
+        <form method="dialog" className="modal-box">
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            onClick={()=>modal.current && (
+              modal.current.close(),
+              modal.current.classList.remove('modal-open')
+            )}
+          >✕</button>
+          <div className="py-4">
+            {imageZoom && 
+              <Image src={imageZoom.src}
+                width={imageZoom.width}
+                height={imageZoom.height}
+                loading={imageZoom.loading}
+              />
+            }
+          </div>
+        </form>
+      </dialog> 
       <div className='ml-[16%] mb-4 hidden re1:block'> 
         {/* Breadcrumb */}
         <Breadcrumb itemListElement={breadcrumbList?.itemListElement} />
@@ -531,6 +566,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
                       className='overflow-hidden hover:scale-150 transition-transform'
                       onMouseMove={zoom}
                       onMouseLeave={resetZoom}
+                      onTouchEnd={touchZoom}
                       style={{ aspectRatio: aspectRatio }}
                       src={img.url!}
                       alt={img.alternateName}
