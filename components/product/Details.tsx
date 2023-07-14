@@ -696,8 +696,8 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
     
                     <img
                       className='overflow-hidden hover:scale-150 transition-transform'
-                      onMouseMove={zoom}
-                      onMouseLeave={resetZoom}
+                      onMouseMove={()=> window.innerWidth>768 && zoom}
+                      onMouseLeave={()=> window.innerWidth>768 && resetZoom}
                       onTouchEnd={touchZoom}
                       style={{ aspectRatio: aspectRatio }}
                       src={img.url!}
