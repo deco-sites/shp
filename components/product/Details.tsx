@@ -572,7 +572,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
    */
   return (
     <>
-      <dialog ref={modal} className='bg-[#111] min-h-screen min-w-[100vw] overflow-hidden'>
+      <dialog ref={modal} className='bg-[#111] min-h-full min-w-[100vw] overflow-hidden'>
         <form method="dialog" className='flex flex-col h-[95vh] justify-end'>
           <button className="btn btn-sm btn-circle absolute right-2 top-2 z-40"
             onClick={()=>modal.current && (
