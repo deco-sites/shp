@@ -694,18 +694,30 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
                         height={400}
                       />
     
-                    <img
-                      className='overflow-hidden hover:scale-150 transition-transform'
-                      onMouseMove={()=> window.innerWidth>768 && zoom}
-                      onMouseLeave={()=> window.innerWidth>768 && resetZoom}
-                      onTouchEnd={touchZoom}
-                      style={{ aspectRatio: aspectRatio }}
-                      src={img.url!}
-                      alt={img.alternateName}
-                      width={width}
-                      height={height}
-                      loading={index === 0 ? 'eager' : 'lazy'}
-                      />
+                    {isMobile ?
+                      (<img
+                        className='overflow-hidden hover:scale-150 transition-transform'
+                        onTouchEnd={touchZoom}
+                        style={{ aspectRatio: aspectRatio }}
+                        src={img.url!}
+                        alt={img.alternateName}
+                        width={width}
+                        height={height}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                      />)
+                      :
+                      (<img
+                        className='overflow-hidden hover:scale-150 transition-transform'
+                        onMouseMove={zoom}
+                        onMouseLeave={resetZoom}
+                        style={{ aspectRatio: aspectRatio }}
+                        src={img.url!}
+                        alt={img.alternateName}
+                        width={width}
+                        height={height}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                      />)
+                    }
                     </Picture>
                   </Slider.Item>
                 )
