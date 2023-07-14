@@ -467,73 +467,68 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
 
   const modal=useRef<HTMLDialogElement>(null)
   const dots=useRef<HTMLUListElement>(null)
+  const dotsModal=useRef<HTMLUListElement>(null)
 
   const [imageZoom,setImageZoom]=useState<HTMLImageElement | null>(null)
   const [dotIndex, setDotIndex]=useState<string | null>(null)
+  
+  const [hideModalTemp,setHideModalTemp]=useState(true)
+  const [hideImg, setHideImg]=useState(true)
 
   function touchZoom(event:TouchEvent){
     const image=event.target as HTMLImageElement
 
-    setImageZoom(image)
+    const imgDataDot=image.parentElement!.parentElement!.getAttribute('data-slider-item')
 
+    dotsModal.current && (
+      (dotsModal.current.querySelector(`div[data-dot="${imgDataDot}"] img`) as HTMLImageElement).click()
+    )
 
     modal.current && (
-      modal.current.showModal()
+      modal.current.showModal(),
+      setHideModalTemp(false),
+      setHideImg(true)
     )
   }
 
+  useEffect(()=>{
+    if(!hideModalTemp){
+      setTimeout(()=>{
+        setHideModalTemp(true)
+        setHideImg(false)
+      },3000)
+    }
+  },[hideModalTemp])
+
   const lastTap = useRef(0);
   const [isZoomed, setIsZoomed] = useState(false);
-
   const imgRef = useRef<HTMLImageElement>(null);
-  const [initialDistance, setInitialDistance] = useState(0);
-  const [lastTouchDistance, setLastTouchDistance] = useState(0);
-  const [lastTouchPosition, setLastTouchPosition] = useState<TouchPosition>({ x: 0, y: 0 });
   const [currentScale, setCurrentScale] = useState(1);
   const [translate, setTranslate] = useState<TouchPosition>({ x: 0, y: 0 });
-
-  useEffect(() => {
-    if (imgRef.current) {
-      const img = imgRef.current;
-      img.style.transform = `scale(${currentScale}) translate(${translate.x}px, ${translate.y}px)`;
-    }
-  }, [currentScale, translate]);
+  const [lastTouchPosition, setLastTouchPosition] = useState<TouchPosition>({ x: 0, y: 0 });
 
   const handleTouchStart = (event: TouchEvent) => {
     const currentTime = Date.now();
     const tapLength = currentTime - lastTap.current;
     lastTap.current = currentTime;
-
+  
     if (tapLength < 300 && tapLength > 0) {
       setIsZoomed(!isZoomed);
+      setTranslate({ x: 0, y: 0 }); // Reset translation when toggling zoom
+      setCurrentScale(isZoomed ? 1 : 2);
     }
-
-    if (!isZoomed && event.touches.length === 2) {
-      const touchDistance = getDistance(event.touches[0], event.touches[1]);
-      setInitialDistance(touchDistance);
-      setLastTouchDistance(touchDistance);
-    } else {
-      const touchPosition: TouchPosition = {
-        x: event.touches[0].clientX,
-        y: event.touches[0].clientY,
-      };
-      setLastTouchPosition(touchPosition);
-    }
+  
+    const touchPosition: TouchPosition = {
+      x: event.touches[0].clientX,
+      y: event.touches[0].clientY,
+    };
+    setLastTouchPosition(touchPosition);
   };
 
   const handleTouchMove = (event: TouchEvent) => {
     event.preventDefault();
-
-    if (currentScale === 1) return;
-
-    if (!isZoomed && event.touches.length === 2) {
-      const touchDistance = getDistance(event.touches[0], event.touches[1]);
-      if (touchDistance < lastTouchDistance && currentScale > 1) {
-        const scale = (touchDistance / initialDistance) * currentScale;
-        setCurrentScale(scale);
-      }
-      setLastTouchDistance(touchDistance);
-    } else {
+  
+    if (isZoomed) {
       const touchPosition: TouchPosition = {
         x: event.touches[0].clientX,
         y: event.touches[0].clientY,
@@ -543,7 +538,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
         y: touchPosition.y - lastTouchPosition.y,
       };
       setLastTouchPosition(touchPosition);
-
+  
       setTranslate(prevTranslate => ({
         x: prevTranslate.x + delta.x,
         y: prevTranslate.y + delta.y,
@@ -551,23 +546,16 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
     }
   };
 
-  const handleTouchEnd = () => {
-    if (initialDistance !== 0) {
-      setCurrentScale(currentScale * (lastTouchDistance / initialDistance));
+  useEffect(() => {
+    if (imgRef.current) {
+      const img = imgRef.current;
+      img.style.transformOrigin = 'center center';
+      img.style.transform = `scale(${currentScale}) translate(${translate.x}px, ${translate.y}px)`;
     }
-    setInitialDistance(0);
-    setLastTouchDistance(0);
-  };
-
-  const getDistance = (touch1: Touch, touch2: Touch) => {
-    return Math.hypot(
-      touch1.clientX - touch2.clientX,
-      touch1.clientY - touch2.clientY
-    );
-  };
+  }, [currentScale, translate]);
 
   useEffect(()=>{
-    (dots.current && dotIndex) && (
+    if(dots.current && dotIndex)(
       (dots.current.querySelector(`button[data-dot="${dotIndex}"]`)! as HTMLButtonElement).click()
     )
   },[dotIndex])
@@ -584,7 +572,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
    */
   return (
     <>
-      <dialog ref={modal} className='bg-[#111] min-h-screen min-w-[100vw]'>
+      <dialog ref={modal} className='bg-[#111] min-h-screen min-w-[100vw] overflow-hidden'>
         <form method="dialog" className='flex flex-col h-[95vh] justify-end'>
           <button className="btn btn-sm btn-circle absolute right-2 top-2 z-40"
             onClick={()=>modal.current && (
@@ -592,30 +580,40 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
             )}
           >✕</button>
 
+          <div className='btn btn-sm btn-circle absolute top-2 left-2 z-40'
+            onTouchEnd={()=>setHideModalTemp(false)}
+          >
+            ?
+          </div>
+
           <div className='m-auto'>
             {imageZoom && 
               <Image src={imageZoom.src}
+                className={hideImg ? 'hidden' : 'block'}
                 ref={imgRef}
                 width={300}
                 height={300}
                 loading={imageZoom.loading}
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
                 style={{
                   touchAction: 'none',
                   transformOrigin: '0 0',
-                  transform: `scale(${currentScale}) translate(${translate.x}px, ${translate.y}px)`,
+                  transform: `scale(${currentScale}) translate(${translate.x}px, ${translate.y}px)`
                 }}
               />
             }
+            <div className={`bg-[#272727] text-white rounded-lg w-[85%] absolute top-[50%] left-[7.5%] p-4 ${hideModalTemp ? 'hidden' : 'block'}`}>
+              <p>Dê dois toques na imagem para dar Zoom</p>
+              <p>E também para sair do Zoom</p>
+            </div>
           </div>
 
-          <ul class='flex gap-2 justify-center overflow-auto px-4 z-40'>
+          <ul ref={dotsModal} class='flex gap-2 justify-center absolute bottom-0 left-0 p-4 w-screen  z-40 bg-[#111]'>
             {images.map((img, index) => (
               <li class='min-w-[60px]'>
                 <div data-dot={index}>
-                  <div className='disabled:border-b-[#dd1f26] w-[60px] re1:w-[70px] border border-b-[#3d3d3d] re1:border-b-transparent border-transparent disabled:shadow-[0_2px_2px_0] group-disabled:shadow-[#dd1f26]/30'>
+                  <div className='data-[disabled="true"]:border-b-[#dd1f26] w-[70px] border-b-[#3d3d3d] border-b'>
                     <Image
                       style={{ aspectRatio: aspectRatio }}
                       width={70}
@@ -625,8 +623,8 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
                       onClick={(event)=>{
                         const image=event.target as HTMLImageElement
                         const dotIndex=image.parentElement!
-                        Array.from(dotIndex!.parentElement!.parentElement!.parentElement!.querySelectorAll('div[disabled="true"]')).forEach(item=>item.setAttribute('disabled','false'))
-                        dotIndex!.setAttribute('disabled','true')
+                        Array.from(dotIndex!.parentElement!.parentElement!.parentElement!.querySelectorAll('div[data-disabled="true"]')).forEach(item=>item.setAttribute('data-disabled','false'))
+                        dotIndex!.setAttribute('data-disabled','true')
                         setImageZoom(image)
                         setDotIndex(dotIndex!.parentElement!.getAttribute('data-dot'))
                       }}
