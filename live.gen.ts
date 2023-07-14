@@ -37,15 +37,16 @@ import * as $$$$$$$$12 from "./sections/Highlights.tsx";
 import * as $$$$$$$$13 from "./sections/LinkTree.tsx";
 import * as $$$$$$$$14 from "./sections/OfertasFogo.tsx";
 import * as $$$$$$$$15 from "./sections/PCNivelGamer.tsx";
-import * as $$$$$$$$16 from "./sections/ProductDetails.tsx";
-import * as $$$$$$$$17 from "./sections/ProductShelf.tsx";
-import * as $$$$$$$$18 from "./sections/ReturnH1.tsx";
-import * as $$$$$$$$19 from "./sections/SearchResult.tsx";
-import * as $$$$$$$$20 from "./sections/Shelf.tsx";
-import * as $$$$$$$$21 from "./sections/SignNewsletter.tsx";
-import * as $$$$$$$$22 from "./sections/Vitrine.tsx";
-import * as $$$$$$$$23 from "./sections/WhatsApp.tsx";
-import * as $$$$$$$$24 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$$$16 from "./sections/productDescription.tsx";
+import * as $$$$$$$$17 from "./sections/ProductDetails.tsx";
+import * as $$$$$$$$18 from "./sections/ProductShelf.tsx";
+import * as $$$$$$$$19 from "./sections/ReturnH1.tsx";
+import * as $$$$$$$$20 from "./sections/SearchResult.tsx";
+import * as $$$$$$$$21 from "./sections/Shelf.tsx";
+import * as $$$$$$$$22 from "./sections/SignNewsletter.tsx";
+import * as $$$$$$$$23 from "./sections/Vitrine.tsx";
+import * as $$$$$$$$24 from "./sections/WhatsApp.tsx";
+import * as $$$$$$$$25 from "./sections/WishlistGallery.tsx";
 import * as $live_workflows from "$live/routes/live/workflows/run.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
@@ -80,6 +81,7 @@ import * as i2$$$$$$$$2 from "$live/matchers/MatchDate.ts";
 import * as i2$$$$$$$$3 from "$live/matchers/MatchDevice.ts";
 import * as i2$$$$$$$$4 from "$live/matchers/MatchEnvironment.ts";
 import * as i2$$$$$$$$5 from "$live/matchers/MatchHost.ts";
+import * as i1$$$$$6 from "$live/matchers/MatchLocation.ts";
 import * as i2$$$$$$$$6 from "$live/matchers/MatchMulti.ts";
 import * as i2$$$$$$$$7 from "$live/matchers/MatchRandom.ts";
 import * as i2$$$$$$$$8 from "$live/matchers/MatchSite.ts";
@@ -229,15 +231,16 @@ const manifest = {
     "deco-sites/shp/sections/LinkTree.tsx": $$$$$$$$13,
     "deco-sites/shp/sections/OfertasFogo.tsx": $$$$$$$$14,
     "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$15,
-    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$16,
-    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$17,
-    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$18,
-    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$19,
-    "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$20,
-    "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$21,
-    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$22,
-    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$23,
-    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$24,
+    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$16,
+    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$17,
+    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$18,
+    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$19,
+    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$20,
+    "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$21,
+    "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$22,
+    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$23,
+    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$24,
+    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$25,
     "deco-sites/std/sections/Analytics.tsx": i2$$$$$5,
     "deco-sites/std/sections/configButterCMS.global.tsx": i2$$$$$6,
     "deco-sites/std/sections/configNuvemShop.tsx": i2$$$$$7,
@@ -294,6 +297,7 @@ const manifest = {
     "$live/matchers/MatchDevice.ts": i2$$$$$$$$3,
     "$live/matchers/MatchEnvironment.ts": i2$$$$$$$$4,
     "$live/matchers/MatchHost.ts": i2$$$$$$$$5,
+    "$live/matchers/MatchLocation.ts": i1$$$$$6,
     "$live/matchers/MatchMulti.ts": i2$$$$$$$$6,
     "$live/matchers/MatchRandom.ts": i2$$$$$$$$7,
     "$live/matchers/MatchSite.ts": i2$$$$$$$$8,
