@@ -14,7 +14,7 @@ const ProductSpecification=({ page }: Props)=>{
    */
 
   return (
-    <div class='py-10 bg-[#111] text-white'>
+    <div class='bg-[#111] text-white'>
       {page ? <Specification page={page}/> : null}
     </div>
   )
