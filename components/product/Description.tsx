@@ -16,6 +16,7 @@ const Description=({page}:Props)=>{
 
   const handleDropdown=(event:MouseEvent)=>{
     setOpenMenu(!openMenu)
+    console.log('dá deploy pf')
   }
   
   useEffect(()=>{

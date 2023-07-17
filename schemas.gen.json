@@ -111,7 +111,7 @@
               "deco-sites/shp/sections/LinkTree.tsx",
               "deco-sites/shp/sections/OfertasFogo.tsx",
               "deco-sites/shp/sections/PCNivelGamer.tsx",
-              "deco-sites/shp/sections/ProductDescription.tsx",
+              "deco-sites/shp/sections/productDescription.tsx",
               "deco-sites/shp/sections/ProductDetails.tsx",
               "deco-sites/shp/sections/ProductShelf.tsx",
               "deco-sites/shp/sections/ProductSpecification.tsx",
@@ -13168,8 +13168,8 @@
         }
       }
     },
-    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdERlc2NyaXB0aW9uLnRzeA==": {
-      "title": "deco-sites/shp/sections/ProductDescription.tsx",
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvcHJvZHVjdERlc2NyaXB0aW9uLnRzeA==": {
+      "title": "deco-sites/shp/sections/productDescription.tsx",
       "type": "object",
       "allOf": [
         {
@@ -13183,9 +13183,9 @@
         "__resolveType": {
           "type": "string",
           "enum": [
-            "deco-sites/shp/sections/ProductDescription.tsx"
+            "deco-sites/shp/sections/productDescription.tsx"
           ],
-          "default": "deco-sites/shp/sections/ProductDescription.tsx"
+          "default": "deco-sites/shp/sections/productDescription.tsx"
         }
       }
     },
@@ -14712,7 +14712,7 @@
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUENOaXZlbEdhbWVyLnRzeA=="
         },
         {
-          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdERlc2NyaXB0aW9uLnRzeA=="
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvcHJvZHVjdERlc2NyaXB0aW9uLnRzeA=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdERldGFpbHMudHN4"

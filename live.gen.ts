@@ -39,7 +39,7 @@ import * as $$$$$$$$12 from "./sections/Highlights.tsx";
 import * as $$$$$$$$13 from "./sections/LinkTree.tsx";
 import * as $$$$$$$$14 from "./sections/OfertasFogo.tsx";
 import * as $$$$$$$$15 from "./sections/PCNivelGamer.tsx";
-import * as $$$$$$$$16 from "./sections/ProductDescription.tsx";
+import * as $$$$$$$$16 from "./sections/productDescription.tsx";
 import * as $$$$$$$$17 from "./sections/ProductDetails.tsx";
 import * as $$$$$$$$18 from "./sections/ProductShelf.tsx";
 import * as $$$$$$$$19 from "./sections/ProductSpecification.tsx";
@@ -236,7 +236,7 @@ const manifest = {
     "deco-sites/shp/sections/LinkTree.tsx": $$$$$$$$13,
     "deco-sites/shp/sections/OfertasFogo.tsx": $$$$$$$$14,
     "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$15,
-    "deco-sites/shp/sections/ProductDescription.tsx": $$$$$$$$16,
+    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$16,
     "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$17,
     "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$18,
     "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$19,
