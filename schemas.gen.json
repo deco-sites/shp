@@ -78,6 +78,7 @@
               "./islands/ShelfIsland.tsx",
               "./islands/ShippingSimulation.tsx",
               "./islands/SliderJS.tsx",
+              "./islands/SpecificationIsland.tsx",
               "./islands/VitrineIsland.tsx",
               "./islands/WishlistButton.tsx",
               "$live/handlers/devPage.ts",
@@ -8055,6 +8056,19 @@
       ],
       "title": "deco-sites/shp/components/ui/ShippingSimulation.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1NwZWNpZmljYXRpb24udHN4@Props": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage",
+          "title": "Page"
+        }
+      },
+      "required": [
+        "page"
+      ],
+      "title": "deco-sites/shp/components/product/Specification.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@VitrineProps": {
       "type": "object",
       "properties": {
@@ -12468,6 +12482,27 @@
         }
       }
     },
+    "Li9pc2xhbmRzL1NwZWNpZmljYXRpb25Jc2xhbmQudHN4": {
+      "title": "./islands/SpecificationIsland.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1NwZWNpZmljYXRpb24udHN4@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/SpecificationIsland.tsx"
+          ],
+          "default": "./islands/SpecificationIsland.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL1ZpdHJpbmVJc2xhbmQudHN4": {
       "title": "./islands/VitrineIsland.tsx",
       "type": "object",
@@ -14517,6 +14552,9 @@
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL1NsaWRlckpTLnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/Li9pc2xhbmRzL1NwZWNpZmljYXRpb25Jc2xhbmQudHN4"
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL1ZpdHJpbmVJc2xhbmQudHN4"
