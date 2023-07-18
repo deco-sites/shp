@@ -30,7 +30,7 @@ const Description=({page}:Props)=>{
   
 
   return (
-    <div className='w-screen px-[10%] border-y border-y-[#3d3d3d]'>
+    <div className='w-full px-[10%] border-y border-y-[#3d3d3d]'>
       <label className='text-base re1:text-xl py-[20px] font-bold flex justify-between items-center' onClick={handleDropdown}>
         <p>Descrição</p>
         <Image src='https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png' width={15} height={15} 
