@@ -82,20 +82,72 @@ const Specification=({page}:Props)=>{
   )
   const PCGamer = categoriesId?.some((item) => item === '10')
   const description:string=product.description!
-  const descricaoFinal=PCGamer ?  (
-    /&nbsp;/.test(description) ? product.isVariantOf?.additionalProperty?.find(item=>item.name==='Bloco Descrição')?.value! : description!
-  ) 
-    : description!
-  
+  const [alreadyOpened,setAlreadyOpened]=useState(false)
   const [openMenu,setOpenMenu]=useState(false)
+  const productDesc=useRef<HTMLDivElement>(null)
 
   const handleDropdown=(event:MouseEvent)=>{
     setOpenMenu(!openMenu)
-  }
+    if(!alreadyOpened && !PCGamer){
+      const descElement=document.createElement('div')
+      descElement.innerHTML=description
+      const pDesc=Array.from(descElement.querySelectorAll('p'))!
+      const specsPossibleNames=['ESPECIFICAÇÕES','ESPECIFICAÇÃO','CARACTERÍSTICAS','CARACTERISTICAS','CARACTERISTICA']
+      const indexSpec=pDesc.indexOf(pDesc.find(element=>specsPossibleNames.some(string=>element.innerText.toUpperCase().includes(string)))!)
+      const specs=pDesc.slice(indexSpec,pDesc.length)
+      specs.forEach((p,index)=>{
+        index !== 0 && p.previousSibling?.remove()
+        p.remove()
+      })
+      const specsText = specs.map((e, index)=>{
+          if (e.innerHTML.includes('\u003Cbr\u003E')) {
+              const arry = e.innerHTML.split('\u003Cbr\u003E')
+              arry.shift()
+              return arry
+          } else {
+              if (e.innerText.includes(':')) {
+                  if (index !== 0) {
+                      return e.innerText
+                  }
+              }
+          }
+      }).filter(function(e) {
+          if (e !== undefined)
+              return e
+      })
 
-  useEffect(()=>{
-    console.log(product)
-  })
+      const specsObj:string[] = []
+      // specsText.forEach((element)=>{
+      //     if (typeof (element) !== 'string') {
+      //         element!.forEach((arr)=>{
+      //             let[key,value] = arr.split(':')
+
+      //             if (!((key === undefined || value === undefined) || (key === '' || value === '') || (key.includes('\u003C') || value.includes('\u003C')))) {
+      //                 if (key.split('')[0] === '-') {
+      //                     key = key.split('')
+      //                     key.shift()
+      //                     key = key.join('')
+      //                 }
+      //                 specsObj.push([key, value])
+      //             }
+      //         })
+      //     } else {
+      //         let[key,value] = element.split(':')
+
+      //         if (!((key === undefined || value === undefined) || (key === '' || value === '') || (key.includes('\u003C') || value.includes('\u003C')))) {
+      //             if (key.split('')[0] === '-') {
+      //                 key = key.split('')
+      //                 key.shift()
+      //                 key = key.join('')
+      //             }
+      //             specsObj.push([key, value])
+      //         }
+      //     }
+      // })
+
+    }
+    setAlreadyOpened(true)
+  }
 
   const specsName=['Processador', 'Fonte', 'Placa Mãe', 'Sistema Operacional', 'Fan Adicional', 'Placa de vídeo', 'Memória', 'Garantia', 'SSD', 'HD', 'Cabos Inclusos', 'Gabinete']
   const pecasOrdem=['Processador', 'Fonte', 'Placa Mãe', 'Fan Adicional', 'Placa de vídeo', 'Memória', 'SSD', 'HD', 'Gabinete']
@@ -107,10 +159,6 @@ const Specification=({page}:Props)=>{
 
   const pecas=specs.filter(item=>pecasOrdem.includes(item!.name!)).sort((a,b)=>pecasOrdem.indexOf(a!.name!) - pecasOrdem.indexOf(b!.name!))
 
-  useEffect(()=>{
-    console.log(specs)
-    console.log(pecas)
-  },[])
 
   return (
     <div className='w-full re1:px-[10%] border-b border-b-[#3d3d3d]'>

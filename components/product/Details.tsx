@@ -425,7 +425,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
 
     window.addEventListener('resize', handleResize)
     let observer:MutationObserver
-    if(urlReview && liVideo.current){
+    if((urlReview && urlReview.split('v=').length>1) && liVideo.current){
       const button=liVideo.current.children[0]
   
       observer= new MutationObserver((mutations)=>{
@@ -711,12 +711,12 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
                 )
             )}
 
-          { urlReview && (
+          {(urlReview && urlReview.split('v=').length>1) && (
             <Slider.Item
               index={images.length}
               class='carousel-item min-w-[100vw] re1:min-w-[30vw] justify-center'
             >
-              <iframe ref={iframe} key={iframeKey} width={isMobile ? 300 : 400} height={isMobile ? 300 : 400} src={`https://www.youtube.com/embed/${urlReview.split('v=')[1].split('&')[0]}`} title="Conheça a Shopinfo | A Melhor Loja de PC Gamer do Brasil" allow="accelerometer autoplay clipboard-write encrypted-media gyroscope picture-in-picture web-share"></iframe>
+              <iframe ref={iframe} key={iframeKey} width={isMobile ? 300 : 400} height={isMobile ? 300 : 400} src={ `https://www.youtube.com/embed/${urlReview.split('v=')[1].split('&')[0]}`} title="Conheça a Shopinfo | A Melhor Loja de PC Gamer do Brasil" allow="accelerometer autoplay clipboard-write encrypted-media gyroscope picture-in-picture web-share"></iframe>
             </Slider.Item>
             )
           }
@@ -765,7 +765,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
               </Slider.Dot>
             </li>
           ))}
-          {urlReview && (
+          {(urlReview && urlReview.split('v=').length>1) && (
             <li class='min-w-[70px]'>
               <Slider.Dot index={images.length}>
                 <div className='flex re1:flex-col gap-1 items-center py-1 px-2 re1:p-0 bg-[#3d3d3d] re1:bg-transparent justify-center rounded-lg  
