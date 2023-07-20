@@ -12,10 +12,10 @@ const Description=({page}:Props)=>{
   const blockDescription=product.isVariantOf?.additionalProperty?.find(item=>item.name==='Bloco Descrição')?.value
   const descriptionDiv=useRef<HTMLDivElement>(null)
   const [openMenu,setOpenMenu]=useState(false)
-  const descriptionFromBD=/&nbsp;/.test(description)
+  const descriptionFromBD=description==='&nbsp;'
   const [alreadyOpened,setAlreadyOpened]=useState(false)
 
-  
+  useEffect(()=>console.log(product))
 
   const handleDropdown=(event:MouseEvent)=>{
     setOpenMenu(!openMenu)
