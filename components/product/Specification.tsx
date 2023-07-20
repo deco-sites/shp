@@ -61,7 +61,7 @@ const SpecPeca=({ ...props }:PecaProps)=>{
               onClick={()=>modal.current?.close()}
               className='absolute top-0 re1:top-[15.5vh] left-[20%] re1:left-[30.25%] m-3 border-[#dd1f26] rounded-full border text-[#dd1f26] w-5 h-5 flex items-center justify-center text-xs'
             >✕</button>
-            <div className='flex flex-col gap-5 text-white'>
+            <div className='flex flex-col gap-5 text-white [overflow-wrap:break-word]'>
               <div className="p-5 bg-[#0a0a0a]">
               {data[0] ? (
                 <img className='m-auto' src={data[0]} width={300} height={300}/>
