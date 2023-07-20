@@ -23,7 +23,7 @@ const Description=({page}:Props)=>{
       if(descriptionDiv.current && !descriptionFromBD){
           const script=document.createElement('script')
         script.src='https://shopinfo.vteximg.com.br/arquivos/org-descricao.js?v=8'
-        document.head.append(script)
+        //document.head.append(script)
         
         descriptionDiv.current.classList.add('max-w-[1230px]')
         descriptionDiv.current.classList.add('mx-auto')
@@ -41,9 +41,11 @@ const Description=({page}:Props)=>{
         })
         
         Array.from(descriptionDiv.current.querySelectorAll('section.descricao-img-bg-all'))
-        .forEach((element)=>{
-          const classes=['w-full','h-auto','bg-[center_top]','bg-no-repeat','bg-cover','re1:h-[51vh]','re5:h-[58vh]']
-          element.classList.add(...classes)
+        .forEach((element,index)=>{
+          const classes=['w-full','h-auto','bg-[center_top]','bg-no-repeat','bg-cover']
+          index!==0 && classes.push('re1:my-[2.5em]')
+          if((element as HTMLElement).style.backgroundImage!=='url("")') classes.push('re1:h-[51vh]')
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
 
@@ -51,17 +53,17 @@ const Description=({page}:Props)=>{
         .forEach((element,index)=>{
           if(index===1){
             const classes=['re1:!p-0','!p-[5em]']
-            element.classList.add(...classes)
+            if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
           }else{
             const classes=['re1:!p-0','!p-[2em]']
-            element.classList.add(...classes)
+            if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
           }
         })
 
         Array.from(descriptionDiv.current.querySelectorAll('.descricao-aling-img-mob'))
         .forEach((element)=>{
           const classes=['flex','justify-center']
-          element.classList.add(...classes)
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
         Array.from(descriptionDiv.current.querySelectorAll('.descricao-img-info'))
@@ -73,56 +75,57 @@ const Description=({page}:Props)=>{
         Array.from(descriptionDiv.current.querySelectorAll('.descricao-h1-title'))
         .forEach((element)=>{
           const classes=['font-bold','leading-[40px]','mb-[.5em]','text-2xl','re1:text-4xl','text-center','re1:text-left']
-          element.classList.add(...classes)
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
         Array.from(descriptionDiv.current.querySelectorAll('.descricao-desktop-container'))
         .forEach((element)=>{
-          const classes=['flex','p-0','pl-[4em]','items-center']
-          element.classList.add(...classes)
+          const classes=['flex','!p-0','!pl-[4em]','items-center']
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
         Array.from(descriptionDiv.current.querySelectorAll('.descricao-desktop-container'))
         .forEach((element)=>{
-          const classes=['flex','p-0','pl-[4em]','items-center','flex-row-reverse']
-          element.classList.add(...classes)
+          const classes=['flex','!p-0','!pl-[4em]','items-center','flex-row-reverse']
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
         Array.from(descriptionDiv.current.querySelectorAll('.descricao-desktop-container-2'))
         .forEach((element)=>{
-          const classes=['flex','p-0','pl-[4em]','items-center']
-          element.classList.add(...classes)
+          const classes=['flex','!p-0','!pl-[4em]','items-center']
+          if(element.querySelector('img') && element.querySelector('div')) classes.push('bg-[#1c1c1c]')
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
         Array.from(descriptionDiv.current.querySelectorAll('.order-2.order-md-1'))
         .forEach((element)=>{
           const classes=['w-[37vw]']
-          element.classList.add(...classes)
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
         Array.from(descriptionDiv.current.querySelectorAll('.container-text-des'))
         .forEach((element)=>{
           const classes=['w-[37vw]','ml-[6em]']
-          element.classList.add(...classes)
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
         Array.from(descriptionDiv.current.querySelectorAll('.text-center-desc'))
         .forEach((element)=>{
           const classes=['text-center','re1:mt-[5em]']
-          element.classList.add(...classes)
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
         Array.from(descriptionDiv.current.querySelectorAll('.descricao-p-info'))
         .forEach((element)=>{
           const classes=['text-center','re1:text-left']
-          element.classList.add(...classes)
+          if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
         
         const pDesc=Array.from(descriptionDiv.current.querySelectorAll('p'))!
-        const specsPossibleNames=['ESPECIFICAÇÕES','ESPECIFICAÇÃO','CARACTERÍSTICAS','CARACTERISTICAS','CARACTERISTICA']
+        const specsPossibleNames=['ESPECIFICAÇÕES:','ESPECIFICAÇÃO:','CARACTERÍSTICAS:','CARACTERISTICAS:','CARACTERISTICA:']
         const indexSpec=pDesc.indexOf(pDesc.find(element=>specsPossibleNames.some(string=>element.innerText.toUpperCase().includes(string)))!)
-        pDesc.slice(indexSpec,pDesc.length).forEach((p,index)=>{
-          index !== 0 && p.previousSibling?.remove()
+        pDesc.slice(indexSpec,pDesc.length).forEach((p)=>{
+          p.previousSibling?.remove()
           p.remove()
         })
       }
@@ -136,6 +139,7 @@ const Description=({page}:Props)=>{
         if(img.hasAttribute('data-src')){
           img.src=img.getAttribute('data-src')!
           img.removeAttribute('data-src')
+          img.style.display='unset'
         }
       })
     }
