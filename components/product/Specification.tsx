@@ -124,7 +124,6 @@ const Specification=({page}:Props)=>{
                   let[key,value]:string[] = arr.split(':')
 
                   if (!((key === undefined || value === undefined) ||  (/^\s*$/.test(key) || /^\s*$/.test(value)) || !(/[A-Za-z]/.test(key) || /[A-Za-z]/.test(value)) || (key.includes('\u003C') || value.includes('\u003C')))) {
-                    console.log(`key: ${key} , value: ${value}`)
                     if (key.split('')[0] === '-') {
                           const arrKey = key.split('')
                           arrKey.shift()
@@ -137,7 +136,6 @@ const Specification=({page}:Props)=>{
               let[key,value] = element.split(':')
 
               if (!((key === undefined || value === undefined) || (/^\s*$/.test(key) || /^\s*$/.test(value)) || !(/[A-Za-z]/.test(key) || /[A-Za-z]/.test(value)) || (key.includes('\u003C') || value.includes('\u003C')))) {
-                  console.log(`key: ${key} , value: ${value}`)
                   if (key.split('')[0] === '-') {
                       const arrKey = key.split('')
                       arrKey.shift()

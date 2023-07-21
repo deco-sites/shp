@@ -1,4 +1,5 @@
 import Image from 'deco-sites/std/components/Image.tsx'
+import {TimeRemaining} from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 
 export interface Props {
   nome?: string
@@ -6,13 +7,13 @@ export interface Props {
   precoPIX?: string | number
   preco10?: number
   discountFlag?: number
-  timeRemaining?:string[]
+  timeRemaining?:TimeRemaining
   productUrl?:string
 }
 
 
 const ProdFogo = ({...props}: Props) => {
-  const [days,hours,minutes,seconds] = props.timeRemaining ? props.timeRemaining : ['00','00','00','00'] 
+  const {days, hours, minutes, seconds} = props.timeRemaining || {days:'00', hours:'00', minutes:'00', seconds:'00'};
 
   return (
     <a href={props.productUrl} className="flex flex-col w-72 justify-between rounded-lg bg-white p-2 h-44">

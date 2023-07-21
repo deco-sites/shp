@@ -15,8 +15,6 @@ const Description=({page}:Props)=>{
   const descriptionFromBD=description==='&nbsp;'
   const [alreadyOpened,setAlreadyOpened]=useState(false)
 
-  useEffect(()=>console.log(product))
-
   const handleDropdown=(event:MouseEvent)=>{
     setOpenMenu(!openMenu)
     if(!alreadyOpened){
