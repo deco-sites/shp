@@ -241,7 +241,7 @@ const selectGames=({Games=[]}:Props)=>{
   Games.length<1 && null
 
   return(
-    <div className='bg-[#272727] w-screen h-fit my-5 py-3'>
+    <div className='bg-[#272727] w-full h-fit my-5 py-3'>
       <div className='flex flex-col items-center w-[90vw] re1:w-[70vw] mx-auto gap-8'>
 
         <div className='flex flex-col items-center justify-center w-4/6'>
