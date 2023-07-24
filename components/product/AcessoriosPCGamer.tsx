@@ -32,12 +32,11 @@ const Acessorio = ({ imgUrl, href, w, h }: AcessorioProps) => {
 const Acessorios = () => {
   const id = 'acessorios-' + useId()
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
-      console.log(isMobile)
+      setIsMobile(window.innerWidth < 768)
     }
 
     handleResize()

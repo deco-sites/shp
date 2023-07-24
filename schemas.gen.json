@@ -88,6 +88,7 @@
               "./islands/ShippingSimulation.tsx",
               "./islands/SliderJS.tsx",
               "./islands/SpecificationIsland.tsx",
+              "./islands/TrustvoxIsland.tsx",
               "./islands/VitrineIsland.tsx",
               "./islands/WishlistButton.tsx",
               "$live/handlers/devPage.ts",
@@ -8835,6 +8836,24 @@
       ],
       "title": "deco-sites/shp/components/product/Specification.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1RydXN0dm94LnRzeA==@Props": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage",
+          "title": "Page"
+        },
+        "storeId": {
+          "type": "string",
+          "title": "Store Id"
+        }
+      },
+      "required": [
+        "page",
+        "storeId"
+      ],
+      "title": "deco-sites/shp/components/product/Trustvox.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvVml0cmluZS50c3g=@VitrineProps": {
       "type": "object",
       "properties": {
@@ -13438,6 +13457,27 @@
         }
       }
     },
+    "Li9pc2xhbmRzL1RydXN0dm94SXNsYW5kLnRzeA==": {
+      "title": "./islands/TrustvoxIsland.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1RydXN0dm94LnRzeA==@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/TrustvoxIsland.tsx"
+          ],
+          "default": "./islands/TrustvoxIsland.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL1ZpdHJpbmVJc2xhbmQudHN4": {
       "title": "./islands/VitrineIsland.tsx",
       "type": "object",
@@ -15638,6 +15678,9 @@
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL1NwZWNpZmljYXRpb25Jc2xhbmQudHN4"
+        },
+        {
+          "$ref": "#/definitions/Li9pc2xhbmRzL1RydXN0dm94SXNsYW5kLnRzeA=="
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL1ZpdHJpbmVJc2xhbmQudHN4"
