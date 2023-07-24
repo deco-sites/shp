@@ -13,18 +13,19 @@ import * as $$$$$3 from "./islands/DescriptionIsland.tsx";
 import * as $$$$$4 from "./islands/DetailsIsland.tsx";
 import * as $$$$$5 from "./islands/GameContextIsland.tsx";
 import * as $$$$$6 from "./islands/HeaderIsland.tsx";
-import * as $$$$$7 from "./islands/OfertasFogoIsland.tsx";
-import * as $$$$$8 from "./islands/PCNivelGamer.tsx";
-import * as $$$$$9 from "./islands/ProductImageZoom.tsx";
-import * as $$$$$10 from "./islands/SearchControls.tsx";
-import * as $$$$$11 from "./islands/SelectGamesIsland.tsx";
-import * as $$$$$12 from "./islands/ShelfIsland.tsx";
-import * as $$$$$13 from "./islands/ShippingSimulation.tsx";
-import * as $$$$$14 from "./islands/SliderJS.tsx";
-import * as $$$$$15 from "./islands/SpecificationIsland.tsx";
-import * as $$$$$16 from "./islands/TrustvoxIsland.tsx";
-import * as $$$$$17 from "./islands/VitrineIsland.tsx";
-import * as $$$$$18 from "./islands/WishlistButton.tsx";
+import * as $$$$$7 from "./islands/NossosNumsIsland.tsx";
+import * as $$$$$8 from "./islands/OfertasFogoIsland.tsx";
+import * as $$$$$9 from "./islands/PCNivelGamer.tsx";
+import * as $$$$$10 from "./islands/ProductImageZoom.tsx";
+import * as $$$$$11 from "./islands/SearchControls.tsx";
+import * as $$$$$12 from "./islands/SelectGamesIsland.tsx";
+import * as $$$$$13 from "./islands/ShelfIsland.tsx";
+import * as $$$$$14 from "./islands/ShippingSimulation.tsx";
+import * as $$$$$15 from "./islands/SliderJS.tsx";
+import * as $$$$$16 from "./islands/SpecificationIsland.tsx";
+import * as $$$$$17 from "./islands/TrustvoxIsland.tsx";
+import * as $$$$$18 from "./islands/VitrineIsland.tsx";
+import * as $$$$$19 from "./islands/WishlistButton.tsx";
 import * as $$$$$$$$0 from "./sections/Acessorios.tsx";
 import * as $$$$$$$$1 from "./sections/BannerGrid.tsx";
 import * as $$$$$$$$2 from "./sections/BannerPLP.tsx";
@@ -218,18 +219,19 @@ const manifest = {
     "./islands/DetailsIsland.tsx": $$$$$4,
     "./islands/GameContextIsland.tsx": $$$$$5,
     "./islands/HeaderIsland.tsx": $$$$$6,
-    "./islands/OfertasFogoIsland.tsx": $$$$$7,
-    "./islands/PCNivelGamer.tsx": $$$$$8,
-    "./islands/ProductImageZoom.tsx": $$$$$9,
-    "./islands/SearchControls.tsx": $$$$$10,
-    "./islands/SelectGamesIsland.tsx": $$$$$11,
-    "./islands/ShelfIsland.tsx": $$$$$12,
-    "./islands/ShippingSimulation.tsx": $$$$$13,
-    "./islands/SliderJS.tsx": $$$$$14,
-    "./islands/SpecificationIsland.tsx": $$$$$15,
-    "./islands/TrustvoxIsland.tsx": $$$$$16,
-    "./islands/VitrineIsland.tsx": $$$$$17,
-    "./islands/WishlistButton.tsx": $$$$$18,
+    "./islands/NossosNumsIsland.tsx": $$$$$7,
+    "./islands/OfertasFogoIsland.tsx": $$$$$8,
+    "./islands/PCNivelGamer.tsx": $$$$$9,
+    "./islands/ProductImageZoom.tsx": $$$$$10,
+    "./islands/SearchControls.tsx": $$$$$11,
+    "./islands/SelectGamesIsland.tsx": $$$$$12,
+    "./islands/ShelfIsland.tsx": $$$$$13,
+    "./islands/ShippingSimulation.tsx": $$$$$14,
+    "./islands/SliderJS.tsx": $$$$$15,
+    "./islands/SpecificationIsland.tsx": $$$$$16,
+    "./islands/TrustvoxIsland.tsx": $$$$$17,
+    "./islands/VitrineIsland.tsx": $$$$$18,
+    "./islands/WishlistButton.tsx": $$$$$19,
   },
   "sections": {
     "$live/sections/Conditional_Beta.tsx": i2$$$$$0,

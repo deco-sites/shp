@@ -79,6 +79,7 @@
               "./islands/DescriptionIsland.tsx",
               "./islands/DetailsIsland.tsx",
               "./islands/HeaderIsland.tsx",
+              "./islands/NossosNumsIsland.tsx",
               "./islands/OfertasFogoIsland.tsx",
               "./islands/PCNivelGamer.tsx",
               "./islands/ProductImageZoom.tsx",
@@ -13288,6 +13289,22 @@
         }
       }
     },
+    "Li9pc2xhbmRzL05vc3Nvc051bXNJc2xhbmQudHN4": {
+      "title": "./islands/NossosNumsIsland.tsx",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/NossosNumsIsland.tsx"
+          ],
+          "default": "./islands/NossosNumsIsland.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL09mZXJ0YXNGb2dvSXNsYW5kLnRzeA==": {
       "title": "./islands/OfertasFogoIsland.tsx",
       "type": "object",
@@ -15651,6 +15668,9 @@
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL0hlYWRlcklzbGFuZC50c3g="
+        },
+        {
+          "$ref": "#/definitions/Li9pc2xhbmRzL05vc3Nvc051bXNJc2xhbmQudHN4"
         },
         {
           "$ref": "#/definitions/Li9pc2xhbmRzL09mZXJ0YXNGb2dvSXNsYW5kLnRzeA=="
