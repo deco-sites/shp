@@ -39,19 +39,20 @@ import * as $$$$$$$$11 from "./sections/Features.tsx";
 import * as $$$$$$$$12 from "./sections/Footer.tsx";
 import * as $$$$$$$$13 from "./sections/Highlights.tsx";
 import * as $$$$$$$$14 from "./sections/LinkTree.tsx";
-import * as $$$$$$$$15 from "./sections/OfertasFogo.tsx";
-import * as $$$$$$$$16 from "./sections/PCNivelGamer.tsx";
-import * as $$$$$$$$17 from "./sections/productDescription.tsx";
-import * as $$$$$$$$18 from "./sections/ProductDetails.tsx";
-import * as $$$$$$$$19 from "./sections/ProductShelf.tsx";
-import * as $$$$$$$$20 from "./sections/ProductSpecification.tsx";
-import * as $$$$$$$$21 from "./sections/ReturnH1.tsx";
-import * as $$$$$$$$22 from "./sections/SearchResult.tsx";
-import * as $$$$$$$$23 from "./sections/Shelf.tsx";
-import * as $$$$$$$$24 from "./sections/SignNewsletter.tsx";
-import * as $$$$$$$$25 from "./sections/Vitrine.tsx";
-import * as $$$$$$$$26 from "./sections/WhatsApp.tsx";
-import * as $$$$$$$$27 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$$$15 from "./sections/NossosNums.tsx";
+import * as $$$$$$$$16 from "./sections/OfertasFogo.tsx";
+import * as $$$$$$$$17 from "./sections/PCNivelGamer.tsx";
+import * as $$$$$$$$18 from "./sections/productDescription.tsx";
+import * as $$$$$$$$19 from "./sections/ProductDetails.tsx";
+import * as $$$$$$$$20 from "./sections/ProductShelf.tsx";
+import * as $$$$$$$$21 from "./sections/ProductSpecification.tsx";
+import * as $$$$$$$$22 from "./sections/ReturnH1.tsx";
+import * as $$$$$$$$23 from "./sections/SearchResult.tsx";
+import * as $$$$$$$$24 from "./sections/Shelf.tsx";
+import * as $$$$$$$$25 from "./sections/SignNewsletter.tsx";
+import * as $$$$$$$$26 from "./sections/Vitrine.tsx";
+import * as $$$$$$$$27 from "./sections/WhatsApp.tsx";
+import * as $$$$$$$$28 from "./sections/WishlistGallery.tsx";
 import * as $live_workflows from "$live/routes/live/workflows/run.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
@@ -240,19 +241,20 @@ const manifest = {
     "deco-sites/shp/sections/Footer.tsx": $$$$$$$$12,
     "deco-sites/shp/sections/Highlights.tsx": $$$$$$$$13,
     "deco-sites/shp/sections/LinkTree.tsx": $$$$$$$$14,
-    "deco-sites/shp/sections/OfertasFogo.tsx": $$$$$$$$15,
-    "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$16,
-    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$17,
-    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$18,
-    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$19,
-    "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$20,
-    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$21,
-    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$22,
-    "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$23,
-    "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$24,
-    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$25,
-    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$26,
-    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$27,
+    "deco-sites/shp/sections/NossosNums.tsx": $$$$$$$$15,
+    "deco-sites/shp/sections/OfertasFogo.tsx": $$$$$$$$16,
+    "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$17,
+    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$18,
+    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$19,
+    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$20,
+    "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$21,
+    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$22,
+    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$23,
+    "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$24,
+    "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$25,
+    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$26,
+    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$27,
+    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$28,
     "deco-sites/std/sections/Analytics.tsx": i2$$$$$5,
     "deco-sites/std/sections/configButterCMS.global.tsx": i2$$$$$6,
     "deco-sites/std/sections/configNuvemShop.tsx": i2$$$$$7,

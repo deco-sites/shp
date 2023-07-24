@@ -298,7 +298,7 @@ const Specification=({page}:Props)=>{
                 </tbody>
               </table>
             </div>
-            <div className='my-6 p-2 re1:p-0 flex flex-col re1:flex-row re1:justify-between'>
+            <div className='my-6 p-2 re1:p-0 flex flex-col re1:flex-row re1:justify-between gap-4 re1:gap-0'>
               <div className='w-full re1:w-2/5 flex flex-col gap-3'>
                 <span>Recomendações</span>
                 <p className='text-xs re1:text-sm'>{product.isVariantOf?.additionalProperty.find(item=>item.name==='Recomendações')?.value || 'Informação indisponível'}</p>
