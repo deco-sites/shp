@@ -79,6 +79,7 @@
               "./islands/BannerItem.tsx",
               "./islands/DescriptionIsland.tsx",
               "./islands/DetailsIsland.tsx",
+              "./islands/GamesIsland.tsx",
               "./islands/HeaderIsland.tsx",
               "./islands/OfertasFogoIsland.tsx",
               "./islands/PCNivelGamer.tsx",
@@ -127,6 +128,7 @@
               "deco-sites/shp/sections/PCNivelGamer.tsx",
               "deco-sites/shp/sections/productDescription.tsx",
               "deco-sites/shp/sections/ProductDetails.tsx",
+              "deco-sites/shp/sections/ProductGames.tsx",
               "deco-sites/shp/sections/ProductShelf.tsx",
               "deco-sites/shp/sections/ProductSpecification.tsx",
               "deco-sites/shp/sections/ProductTrustvox.tsx",
@@ -3916,9 +3918,9 @@
         }
       ]
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader": {
-      "$ref": "#/root/loaders",
-      "title": "Loader"
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Accounts": {
+      "$ref": "#/root/accounts",
+      "title": "Accounts"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Flag": {
       "$ref": "#/root/flags",
@@ -3928,20 +3930,18 @@
       "$ref": "#/root/sections",
       "title": "Section"
     },
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader": {
+      "$ref": "#/root/loaders",
+      "title": "Loader"
+    },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page": {
       "$ref": "#/root/pages",
       "title": "Page"
     },
-    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@4dc8c2f895a6513848bc8f3f1319d3f2|Account|Flag|Loader|Page|Section": {
+    "ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Accounts|Flag|Loader|Page|Section": {
       "anyOf": [
         {
-          "$ref": "#/definitions/Resolvable"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader"
-        },
-        {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Account"
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Accounts"
         },
         {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Flag"
@@ -3950,10 +3950,13 @@
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section"
         },
         {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader"
+        },
+        {
           "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9wYWdlLnRz@Page"
         }
       ],
-      "title": "4dc8c2f895a6513848bc8f3f1319d3f2|Account|Flag|Loader|Page|Section"
+      "title": "Accounts|Flag|Loader|Page|Section"
     },
     "ZGVjby1jeC9saXZlL2xvYWRlcnMvc3RhdGUudHM=@StateProp": {
       "type": "object",
@@ -3963,7 +3966,7 @@
           "title": "Key"
         },
         "value": {
-          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@4dc8c2f895a6513848bc8f3f1319d3f2|Account|Flag|Loader|Page|Section",
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9hY2NvdW50LnRz@Accounts|Flag|Loader|Page|Section",
           "title": "Value"
         }
       },
@@ -9995,6 +9998,19 @@
       ],
       "title": "deco-sites/shp/components/product/Details.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L0dhbWVzLnRzeA==@Props": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage",
+          "title": "Page"
+        }
+      },
+      "required": [
+        "page"
+      ],
+      "title": "deco-sites/shp/components/product/Games.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvT2ZlcnRhc0ZvZ28udHN4@Props": {
       "type": "object",
       "properties": {
@@ -10207,6 +10223,31 @@
       ],
       "title": "deco-cx/live/handlers/fresh.ts@FreshConfig"
     },
+    "ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Header": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "title": "Key"
+        },
+        "value": {
+          "type": "string",
+          "title": "Value"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ],
+      "title": "{{{key}}} - {{{value}}}"
+    },
+    "ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Header[]": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Header"
+      },
+      "title": "Header[]"
+    },
     "ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Props": {
       "type": "object",
       "properties": {
@@ -10230,6 +10271,11 @@
           ],
           "description": "Host that should be used when proxying the request",
           "title": "Host"
+        },
+        "customHeaders": {
+          "$ref": "#/definitions/ZGVjby1jeC9saXZlL2hhbmRsZXJzL3Byb3h5LnRz@Header[]",
+          "description": "custom headers",
+          "title": "Custom Headers"
         }
       },
       "required": [
@@ -11879,6 +11925,19 @@
         "pix"
       ],
       "title": "deco-sites/shp/components/product/ProductDetails.tsx@Props"
+    },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1Byb2R1Y3RHYW1lcy50c3g=@Props": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage|null",
+          "title": "Page"
+        }
+      },
+      "required": [
+        "page"
+      ],
+      "title": "deco-sites/shp/components/product/ProductGames.tsx@Props"
     },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=@Props": {
       "type": "object",
@@ -14667,6 +14726,27 @@
         }
       }
     },
+    "Li9pc2xhbmRzL0dhbWVzSXNsYW5kLnRzeA==": {
+      "title": "./islands/GamesIsland.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L0dhbWVzLnRzeA==@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/GamesIsland.tsx"
+          ],
+          "default": "./islands/GamesIsland.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL0hlYWRlcklzbGFuZC50c3g=": {
       "title": "./islands/HeaderIsland.tsx",
       "type": "object",
@@ -15621,6 +15701,27 @@
             "deco-sites/shp/sections/ProductDetails.tsx"
           ],
           "default": "deco-sites/shp/sections/ProductDetails.tsx"
+        }
+      }
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdEdhbWVzLnRzeA==": {
+      "title": "deco-sites/shp/sections/ProductGames.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1Byb2R1Y3RHYW1lcy50c3g=@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/ProductGames.tsx"
+          ],
+          "default": "deco-sites/shp/sections/ProductGames.tsx"
         }
       }
     },
@@ -17132,6 +17233,9 @@
           "$ref": "#/definitions/Li9pc2xhbmRzL0RldGFpbHNJc2xhbmQudHN4"
         },
         {
+          "$ref": "#/definitions/Li9pc2xhbmRzL0dhbWVzSXNsYW5kLnRzeA=="
+        },
+        {
           "$ref": "#/definitions/Li9pc2xhbmRzL0hlYWRlcklzbGFuZC50c3g="
         },
         {
@@ -17298,6 +17402,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdERldGFpbHMudHN4"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdEdhbWVzLnRzeA=="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdFNoZWxmLnRzeA=="
