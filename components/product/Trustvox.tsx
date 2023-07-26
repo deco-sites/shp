@@ -48,7 +48,7 @@ const Trustvox=({page, storeId}:Props)=>{
           loading='eager' decoding='sync' className={`hover:brightness-50 active:hue-rotate-[350deg] cursor-pointer ${openMenu ? 'rotate-[270deg]' : 'rotate-90'}`}
         />
       </label>
-      <div id="_trustvox_widget"></div>
+      <div className={`${openMenu ? 'block' : 'hidden'}`} id="_trustvox_widget"></div>
     </div>
   )
 }
