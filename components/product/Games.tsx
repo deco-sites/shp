@@ -14,7 +14,7 @@ const getGamesLoader= async(proc:string,placa:string) =>{
   const data =await fetch(url,{
     method: "POST",
     body: formData 
-  }).then(r=>r.json()).catch(err=>console.log('Error: ',err)) || {}
+  }).then(r=>r.json()).catch(err=>console.error(err)) || {}
 
   return data
 }
