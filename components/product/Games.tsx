@@ -11,7 +11,7 @@ const getGamesLoader= async(proc:string,placa:string) =>{
   const formData=new FormData()
   formData.append('processador',proc)
   formData.append('placaVideo',placa)
-  const data:Record<string,number> =await fetch(url,{
+  const data =await fetch(url,{
     method: "POST",
     body: formData 
   }).then(r=>r.json()).catch(err=>console.log('Error: ',err)) || {}
