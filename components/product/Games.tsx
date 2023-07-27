@@ -10,19 +10,6 @@ export interface Props {
   page:ProductDetailsPage
 }
 
-const getGamesLoader= async(proc:string,placa:string) =>{
-  const url='https://api.shopinfo.com.br/paramFps.php'
-  const formData=new FormData()
-  formData.append('processador',proc)
-  formData.append('placaVideo',placa)
-  const data =await fetch(url,{
-    method: "POST",
-    body: formData 
-  }).then(r=>r.json()).catch(err=>console.error(err)) || {}
-
-  return data
-}
-
 const gamesElements:JSX.Element[]=[
   <div class="lol"><Image width={80} height={80} loading="lazy" decoding='sync' fetchPriority='low' alt="icone jogo" src="https://shopinfo.vteximg.com.br/arquivos/icone-encontrePC-leagueoflegends.png"/><div class="flex flex-col justify-around"><span class="text-white text-sm re1:text-base line-clamp-1 font-bold">LOL</span><div><span class="text-[#707070] text-xs">Full HD - Low </span></div><span class="text-white text-sm re1:text-base font-bold">*** FPS</span></div></div>,
             
@@ -73,6 +60,13 @@ const gamesElements:JSX.Element[]=[
 
 const Games=({ page }:Props)=>{
   const {product}=page
+  const categoriesId = product.additionalProperty?.map((item) =>
+    item.name === 'category' ? item.propertyID : undefined
+  )
+  const PCGamer = categoriesId?.some((item) => item === '10')
+
+  if(!PCGamer){ return null}
+
   const id='gamesMob'+useId()
 
   const pecasName=['Processador','Placa de vídeo']
@@ -114,6 +108,24 @@ const Games=({ page }:Props)=>{
     }
   }
 
+  const getGamesLoader= async(proc:string,placa:string) =>{
+    const url='https://api.shopinfo.com.br/paramFps.php'
+    const formData=new FormData()
+    formData.append('processador',proc)
+    formData.append('placaVideo',placa)
+    const data =await fetch(url,{
+      method: "POST",
+      body: formData 
+    }).then(async (r)=>{
+      if(await r.text()==='empty'){
+        supremeDiv.current && supremeDiv.current.remove()
+      }
+      return r.json()
+    }).catch(err=>console.log('Error:'+err)) || {}
+  
+    return data
+  }
+
   const handleDropdown=()=>{
     setOpenMenu(!openMenu)
     if(!alreadyOpened){
@@ -152,7 +164,7 @@ const Games=({ page }:Props)=>{
       </label>
       <div className={`${openMenu ? 'block' : 'hidden'}`}>
 
-        {mobileSliderItems(htmlContent).length && <div id={id} className='flex re1:hidden flex-col w-full mb-[25px]'>
+        {mobileSliderItems(htmlContent).length!==0 && <div id={id} className='flex re1:hidden flex-col w-full mb-[25px]'>
           <Slider className='carousel carousel-center gap-6 scrollbar-none'>
             {mobileSliderItems(htmlContent)}
           </Slider>
