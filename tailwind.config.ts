@@ -1,4 +1,4 @@
-import daisyui from 'daisyui'
+import daisyui from 'npm:daisyui@latest'
 
 // Daisi UI theme
 export const theme = {
