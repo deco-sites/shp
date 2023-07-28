@@ -475,20 +475,40 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
   const [hideModalTemp,setHideModalTemp]=useState(true)
   const [hideImg, setHideImg]=useState(true)
 
-  function touchZoom(event:TouchEvent){
-    const image=event.target as HTMLImageElement
+  const [touchZoomStartX,setTouchZoomStartX]=useState(0)
+  const [touchZoomStartY,setTouchZoomStartY]=useState(0)
 
-    const imgDataDot=image.parentElement!.parentElement!.getAttribute('data-slider-item')
+  function touchZoomStart(event: TouchEvent) {
+    // Armazenar a posição inicial do toque
+    setTouchZoomStartX(event.touches[0].clientX)
+    setTouchZoomStartY(event.touches[0].clientY)
+  }
 
-    dotsModal.current && (
-      (dotsModal.current.querySelector(`div[data-dot="${imgDataDot}"] img`) as HTMLImageElement).click()
-    )
+  function touchZoomEnd(event:TouchEvent){
+    
+    const touchEndX = event.changedTouches[0].clientX
+    const touchEndY = event.changedTouches[0].clientY
 
-    modal.current && (
-      modal.current.showModal(),
-      setHideModalTemp(false),
-      setHideImg(true)
-    )
+    const deltaX = Math.abs(touchEndX - touchZoomStartX)
+    const deltaY = Math.abs(touchEndY - touchZoomStartY)
+
+    const threshold = 10
+    
+    if(deltaX < threshold && deltaY < threshold){
+      const image=event.target as HTMLImageElement
+      
+      const imgDataDot=image.parentElement!.parentElement!.getAttribute('data-slider-item')
+      
+      dotsModal.current && (
+        (dotsModal.current.querySelector(`div[data-dot="${imgDataDot}"] img`) as HTMLImageElement).click()
+      )
+      
+      modal.current && (
+        modal.current.showModal(),
+        setHideModalTemp(false),
+        setHideImg(true)
+      )
+    }
   }
 
   useEffect(()=>{
@@ -574,13 +594,13 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
     <>
       <dialog ref={modal} className='bg-[#111] min-h-full min-w-[100vw] overflow-hidden'>
         <form method="dialog" className='flex flex-col h-[95vh] justify-end'>
-          <button className="btn btn-sm btn-circle absolute right-2 top-2 z-40"
+          <button className="btn btn-sm btn-circle absolute right-2 top-2 z-40 bg-[#3d3d3d] text-white border-transparent"
             onClick={()=>modal.current && (
               modal.current.close()
             )}
           >✕</button>
 
-          <div className='btn btn-sm btn-circle absolute top-2 left-2 z-40'
+          <div className='btn btn-sm btn-circle absolute top-2 left-2 z-40 bg-[#3d3d3d] text-white border-transparent'
             onTouchEnd={()=>setHideModalTemp(false)}
           >
             ?
@@ -669,7 +689,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
               />
             </div>
           </div>
-          <Slider class='carousel gap-6'>
+          <Slider class='carousel gap-6 w-full'>
             {images.map((img, index) => 
                 (
                   <Slider.Item
@@ -698,7 +718,8 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
                       className={`overflow-hidden ${!isMobile && 'hover:scale-150'} transition-transform`}
                       onMouseMove={zoom}
                       onMouseLeave={resetZoom}
-                      onTouchEnd={touchZoom}
+                      onTouchStart={touchZoomStart}
+                      onTouchEnd={touchZoomEnd}
                       style={{ aspectRatio: aspectRatio }}
                       src={img.url!}
                       alt={img.alternateName}

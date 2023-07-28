@@ -1,3 +1,5 @@
+import daisyui from 'daisyui'
+
 // Daisi UI theme
 export const theme = {
   "primary": "hsl(180 100% 10%)",
@@ -23,6 +25,7 @@ export const theme = {
 };
 
 export default {
+  plugins:[daisyui],
   content: ["./**/*.tsx"],
   theme: {
     // https://tailwindcss.com/docs/container#centering-by-default
@@ -66,5 +69,5 @@ export default {
         "re5": "1800px",
       },
     },
-  },
+  }
 };

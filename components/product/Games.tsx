@@ -131,7 +131,7 @@ const Games=({ page }:Props)=>{
     if(!alreadyOpened){
       (async()=>{
         const data=await getGamesLoader(specs[0]!.value!, specs[1]!.value!)
-        Object.keys(data).length && handleData(data)
+        Object.keys(data).length ? handleData(data) : supremeDiv.current && supremeDiv.current.remove()
       })()
     }
     setAlreadyOpened(true)
