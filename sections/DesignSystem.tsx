@@ -7,7 +7,7 @@
 import { Color } from "https://deno.land/x/color@v0.3.0/mod.ts";
 import { useId } from "preact/hooks";
 import { Head } from "$fresh/runtime.ts";
-import { theme as defaultTheme } from "deco-sites/fashion/tailwind.config.ts";
+// import { theme as defaultTheme } from "deco-sites/fashion/tailwind.config.ts";
 import Icon from "deco-sites/fashion/components/ui/Icon.tsx";
 
 export interface Colors {
@@ -311,7 +311,7 @@ function Section({
   },
 }: Props) {
   const id = useId();
-  const theme = { ...defaultTheme, ...colors, ...miscellaneous };
+  const theme = { ...colors, ...miscellaneous };
   const variables = [...toVariables(theme), ["--font-family", fonts.fontFamily]]
     .map(([cssVar, value]) => `${cssVar}: ${value}`)
     .join(";");
