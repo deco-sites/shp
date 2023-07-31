@@ -1,5 +1,5 @@
 import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 
 export interface Props {
@@ -26,7 +26,6 @@ const Trustvox=({page, storeId}:Props)=>{
   const handleDropdown=()=>{
     setOpenMenu(!openMenu)
     if(!alreadyOpened){
-      console.log('deu append')
       const script=document.createElement('script')
       script.type='text/javascript'
       script.innerHTML=scriptText

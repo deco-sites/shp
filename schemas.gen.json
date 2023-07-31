@@ -87,6 +87,7 @@
               "./islands/OfertasFogoIsland.tsx",
               "./islands/PCNivelGamer.tsx",
               "./islands/ProductImageZoom.tsx",
+              "./islands/RecommendedProds.tsx",
               "./islands/SearchControls.tsx",
               "./islands/SelectGamesIsland.tsx",
               "./islands/ShelfIsland.tsx",
@@ -132,6 +133,7 @@
               "deco-sites/shp/sections/productDescription.tsx",
               "deco-sites/shp/sections/ProductDetails.tsx",
               "deco-sites/shp/sections/ProductGames.tsx",
+              "deco-sites/shp/sections/ProductRecommendedProds.tsx",
               "deco-sites/shp/sections/ProductShelf.tsx",
               "deco-sites/shp/sections/ProductSpecification.tsx",
               "deco-sites/shp/sections/ProductTrustvox.tsx",
@@ -3993,6 +3995,7 @@
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section": {
       "$ref": "#/root/sections",
+      "widget": "none",
       "title": "Section"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9sb2FkZXIudHM=@Loader": {
@@ -10130,6 +10133,19 @@
       ],
       "title": "deco-sites/shp/sections/PCNivelGamer.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1JlY29tbWVuZGVkUHJvZHMudHN4@Props": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage",
+          "title": "Page"
+        }
+      },
+      "required": [
+        "page"
+      ],
+      "title": "deco-sites/shp/components/product/RecommendedProds.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9Db21wb25lbnRzU0hQL1NlbGVjdEdhbWVzL0dhbWUudHN4@gameProps": {
       "type": "object",
       "properties": {
@@ -10451,10 +10467,13 @@
           "items": {
             "$ref": "#/definitions/ZGVjby1jeC9saXZlL2Jsb2Nrcy9zZWN0aW9uLnRz@Section"
           },
-          "title": "Page Sections"
+          "title": "Sections",
+          "label": "hidden",
+          "changeable": "true"
         },
         {
           "title": "Variant",
+          "label": "hidden",
           "type": "object",
           "allOf": [
             {
@@ -10500,7 +10519,8 @@
         "sections"
       ],
       "title": "deco-cx/live/pages/LivePage.tsx@Props",
-      "titleBy": "name"
+      "titleBy": "name",
+      "label": "rootHidden"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9tYXRjaGVyLnRz@Matcher": {
       "$ref": "#/root/matchers",
@@ -11994,6 +12014,19 @@
       ],
       "title": "deco-sites/shp/components/product/ProductGames.tsx@Props"
     },
+    "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1Byb2R1Y3RSZWNvbW1lbmRlZFByb2RzLnRzeA==@Props": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvY29tbWVyY2UvdHlwZXMudHM=@ProductDetailsPage|null",
+          "title": "Page"
+        }
+      },
+      "required": [
+        "page"
+      ],
+      "title": "deco-sites/shp/components/product/ProductRecommendedProds.tsx@Props"
+    },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1Byb2R1Y3RTaGVsZi50c3g=@Props": {
       "type": "object",
       "properties": {
@@ -12712,6 +12745,7 @@
         "value"
       ],
       "title": "{{#beautifySchemaTitle}}{{{rule.__resolveType}}}{{/beautifySchemaTitle}} Variant",
+      "label": "hidden",
       "icon": "flag"
     },
     "ZGVjby1jeC9saXZlL2Jsb2Nrcy9mbGFnLnRz@Variant+Section[][]": {
@@ -14934,6 +14968,27 @@
         }
       }
     },
+    "Li9pc2xhbmRzL1JlY29tbWVuZGVkUHJvZHMudHN4": {
+      "title": "./islands/RecommendedProds.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1JlY29tbWVuZGVkUHJvZHMudHN4@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "./islands/RecommendedProds.tsx"
+          ],
+          "default": "./islands/RecommendedProds.tsx"
+        }
+      }
+    },
     "Li9pc2xhbmRzL1NlYXJjaENvbnRyb2xzLnRzeA==": {
       "title": "./islands/SearchControls.tsx",
       "type": "object",
@@ -15838,6 +15893,27 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdFJlY29tbWVuZGVkUHJvZHMudHN4": {
+      "title": "deco-sites/shp/sections/ProductRecommendedProds.tsx",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy9wcm9kdWN0L1Byb2R1Y3RSZWNvbW1lbmRlZFByb2RzLnRzeA==@Props"
+        }
+      ],
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/shp/sections/ProductRecommendedProds.tsx"
+          ],
+          "default": "deco-sites/shp/sections/ProductRecommendedProds.tsx"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdFNoZWxmLnRzeA==": {
       "title": "deco-sites/shp/sections/ProductShelf.tsx",
       "type": "object",
@@ -16585,6 +16661,7 @@
     },
     "JGxpdmUvZmxhZ3MvbXVsdGl2YXJpYXRlLnRz": {
       "title": "Variant",
+      "label": "hidden",
       "type": "object",
       "allOf": [
         {
@@ -17370,6 +17447,9 @@
           "$ref": "#/definitions/Li9pc2xhbmRzL1Byb2R1Y3RJbWFnZVpvb20udHN4"
         },
         {
+          "$ref": "#/definitions/Li9pc2xhbmRzL1JlY29tbWVuZGVkUHJvZHMudHN4"
+        },
+        {
           "$ref": "#/definitions/Li9pc2xhbmRzL1NlYXJjaENvbnRyb2xzLnRzeA=="
         },
         {
@@ -17527,6 +17607,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdEdhbWVzLnRzeA=="
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdFJlY29tbWVuZGVkUHJvZHMudHN4"
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvUHJvZHVjdFNoZWxmLnRzeA=="

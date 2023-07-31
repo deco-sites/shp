@@ -14,6 +14,7 @@ const Description=({page}:Props)=>{
   const [openMenu,setOpenMenu]=useState(false)
   const descriptionFromBD=description==='&nbsp;'
   const [alreadyOpened,setAlreadyOpened]=useState(false)
+  const [vazio,setVazio]=useState(false)
 
   const handleDropdown=(event:MouseEvent)=>{
     setOpenMenu(!openMenu)
@@ -126,6 +127,7 @@ const Description=({page}:Props)=>{
           p.previousSibling?.remove()
           p.remove()
         })
+        descriptionDiv.current.innerHTML==='' && setVazio(true)
       }
     }
     setAlreadyOpened(true)
@@ -145,7 +147,7 @@ const Description=({page}:Props)=>{
   
 
   return (
-    <div className='w-full re1:px-[10%] border-y border-y-[#3d3d3d]'>
+    <div className={`w-full re1:px-[10%] border-y border-y-[#3d3d3d] ${vazio ? 'hidden' : ''}`}>
       <label className='text-base re1:text-xl px-[10%] re1:px-0 py-[20px] font-bold flex justify-between items-center' onClick={handleDropdown}>
         <p>Descrição</p>
         <Image src='https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png' width={15} height={15} 
