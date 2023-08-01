@@ -24,11 +24,33 @@ const recomendacoesLoader = async (param: string) => {
   return data
 }
 
+interface PcInfos {
+  id: string;
+  name: string;
+  priceVista: string;
+  valorParcela: string;
+  parcela: number;
+  link: string;
+  image: string;
+  placaVideo: string;
+  processador: string;
+  memoria: string;
+  armazenamento: string;
+  classArmazenamento: string;
+  tipoArmazenamento: string;
+  precoDe: string;
+  priceParcelado: string;
+  flags: Array<{
+    class: string;
+    name: string;
+  }>
+}
+
 const recomendacoesV2Loader = async (param: string) => {
   const url = 'https://api.shopinfo.com.br/vitrines/recomendacoesV2.php'
   const formData = new FormData()
   formData.append('data', param)
-  const data =
+  const data:PcInfos[] =
     (await fetch(url, {
       method: 'POST',
       body: formData,
@@ -61,15 +83,13 @@ const ProdCard=({...props}:ProdCard)=>{
   const [trustPercent, setTrustPercent]=useState(0)
   
   useEffect(()=>{
-    const batata=async()=>{
+    const handleTrust=async()=>{
       const { products_rates }=await loaderTrustvox(productId, '79497')
       const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
       setTrustPercent(obj.average*20)
       setObjTrust(obj)
     }
-    console.log('obj')
-
-    batata()
+    handleTrust()
   },[])
 
   return(
@@ -105,6 +125,109 @@ const ProdCard=({...props}:ProdCard)=>{
   )
 }
 
+interface PcCard{
+  productId:string
+  prodName:string
+  precoVista:string
+  valorParcela:string
+  parcelas:number
+  linkProd:string
+  imgUrl:string
+  placaVideo:string
+  processador:string
+  memoria:string
+  armazenamento:string
+  tipoArm:string
+  precoDe:string
+}
+
+const PcCard=({...props}:PcCard)=>{
+  const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe} = props
+  const precoDeNum=parseFloat(precoDe.split('R$ ')[1].replace('.','').replace(',','.'))
+  const vistaNum=parseFloat(precoVista.replace('.','').replace(',','.'))
+  const percent=Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100)
+
+  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
+  const [trustPercent, setTrustPercent]=useState(0)
+  
+  useEffect(()=>{
+    const handleTrust=async()=>{
+      const { products_rates }=await loaderTrustvox(productId, '79497')
+      const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
+      setTrustPercent(obj.average*20)
+      setObjTrust(obj)
+    }
+    handleTrust()
+  },[])
+
+  return(
+    <a className='flex flex-row re1:flex-col h-36 re1:h-[370px] w-[90vw] re1:w-[18%] bg-[#262626] rounded-lg p-3 re1:p-0 border
+    border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
+      <div className='flex re1:px-3 re1:pt-3 w-[30%] h-auto re1:w-auto'>
+        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-{percent}%</span>
+        <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
+      </div>
+      <div className='flex flex-col re1:flex-col-reverse justify-between w-[65%] ml-[5%] re1:ml-0 re1:w-full re1:h-[50%] re1:pb-3'>
+        <div className='re1:px-3'>
+          <p className='text-green-500 font-bold line-clamp-1 text-xs re1:text-base'>{placaVideo}</p>
+          <div className='flex justify-between'>
+            <label className='flex items-center gap-1'>
+              <Image
+                src='https://shopinfo.vteximg.com.br/arquivos/icon-processador.svg'
+                width={15}
+                height={15}
+                loading='lazy'
+                fetchPriority='low' decoding='sync'
+              />
+              <p className='text-xs line-clamp-1'>{processador}</p>
+            </label>
+            <label className='flex items-center gap-1'>
+              <Image
+                src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
+                width={15}
+                height={15}
+                loading='lazy'
+                fetchPriority='low' decoding='sync'
+              />
+              <p className='text-xs line-clamp-1'>{memoria}</p>
+            </label>
+            <label className='flex items-center gap-1'>
+              <Image
+                src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
+                width={15}
+                height={15}
+                loading='lazy'
+                fetchPriority='low' decoding='sync'
+              />
+              <p className='text-xs line-clamp-1'>{tipoArm} {armazenamento}</p>
+            </label>
+          </div>
+        </div>
+        <div className='flex items-center justify-start re1:justify-center'> 
+          <hr className='hidden re1:block border-t-[#111] w-full'/>
+          {/* Trustvox */}
+          {objTrust?.average ===0 ? null :
+            <div className='flex justify-center items-center absolute'>
+              <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
+                <div style={{width:`${trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
+              </div>
+              <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
+            </div>
+          }
+        </div>
+        <div className='flex flex-col re1:px-3'>
+          <p className='text-xs re1:text-sm max-h-[30%] line-clamp-1 leading-3 re1:leading-4'>
+            {prodName}
+          </p>
+          <span className='line-through text-base-300 text-xs leading-3'>{precoDe}</span>
+          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>R$ {precoVista}</span> no pix</p>
+          <span className='text-xs text-base-300 leading-3'>{parcelas}x R$ {valorParcela} sem juros</span>
+        </div>
+      </div>
+    </a>
+  )
+}
+
 const ProductRecommendedProds = ({ page }: Props) => {
   const { product } = page
   const prodID = product.isVariantOf!.productGroupID
@@ -130,7 +253,14 @@ const ProductRecommendedProds = ({ page }: Props) => {
       PCGamer?
       (async()=>{
         const data=await recomendacoesV2Loader(param)
-        console.log(data)
+        const elements:JSX.Element[]=data.map(item=>
+          <PcCard productId={item.id} prodName={item.name} precoVista={item.priceVista} valorParcela={item.valorParcela} parcelas={item.parcela}
+            linkProd={item.link} imgUrl={item.image} precoDe={item.precoDe} armazenamento={item.armazenamento} 
+            memoria={item.memoria} placaVideo={item.placaVideo} processador={item.processador} tipoArm={item.tipoArmazenamento}
+          />
+        )
+        console.log(elements)
+        setHtmlContent(elements)
       })()
     :
       (async()=>{
@@ -138,7 +268,6 @@ const ProductRecommendedProds = ({ page }: Props) => {
         const elements:JSX.Element[]=data[0].map(item=>{
           const arr=item.index.split('#')
           return <ProdCard productId={arr[0]} prodName={arr[1]} precoVista={arr[2]} valorParcela={arr[3]} parcelas={arr[4]} linkProd={arr[5]} imgUrl={arr[6]} precoDe={arr[7]}/>
-          
         })
         setHtmlContent(elements)
       })()
