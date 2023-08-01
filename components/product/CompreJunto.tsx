@@ -14,10 +14,6 @@ const loaderCartSimulation= async (skuId:string)=>{
   }
   const data=await fetch(url,{
     method:'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
     body: JSON.stringify(json)
   }).then(r=>r.json()).catch(err=>console.error('Error: ',err))
   console.log(data)
