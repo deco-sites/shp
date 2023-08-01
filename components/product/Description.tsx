@@ -91,7 +91,7 @@ const Description=({page}:Props)=>{
         
         Array.from(descriptionDiv.current.querySelectorAll('.descricao-desktop-container-2'))
         .forEach((element)=>{
-          const classes=['flex','!p-0','!pl-[4em]','items-center']
+          const classes=['flex','!p-0','!pl-[4em]','items-center','justify-around']
           if(element.querySelector('img') && element.querySelector('div')) classes.push('bg-[#1c1c1c]')
           if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
         })
