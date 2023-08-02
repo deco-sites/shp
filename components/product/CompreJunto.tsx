@@ -32,7 +32,7 @@ const CompreJunto=({page}:Props)=>{
     //console.log(buyTogether)
   }
   
-  
+  handleData()
 
   const productA=(
     <div className='flex gap-2 w-[40%] items-center'>
@@ -43,7 +43,7 @@ const CompreJunto=({page}:Props)=>{
     
   useEffect(()=>{ 
     console.log(product)
-    handleData()
+    
   })
    
   return(
