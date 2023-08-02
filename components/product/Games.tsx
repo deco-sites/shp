@@ -81,6 +81,7 @@ const Games=({ page }:Props)=>{
   const supremeDiv=useRef<HTMLDivElement>(null)
 
   const [htmlContent,setHtmlContent]=useState<string[]>([])
+  const [loading,setLoading]=useState<JSX.Element[]>([<div className='flex justify-center items-center'><div className='loading loading-spinner loading-lg'/></div>])
   
   const handleData=(obj:Record<string,number>)=>{
     const gamesValidos:string[]=[]
@@ -92,7 +93,7 @@ const Games=({ page }:Props)=>{
     }
 
     if(count === Object.keys(obj).length){
-      supremeDiv.current && supremeDiv.current.remove()
+      setTimeout(()=>{supremeDiv.current && supremeDiv.current.remove()},3000)
     }else{
       const cloneElements=[...gamesElements]
       gamesElements.forEach((element)=>{
@@ -105,6 +106,7 @@ const Games=({ page }:Props)=>{
       })
 
       setHtmlContent(html)
+      setLoading([])
     }
   }
 
@@ -117,11 +119,16 @@ const Games=({ page }:Props)=>{
       method: "POST",
       body: formData 
     }).then(async (r)=>{
-      if(await r.text()==='empty'){
-        supremeDiv.current && supremeDiv.current.remove()
+      const resp=r.clone()
+      const text=await r.text()
+      if(text==='empty'){
+        setTimeout(()=>{
+          supremeDiv.current && supremeDiv.current.remove()
+        },3000)
+      }else{
+        return resp.json()
       }
-      return r.json()
-    }).catch(err=>console.log('Error:'+err)) || {}
+    }).catch(err=>console.error(err)) || {}
   
     return data
   }
@@ -131,7 +138,7 @@ const Games=({ page }:Props)=>{
     if(!alreadyOpened){
       (async()=>{
         const data=await getGamesLoader(specs[0]!.value!, specs[1]!.value!)
-        Object.keys(data).length ? handleData(data) : supremeDiv.current && supremeDiv.current.remove()
+        Object.keys(data).length ? handleData(data) : setTimeout(()=>{supremeDiv.current && supremeDiv.current.remove()},3000)
       })()
     }
     setAlreadyOpened(true)
@@ -163,6 +170,8 @@ const Games=({ page }:Props)=>{
         />
       </label>
       <div className={`${openMenu ? 'block' : 'hidden'}`}>
+
+        {loading.map(item=>item)}
 
         {mobileSliderItems(htmlContent).length!==0 && <div id={id} className='flex re1:hidden flex-col w-full mb-[25px]'>
           <Slider className='carousel carousel-center gap-6 scrollbar-none'>

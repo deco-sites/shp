@@ -33,7 +33,7 @@ const PCGamerIdeal = ({ peca = [] }: Props) => {
               <select
                 name={`select ${peca.name}`}
                 id={index.toString()}
-                className='rounded-lg text-sm re1:text-base p-2 py-1 border-neutral-400 border-[2px] appearance-none outline-none pr-6'
+                className='bg-transparent rounded-lg text-sm re1:text-base p-2 py-1 border-neutral-400 border-[2px] appearance-none outline-none pr-6'
               >
                 <option value='Todos os valores'>Todas as Opções</option>
                 {peca.options?.map((option) => (
