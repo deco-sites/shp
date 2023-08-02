@@ -9,9 +9,15 @@ export interface Props{
   page:LoaderReturnType<ProductDetailsPage>
 }
 
+//solução temporária pro bloqueio do cors na vtex 
 const loaderSearchAPI= async (skuId:string)=>{
   const url=`https://shopinfo.vtexcommercestable.com.br/api/catalog_system/pub/products/search?fq=skuId:${skuId}`
-  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
+  const data=await fetch(url).then(async(r)=>{
+    const resp=r.clone()
+    const text=await r.text()
+    console.log(text)
+    return resp
+  }).catch(err=>console.error('Error: ',err))
   console.log(data)
   return data
 }
@@ -22,11 +28,11 @@ const CompreJunto=({page}:Props)=>{
 
   const handleData=async()=>{
     const data=await loaderSearchAPI(product.sku)
-    const buyTogether=data[0].items[0].sellers[0].commertialOffer.BuyTogether
-    console.log(buyTogether)
+    //const buyTogether=data[0].items[0].sellers[0].commertialOffer.BuyTogether
+    //console.log(buyTogether)
   }
   
-  handleData()
+  
 
   const productA=(
     <div className='flex gap-2 w-[40%] items-center'>
@@ -37,6 +43,7 @@ const CompreJunto=({page}:Props)=>{
     
   useEffect(()=>{ 
     console.log(product)
+    handleData()
   })
    
   return(
