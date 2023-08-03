@@ -76,6 +76,7 @@
               "deco-sites/std/loaders/vtex/proxy.ts",
               "deco-sites/std/loaders/vtex/user.ts",
               "deco-sites/std/loaders/vtex/wishlist.ts",
+              "deco-sites/std/loaders/x/font.ts",
               "deco-sites/std/loaders/x/redirectsFromCsv.ts",
               "./islands/AcessoriosIsland.tsx",
               "./islands/AddToCartButton.tsx",
@@ -6581,6 +6582,14 @@
             "value"
           ],
           "title": "Handler"
+        },
+        "highPriority": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "title": "Priority",
+          "description": "higher priority means that this route will be used in favor of other routes with less or none priority"
         }
       },
       "required": [
@@ -9583,6 +9592,17 @@
           "type": "number",
           "description": "total number of items to display",
           "title": "Count"
+        },
+        "fq": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "description": "fq's",
+          "title": "Fq"
         }
       },
       "required": [],
@@ -12180,6 +12200,19 @@
         "columns"
       ],
       "title": "deco-sites/shp/components/search/SearchResult.tsx@Props"
+    },
+    "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4@Props": {
+      "type": "object",
+      "properties": {
+        "fqType": {
+          "type": "string",
+          "title": "Fq Type"
+        }
+      },
+      "required": [
+        "fqType"
+      ],
+      "title": "deco-sites/shp/sections/Shelf.tsx@Props"
     },
     "ZGVjby1zaXRlcy9zaHAvY29tcG9uZW50cy91aS9XaGF0c0FwcC50c3g=@Props": {
       "type": "object",
@@ -14785,6 +14818,22 @@
         }
       }
     },
+    "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L2ZvbnQudHM=": {
+      "title": "deco-sites/std/loaders/x/font.ts",
+      "type": "object",
+      "required": [
+        "__resolveType"
+      ],
+      "properties": {
+        "__resolveType": {
+          "type": "string",
+          "enum": [
+            "deco-sites/std/loaders/x/font.ts"
+          ],
+          "default": "deco-sites/std/loaders/x/font.ts"
+        }
+      }
+    },
     "ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM=": {
       "title": "deco-sites/std/loaders/x/redirectsFromCsv.ts",
       "type": "object",
@@ -16092,6 +16141,11 @@
     "ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4": {
       "title": "deco-sites/shp/sections/Shelf.tsx",
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zaHAvc2VjdGlvbnMvU2hlbGYudHN4@Props"
+        }
+      ],
       "required": [
         "__resolveType"
       ],
@@ -17470,6 +17524,9 @@
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy92dGV4L3dpc2hsaXN0LnRz"
+        },
+        {
+          "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L2ZvbnQudHM="
         },
         {
           "$ref": "#/definitions/ZGVjby1zaXRlcy9zdGQvbG9hZGVycy94L3JlZGlyZWN0c0Zyb21Dc3YudHM="
