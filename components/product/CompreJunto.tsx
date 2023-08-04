@@ -13,8 +13,8 @@ export interface Props{
 }
 
 interface objBuyTogether{
-    sku:string,
-    promotion:string,
+  sku:string,
+  promotion:string,
 }
 
 //solução temporária pro bloqueio do cors na vtex quando no cliente e não consigo passar o retorno da func pro clientSide se ela for feita no serverSide
