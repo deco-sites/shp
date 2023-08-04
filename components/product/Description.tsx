@@ -20,9 +20,9 @@ const Description=({page}:Props)=>{
     setOpenMenu(!openMenu)
     if(!alreadyOpened){
       if(descriptionDiv.current && !descriptionFromBD){
-          const script=document.createElement('script')
-        script.src='https://shopinfo.vteximg.com.br/arquivos/org-descricao.js?v=8'
-        //document.head.append(script)
+        // const script=document.createElement('script')
+        // script.src='https://shopinfo.vteximg.com.br/arquivos/org-descricao.js?v=8'
+        // document.head.append(script)
         
         descriptionDiv.current.classList.add('max-w-[1230px]')
         descriptionDiv.current.classList.add('mx-auto')
@@ -67,7 +67,7 @@ const Description=({page}:Props)=>{
         
         Array.from(descriptionDiv.current.querySelectorAll('.descricao-img-info'))
         .forEach((element)=>{
-          const classes=['w-[20em]','re1:w-[22em]']
+          const classes=['w-[20em]','re1:w-[22em]','mx-auto','re1:mx-0']
           element.classList.add(...classes)
         })
 
@@ -142,6 +142,14 @@ const Description=({page}:Props)=>{
           img.style.display='unset'
         }
       })
+
+      Array.from(descriptionDiv.current.querySelectorAll('source')).forEach(source=>{
+        if(source.hasAttribute('data-srcset')){
+          source.srcset=source.getAttribute('data-srcset')!
+          source.removeAttribute('data-srcset')
+          source.style.display='unset'
+        }
+      })
     }
   },[])
   
@@ -149,7 +157,7 @@ const Description=({page}:Props)=>{
   return (
     <div className={`w-full re1:px-[10%] border-y border-y-[#3d3d3d] ${vazio ? 'hidden' : ''}`}>
       <label className='text-base re1:text-xl px-[10%] re1:px-0 py-[20px] font-bold flex justify-between items-center' onClick={handleDropdown}>
-        <p>Descrição</p>
+        <p className='w-[90%] re1:w-auto'>Descrição</p>
         <Image src='https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png' width={15} height={15} 
           loading='eager' decoding='sync' className={`hover:brightness-50 active:hue-rotate-[350deg] cursor-pointer ${openMenu ? 'rotate-[270deg]' : 'rotate-90'}`}
         />

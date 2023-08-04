@@ -203,7 +203,7 @@ const Specification=({page}:Props)=>{
   return (
     <div className='w-full re1:px-[10%] border-b border-b-[#3d3d3d]'>
       <label className='text-base px-[10%] re1:px-0 re1:text-xl py-[20px] font-bold flex justify-between items-center' onClick={handleDropdown}>
-        <p>Especificações Técnicas</p>
+        <p className='w-[90%] re1:w-auto'>Especificações Técnicas</p>
         <Image src='https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png' width={15} height={15} 
           loading='eager' decoding='sync' className={`hover:brightness-50 active:hue-rotate-[350deg] cursor-pointer ${openMenu ? 'rotate-[270deg]' : 'rotate-90'}`}
         />
