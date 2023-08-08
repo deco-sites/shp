@@ -84,7 +84,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
         id={id}
         className='container grid grid-cols-[20px_1fr_20px] re1:grid-cols-[48px_1fr_48px] px-0 re1:px-5'
       >
-        <Slider className='carousel carousel-center gap-6 col-span-full row-start-2 row-end-5 scrollbar-none'>
+        <Slider className='carousel carousel-center gap-6 col-span-full row-start-2 row-end-5 scrollbar-none overflow-y-hidden'>
           {products.map((slide, index) => {
             const imgUrl =
               slide.image && slide.image[0] && slide.image[0].url

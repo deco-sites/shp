@@ -47,7 +47,7 @@ const BTNFinal= () => {
   const fetchData=useCallback(async (fqs:string[])=>{
     const data= await Runtime.invoke({
       key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
-      props:{fq:fqs, count:50}
+      props:{fq:fqs.map(item=>encodeURI(item)), count:50}
     }) || []
 
     return data
@@ -56,7 +56,6 @@ const BTNFinal= () => {
   const callPromises=async(system:typeof DataJson.fps)=>{
     const term:string[]=[]
     system.forEach(obj=>term.push(`fq=C:/10/&fq=specificationFilter_20:${obj.placa},specificationFilter_19:${obj.processador}&fq=P:[${parseFloat(minPrice.value)} TO ${parseFloat(RangeVal.value)}]`)) 
-    console.log('Term:'+ term)
     const arrayRespPromisses=term.map(req=>fetchData(req.replace('&','').split('fq=')))
     const arrayResp=await Promise.all(arrayRespPromisses)
     const sku:string[]=[]
@@ -98,7 +97,6 @@ const BTNFinal= () => {
             
           }else{
             (async()=>{
-              console.log('executou')
               const Ids60=await callPromises(systems60)
               const Ids144= await callPromises(systems144)
               Ids60.length<1 ? block60.value=true : block60.value=false
