@@ -36,7 +36,7 @@ const Benefits = () => {
             preload decoding='sync' loading='eager' fetchPriority='high'
             className="grayscale brightness-50" width={63} height={36} src="https://shopinfo.vteximg.com.br/arquivos/icon-truck-frete.png" 
           />
-          <p><b>Frete Grátis</b> <br/> Brasil em PCs</p>
+          <p><b>Frete Grátis</b> <br/> Sul e Sudeste em PCs</p>
         </label>
     </div>
   );
