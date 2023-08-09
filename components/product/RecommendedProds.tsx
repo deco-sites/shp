@@ -139,13 +139,14 @@ interface PcCard{
   armazenamento:string
   tipoArm:string
   precoDe:string
+  precoParcelado:string
 }
 
 const PcCard=({...props}:PcCard)=>{
-  const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe} = props
-  const precoDeNum=parseFloat(precoDe.split('R$ ')[1].replace('.','').replace(',','.'))
+  const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado} = props
+  const precoDeNum=precoDe!=='' ? parseFloat((precoDe.split('R$ ')[1]).replace('.','').replace(',','.')) : parseFloat(precoParcelado.replace('.','').replace(',','.'))
   const vistaNum=parseFloat(precoVista.replace('.','').replace(',','.'))
-  const percent=Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100)
+  const percent=precoDe!=='' ? Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100) : 12
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
   const [trustPercent, setTrustPercent]=useState(0)
@@ -219,7 +220,7 @@ const PcCard=({...props}:PcCard)=>{
           <p className='text-xs re1:text-sm max-h-[30%] line-clamp-1 leading-3 re1:leading-4'>
             {prodName}
           </p>
-          <span className='line-through text-base-300 text-xs leading-3'>{precoDe}</span>
+          <span className='line-through text-base-300 text-xs leading-3'>{precoDe!=='' ? precoDe : `DE: R$ ${precoDeNum}`}</span>
           <p className='text-xs'><span className='text-green-500 text-lg font-bold'>R$ {precoVista}</span> no pix</p>
           <span className='text-xs text-base-300 leading-3'>{parcelas}x R$ {valorParcela} sem juros</span>
         </div>
@@ -253,9 +254,10 @@ const ProductRecommendedProds = ({ page }: Props) => {
       PCGamer?
       (async()=>{
         const data=await recomendacoesV2Loader(param)
+        console.log(data)
         const elements:JSX.Element[]=data.map(item=>
           <PcCard productId={item.id} prodName={item.name} precoVista={item.priceVista} valorParcela={item.valorParcela} parcelas={item.parcela}
-            linkProd={item.link} imgUrl={item.image} precoDe={item.precoDe} armazenamento={item.armazenamento} 
+            linkProd={item.link} imgUrl={item.image} precoDe={item.precoDe} armazenamento={item.armazenamento} precoParcelado={item.priceParcelado}
             memoria={item.memoria} placaVideo={item.placaVideo} processador={item.processador} tipoArm={item.tipoArmazenamento}
           />
         )
@@ -264,6 +266,7 @@ const ProductRecommendedProds = ({ page }: Props) => {
     :
       (async()=>{
         const data=await recomendacoesLoader(param)
+        console.log(data)
         const elements:JSX.Element[]=data[0].map(item=>{
           const arr=item.index.split('#')
           return <ProdCard productId={arr[0]} prodName={arr[1]} precoVista={arr[2]} valorParcela={arr[3]} parcelas={arr[4]} linkProd={arr[5]} imgUrl={arr[6]} precoDe={arr[7]}/>

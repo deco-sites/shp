@@ -44,23 +44,24 @@ import * as $$$$$$$$13 from "./sections/Highlights.tsx";
 import * as $$$$$$$$14 from "./sections/LinkTree.tsx";
 import * as $$$$$$$$15 from "./sections/NossosNums.tsx";
 import * as $$$$$$$$16 from "./sections/OfertasFogo.tsx";
-import * as $$$$$$$$17 from "./sections/PagDepartamento.tsx";
-import * as $$$$$$$$18 from "./sections/PCNivelGamer.tsx";
-import * as $$$$$$$$19 from "./sections/ProductCompreJunto.tsx";
-import * as $$$$$$$$20 from "./sections/productDescription.tsx";
-import * as $$$$$$$$21 from "./sections/ProductDetails.tsx";
-import * as $$$$$$$$22 from "./sections/ProductGames.tsx";
-import * as $$$$$$$$23 from "./sections/ProductRecommendedProds.tsx";
-import * as $$$$$$$$24 from "./sections/ProductShelf.tsx";
-import * as $$$$$$$$25 from "./sections/ProductSpecification.tsx";
-import * as $$$$$$$$26 from "./sections/ProductTrustvox.tsx";
-import * as $$$$$$$$27 from "./sections/ReturnH1.tsx";
-import * as $$$$$$$$28 from "./sections/SearchResult.tsx";
-import * as $$$$$$$$29 from "./sections/Shelf.tsx";
-import * as $$$$$$$$30 from "./sections/SignNewsletter.tsx";
-import * as $$$$$$$$31 from "./sections/Vitrine.tsx";
-import * as $$$$$$$$32 from "./sections/WhatsApp.tsx";
-import * as $$$$$$$$33 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$$$17 from "./sections/PagCategEDepto/iconeNavegacional.tsx";
+import * as $$$$$$$$18 from "./sections/PagCategEDepto/PagDepartamento.tsx";
+import * as $$$$$$$$19 from "./sections/PCNivelGamer.tsx";
+import * as $$$$$$$$20 from "./sections/ProductCompreJunto.tsx";
+import * as $$$$$$$$21 from "./sections/productDescription.tsx";
+import * as $$$$$$$$22 from "./sections/ProductDetails.tsx";
+import * as $$$$$$$$23 from "./sections/ProductGames.tsx";
+import * as $$$$$$$$24 from "./sections/ProductRecommendedProds.tsx";
+import * as $$$$$$$$25 from "./sections/ProductShelf.tsx";
+import * as $$$$$$$$26 from "./sections/ProductSpecification.tsx";
+import * as $$$$$$$$27 from "./sections/ProductTrustvox.tsx";
+import * as $$$$$$$$28 from "./sections/ReturnH1.tsx";
+import * as $$$$$$$$29 from "./sections/SearchResult.tsx";
+import * as $$$$$$$$30 from "./sections/Shelf.tsx";
+import * as $$$$$$$$31 from "./sections/SignNewsletter.tsx";
+import * as $$$$$$$$32 from "./sections/Vitrine.tsx";
+import * as $$$$$$$$33 from "./sections/WhatsApp.tsx";
+import * as $$$$$$$$34 from "./sections/WishlistGallery.tsx";
 import * as $live_workflows from "$live/routes/live/workflows/run.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
@@ -74,6 +75,7 @@ import * as $live_previews_block from "$live/routes/live/previews/[...block].tsx
 import * as $live_previews_index from "$live/routes/live/previews/index.tsx";
 import * as $live_catchall from "$live/routes/[...catchall].tsx";
 import { DecoManifest } from "$live/types.ts";
+import * as i1$0 from "$live/loaders/secret.ts";
 import * as i2$$$0 from "$live/loaders/state.ts";
 import * as i2$$$1 from "$live/loaders/workflows/events.ts";
 import * as i2$$$2 from "$live/loaders/workflows/get.ts";
@@ -105,6 +107,7 @@ import * as i2$$$$$$$$$0 from "$live/flags/audience.ts";
 import * as i2$$$$$$$$$1 from "$live/flags/everyone.ts";
 import * as i2$$$$$$$$$2 from "$live/flags/flag.ts";
 import * as i2$$$$$$$$$3 from "$live/flags/multivariate.ts";
+import * as i1$$$$$$$0 from "$live/actions/secrets/encrypt.ts";
 import * as i2$$$$$$0 from "$live/actions/workflows/cancel.ts";
 import * as i2$$$$$$1 from "$live/actions/workflows/signal.ts";
 import * as i2$$$$$$2 from "$live/actions/workflows/start.ts";
@@ -274,23 +277,24 @@ const manifest = {
     "deco-sites/shp/sections/LinkTree.tsx": $$$$$$$$14,
     "deco-sites/shp/sections/NossosNums.tsx": $$$$$$$$15,
     "deco-sites/shp/sections/OfertasFogo.tsx": $$$$$$$$16,
-    "deco-sites/shp/sections/PagDepartamento.tsx": $$$$$$$$17,
-    "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$18,
-    "deco-sites/shp/sections/ProductCompreJunto.tsx": $$$$$$$$19,
-    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$20,
-    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$21,
-    "deco-sites/shp/sections/ProductGames.tsx": $$$$$$$$22,
-    "deco-sites/shp/sections/ProductRecommendedProds.tsx": $$$$$$$$23,
-    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$24,
-    "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$25,
-    "deco-sites/shp/sections/ProductTrustvox.tsx": $$$$$$$$26,
-    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$27,
-    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$28,
-    "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$29,
-    "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$30,
-    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$31,
-    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$32,
-    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$33,
+    "deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx": $$$$$$$$17,
+    "deco-sites/shp/sections/PagCategEDepto/PagDepartamento.tsx": $$$$$$$$18,
+    "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$19,
+    "deco-sites/shp/sections/ProductCompreJunto.tsx": $$$$$$$$20,
+    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$21,
+    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$22,
+    "deco-sites/shp/sections/ProductGames.tsx": $$$$$$$$23,
+    "deco-sites/shp/sections/ProductRecommendedProds.tsx": $$$$$$$$24,
+    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$25,
+    "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$26,
+    "deco-sites/shp/sections/ProductTrustvox.tsx": $$$$$$$$27,
+    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$28,
+    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$29,
+    "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$30,
+    "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$31,
+    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$32,
+    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$33,
+    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$34,
     "deco-sites/std/sections/Analytics.tsx": i2$$$$$5,
     "deco-sites/std/sections/configButterCMS.global.tsx": i2$$$$$6,
     "deco-sites/std/sections/configLinxImpulse.global.tsx": i2$$$$$7,
@@ -305,6 +309,7 @@ const manifest = {
     "deco-sites/std/sections/VTEXPortalDataLayerCompatibility.tsx": i2$$$$$16,
   },
   "loaders": {
+    "$live/loaders/secret.ts": i1$0,
     "$live/loaders/state.ts": i2$$$0,
     "$live/loaders/workflows/events.ts": i2$$$1,
     "$live/loaders/workflows/get.ts": i2$$$2,
@@ -374,6 +379,7 @@ const manifest = {
     "$live/flags/multivariate.ts": i2$$$$$$$$$3,
   },
   "actions": {
+    "$live/actions/secrets/encrypt.ts": i1$$$$$$$0,
     "$live/actions/workflows/cancel.ts": i2$$$$$$0,
     "$live/actions/workflows/signal.ts": i2$$$$$$1,
     "$live/actions/workflows/start.ts": i2$$$$$$2,

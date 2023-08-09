@@ -1,1 +1,1 @@
-export {default} from 'deco-sites/shp/sections/PagDepartamento.tsx'
+export {default} from 'deco-sites/shp/sections/PagCategEDepto/PagDepartamento.tsx'

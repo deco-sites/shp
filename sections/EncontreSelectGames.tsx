@@ -180,6 +180,9 @@ const selectGames=({Games=[]}:Props)=>{
   }, [])
 
   useEffect(() => {
+    // gambiarra pra trocar a cor do body pq só a home é branca
+    document.body.style.backgroundColor='#EFEFEF'
+
     handleResize()
 
     window.addEventListener('resize', handleResize)
