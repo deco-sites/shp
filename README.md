@@ -1,4 +1,4 @@
-## Ambiente teste Shopinfo
+## Shopinfo
 <p>Link:<a href="https://deco-sites-shp.deno.dev/">https://deco-sites-shp.deno.dev/</a></p>
 
 # Fashion starter by deco.cx
