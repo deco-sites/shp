@@ -264,7 +264,7 @@ function ProductInfo({ page, pix }: Props) {
                 </>
               }
             </div>
-            <p className='text-green-500 text-lg'>{brand}</p>
+            <p className='text-green-500 text-lg'>{brand?.name}</p>
           </div>
         </div>
         {/* Code and name */}
@@ -398,7 +398,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
     offers,
     gtin,
     isVariantOf,
-    additionalProperty,
+    additionalProperty
   } = product
   const categoriesId = additionalProperty?.map((item) =>
     item.name === 'category' ? item.propertyID : undefined
