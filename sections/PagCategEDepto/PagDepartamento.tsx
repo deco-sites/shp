@@ -1,15 +1,15 @@
-// deno-lint-ignore-file no-window-prefix
-import { useEffect, useState } from 'preact/hooks'
-import { Runtime } from 'deco-sites/std/runtime.ts'
+// deno-lint-ignore-file no-window-prefix no-explicit-any
+import { useEffect, useState, useRef } from 'preact/hooks'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
-import Benefits from "deco-sites/shp/sections/Benefits.tsx";
-import { FilterToggleValue } from "deco-sites/std/commerce/types.ts";
-import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx';
+import Benefits from "deco-sites/shp/sections/Benefits.tsx"
+import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
+import { Runtime } from "deco-sites/shp/runtime.ts"
 
 export interface Props{
   titleCategoria?:string
-  idCategoria:number
+  /**@description separe os ids por barra caso seja uma categoria ex: Dep/Categ */
+  idsDeCategoria:string
   bannerUrl:string
   descText?:string
   seoText?:string
@@ -20,17 +20,17 @@ export interface Props{
   }>
 }
 
-const fetchData=async (idCateg:number)=>{
-  const data= await Runtime.invoke({
-    key:'deco-sites/std/loaders/vtex/legacy/productListingPage.ts',
-    props:{count:20,fq:`C:/${idCateg}/`}
-  })
-
+const fetchData=async (idCateg:string)=>{
+  const url=`https://api.shopinfo.com.br/Deco/getFacetsByCategId.php?fq=C:/${idCateg}/`
+  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
   return data
 }
 
-const fetchProducts= (idCateg:number, from:number, to:number)=>{
-  return []
+const fetchProducts=async (queryString:string)=>{
+  const url=`https://api.shopinfo.com.br/Deco/getProductsList.php?${queryString}`
+  console.log(url)
+  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
+  return data
 }
 
 const replaceClasses=(desc:string)=>{
@@ -57,14 +57,41 @@ const replaceClasses=(desc:string)=>{
 
 interface FilterObj{
   label:string
-  values:FilterToggleValue[]
+  values:SpecObj[]
 }
 
-const pagDepartamento=({bannerUrl, descText, idCategoria, seoText, titleCategoria, iconesNavegacionais}:Props)=>{
+interface SpecObj{
+  Link:string
+  LinkEncoded:string
+  Map:string
+  Name:string
+  Position: number | null
+  Quantity: number | null
+  Value:string
+}
+
+const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria, iconesNavegacionais}:Props)=>{
   const [hideDescSeo,setHideDescSeo]=useState(true)
-  const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:20})
+  const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:19})
   const [order,setOrder]=useState('')
   const [filters,setFilters]=useState<FilterObj[]>([])
+  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
+  const [products, setProducts]=useState([])
+
+  const listFiltersDesk=useRef<HTMLUListElement>(null)
+
+  const addFilterListeners=()=>{
+    const ulDesk=listFiltersDesk.current!
+
+    Array.from(ulDesk.querySelectorAll('input[type="checkbox"]')).forEach((checkbox)=>{
+      (checkbox as HTMLInputElement).addEventListener('input',(event)=>{
+        const target=(event.target as HTMLInputElement)
+        setSelectedFilters(prevSelectedFilters => 
+          (target.checked) ? [...prevSelectedFilters, {fq:(target.getAttribute('data-fq') as string) ,value:target.value}] : [...prevSelectedFilters.filter(obj => obj.value !== target.value)]
+        )
+      })
+    })
+  }
 
   const orderFilters=[
     {'Menor Preço':'OrderByPriceDESC'},
@@ -95,13 +122,19 @@ const pagDepartamento=({bannerUrl, descText, idCategoria, seoText, titleCategori
     }
 
     (async()=>{
-      const pageData=await fetchData(idCategoria)
-      const dataFilters=pageData!.filters.filter(item=>item.label!=='Departments')
-      const arrFilterObj=dataFilters.map(filtro=>filtro.label!=='Brands' ? 
-        {label:filtro.label, values:(filtro.values as FilterToggleValue[])} : {label:'Marcas', values:(filtro.values as FilterToggleValue[])}
-      )
+      const pageData=await fetchData(idsDeCategoria)
+
+      const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, ...pageData!.SpecificationFilters}
+
+      console.log(dataFilters)
+
+      const arrFilterObj:FilterObj[]=[]
+
+      for(const key in dataFilters){
+        arrFilterObj.push({label:key , values:dataFilters[key]})
+      }
+      
       setFilters(arrFilterObj)
-      console.log(arrFilterObj)
     })()
     
     window.addEventListener('scroll',handleScroll)
@@ -111,6 +144,20 @@ const pagDepartamento=({bannerUrl, descText, idCategoria, seoText, titleCategori
     }
   },[])
 
+  useEffect(()=>{filters.length && addFilterListeners()},[filters])
+
+  useEffect(()=>{
+    (async()=>{
+        const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
+        const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
+        order!=='' && queryString.push(`O=${order}`)
+        const data= await fetchProducts(queryString.join('&'))
+        setProducts(data)
+    })()
+  },[selectedFilters,order])
+
+  useEffect(()=>console.log(products),[products])
+
   return(
     <div className='w-full text-white'>
       <div className='absolute top-0 z-[-1] '>
@@ -118,7 +165,7 @@ const pagDepartamento=({bannerUrl, descText, idCategoria, seoText, titleCategori
           fetchPriority='high' preload 
         />
       </div>
-      <div className='re1:px-[15%]'>
+      <div className='re1:px-[5%] re4:px-[15%]'>
         <div className='my-[60px] text-gray-500'>
           <p><a href='/'>Home</a> &gt; {titleCategoria}</p>
         </div>
@@ -149,7 +196,7 @@ const pagDepartamento=({bannerUrl, descText, idCategoria, seoText, titleCategori
             <span>Ordenar Por:</span>
             <select className="text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs"
               onInput={(event)=>{
-                console.log((event.target as HTMLSelectElement).value)
+                setOrder((event.target as HTMLSelectElement).value)
               }}
             >
               <option disabled selected>Selecione</option>
@@ -161,9 +208,14 @@ const pagDepartamento=({bannerUrl, descText, idCategoria, seoText, titleCategori
         </div>
 
         <div className='flex w-full'>
-          <ul className='w-[22%] flex flex-col gap-4'>
+          <ul ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
             {filters.map(filtro=><Filtro title={filtro.label} values={filtro.values} />)}
           </ul>
+
+          <div className='grid grid-cols-4'>
+            {products.length ? products.map((product:any) =><Image src={product!.items![0].images[0].imageUrl} width={150} height={150}/>)
+              : 'Não tem produtos com esta combinação de filtros'}
+          </div>
         </div>
       </div>
     </div>
