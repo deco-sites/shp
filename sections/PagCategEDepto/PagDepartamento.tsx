@@ -80,6 +80,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   const [products, setProducts]=useState<any>([])
   const [fetchLength, setFetchLength]=useState(0)
 
+  const filterLabel=useRef<HTMLLabelElement>(null)
+
   const listFiltersDesk=useRef<HTMLUListElement>(null)
 
   const addFilterListeners=()=>{
@@ -92,6 +94,19 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           (target.checked) ? [...prevSelectedFilters, {fq:(target.getAttribute('data-fq') as string) ,value:target.value}] : [...prevSelectedFilters.filter(obj => obj.value !== target.value)]
         )
       })
+    })
+
+    const ulMob=filterLabel.current && filterLabel.current.querySelector('dialog ul')
+    const btnFilter=filterLabel.current && filterLabel.current.querySelector('dialog button#filtrar')
+
+    btnFilter && (btnFilter as HTMLButtonElement).addEventListener('click',(event)=>{
+      const inputsChecked:HTMLInputElement[]=Array.from(ulMob!.querySelectorAll('input:checked'))
+      const filtersSelected:Array<{fq:string, value:string}> =[]
+      inputsChecked.forEach(input=>{
+        filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
+      })
+
+      setSelectedFilters(filtersSelected)
     })
   }
 
@@ -128,8 +143,6 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
       const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, ...pageData!.SpecificationFilters}
 
-      console.log(dataFilters)
-
       const arrFilterObj:FilterObj[]=[]
 
       for(const key in dataFilters){
@@ -148,50 +161,25 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
   useEffect(()=>{filters.length && addFilterListeners()},[filters])
 
+  const handleMoreProducts=async()=>{
+    const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
+    const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
+    order!=='' && queryString.push(`O=${order}`)
+    const data= await fetchProducts(queryString.join('&'))
+    setFetchLength(data.length)
+    fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
+  }
+
   useEffect(()=>{
-    (async()=>{
-      console.log(fromTo)
-        const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
-        const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,'_from=0&_to=19']
-        order!=='' && queryString.push(`O=${order}`)
-        const data= await fetchProducts(queryString.join('&'))
-        setFetchLength(data.length)
-        setProducts(data)
-        setFromTo({from:0, to:19})
-    })()
+    typeof window!=='undefined' && setFromTo({from:0, to:19})
   },[selectedFilters])
 
   useEffect(()=>{
-    (async()=>{
-      console.log(fromTo)
-      if(fromTo.to!==19){
-        const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
-        const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
-        order!=='' && queryString.push(`O=${order}`)
-        const data= await fetchProducts(queryString.join('&'))
-        setFetchLength(data.length)
-        setProducts((prevProducts: any)=>[...prevProducts, ...data])
-      }
-    })()
+    typeof window!=='undefined' && handleMoreProducts()
   },[fromTo])
 
   useEffect(()=>{
-    (async()=>{
-      console.log(fromTo)
-        const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
-        let queryString:string[]
-        // só pode retornar no máximo 50 products ent coloco o limite na ultima adição de 20 possivel do to
-        if(fromTo.to>50){
-          queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=0&_to=39`]
-        }else{
-          queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=0&_to=${fromTo.to}`]
-        }
-          order!=='' && queryString.push(`O=${order}`)
-          const data= await fetchProducts(queryString.join('&'))
-          console.log(data)
-          setFetchLength(data.length)
-          setProducts(data)
-    })()
+    typeof window!=='undefined' && setFromTo({from:0, to:19})
   },[order])
 
   useEffect(()=>console.log(products),[products])
@@ -221,7 +209,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
             <p>Principais categorias</p>
             <hr className='border-[#262626] w-[40%] re1:w-[80%]'/>
           </div>
-          <ul className='flex re1:items-center justify-start gap-4 re1:gap-0 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
+          <ul className='flex re1:items-center justify-start re1:justify-around gap-4 re1:gap-0 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
             {iconesNavegacionais.map((icon)=>(
               <IconeNavegacional href={icon.href} imgUrl={icon.imgUrl} categoryName={icon.categoryName} />
             ))}
@@ -229,11 +217,11 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         </div>
 
         <div className='flex justify-between align-bottom px-4 re1:px-0'>
-          <label>
+          <label className='w-[45%]' ref={filterLabel}>
             <span>Filtro</span>
             <FiltroMob filters={filters}/>
           </label>
-          <label className='focus-within:text-primary w-1/2 re1:w-auto'>
+          <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span>Ordenar Por:</span>
             <select className="text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs"
               onInput={(event)=>{
@@ -259,7 +247,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
                 : 'Não tem produtos com esta combinação de filtros'}
             </div>
 
-            {fetchLength===20 && 
+            {fetchLength>=20 && 
             <button className='w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg' onClick={()=>{
               if(fetchLength===20){
                 const {from,to}=fromTo

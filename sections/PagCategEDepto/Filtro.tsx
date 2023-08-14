@@ -45,7 +45,7 @@ const Filtro=({title, values}:Props)=>{
   }
 
   return(
-    <div className='w-full re1:flex flex-col bg-[#1e1e1e] hidden'>
+    <div className='w-full flex flex-col bg-[#111] re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>
       <h5 className='px-3 py-5 flex justify-between cursor-pointer'
         onClick={()=>setOpen(!open)}
       >
