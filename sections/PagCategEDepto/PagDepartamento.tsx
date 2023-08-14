@@ -5,6 +5,7 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Benefits from "deco-sites/shp/sections/Benefits.tsx"
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import { Runtime } from "deco-sites/shp/runtime.ts"
+import FiltroMob from "deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx";
 
 export interface Props{
   titleCategoria?:string
@@ -76,7 +77,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   const [order,setOrder]=useState('')
   const [filters,setFilters]=useState<FilterObj[]>([])
   const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
-  const [products, setProducts]=useState([])
+  const [products, setProducts]=useState<any>([])
+  const [fetchLength, setFetchLength]=useState(0)
 
   const listFiltersDesk=useRef<HTMLUListElement>(null)
 
@@ -94,8 +96,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   }
 
   const orderFilters=[
-    {'Menor Preço':'OrderByPriceDESC'},
-    {'Maior Preço':'OrderByPriceASC'},
+    {'Menor Preço':'OrderByPriceASC'},
+    {'Maior Preço':'OrderByPriceDESC'},
     {'Mais Vendidos':'OrderByTopSaleDESC'},
     {'Melhores Avaliações':'OrderByReviewRateDESC'},
     {'A - Z':'OrderByNameASC'},
@@ -148,13 +150,49 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
   useEffect(()=>{
     (async()=>{
+      console.log(fromTo)
+        const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
+        const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,'_from=0&_to=19']
+        order!=='' && queryString.push(`O=${order}`)
+        const data= await fetchProducts(queryString.join('&'))
+        setFetchLength(data.length)
+        setProducts(data)
+        setFromTo({from:0, to:19})
+    })()
+  },[selectedFilters])
+
+  useEffect(()=>{
+    (async()=>{
+      console.log(fromTo)
+      if(fromTo.to!==19){
         const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
         const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
         order!=='' && queryString.push(`O=${order}`)
         const data= await fetchProducts(queryString.join('&'))
-        setProducts(data)
+        setFetchLength(data.length)
+        setProducts((prevProducts: any)=>[...prevProducts, ...data])
+      }
     })()
-  },[selectedFilters,order])
+  },[fromTo])
+
+  useEffect(()=>{
+    (async()=>{
+      console.log(fromTo)
+        const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
+        let queryString:string[]
+        // só pode retornar no máximo 50 products ent coloco o limite na ultima adição de 20 possivel do to
+        if(fromTo.to>50){
+          queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=0&_to=39`]
+        }else{
+          queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=0&_to=${fromTo.to}`]
+        }
+          order!=='' && queryString.push(`O=${order}`)
+          const data= await fetchProducts(queryString.join('&'))
+          console.log(data)
+          setFetchLength(data.length)
+          setProducts(data)
+    })()
+  },[order])
 
   useEffect(()=>console.log(products),[products])
 
@@ -166,33 +204,36 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         />
       </div>
       <div className='re1:px-[5%] re4:px-[15%]'>
-        <div className='my-[60px] text-gray-500'>
+        <div className='my-5 re1:my-[60px] text-gray-500'>
           <p><a href='/'>Home</a> &gt; {titleCategoria}</p>
         </div>
-        <div className='bg-transparent'>
+        <div className='bg-transparent px-4 re1:px-0'>
           <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
-          <div className='max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText|| '<div>OII Luii</div>'}} />
+          <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText|| '<div>OII Luii</div>'}} />
           <button className='font-bold mb-2 border-b border-b-primary' onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
           <div className={`${hideDescSeo ? 'line-clamp-1' : ''}`} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || '<div>OII Luii</div>'}} />
         </div>
 
         <Benefits/>
 
-        <div>
-          <div className='text-2xl flex justify-between items-center w-full mb-4'>
+        <div className='mb-8 re1:mb-0'>
+          <div className='text-xl re1:text-2xl flex justify-between items-center w-full mb-4 px-4 re1:px-0'>
             <p>Principais categorias</p>
-            <hr className='border-[#262626] w-[80%]'/>
+            <hr className='border-[#262626] w-[40%] re1:w-[80%]'/>
           </div>
-          <ul className='flex items-center justify-around w-full mb-4'>
+          <ul className='flex re1:items-center justify-start gap-4 re1:gap-0 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
             {iconesNavegacionais.map((icon)=>(
               <IconeNavegacional href={icon.href} imgUrl={icon.imgUrl} categoryName={icon.categoryName} />
             ))}
           </ul>
         </div>
 
-        <div className='flex justify-between align-bottom'>
-          <p>Filtros</p>
-          <label className='focus-within:text-primary'>
+        <div className='flex justify-between align-bottom px-4 re1:px-0'>
+          <label>
+            <span>Filtro</span>
+            <FiltroMob filters={filters}/>
+          </label>
+          <label className='focus-within:text-primary w-1/2 re1:w-auto'>
             <span>Ordenar Por:</span>
             <select className="text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs"
               onInput={(event)=>{
@@ -212,11 +253,23 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
             {filters.map(filtro=><Filtro title={filtro.label} values={filtro.values} />)}
           </ul>
 
-          <div className='grid grid-cols-4'>
-            {products.length ? products.map((product:any) =><Image src={product!.items![0].images[0].imageUrl} width={150} height={150}/>)
-              : 'Não tem produtos com esta combinação de filtros'}
+          <div className='w-full re1:w-[70%] px-4 re1:px-0'>
+            <div className='grid grid-cols-4 gap-x-4'>
+              {products.length ? products.map((product:any) =><p>{product.items[0].sellers[0].commertialOffer.Price}</p>)
+                : 'Não tem produtos com esta combinação de filtros'}
+            </div>
+
+            {fetchLength===20 && 
+            <button className='w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg' onClick={()=>{
+              if(fetchLength===20){
+                const {from,to}=fromTo
+                setFromTo({from:from+20, to:to+20})
+              }
+            }}>Carregar mais Produtos</button>}
           </div>
         </div>
+        
+        
       </div>
     </div>
   )
