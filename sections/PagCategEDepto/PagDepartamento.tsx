@@ -5,7 +5,8 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Benefits from "deco-sites/shp/sections/Benefits.tsx"
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import { Runtime } from "deco-sites/shp/runtime.ts"
-import FiltroMob from "deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx";
+import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
+import Card from 'deco-sites/shp/sections/PagCategEDepto/Card.tsx'
 
 export interface Props{
   titleCategoria?:string
@@ -236,19 +237,19 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </label>
         </div>
 
-        <div className='flex w-full'>
+        <div className='flex w-full justify-around'>
           <ul ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
             {filters.map(filtro=><Filtro title={filtro.label} values={filtro.values} />)}
           </ul>
 
-          <div className='w-full re1:w-[70%] px-4 re1:px-0'>
-            <div className='grid grid-cols-4 gap-x-4'>
-              {products.length ? products.map((product:any) =><p>{product.items[0].sellers[0].commertialOffer.Price}</p>)
+          <div className='flex flex-col items-center w-full re1:w-[70%] px-4 re1:px-0'>
+            <div className='grid grid-cols-4 gap-x-4 gap-y-4'>
+              {products.length ? products.map((product:any) =><Card product={product} />)
                 : 'Não tem produtos com esta combinação de filtros'}
             </div>
 
-            {fetchLength>=20 && 
-            <button className='w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg' onClick={()=>{
+            {fetchLength===20 && 
+            <button className='w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto mt-4' onClick={()=>{
               if(fetchLength===20){
                 const {from,to}=fromTo
                 setFromTo({from:from+20, to:to+20})

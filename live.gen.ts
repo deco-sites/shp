@@ -44,26 +44,27 @@ import * as $$$$$$$$13 from "./sections/Highlights.tsx";
 import * as $$$$$$$$14 from "./sections/LinkTree.tsx";
 import * as $$$$$$$$15 from "./sections/NossosNums.tsx";
 import * as $$$$$$$$16 from "./sections/OfertasFogo.tsx";
-import * as $$$$$$$$17 from "./sections/PagCategEDepto/Filtro.tsx";
-import * as $$$$$$$$18 from "./sections/PagCategEDepto/FiltroMob.tsx";
-import * as $$$$$$$$19 from "./sections/PagCategEDepto/iconeNavegacional.tsx";
-import * as $$$$$$$$20 from "./sections/PagCategEDepto/PagDepartamento.tsx";
-import * as $$$$$$$$21 from "./sections/PCNivelGamer.tsx";
-import * as $$$$$$$$22 from "./sections/ProductCompreJunto.tsx";
-import * as $$$$$$$$23 from "./sections/productDescription.tsx";
-import * as $$$$$$$$24 from "./sections/ProductDetails.tsx";
-import * as $$$$$$$$25 from "./sections/ProductGames.tsx";
-import * as $$$$$$$$26 from "./sections/ProductRecommendedProds.tsx";
-import * as $$$$$$$$27 from "./sections/ProductShelf.tsx";
-import * as $$$$$$$$28 from "./sections/ProductSpecification.tsx";
-import * as $$$$$$$$29 from "./sections/ProductTrustvox.tsx";
-import * as $$$$$$$$30 from "./sections/ReturnH1.tsx";
-import * as $$$$$$$$31 from "./sections/SearchResult.tsx";
-import * as $$$$$$$$32 from "./sections/Shelf.tsx";
-import * as $$$$$$$$33 from "./sections/SignNewsletter.tsx";
-import * as $$$$$$$$34 from "./sections/Vitrine.tsx";
-import * as $$$$$$$$35 from "./sections/WhatsApp.tsx";
-import * as $$$$$$$$36 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$$$17 from "./sections/PagCategEDepto/Card.tsx";
+import * as $$$$$$$$18 from "./sections/PagCategEDepto/Filtro.tsx";
+import * as $$$$$$$$19 from "./sections/PagCategEDepto/FiltroMob.tsx";
+import * as $$$$$$$$20 from "./sections/PagCategEDepto/iconeNavegacional.tsx";
+import * as $$$$$$$$21 from "./sections/PagCategEDepto/PagDepartamento.tsx";
+import * as $$$$$$$$22 from "./sections/PCNivelGamer.tsx";
+import * as $$$$$$$$23 from "./sections/ProductCompreJunto.tsx";
+import * as $$$$$$$$24 from "./sections/productDescription.tsx";
+import * as $$$$$$$$25 from "./sections/ProductDetails.tsx";
+import * as $$$$$$$$26 from "./sections/ProductGames.tsx";
+import * as $$$$$$$$27 from "./sections/ProductRecommendedProds.tsx";
+import * as $$$$$$$$28 from "./sections/ProductShelf.tsx";
+import * as $$$$$$$$29 from "./sections/ProductSpecification.tsx";
+import * as $$$$$$$$30 from "./sections/ProductTrustvox.tsx";
+import * as $$$$$$$$31 from "./sections/ReturnH1.tsx";
+import * as $$$$$$$$32 from "./sections/SearchResult.tsx";
+import * as $$$$$$$$33 from "./sections/Shelf.tsx";
+import * as $$$$$$$$34 from "./sections/SignNewsletter.tsx";
+import * as $$$$$$$$35 from "./sections/Vitrine.tsx";
+import * as $$$$$$$$36 from "./sections/WhatsApp.tsx";
+import * as $$$$$$$$37 from "./sections/WishlistGallery.tsx";
 import * as $live_workflows from "$live/routes/live/workflows/run.ts";
 import * as $live_middleware from "$live/routes/_middleware.ts";
 import * as $live_workbench from "$live/routes/live/workbench.ts";
@@ -279,26 +280,27 @@ const manifest = {
     "deco-sites/shp/sections/LinkTree.tsx": $$$$$$$$14,
     "deco-sites/shp/sections/NossosNums.tsx": $$$$$$$$15,
     "deco-sites/shp/sections/OfertasFogo.tsx": $$$$$$$$16,
-    "deco-sites/shp/sections/PagCategEDepto/Filtro.tsx": $$$$$$$$17,
-    "deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx": $$$$$$$$18,
-    "deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx": $$$$$$$$19,
-    "deco-sites/shp/sections/PagCategEDepto/PagDepartamento.tsx": $$$$$$$$20,
-    "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$21,
-    "deco-sites/shp/sections/ProductCompreJunto.tsx": $$$$$$$$22,
-    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$23,
-    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$24,
-    "deco-sites/shp/sections/ProductGames.tsx": $$$$$$$$25,
-    "deco-sites/shp/sections/ProductRecommendedProds.tsx": $$$$$$$$26,
-    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$27,
-    "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$28,
-    "deco-sites/shp/sections/ProductTrustvox.tsx": $$$$$$$$29,
-    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$30,
-    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$31,
-    "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$32,
-    "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$33,
-    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$34,
-    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$35,
-    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$36,
+    "deco-sites/shp/sections/PagCategEDepto/Card.tsx": $$$$$$$$17,
+    "deco-sites/shp/sections/PagCategEDepto/Filtro.tsx": $$$$$$$$18,
+    "deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx": $$$$$$$$19,
+    "deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx": $$$$$$$$20,
+    "deco-sites/shp/sections/PagCategEDepto/PagDepartamento.tsx": $$$$$$$$21,
+    "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$22,
+    "deco-sites/shp/sections/ProductCompreJunto.tsx": $$$$$$$$23,
+    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$24,
+    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$25,
+    "deco-sites/shp/sections/ProductGames.tsx": $$$$$$$$26,
+    "deco-sites/shp/sections/ProductRecommendedProds.tsx": $$$$$$$$27,
+    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$28,
+    "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$29,
+    "deco-sites/shp/sections/ProductTrustvox.tsx": $$$$$$$$30,
+    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$31,
+    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$32,
+    "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$33,
+    "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$34,
+    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$$$35,
+    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$$$36,
+    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$$$37,
     "deco-sites/std/sections/Analytics.tsx": i2$$$$$5,
     "deco-sites/std/sections/configButterCMS.global.tsx": i2$$$$$6,
     "deco-sites/std/sections/configLinxImpulse.global.tsx": i2$$$$$7,
