@@ -80,10 +80,12 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
   const [products, setProducts]=useState<any>([])
   const [fetchLength, setFetchLength]=useState(0)
-
+  const [divFlut, setDivFlut]=useState(false)
   const filterLabel=useRef<HTMLLabelElement>(null)
 
   const listFiltersDesk=useRef<HTMLUListElement>(null)
+
+  const divFlutLabel=useRef<HTMLLabelElement>(null)
 
   const addFilterListeners=()=>{
     const ulDesk=listFiltersDesk.current!
@@ -98,10 +100,22 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     })
 
     const ulMob=filterLabel.current && filterLabel.current.querySelector('dialog ul')
+    const ulDivFlut=divFlutLabel.current && divFlutLabel.current.querySelector('dialog ul')
     const btnFilter=filterLabel.current && filterLabel.current.querySelector('dialog button#filtrar')
+    const btnDivFlut=divFlutLabel.current && divFlutLabel.current.querySelector('dialog button#filtrar')
 
     btnFilter && (btnFilter as HTMLButtonElement).addEventListener('click',(event)=>{
       const inputsChecked:HTMLInputElement[]=Array.from(ulMob!.querySelectorAll('input:checked'))
+      const filtersSelected:Array<{fq:string, value:string}> =[]
+      inputsChecked.forEach(input=>{
+        filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
+      })
+
+      setSelectedFilters(filtersSelected)
+    })
+
+    btnDivFlut && (btnDivFlut as HTMLButtonElement).addEventListener('click',(event)=>{
+      const inputsChecked:HTMLInputElement[]=Array.from(ulDivFlut!.querySelectorAll('input:checked'))
       const filtersSelected:Array<{fq:string, value:string}> =[]
       inputsChecked.forEach(input=>{
         filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
@@ -130,6 +144,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     header && ((header.children[0] as HTMLElement).style.opacity='.8')
 
     const handleScroll=()=>{
+      //header opacity
       if(window.scrollY > initialScrollY && !scrolledDown){
         header && ((header.children[0] as HTMLElement).style.opacity='1')
         scrolledDown=true
@@ -137,6 +152,9 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         header && ((header.children[0] as HTMLElement).style.opacity='.8')
         scrolledDown=false
       }
+
+      //divFlut
+      window.scrollY > 800 ? setDivFlut(true) : setDivFlut(false)
     }
 
     (async()=>{
@@ -173,6 +191,11 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
   useEffect(()=>{
     typeof window!=='undefined' && setFromTo({from:0, to:19})
+
+    selectedFilters.forEach((filter)=>{
+      const value=filter.value
+      Array.from(document.querySelectorAll(`input[value='${value}']`)).forEach((input)=>(input as HTMLInputElement).checked=true)
+    })
   },[selectedFilters])
 
   useEffect(()=>{
@@ -193,14 +216,14 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         />
       </div>
       <div className='re1:px-[5%] re4:px-[15%]'>
-        <div className='my-5 re1:my-[60px] text-gray-500'>
+        <div className='my-5 re1:my-[60px] text-gray-500 px-4 re1:px-0'>
           <p><a href='/'>Home</a> &gt; {titleCategoria}</p>
         </div>
         <div className='bg-transparent px-4 re1:px-0'>
           <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
           <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText|| '<div>OII Luii</div>'}} />
           <button className='font-bold mb-2 border-b border-b-primary' onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
-          <div className={`${hideDescSeo ? 'line-clamp-1' : ''}`} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || '<div>OII Luii</div>'}} />
+          <div className={hideDescSeo ? 'line-clamp-1' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || '<div>OII Luii</div>'}} />
         </div>
 
         <Benefits/>
@@ -223,7 +246,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
             <FiltroMob filters={filters}/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-            <span>Ordenar Por:</span>
+            <span className='font-bold'>Ordenar Por:</span>
             <select className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
@@ -238,7 +261,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         </div>
 
         <div className='flex w-full justify-between'>
-          <ul ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
+          <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
             {filters.map(filtro=><Filtro title={filtro.label} values={filtro.values} />)}
           </ul>
 
@@ -260,6 +283,25 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         
         
       </div>
+      <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-[#111]`}>
+          <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
+            <span className='font-bold'>Filtros</span>
+            <FiltroMob filters={filters}/>
+          </label>
+          <label className='focus-within:text-primary w-[45%] re1:w-auto'>
+            <span className='font-bold'>Ordenar Por:</span>
+            <select className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+              onInput={(event)=>{
+                setOrder((event.target as HTMLSelectElement).value)
+              }}
+            >
+              <option disabled selected>Selecione</option>
+              {orderFilters.map(filter=>(
+                <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+              ))}
+            </select>
+          </label>
+        </div>
     </div>
   )
 }

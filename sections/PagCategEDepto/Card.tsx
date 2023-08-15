@@ -52,25 +52,24 @@ const ProdCard=({...props}:ProdCard)=>{
     const handleTrust=async()=>{
       const { products_rates }=await loaderTrustvox(productId, '79497')
       const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
-      setTrustPercent(obj.average*20)
-      setObjTrust(obj)
+      obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
     }
     handleTrust()
   },[])
 
   return(
-    <a className='flex flex-row re1:flex-col h-36 re1:h-[370px] w-full bg-[#262626] rounded-lg p-3 re1:p-0 border
+    <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
     border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
-      <div className='flex re1:px-3 re1:pt-3 w-[30%] h-auto re1:w-auto'>
+      <div className='flex px-3 pt-3 h-auto w-auto'>
         <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-12%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
-      <div className='flex flex-col re1:flex-col-reverse justify-between w-[65%] ml-[5%] re1:ml-0 re1:w-full re1:h-[50%] re1:pb-3'>
-        <p className='text-xs re1:text-sm max-h-[30%] line-clamp-2 re1:px-3'>
+      <div className='flex flex-col-reverse justify-between ml-0 w-full h-[50%] pb-3'>
+        <p className='text-sm max-h-[30%] line-clamp-2 px-3'>
           {prodName}
         </p>
-        <div className='flex items-center justify-start re1:justify-center'> 
-          <hr className='hidden re1:block border-t-[#111] w-full'/>
+        <div className='flex items-center justify-center'> 
+          <hr className='block border-t-[#111] w-full'/>
           {/* Trustvox */}
           {objTrust?.average ===0 ? null :
             <div className='flex justify-center items-center absolute'>
@@ -81,10 +80,10 @@ const ProdCard=({...props}:ProdCard)=>{
             </div>
           }
         </div>
-        <div className='flex flex-col re1:px-3'>
-          <span className='line-through text-base-300 text-xs'>{precoDe}</span>
-          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>R$ {DescontoPIX(parseFloat(precoVista), 12)}</span> no pix</p>
-          <span className='text-xs text-base-300'>{parcelas}x R$ {valorParcela} sem juros</span>
+        <div className='flex flex-col px-3'>
+          <span className='line-through text-[#b4b4b4] text-xs'>De: R${precoDe}</span>
+          <p className='text-xs'><span className='text-green-500 text-xl font-bold'>R$ {DescontoPIX(parseFloat(precoVista), 12)}</span> no pix</p>
+          <span className='text-xs text-[#b4b4b4]'>{parcelas}x R$ {valorParcela} sem juros</span>
         </div>
       </div>
     </a>
@@ -105,8 +104,7 @@ const PcCard=({...props}:PcCard)=>{
     const handleTrust=async()=>{
       const { products_rates }=await loaderTrustvox(productId, '79497')
       const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
-      setTrustPercent(obj.average*20)
-      setObjTrust(obj)
+      obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
     }
     handleTrust()
   },[])
