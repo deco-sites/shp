@@ -4,7 +4,6 @@ import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNaveg
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Benefits from "deco-sites/shp/sections/Benefits.tsx"
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
-import { Runtime } from "deco-sites/shp/runtime.ts"
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/sections/PagCategEDepto/Card.tsx'
 
@@ -75,7 +74,7 @@ interface SpecObj{
 const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria, iconesNavegacionais}:Props)=>{
   const [hideDescSeo,setHideDescSeo]=useState(true)
   const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:19})
-  const [order,setOrder]=useState('')
+  const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
   const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
   const [products, setProducts]=useState<any>([])
@@ -159,8 +158,9 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
     (async()=>{
       const pageData=await fetchData(idsDeCategoria)
+      console.log(pageData)
 
-      const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, ...pageData!.SpecificationFilters}
+      const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, 'Faixa de Preço': pageData!.PriceRanges,...pageData!.SpecificationFilters}
 
       const arrFilterObj:FilterObj[]=[]
 
@@ -183,7 +183,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   const handleMoreProducts=async()=>{
     const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
     const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
-    order!=='' && queryString.push(`O=${order}`)
+    order!=='selecione' && queryString.push(`O=${order}`)
     const data= await fetchProducts(queryString.join('&'))
     setFetchLength(data.length)
     fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
@@ -204,6 +204,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
   useEffect(()=>{
     typeof window!=='undefined' && setFromTo({from:0, to:19})
+    Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
   },[order])
 
   useEffect(()=>console.log(products),[products])
@@ -247,12 +248,12 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por:</span>
-            <select className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+            <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
               }}
             >
-              <option disabled selected>Selecione</option>
+              <option disabled selected value='selecione'>Selecione</option>
               {orderFilters.map(filter=>(
                 <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
               ))}
@@ -290,12 +291,12 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por:</span>
-            <select className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+            <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
               }}
             >
-              <option disabled selected>Selecione</option>
+              <option disabled selected value='selecione'>Selecione</option>
               {orderFilters.map(filter=>(
                 <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
               ))}
