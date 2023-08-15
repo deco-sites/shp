@@ -2,6 +2,7 @@
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { useState, useEffect} from 'preact/hooks'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
+import WishlistButton from "deco-sites/shp/islands/WishlistButton.tsx";
 
 export interface Props{
   product:any
@@ -92,9 +93,10 @@ const ProdCard=({...props}:ProdCard)=>{
 
 const PcCard=({...props}:PcCard)=>{
   const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado} = props
-  const precoDeNum=precoDe!=='' ? parseFloat(precoDe.toString().replace('.','').replace(',','.')) : parseFloat(precoParcelado.replace('.','').replace(',','.'))
-  const vistaNum=parseFloat(precoVista.toString().replace('.','').replace(',','.'))
+  const precoDeNum=parseFloat(precoDe)
+  const vistaNum=parseFloat(precoVista)
   const percent=precoDe!=='' ? Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100) : 12
+  const arm=(armazenamento || '').toString().toUpperCase()
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
   const [trustPercent, setTrustPercent]=useState(0)
@@ -110,68 +112,64 @@ const PcCard=({...props}:PcCard)=>{
   },[])
 
   return(
-    <a className='flex flex-row re1:flex-col h-36 re1:h-[370px] w-full bg-[#262626] rounded-lg p-3 re1:p-0 border
+    <a className='flex flex-col h-[350px] w-full bg-[#262626] rounded-lg p-0 border
     border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
-      <div className='flex re1:px-3 re1:pt-3 w-[30%] h-auto re1:w-auto'>
-        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-{percent}%</span>
-        <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
-      </div>
-      <div className='flex flex-col re1:flex-col-reverse justify-between w-[65%] ml-[5%] re1:ml-0 re1:w-full re1:h-[50%] re1:pb-3'>
-        <div className='re1:px-3'>
-          <p className='text-green-500 font-bold line-clamp-1 text-xs re1:text-base'>{placaVideo}</p>
-          <div className='flex justify-between'>
-            <label className='flex items-center gap-1'>
-              <Image
-                src='https://shopinfo.vteximg.com.br/arquivos/icon-processador.svg'
-                width={15}
-                height={15}
-                loading='lazy'
-                fetchPriority='low' decoding='sync'
-              />
-              <p className='text-xs line-clamp-1'>{processador}</p>
-            </label>
-            <label className='flex items-center gap-1'>
-              <Image
-                src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
-                width={15}
-                height={15}
-                loading='lazy'
-                fetchPriority='low' decoding='sync'
-              />
-              <p className='text-xs line-clamp-1'>{memoria}</p>
-            </label>
-            <label className='flex items-center gap-1'>
-              <Image
-                src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
-                width={15}
-                height={15}
-                loading='lazy'
-                fetchPriority='low' decoding='sync'
-              />
-              <p className='text-xs line-clamp-1'>{tipoArm} {armazenamento}</p>
-            </label>
-          </div>
-        </div>
-        <div className='flex items-center justify-start re1:justify-center'> 
-          <hr className='hidden re1:block border-t-[#111] w-full'/>
-          {/* Trustvox */}
-          {objTrust?.average ===0 ? null :
-            <div className='flex justify-center items-center absolute'>
-              <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
-                <div style={{width:`${trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
+      <div className='flex flex-col px-3 pt-8 re1:pt-3 h-auto w-auto'>
+        <div>
+          <div className='flex items-center justify-start mt-[-12%] re1:mt-0'>
+            {/* Trustvox */}
+            {objTrust?.average ===0 ? null :
+              <div className='flex justify-center items-center absolute'>
+                <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
+                  <div style={{width:`${trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
+                </div>
+                <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
               </div>
-              <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
-            </div>
-          }
+            }
+          </div>
+          <span className={`absolute h-[30px] w-[35px] ${objTrust?.average !==0 && 'mt-[3%] re1:mt-[1%]'} flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg`}>-{percent}%</span>
         </div>
-        <div className='flex flex-col re1:px-3'>
-          <p className='text-xs re1:text-sm max-h-[30%] line-clamp-1 leading-3 re1:leading-4'>
-            {prodName}
-          </p>
-          <span className='line-through text-base-300 text-xs leading-3'>{precoDe!=='' ? precoDe : `DE: R$ ${precoDeNum}`}</span>
-          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>R$ {precoVista}</span> no pix</p>
-          <span className='text-xs text-base-300 leading-3'>{parcelas}x R$ {valorParcela} sem juros</span>
+        <div className='absolute ml-[28%] re1:ml-[8.5%] mt-[-10%] re1:mt-[-.5%]'><WishlistButton productID={productId} variant='icon'/></div>
+        <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
+        <div className='text-green-500 flex flex-col gap-1 w-[80px] absolute mt-[20%] re1:mt-[6%]'>
+          <p className='text-white font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90'>{processador}</p>
+          <p className='font-bold line-clamp-2 text-xs bg-[#000000] bg-opacity-90'>{placaVideo}</p>
         </div>
+      </div>
+      <div className='flex flex-col px-3 justify-between my-auto h-[40%]'>
+        <p className='text-sm line-clamp-2 leading-4'>
+          {prodName}
+        </p>
+        <div className='flex justify-between re1:justify-start re1:gap-2'>
+          <label className='flex items-center gap-1'>
+            <Image
+              src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
+              width={15}
+              height={15}
+              loading='lazy'
+              fetchPriority='low' decoding='sync'
+            />
+            <p className='text-[10px] line-clamp-1'>{memoria}</p>
+          </label>
+          <label className='flex items-center gap-1 w-[80px]'>
+            <Image
+              src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
+              width={15}
+              height={15}
+              loading='lazy'
+              fetchPriority='low' decoding='sync'
+            />
+            <p className='text-[10px] line-clamp-1'>{(arm.includes('HD') || arm.includes('SSD')) ? 
+              armazenamento: `${tipoArm} ${arm}`}
+            </p>
+          </label>
+        </div>
+        <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x R$ {valorParcela}</span>
+        <p className='text-[11px] text-[#b4b4b4]'>ou por R$ {precoVista} no Pix</p>
+        <label className='flex gap-2 text-sm items-center'>
+          <input type='checkbox' name='compare' className='checkbox checkbox-primary checkbox-sm'/>
+          <p>Compare</p>
+        </label>
       </div>
     </a>
   )
