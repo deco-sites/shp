@@ -217,14 +217,14 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </ul>
         </div>
 
-        <div className='flex justify-between align-bottom px-4 re1:px-0'>
+        <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
           <label className='w-[45%]' ref={filterLabel}>
-            <span>Filtro</span>
+            <span className='font-bold'>Filtros</span>
             <FiltroMob filters={filters}/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span>Ordenar Por:</span>
-            <select className="text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs"
+            <select className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
               }}
@@ -237,15 +237,15 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </label>
         </div>
 
-        <div className='flex w-full justify-around'>
+        <div className='flex w-full justify-between'>
           <ul ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
             {filters.map(filtro=><Filtro title={filtro.label} values={filtro.values} />)}
           </ul>
 
           <div className='flex flex-col items-center w-full re1:w-[70%] px-4 re1:px-0'>
-            <div className='grid grid-cols-4 gap-x-4 gap-y-4'>
+            <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
               {products.length ? products.map((product:any) =><Card product={product} />)
-                : 'Não tem produtos com esta combinação de filtros'}
+                : <div className='loading loading-spinner loading-lg text-primary absolute'/>}
             </div>
 
             {fetchLength===20 && 
