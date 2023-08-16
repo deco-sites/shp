@@ -153,12 +153,14 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       }
 
       //divFlut
-      window.scrollY > 800 ? setDivFlut(true) : setDivFlut(false)
+      window.scrollY > 800 ? setDivFlut(true) : (
+        divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
+      )
     }
 
     (async()=>{
       const pageData=await fetchData(idsDeCategoria)
-      console.log(pageData)
+      //console.log(pageData)
 
       const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, 'Faixa de Preço': pageData!.PriceRanges,...pageData!.SpecificationFilters}
 
@@ -191,10 +193,17 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
   useEffect(()=>{
     typeof window!=='undefined' && setFromTo({from:0, to:19})
-
-    selectedFilters.forEach((filter)=>{
-      const value=filter.value
-      Array.from(document.querySelectorAll(`input[value='${value}']`)).forEach((input)=>(input as HTMLInputElement).checked=true)
+    const filterValues=selectedFilters.map(filter=>filter.value)
+    //console.log(filterValues)
+    
+    Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
+      const Input=input as HTMLInputElement
+      //Input.value===value ? (Input.checked=true) : (!filterValues.includes(Input.value) && (Input.checked=false))
+      if(filterValues.includes(Input.value)){
+        Input.checked=true
+      }else{
+        Input.checked=false
+      }    
     })
   },[selectedFilters])
 
@@ -207,10 +216,10 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
   },[order])
 
-  useEffect(()=>console.log(products),[products])
+  //useEffect(()=>console.log(products),[products])
 
   return(
-    <div className='w-full text-white'>
+    <div className='w-full text-white appearance-none'>
       <div className='absolute top-0 z-[-1] '>
         <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
           fetchPriority='high' preload 
@@ -244,7 +253,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
           <label className='w-[45%]' ref={filterLabel}>
             <span className='font-bold'>Filtros</span>
-            <FiltroMob filters={filters}/>
+            <FiltroMob filters={filters} id='menu'/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por:</span>
@@ -287,7 +296,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-[#111]`}>
           <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
             <span className='font-bold'>Filtros</span>
-            <FiltroMob filters={filters}/>
+            <FiltroMob filters={filters} id='divFlut'/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por:</span>

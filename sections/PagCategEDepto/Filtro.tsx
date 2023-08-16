@@ -1,4 +1,4 @@
-import { useState, useRef } from 'preact/hooks'
+import { useState, useRef, useEffect } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 
@@ -35,14 +35,16 @@ const Filtro=({title, values}:Props)=>{
           !li.classList.contains('hidden') && li.classList.add('hidden')
         }
       })
-      console.log(listChildrens)
-      console.log(inputValue)
     }
   }
 
   const cleanInput=(event:KeyboardEvent)=>{
     event.key==='Escape' && (search.current && (search.current.value='', handleInput()))
   }
+
+  useEffect(()=>{
+    setOpen(false)
+  },[])
 
   return(
     <div className='w-full flex flex-col bg-[#111] re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>
@@ -69,7 +71,7 @@ const Filtro=({title, values}:Props)=>{
           {values.map(filter=>(
             <li className='py-1 px-2'>
               <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                <input type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-sm' data-fq={filter.Map}/>
+                <input id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-sm' data-fq={filter.Map}/>
                 <span className='line-clamp-1 text-sm'>{filter.Name}</span>
               </label>
             </li>
