@@ -127,7 +127,7 @@ const PcCard=({...props}:PcCard)=>{
           </div>
           <span className={`absolute h-[30px] w-[35px] ${objTrust?.average !==0 && 'mt-[8%] re1:mt-[6%]'} flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg`}>-{percent}%</span>
         </div>
-        <div className='absolute ml-[70%] re1:ml-[73%] mt-[-18  %] re1:mt-[-6.5%]'><WishlistButton productID={productId} variant='icon'/></div>
+        <div className='absolute ml-[65%] re1:ml-[73%] mt-[-18%] re1:mt-[-6.5%]'><WishlistButton productID={productId} variant='icon'/></div>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
         <div className='text-green-500 flex flex-col gap-1 w-[85px] absolute mt-[45%] re1:mt-[50%]'>
           <p className='text-white font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90 px-1'>{processador}</p>
