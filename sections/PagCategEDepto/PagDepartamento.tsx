@@ -39,17 +39,11 @@ const replaceClasses=(desc:string)=>{
   //removendo butão de fecha e vermais
   string=string.replace('<span class="buttonText verMais"> <span class="verMais">Ver mais</span> <span class="fechar">Fechar</span> </span>','')
 
-  // string=string.replaceAll('<p>','<p class="pb-[10px]">')
-
-  string=string.replaceAll('text-categoriaSeo','mb-[20px] font-normal font-sans')
+  string=string.replaceAll('text-categoriaSeo','mb-[20px] font-normal font-sans inline')
 
   string=string.replaceAll('<h2>','<h2 class="font-black text-xl text-primary m-0 flex leading-loose">')
 
   string=string.replaceAll('<h3>','<h3 class="font-medium text-2xl leading-loose flex m-0">')
-
-  // string=string.replaceAll('<ul>','<ul class="list-disc">')
-
-  // string=string.replaceAll('<li>','<li class="list-disc">')
 
   string=string.replaceAll('<a','<a class="text-primary hover:text-white"')
 

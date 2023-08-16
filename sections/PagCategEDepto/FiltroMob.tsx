@@ -65,7 +65,7 @@ const FiltroMob=({ filters, id }:Props)=>{
             }}
           >✕</button>
 
-          <div className='flex flex-col py-5 items-center gap-10'>
+          <div className='flex flex-col py-5 items-center gap-10 text-white'>
             <h2 className='text-2xl font-bold px-4'>Filtros</h2>
             <ul className='w-full'>
               {filters.map((filter)=><Filtro title={filter.label} values={filter.values}/>)}
