@@ -39,7 +39,7 @@ const replaceClasses=(desc:string)=>{
   //removendo butão de fecha e vermais
   string=string.replace('<span class="buttonText verMais"> <span class="verMais">Ver mais</span> <span class="fechar">Fechar</span> </span>','')
 
-  string=string.replaceAll('text-categoriaSeo','mb-[20px] font-normal font-sans inline')
+  string=string.replaceAll('text-categoriaSeo','mb-[20px] font-normal font-sans')
 
   string=string.replaceAll('<h2>','<h2 class="font-black text-xl text-primary m-0 flex leading-loose">')
 
@@ -79,6 +79,9 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   const listFiltersDesk=useRef<HTMLUListElement>(null)
 
   const divFlutLabel=useRef<HTMLLabelElement>(null)
+
+  const textSeo=useRef<HTMLDivElement>(null)
+
 
   const addFilterListeners=()=>{
     const ulDesk=listFiltersDesk.current!
@@ -227,7 +230,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
           <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText|| '<div>OII Luii</div>'}} />
           <button className='font-bold mb-2 border-b border-b-primary' onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
-          <div className={hideDescSeo ? 'line-clamp-1' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || '<div>OII Luii</div>'}} />
+          <div ref={textSeo} className={hideDescSeo ? 'line-clamp-1 max-h-5' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || '<div>OII Luii</div>'}} />
         </div>
 
         <Benefits/>
