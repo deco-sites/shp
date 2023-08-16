@@ -2,14 +2,15 @@
 import { useEffect, useState, useRef } from 'preact/hooks'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
-import Benefits from "deco-sites/shp/sections/Benefits.tsx"
+import Benefits from 'deco-sites/shp/sections/Benefits.tsx'
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/sections/PagCategEDepto/Card.tsx'
+import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 
 export interface Props{
   titleCategoria?:string
-  /**@description separe os ids por barra caso seja uma categoria ex: Dep/Categ */
+  /**@description separe os ids por barra caso seja uma categoria ex: IdDep/IdCateg */
   idsDeCategoria:string
   bannerUrl:string
   descText?:string
@@ -63,6 +64,7 @@ interface SpecObj{
   Position: number | null
   Quantity: number | null
   Value:string
+  Slug?:string
 }
 
 const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria, iconesNavegacionais}:Props)=>{
@@ -157,9 +159,17 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
     (async()=>{
       const pageData=await fetchData(idsDeCategoria)
-      //console.log(pageData)
+      console.log(pageData)
 
-      const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, 'Faixa de Preço': pageData!.PriceRanges,...pageData!.SpecificationFilters}
+      const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
+        const slugSplittado=obj.Slug!.split('-')
+        const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
+        obj.Value=finalValue
+        obj.Map='P'
+        return obj
+      })
+
+      const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands,...pageData!.SpecificationFilters, 'Faixa de Preço': priceFilters}
 
       const arrFilterObj:FilterObj[]=[]
 
@@ -167,6 +177,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         arrFilterObj.push({label:key , values:dataFilters[key]})
       }
       
+      console.log(arrFilterObj)
       setFilters(arrFilterObj)
     })()
     
@@ -195,12 +206,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     
     Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
       const Input=input as HTMLInputElement
-      //Input.value===value ? (Input.checked=true) : (!filterValues.includes(Input.value) && (Input.checked=false))
-      if(filterValues.includes(Input.value)){
-        Input.checked=true
-      }else{
-        Input.checked=false
-      }    
+      filterValues.includes(Input.value) ? (Input.checked=true) : (Input.checked=false)
     })
   },[selectedFilters])
 
@@ -269,7 +275,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
         <div className='flex w-full justify-between'>
           <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
-            {filters.map(filtro=><Filtro title={filtro.label} values={filtro.values} />)}
+            {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
+            <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/>
           </ul>
 
           <div className='flex flex-col items-center w-full re1:w-[70%] px-4 re1:px-0'>
@@ -298,9 +305,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por:</span>
             <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
-              onInput={(event)=>{
-                setOrder((event.target as HTMLSelectElement).value)
-              }}
+              onInput={event=>setOrder((event.target as HTMLSelectElement).value)}
             >
               <option disabled selected value='selecione'>Selecione</option>
               {orderFilters.map(filter=>(

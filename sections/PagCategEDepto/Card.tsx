@@ -97,17 +97,17 @@ const PcCard=({...props}:PcCard)=>{
   const percent=precoDe!=='' ? Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100) : 12
   const arm=(armazenamento || '').toString().toUpperCase()
 
-  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
+  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
   const [trustPercent, setTrustPercent]=useState(0)
   
-  useEffect(()=>{
-    const handleTrust=async()=>{
-      const { products_rates }=await loaderTrustvox(productId, '79497')
-      const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
-      obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
-    }
-    handleTrust()
-  },[])
+  // useEffect(()=>{
+  //   const handleTrust=async()=>{
+  //     const { products_rates }=await loaderTrustvox(productId, '79497')
+  //     const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
+  //     obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
+  //   }
+  //   handleTrust()
+  // },[])
 
   return(
     <a className='flex flex-col h-[350px] w-full bg-[#262626] rounded-lg p-0 border relative
@@ -129,9 +129,9 @@ const PcCard=({...props}:PcCard)=>{
         </div>
         <div className='absolute ml-[70%] re1:ml-[73%] mt-[-18  %] re1:mt-[-6.5%]'><WishlistButton productID={productId} variant='icon'/></div>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
-        <div className='text-green-500 flex flex-col gap-1 w-[80px] absolute mt-[45%] re1:mt-[50%]'>
-          <p className='text-white font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90'>{processador}</p>
-          <p className='font-bold line-clamp-2 text-xs bg-[#000000] bg-opacity-90'>{placaVideo}</p>
+        <div className='text-green-500 flex flex-col gap-1 w-[85px] absolute mt-[45%] re1:mt-[50%]'>
+          <p className='text-white font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90 px-1'>{processador}</p>
+          <p className='font-bold line-clamp-2 text-xs bg-[#000000] bg-opacity-90 px-1'>{placaVideo}</p>
         </div>
       </div>
       <div className='flex flex-col px-3 justify-between my-auto h-[40%]'>

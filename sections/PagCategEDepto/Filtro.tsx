@@ -18,7 +18,7 @@ interface SpecObj{
 }
 
 const Filtro=({title, values}:Props)=>{
-  const [open,setOpen]=useState(true)
+  const [open,setOpen]=useState(false)
   const search=useRef<HTMLInputElement>(null)
   const valuesList=useRef<HTMLUListElement>(null)
   
@@ -41,10 +41,6 @@ const Filtro=({title, values}:Props)=>{
   const cleanInput=(event:KeyboardEvent)=>{
     event.key==='Escape' && (search.current && (search.current.value='', handleInput()))
   }
-
-  useEffect(()=>{
-    setOpen(false)
-  },[])
 
   return(
     <div className='w-full flex flex-col bg-[#111] re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>

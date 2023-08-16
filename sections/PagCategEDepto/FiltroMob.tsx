@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from 'preact/hooks'
+import { useRef, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
+import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 
 
 interface Props{
@@ -41,14 +42,9 @@ const FiltroMob=({ filters, id }:Props)=>{
     }
   }
 
-  useEffect(()=>console.log(modalOpen),[modalOpen])
-
   return(
     <div className='re1:hidden' >
-      <button className='bg-transparent border border-white w-full h-12 px-10 rounded-lg' onClick={(event)=>{
-          //modal.current && (modal.current.showModal())
-          openModal()
-        }}>
+      <button className='bg-transparent border border-white w-full h-12 px-10 rounded-lg' onClick={openModal}>
         <Image className='mx-auto' src='https://shopinfo.vteximg.com.br/arquivos/filterIcon.png' width={30} height={30}/>
       </button>
 
@@ -68,7 +64,10 @@ const FiltroMob=({ filters, id }:Props)=>{
           <div className='flex flex-col py-5 items-center gap-10 text-white'>
             <h2 className='text-2xl font-bold px-4'>Filtros</h2>
             <ul className='w-full'>
-              {filters.map((filter)=><Filtro title={filter.label} values={filter.values}/>)}
+              {filters.map((filtro,index)=>index!==filters.length-1 ?
+                (<Filtro title={filtro.label} values={filtro.values} />) :
+                (<PriceFilter filtro={filtro}/>)
+                )}
             </ul>
             <div className='px-4 w-full'>
               <button onClick={closeModal} id='filtrar' className='w-full bg-primary px-[5px] py-[10px] rounded-lg text-lg'>Filtrar</button>
