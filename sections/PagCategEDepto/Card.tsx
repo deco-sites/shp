@@ -23,6 +23,7 @@ interface PcCard{
   tipoArm:string
   precoDe:string
   precoParcelado:string
+  isAvailable:boolean
 }
 
 interface ProdCard{
@@ -34,6 +35,7 @@ interface ProdCard{
   imgUrl:string
   linkProd:string
   precoDe:string
+  isAvailable:boolean
 }
 
 const loaderTrustvox= async (productId:string, storeId:string)=>{
@@ -42,8 +44,15 @@ const loaderTrustvox= async (productId:string, storeId:string)=>{
   return data
 }
 
+const tagDiscount=(price:number, listPrice:number, pix?:number)=>{
+  const precoOriginal = listPrice
+  const precoComDesconto  = pix ? price-(price*(pix/100)) : price
+  const desconto = precoOriginal - precoComDesconto
+  return Math.ceil((desconto / precoOriginal)*100)
+}
+
 const ProdCard=({...props}:ProdCard)=>{
-  const {productId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe} = props
+  const {productId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe, isAvailable} = props
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
   const [trustPercent, setTrustPercent]=useState(0)
@@ -81,9 +90,14 @@ const ProdCard=({...props}:ProdCard)=>{
           }
         </div>
         <div className='flex flex-col px-3'>
-          <span className='line-through text-[#b4b4b4] text-xs'>De: R${precoDe}</span>
-          <p className='text-xs'><span className='text-green-500 text-xl font-bold'>R$ {DescontoPIX(parseFloat(precoVista), 12)}</span> no pix</p>
-          <span className='text-xs text-[#b4b4b4]'>{parcelas}x R$ {valorParcela} sem juros</span>
+          {isAvailable ? (
+            <>
+              <span className='line-through text-[#b4b4b4] text-xs'>De: R${precoDe}</span>
+              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>R$ {DescontoPIX(parseFloat(precoVista), 12)}</span> no pix</p>
+              <span className='text-xs text-[#b4b4b4]'>{parcelas}x R$ {valorParcela} sem juros</span>
+            </>):(
+              <p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>
+            )}
         </div>
       </div>
     </a>
@@ -91,10 +105,11 @@ const ProdCard=({...props}:ProdCard)=>{
 }
 
 const PcCard=({...props}:PcCard)=>{
-  const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado} = props
+  console.log(props)
+  const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado, isAvailable} = props
   const precoDeNum=parseFloat(precoDe)
   const vistaNum=parseFloat(precoVista)
-  const percent=precoDe!=='' ? Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100) : 12
+  const percent= precoDeNum ? tagDiscount(vistaNum,precoDeNum,12) : 12
   const arm=(armazenamento || '').toString().toUpperCase()
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
@@ -162,8 +177,11 @@ const PcCard=({...props}:PcCard)=>{
             </p>
           </label>
         </div>
-        <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x R$ {valorParcela}</span>
-        <p className='text-[11px] text-[#b4b4b4]'>ou por R$ {precoVista} no Pix</p>
+        {isAvailable ? (
+        <>
+          <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x R$ {valorParcela}</span>
+          <p className='text-[11px] text-[#b4b4b4]'>ou por R$ {DescontoPIX(parseFloat(precoVista),12)} no Pix</p>
+        </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
           <input type='checkbox' name='compare' className='checkbox checkbox-primary checkbox-sm'/>
           <p>Compare</p>
@@ -182,13 +200,14 @@ const Card=({product}:Props)=>{
   const priceVista=product.items[0].sellers[0].commertialOffer.Price
   const priceDe=product.items[0].sellers[0].commertialOffer.ListPrice
   const linkProduto=product.linkText+'/p'
+  const avaibility=product.items[0].sellers[0].commertialOffer.IsAvailable
 
   if(PCGamer){
     return <PcCard  armazenamento={product.SSD || product.HD} imgUrl={image} prodName={name} memoria={product.Memória} 
-    placaVideo={product['Placa de vídeo']} linkProd={linkProduto} productId={productId} precoDe={priceDe} precoVista={priceVista}
+    placaVideo={product['Placa de vídeo']} linkProd={linkProduto} productId={productId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility}
     processador={product.Processador} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={10} precoParcelado={priceVista} valorParcela={(parseFloat(priceVista)/10).toFixed(2)}/>
   }else{
-    return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe} precoVista={priceVista} parcelas={'10'} productId={productId} prodName={name} valorParcela={(parseFloat(priceVista)/10).toFixed(2)}/>
+    return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe} precoVista={priceVista} parcelas={'10'} productId={productId} prodName={name} valorParcela={(parseFloat(priceVista)/10).toFixed(2)} isAvailable={avaibility}/>
   }
 }
 

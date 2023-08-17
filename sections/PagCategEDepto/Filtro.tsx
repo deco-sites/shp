@@ -18,7 +18,7 @@ interface SpecObj{
 }
 
 const Filtro=({title, values}:Props)=>{
-  const [open,setOpen]=useState(false)
+  const [open,setOpen]=useState(true)
   const search=useRef<HTMLInputElement>(null)
   const valuesList=useRef<HTMLUListElement>(null)
   
