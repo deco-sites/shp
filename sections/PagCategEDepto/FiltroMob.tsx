@@ -80,7 +80,8 @@ const FiltroMob=({ filters, id }:Props)=>{
             <div className='px-4 w-full'>
               <button onClick={()=>{
                 const priceInputs=Array.from(modal.current!.querySelectorAll('input[name="min"], input[name="max"]'))
-                const hasInputPriceVoid=priceInputs.filter(input=>(input as HTMLInputElement).value.length===0).length>0
+                const priceInputsLength=priceInputs.filter(input=>(input as HTMLInputElement).value.length===0).length
+                const hasInputPriceVoid=(priceInputsLength>0 && priceInputsLength!==2)
                 hasInputPriceVoid ? alert('Há somente um campo de preço preenchido!') : closeModal()
               }} id='filtrar' className='w-full bg-primary px-[5px] py-[10px] rounded-lg text-lg' type='button'>Filtrar</button>
             </div>

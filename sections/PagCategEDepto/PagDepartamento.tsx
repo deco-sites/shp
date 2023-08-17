@@ -69,6 +69,8 @@ interface SpecObj{
 
 const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria, iconesNavegacionais}:Props)=>{
   const [hideDescSeo,setHideDescSeo]=useState(true)
+  const [loading, setLoading]=useState(true)
+  const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
   const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:19})
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
@@ -128,7 +130,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         filtersSelected.push({fq , value})
       }
 
-      setSelectedFilters(filtersSelected)
+      setSelectedFilters(filtersSelected)     
+      isMobile && window.scrollTo({top:700, behavior:'smooth'})
     })
 
     btnDivFlut && (btnDivFlut as HTMLButtonElement).addEventListener('click',()=>{
@@ -148,6 +151,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       }
 
       setSelectedFilters(filtersSelected)
+      isMobile && window.scrollTo({top:700, behavior:'smooth'})
     })
 
     const btnPriceRange=ulDesk.querySelector('button#priceRange')!
@@ -224,22 +228,30 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       setFilters(arrFilterObj)
     })()
     
+    const handleResize=()=>{
+      setIsMobile(window.innerWidth<=768)
+    }
+
     window.addEventListener('scroll',handleScroll)
+    window.addEventListener('resize',handleResize)
 
     return()=>{
       window.removeEventListener('scroll',handleScroll)
+      window.removeEventListener('resize',handleResize)
     }
   },[])
 
   useEffect(()=>{filters.length && addFilterListeners()},[filters])
 
   const handleMoreProducts=async()=>{
+    setLoading(true)
     const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
     const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
     const data= await fetchProducts(queryString.join('&'))
     setFetchLength(data.length)
     fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
+    setLoading(false)
   }
 
   useEffect(()=>{
@@ -259,10 +271,9 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
   useEffect(()=>{
     typeof window!=='undefined' && setFromTo({from:0, to:19})
+
     Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
   },[order])
-
-  //useEffect(()=>console.log(products),[products])
 
   return(
     <div className='w-full text-white appearance-none'>
@@ -323,18 +334,20 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </ul>
 
           <div className='flex flex-col items-center w-full re1:w-[70%] px-4 re1:px-0'>
-            <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-              {products.length ? products.map((product:any) =><Card product={product} />)
-                : <div className='loading loading-spinner loading-lg text-primary absolute'/>}
-            </div>
-
-            {fetchLength===20 && 
-            <button className='w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto mt-4' onClick={()=>{
-              if(fetchLength===20){
-                const {from,to}=fromTo
-                setFromTo({from:from+20, to:to+20})
-              }
-            }}>Carregar mais Produtos</button>}
+            {loading ? (<div className='loading loading-spinner loading-lg text-primary'/>) : (
+              <>
+                <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
+                  {products.length ? products.map((product:any)=><Card product={product} />) : null}
+                </div>
+                {fetchLength===20 && 
+                <button className='w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto my-6 re1:my-20' onClick={()=>{
+                  if(fetchLength===20){
+                    const {from,to}=fromTo
+                    setFromTo({from:from+20, to:to+20})
+                  }
+                }}>Carregar mais Produtos</button>}
+              </>
+            )}
           </div>
         </div>
         
