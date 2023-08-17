@@ -91,8 +91,18 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     Array.from(ulDesk.querySelectorAll('input[type="checkbox"]')).forEach((checkbox)=>{
       (checkbox as HTMLInputElement).addEventListener('input',(event)=>{
         const target=(event.target as HTMLInputElement)
-        setSelectedFilters(prevSelectedFilters => 
-          (target.checked) ? [...prevSelectedFilters, {fq:(target.getAttribute('data-fq') as string) ,value:target.value}] : [...prevSelectedFilters.filter(obj => obj.value !== target.value)]
+        setSelectedFilters(prevSelectedFilters =>{
+          const fq=target.getAttribute('data-fq') as string
+
+          if(fq==='P'){
+            return (target.checked) ? 
+              [...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq,value:target.value}] 
+            : 
+              [...prevSelectedFilters.filter(obj => obj.value !== target.value).filter(filter=>filter.fq!=='P')]
+          }
+
+          return (target.checked) ? [...prevSelectedFilters, {fq,value:target.value}] : [...prevSelectedFilters.filter(obj => obj.value !== target.value)]
+        }
         )
       })
     })
@@ -102,25 +112,58 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     const btnFilter=filterLabel.current && filterLabel.current.querySelector('dialog button#filtrar')
     const btnDivFlut=divFlutLabel.current && divFlutLabel.current.querySelector('dialog button#filtrar')
 
-    btnFilter && (btnFilter as HTMLButtonElement).addEventListener('click',(event)=>{
+    btnFilter && (btnFilter as HTMLButtonElement).addEventListener('click',()=>{
       const inputsChecked:HTMLInputElement[]=Array.from(ulMob!.querySelectorAll('input:checked'))
       const filtersSelected:Array<{fq:string, value:string}> =[]
       inputsChecked.forEach(input=>{
         filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
       })
 
+      const minInput=ulMob!.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulMob!.querySelector('input[name="max"]') as HTMLInputElement
+
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
+        const fq='P'
+        filtersSelected.push({fq , value})
+      }
+
       setSelectedFilters(filtersSelected)
     })
 
-    btnDivFlut && (btnDivFlut as HTMLButtonElement).addEventListener('click',(event)=>{
+    btnDivFlut && (btnDivFlut as HTMLButtonElement).addEventListener('click',()=>{
       const inputsChecked:HTMLInputElement[]=Array.from(ulDivFlut!.querySelectorAll('input:checked'))
       const filtersSelected:Array<{fq:string, value:string}> =[]
       inputsChecked.forEach(input=>{
         filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
       })
 
+      const minInput=ulDivFlut!.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulDivFlut!.querySelector('input[name="max"]') as HTMLInputElement
+
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
+        const fq='P'
+        filtersSelected.push({fq , value})
+      }
+
       setSelectedFilters(filtersSelected)
     })
+
+    const btnPriceRange=ulDesk.querySelector('button#priceRange')!
+    btnPriceRange.addEventListener('click',()=>{
+      const minInput=ulDesk.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulDesk.querySelector('input[name="max"]') as HTMLInputElement
+
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
+        const fq='P'
+        setSelectedFilters(prevSelectedFilters=>[...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq,value}])
+      }else{
+        alert('Você precisa preencher os dois campos de preço!')
+      }
+    })
+
   }
 
   const orderFilters=[
