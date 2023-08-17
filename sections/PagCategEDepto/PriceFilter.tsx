@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'preact/hooks'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
-import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 
 interface Props{
   filtro:FilterObj | undefined
@@ -48,7 +47,13 @@ const PriceFilter=({filtro}:Props)=>{
           {values.map(filter=>(
             <li className='py-1 px-2'>
               <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                <input id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-sm' data-fq={filter.Map}/>
+                <input onInput={(event)=>{
+                  const Input=event.target as HTMLInputElement
+                  if(Input.checked){
+                    Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
+                    Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
+                  }
+                }} id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-sm' data-fq={filter.Map}/>
                 <span className='line-clamp-1 text-sm'>{filter.Name}</span>
               </label>
             </li>
@@ -66,6 +71,7 @@ const PriceFilter=({filtro}:Props)=>{
                     const inputMax=max.current as HTMLInputElement
                     if(Input.value.length>0){
                       setRed(true)
+                      Array.from(document.querySelectorAll('input[data-fq="P"]')).forEach(input=>(input as HTMLInputElement).checked=false)
                     }else if(inputMax.value.length === 0){
                       setRed(false)
                     }
@@ -83,6 +89,7 @@ const PriceFilter=({filtro}:Props)=>{
                     const inputMin=min.current as HTMLInputElement
                     if(Input.value.length>0){
                       setRed(true)
+                      Array.from(document.querySelectorAll('input[data-fq="P"]')).forEach(input=>(input as HTMLInputElement).checked=false)
                     }else if(inputMin.value.length === 0){
                       setRed(false)
                     }
