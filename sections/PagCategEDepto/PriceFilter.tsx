@@ -24,7 +24,7 @@ interface SpecObj{
 const PriceFilter=({filtro}:Props)=>{
   if(typeof filtro==='undefined') return null
   const {label, values}=filtro
-  const [open,setOpen]=useState(false)
+  const [open,setOpen]=useState(true)
 
   const [red,setRed]=useState(false)
   const min=useRef<HTMLInputElement>(null)
