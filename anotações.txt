@@ -1,1 +1,3 @@
 Colocar async no desempenho na PDP
+Melhoria no filtros parsea os prod pra filtrar os filtros
+Arrumar filtros select all usando o label dos filters também

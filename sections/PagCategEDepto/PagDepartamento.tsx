@@ -272,10 +272,11 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   useEffect(()=>{
     typeof window!=='undefined' && setFromTo({from:0, to:19})
     const filterValues=selectedFilters.map(filter=>filter.value)
+    const filterFqs=selectedFilters.map(filter=>filter.fq)
     
     Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
       const Input=input as HTMLInputElement
-      filterValues.includes(Input.value) ? (Input.checked=true) : (Input.checked=false)
+      (filterValues.includes(Input.value) && filterFqs.includes(Input.getAttribute('data-fq')!))? (Input.checked=true) : (Input.checked=false)
     })
   },[selectedFilters])
 
