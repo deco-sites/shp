@@ -69,12 +69,12 @@ const ProdCard=({...props}:ProdCard)=>{
   return(
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
     border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
-      <div className='flex px-3 pt-3 h-auto w-auto'>
+      <div className='flex px-3 pt-3 h-[50%] w-auto'>
         <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-12%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
-      <div className='flex flex-col-reverse justify-between ml-0 w-full h-[50%] pb-3'>
-        <p className='text-sm max-h-[30%] line-clamp-2 px-3'>
+      <div className='flex flex-col-reverse justify-end gap-10 ml-0 w-full h-[50%]'>
+        <p className='text-sm line-clamp-2 px-3'>
           {prodName}
         </p>
         <div className='flex items-center justify-center'> 
@@ -105,7 +105,6 @@ const ProdCard=({...props}:ProdCard)=>{
 }
 
 const PcCard=({...props}:PcCard)=>{
-  console.log(props)
   const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado, isAvailable} = props
   const precoDeNum=parseFloat(precoDe)
   const vistaNum=parseFloat(precoVista)
@@ -199,7 +198,7 @@ const Card=({product}:Props)=>{
   const name=product.productName
   const priceVista=product.items[0].sellers[0].commertialOffer.Price
   const priceDe=product.items[0].sellers[0].commertialOffer.ListPrice
-  const linkProduto=product.linkText+'/p'
+  const linkProduto='/'+product.linkText+'/p'
   const avaibility=product.items[0].sellers[0].commertialOffer.IsAvailable
 
   if(PCGamer){

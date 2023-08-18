@@ -78,14 +78,24 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   const [products, setProducts]=useState<any>([])
   const [fetchLength, setFetchLength]=useState(0)
   const [divFlut, setDivFlut]=useState(false)
+  const [showMore, setShowMore]=useState(false)
   const filterLabel=useRef<HTMLLabelElement>(null)
 
   const listFiltersDesk=useRef<HTMLUListElement>(null)
 
   const divFlutLabel=useRef<HTMLLabelElement>(null)
 
-  const textSeo=useRef<HTMLDivElement>(null)
+  const contentWrapper=useRef<HTMLDivElement>(null)
 
+  const getProductsStartY=()=>{
+    if(filterLabel.current){
+      const filterLabelRect=filterLabel.current.getBoundingClientRect()
+      const posY=filterLabelRect.top + window.scrollY
+      return posY
+    }else{
+      return 700
+    }
+  }
 
   const addFilterListeners=()=>{
     const ulDesk=listFiltersDesk.current!
@@ -104,8 +114,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           }
 
           return (target.checked) ? [...prevSelectedFilters, {fq,value:target.value}] : [...prevSelectedFilters.filter(obj => obj.value !== target.value)]
-        }
-        )
+        })
+        window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
       })
     })
 
@@ -131,7 +141,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       }
 
       setSelectedFilters(filtersSelected)     
-      isMobile && window.scrollTo({top:700, behavior:'smooth'})
+      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
     btnDivFlut && (btnDivFlut as HTMLButtonElement).addEventListener('click',()=>{
@@ -151,7 +161,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       }
 
       setSelectedFilters(filtersSelected)
-      isMobile && window.scrollTo({top:700, behavior:'smooth'})
+      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
     const btnPriceRange=ulDesk.querySelector('button#priceRange')!
@@ -166,6 +176,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       }else{
         alert('Você precisa preencher os dois campos de preço!')
       }
+
+      window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
   }
@@ -199,15 +211,19 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       }
 
       //divFlut
-      window.scrollY > 800 ? setDivFlut(true) : (
-        divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
-      )
+      if(contentWrapper.current){
+        const contentRect=contentWrapper.current.getBoundingClientRect()
+        const endContent=contentRect.bottom + window.scrollY
+        if(window.scrollY > getProductsStartY() && window.scrollY < endContent){
+          setDivFlut(true)
+        }else{
+          divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
+        }
+      }
     }
 
     (async()=>{
       const pageData=await fetchData(idsDeCategoria)
-      console.log(pageData)
-
       const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
         const slugSplittado=obj.Slug!.split('-')
         const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
@@ -223,8 +239,6 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       for(const key in dataFilters){
         arrFilterObj.push({label:key , values:dataFilters[key]})
       }
-      
-      console.log(arrFilterObj)
       setFilters(arrFilterObj)
     })()
     
@@ -244,7 +258,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   useEffect(()=>{filters.length && addFilterListeners()},[filters])
 
   const handleMoreProducts=async()=>{
-    setLoading(true)
+    !showMore && setLoading(true)
     const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
     const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
@@ -252,12 +266,12 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     setFetchLength(data.length)
     fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
     setLoading(false)
+    setShowMore(false)
   }
 
   useEffect(()=>{
     typeof window!=='undefined' && setFromTo({from:0, to:19})
     const filterValues=selectedFilters.map(filter=>filter.value)
-    //console.log(filterValues)
     
     Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
       const Input=input as HTMLInputElement
@@ -282,7 +296,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           fetchPriority='high' preload 
         />
       </div>
-      <div className='re1:px-[5%] re4:px-[15%]'>
+      <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
         <div className='my-5 re1:my-[60px] text-gray-500 px-4 re1:px-0'>
           <p><a href='/'>Home</a> &gt; {titleCategoria}</p>
         </div>
@@ -290,7 +304,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
           <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText|| '<div>OII Luii</div>'}} />
           <button className='font-bold mb-2 border-b border-b-primary' onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
-          <div ref={textSeo} className={hideDescSeo ? 'line-clamp-1 max-h-5' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || '<div>OII Luii</div>'}} />
+          <div className={hideDescSeo ? 'line-clamp-1 max-h-5' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || '<div>OII Luii</div>'}} />
         </div>
 
         <Benefits/>
@@ -313,7 +327,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
             <FiltroMob filters={filters} id='menu'/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-            <span className='font-bold'>Ordenar Por:</span>
+            <span className='font-bold'>Ordenar Por</span>
             <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
@@ -334,18 +348,23 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </ul>
 
           <div className='flex flex-col items-center w-full re1:w-[70%] px-4 re1:px-0'>
-            {loading ? (<div className='loading loading-spinner loading-lg text-primary'/>) : (
+            {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
               <>
-                <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                  {products.length ? products.map((product:any)=><Card product={product} />) : null}
-                </div>
+                {products.length ? (
+                  <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
+                    {products.map((product:any)=><Card product={product} />)}
+                  </div>
+                ) : (
+                  <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
+                )}
                 {fetchLength===20 && 
-                <button className='w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto my-6 re1:my-20' onClick={()=>{
+                <button className='font-bold w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto my-6 re1:my-20' onClick={()=>{
                   if(fetchLength===20){
                     const {from,to}=fromTo
+                    setShowMore(true)
                     setFromTo({from:from+20, to:to+20})
                   }
-                }}>Carregar mais Produtos</button>}
+                }}>{showMore ? <div className='loading loading-spinner'/> : 'Carregar mais Produtos'}</button>}
               </>
             )}
           </div>
@@ -361,7 +380,10 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por:</span>
             <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
-              onInput={event=>setOrder((event.target as HTMLSelectElement).value)}
+              onInput={event=>{
+                setOrder((event.target as HTMLSelectElement).value)
+                isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+              }}
             >
               <option disabled selected value='selecione'>Selecione</option>
               {orderFilters.map(filter=>(
