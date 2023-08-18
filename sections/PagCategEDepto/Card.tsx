@@ -73,7 +73,7 @@ const ProdCard=({...props}:ProdCard)=>{
         <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-12%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
-      <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-2'>
+      <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-4'>
         <p className='text-sm line-clamp-2 px-3'>
           {prodName}
         </p>
