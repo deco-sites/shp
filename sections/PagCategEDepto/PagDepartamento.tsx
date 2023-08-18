@@ -7,6 +7,7 @@ import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/sections/PagCategEDepto/Card.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
+import { arrToStream } from '$live/deps.ts'
 
 export interface Props{
   titleCategoria?:string
@@ -65,6 +66,11 @@ interface SpecObj{
   Quantity: number | null
   Value:string
   Slug?:string
+}
+
+interface FiltroObj{
+  label:string
+  value:string
 }
 
 const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria, iconesNavegacionais}:Props)=>{
@@ -289,6 +295,31 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
     Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
   },[order])
+
+  useEffect(()=>{
+    //console.log(products)
+    const keys=filters.map(filter=>filter.label)
+    const productsFields:FiltroObj[]=[]
+    products.forEach((product:any)=>{
+      const fields=[]
+      for(const key in product){
+        if(keys.includes(key)){
+          fields.push({label: key, value: product[key][0]})
+        }
+      }
+      productsFields.push(...fields)
+    })
+
+    const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
+    const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
+      const {label,value}=obj
+      if(!acc[label]) acc[label]=[]
+
+      acc[label].push(value)
+      return acc
+    },{} as Record<string, string[]>)
+    console.log(filtrosByLabel)
+  },[products])
 
   return(
     <div className='w-full text-white appearance-none'>
