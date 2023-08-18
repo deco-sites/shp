@@ -69,15 +69,15 @@ const ProdCard=({...props}:ProdCard)=>{
   return(
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
     border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
-      <div className='flex px-3 pt-3 h-[50%] w-auto'>
+      <div className='flex px-3 pt-3 h-auto w-auto'>
         <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-12%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
-      <div className='flex flex-col-reverse justify-end gap-10 ml-0 w-full h-[50%]'>
+      <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-2'>
         <p className='text-sm line-clamp-2 px-3'>
           {prodName}
         </p>
-        <div className='flex items-center justify-center'> 
+        <div className='flex items-center justify-center my-[20px]'> 
           <hr className='block border-t-[#111] w-full'/>
           {/* Trustvox */}
           {objTrust?.average ===0 ? null :
