@@ -85,6 +85,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   const [fetchLength, setFetchLength]=useState(0)
   const [divFlut, setDivFlut]=useState(false)
   const [showMore, setShowMore]=useState(false)
+
+
   const filterLabel=useRef<HTMLLabelElement>(null)
 
   const listFiltersDesk=useRef<HTMLUListElement>(null)
@@ -297,28 +299,69 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   },[order])
 
   useEffect(()=>{
-    //console.log(products)
-    const keys=filters.map(filter=>filter.label)
-    const productsFields:FiltroObj[]=[]
-    products.forEach((product:any)=>{
-      const fields=[]
-      for(const key in product){
-        if(keys.includes(key)){
-          fields.push({label: key, value: product[key][0]})
+    // filtragem de filtros no desktop
+    if(products.length){
+      const keys=filters.map(filter=>filter.label)
+      const productsFields:FiltroObj[]=[]
+      products.forEach((product:any)=>{
+        const fields=[]
+        for(const key in product){
+          if(keys.includes(key)){
+            fields.push({label: key, value: product[key][0]})
+          }else if(key==='brand'){
+            fields.push({label: 'Marcas', value: product[key]})
+          }
         }
+        productsFields.push(...fields)
+      })
+
+      const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
+      const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
+        const {label,value}=obj
+        if(!acc[label]) acc[label]=[]
+        acc[label].push(value)
+        return acc
+      },{} as Record<string, string[]>)
+      console.log(filtrosByLabel)
+
+      if(listFiltersDesk.current && selectedFilters.length){
+        const keys=Object.keys(filtrosByLabel)
+        const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
+        const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
+        console.log(h5NaoDisp)
+        h5S.forEach(h5=>{
+          const key=h5.innerText
+          Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
+            const Li=li as HTMLLIElement
+            if(filtrosByLabel[key].includes(Li.innerText)){
+              Li.style.display='flex'
+            }else{
+              Li.style.display='none'
+            }
+          })
+          
+        })
+
+        h5NaoDisp.forEach(h5=>{
+          const divPai=h5.parentElement! as HTMLDivElement
+          divPai.style.display='none'
+        })
+      }else if(listFiltersDesk.current){
+        const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
+        h5S.forEach(h5=>{
+          Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
+            const Li=li as HTMLLIElement
+            Li.style.display='flex'
+          })
+        })
+
+        const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
+        h5NaoDisp.forEach(h5=>{
+          const divPai=h5.parentElement! as HTMLDivElement
+          divPai.style.display='flex'
+        })
       }
-      productsFields.push(...fields)
-    })
-
-    const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
-    const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
-      const {label,value}=obj
-      if(!acc[label]) acc[label]=[]
-
-      acc[label].push(value)
-      return acc
-    },{} as Record<string, string[]>)
-    console.log(filtrosByLabel)
+    }
   },[products])
 
   return(
@@ -382,7 +425,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           <div className='flex flex-col items-center w-full re1:w-[70%] px-4 re1:px-0'>
             {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
               <>
-                {products.length ? (
+                {products.length > 0 ? (
                   <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
                     {products.map((product:any)=><Card product={product} />)}
                   </div>
