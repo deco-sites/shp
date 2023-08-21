@@ -330,13 +330,16 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
         console.log(h5NaoDisp)
         h5S.forEach(h5=>{
+          const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
+          Input.value=''
+
           const key=h5.innerText
           Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
             const Li=li as HTMLLIElement
             if(filtrosByLabel[key].includes(Li.innerText)){
-              Li.style.display='flex'
+              Li.removeAttribute('data-filtered')
             }else{
-              Li.style.display='none'
+              Li.setAttribute('data-filtered','filtrado')
             }
           })
           
@@ -344,21 +347,24 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
 
         h5NaoDisp.forEach(h5=>{
           const divPai=h5.parentElement! as HTMLDivElement
-          divPai.style.display='none'
+          divPai.classList.replace('flex','hidden')
         })
       }else if(listFiltersDesk.current){
         const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
         h5S.forEach(h5=>{
+          const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
+          Input.value=''
+
           Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
             const Li=li as HTMLLIElement
-            Li.style.display='flex'
+            Li.removeAttribute('data-filtered')
           })
         })
 
         const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
         h5NaoDisp.forEach(h5=>{
           const divPai=h5.parentElement! as HTMLDivElement
-          divPai.style.display='flex'
+          divPai.classList.replace('hidden','flex')
         })
       }
     }

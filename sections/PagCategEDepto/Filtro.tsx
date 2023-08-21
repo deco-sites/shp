@@ -25,14 +25,14 @@ const Filtro=({title, values}:Props)=>{
   const handleInput=()=>{
     if(search.current && valuesList.current){
       const inputValue=search.current.value.toLowerCase()
-      const listChildrens=Array.from(valuesList.current.children).map(li=>li.querySelector('span')!)
+      const listChildrens=Array.from(valuesList.current.children).filter(li=>!li.hasAttribute('data-filtered'))
 
-      listChildrens.forEach((span)=>{
-        const li=span.parentElement!.parentElement!
-        if(span.innerText.toLowerCase().includes(inputValue)){
-          li.classList.contains('hidden') && li.classList.remove('hidden')
+      listChildrens.forEach((li)=>{
+        const Li=li as HTMLLIElement
+        if(Li.innerText.toLowerCase().includes(inputValue)){
+          Li.classList.contains('hidden') && Li.classList.remove('hidden')
         }else{
-          !li.classList.contains('hidden') && li.classList.add('hidden')
+          Li.classList.add('hidden')
         }
       })
     }
@@ -65,7 +65,7 @@ const Filtro=({title, values}:Props)=>{
         </label>
         <ul ref={valuesList} className={`flex flex-col gap-2 bg-[#141414] overflow-y-auto max-h-[300px]`}>
           {values.map(filter=>(
-            <li className='py-1 px-2'>
+            <li className='py-1 px-2 data-[filtered]:!hidden'>
               <label className='flex justify-start gap-2 cursor-pointer items-center'>
                 <input id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-sm' data-fq={filter.Map}/>
                 <span className='line-clamp-1 text-sm'>{filter.Name}</span>
