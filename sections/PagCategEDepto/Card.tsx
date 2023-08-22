@@ -92,9 +92,9 @@ const ProdCard=({...props}:ProdCard)=>{
         <div className='flex flex-col px-3'>
           {isAvailable ? (
             <>
-              <span className='line-through text-[#b4b4b4] text-xs'>De: R${precoDe}</span>
-              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>R$ {DescontoPIX(parseFloat(precoVista), 12)}</span> no pix</p>
-              <span className='text-xs text-[#b4b4b4]'>{parcelas}x R$ {valorParcela} sem juros</span>
+              <span className='line-through text-[#b4b4b4] text-xs'>De: {parseFloat(precoDe).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>{parseFloat(DescontoPIX(parseFloat(precoVista), 12)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
+              <span className='text-xs text-[#b4b4b4]'>{parcelas}x {parseFloat(valorParcela).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
             </>):(
               <p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>
             )}
@@ -178,8 +178,8 @@ const PcCard=({...props}:PcCard)=>{
         </div>
         {isAvailable ? (
         <>
-          <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x R$ {valorParcela}</span>
-          <p className='text-[11px] text-[#b4b4b4]'>ou por R$ {DescontoPIX(parseFloat(precoVista),12)} no Pix</p>
+          <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x {parseFloat(valorParcela).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+          <p className='text-[11px] text-[#b4b4b4]'>ou por {parseFloat(DescontoPIX(parseFloat(precoVista),12)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
           <input type='checkbox' name='compare' className='checkbox checkbox-primary checkbox-sm'/>

@@ -27,17 +27,17 @@ const renderProduct = (element: Product, index: number, PcGamer:boolean) => {
     'Processador',
     'Placa de vídeo',
   ]
-  const pecaArray = element.isVariantOf?.additionalProperty
-  const pecasObj: Record<string, string | undefined> = {}
+  const pecaArray = element.isVariantOf!.additionalProperty
+  const pecasObj: Record<string, string> = {}
 
-  pecaArray?.forEach(({name, value}) => {
-    if (pecas.includes(String(name))) {
+  pecaArray!.forEach(({name, value}) => {
+    if (name && value && pecas.includes(name)) {
       if (name === 'HD' || name === 'SSD') {
-        value?.includes(name)
+        value!.includes(name)
           ? (pecasObj['armazenamento'] = value)
           : (pecasObj['armazenamento'] = `${name}: ${value}`)
       } else {
-        pecasObj[String(name)] = value
+        pecasObj[name] = value
       }
     }
   })
@@ -48,13 +48,13 @@ const renderProduct = (element: Product, index: number, PcGamer:boolean) => {
         ? putSizeInUrl(element.image[0].url, [135, 135]) ||
           element.image[0].url
         : '#',
-    nome: element.name,
+    nome: element.name!,
     preco10:
-      element.offers?.highPrice &&
-      parseFloat((element.offers?.highPrice / 10).toFixed(2)),
-    precoPIX: element.offers && DescontoPIX(element.offers.highPrice, 12),
+      element.offers!.highPrice &&
+      parseFloat((element.offers!.highPrice / 10).toFixed(2)),
+    precoPIX: element.offers! && DescontoPIX(element.offers.highPrice, 12),
     discountFlag: 12,
-    productUrl: element.isVariantOf?.url
+    productUrl: element.isVariantOf!.url!
   }
 
   if (PcGamer) {

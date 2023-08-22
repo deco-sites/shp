@@ -1,12 +1,12 @@
 import Image from 'deco-sites/std/components/Image.tsx'
 
 export interface ProdProps {
-  nome?: string
+  nome: string
   imgUrl: string
-  precoPIX?: string | number
-  preco10?: number
-  discountFlag?: number
-  productUrl?:string
+  precoPIX: string | number
+  preco10: number
+  discountFlag: number
+  productUrl:string
 }
 
 const Prod = ({ ...props }: ProdProps) => {
@@ -44,9 +44,9 @@ const Prod = ({ ...props }: ProdProps) => {
 
         <div className='flex flex-col'>
           <span className='text-lg text-[#dd1f26] font-bold'>
-            10x R$ {props.preco10}
+            10x {props.preco10.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
           </span>
-          <p className='text-xs'>ou por R$ {props.precoPIX} no Pix</p>
+          <p className='text-xs'>ou por {parseFloat(props.precoPIX.toString()).toLocaleString('pt-BR',{style:'currency', currency:'BRL'})} no Pix</p>
         </div>
 
         <label htmlFor='compare' className='flex gap-1'>

@@ -99,17 +99,17 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
               >
                 <ProdFogo
                   imgUrl={imgUrl}
-                  nome={slide.name}
+                  nome={slide.name!}
                   preco10={
-                    slide.offers?.highPrice &&
-                    parseFloat((slide.offers.highPrice / 10).toFixed(2))
+                    slide.offers!.highPrice &&
+                    parseFloat((slide.offers!.highPrice / 10).toFixed(2))
                   }
                   precoPIX={
-                    slide.offers && DescontoPIX(slide.offers.highPrice, 15)
+                    slide.offers! && DescontoPIX(slide.offers.highPrice, 15)
                   }
                   discountFlag={15}
                   timeRemaining={timeRemaining}
-                  productUrl={slide.isVariantOf?.url}
+                  productUrl={slide.isVariantOf!.url!}
                 />
               </Slider.Item>
             )
