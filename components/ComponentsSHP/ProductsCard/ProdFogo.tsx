@@ -39,7 +39,7 @@ const ProdFogo = ({...props}: Props) => {
         />
 
         <div className="flex flex-col max-w-[200px] overflow-hidden">
-          <span className="text-xs  text-black font-bold">
+          <span className="text-xs text-black font-bold line-clamp-3">
             {props.nome}
           </span>
 
