@@ -388,22 +388,22 @@ const HeaderSHP = () => {
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-acessorios-headset.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/acessorios-gamer/headeset-gamer',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-acessorios-mouse.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/acessorios-gamer/mouse-gamer',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-acessorios-teclado.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/acessorios-gamer/teclado-gamer',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-acessorios-cadeira.png?v=637465887851700000',
-                    linkTo: '/pcgamer',
+                    linkTo: '/acessorios-gamer/cadeiras',
                   },
                 ]}
                 subCategsNoImg={[
@@ -411,23 +411,23 @@ const HeaderSHP = () => {
                     name: 'Mousepad Gamer',
                     iconUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/acessorios-gamer/mousepad-gamer',
                   },
                   {
                     name: 'Kit Gamer',
                     iconUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/acessorios-gamer/kit-gamer',
                   },
                   {
                     name: 'Monitor Gamer',
                     iconUrl: 'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/acessorios-gamer/monitor',
                   },
                   {
                     name: 'Adaptadores',
                     iconUrl: 'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/acessorios-gamer/adaptadores',
                   },
                 ]}
               />
@@ -635,35 +635,35 @@ const HeaderSHP = () => {
                     },
                     {
                       name: 'Headset Gamer',
-                      link: '/teste',
+                      link: '/acessorios-gamer/headset-gamer',
                     },
                     {
                       name: 'Mouse Gamer',
-                      link: '/teste',
+                      link: '/acessorios-gamer/mouse-gamer',
                     },
                     {
                       name: 'Cadeira Gamer',
-                      link: '/teste',
+                      link: '/acessorios-gamer/cadeiras',
                     },
                     {
                       name: 'Mousepad Gamer',
-                      link: '/teste',
+                      link: '/acessorios-gamer/mousepad-gamer',
                     },
                     {
                       name: 'Teclado Gamer',
-                      link: '/teste',
+                      link: '/acessorios-gamer/teclado-gamer',
                     },
                     {
                       name: 'Kit Gamer',
-                      link: '/teste',
+                      link: '/acessorios-gamer/kit-gamer',
                     },
                     {
                       name: 'Monitor Gamer',
-                      link: '/teste',
+                      link: '/acessorios-gamer/monitor',
                     },
                     {
                       name: 'Adaptadores',
-                      link: '/teste',
+                      link: '/acessorios-gamer/adaptadores',
                     },
                   ]}
                 />

@@ -73,7 +73,7 @@ interface FiltroObj{
   value:string
 }
 
-const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria, iconesNavegacionais}:Props)=>{
+const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria='', iconesNavegacionais}:Props)=>{
   const [hideDescSeo,setHideDescSeo]=useState(true)
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
@@ -85,6 +85,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   const [fetchLength, setFetchLength]=useState(0)
   const [divFlut, setDivFlut]=useState(false)
   const [showMore, setShowMore]=useState(false)
+  const [path,setPath]=useState<string[]>([titleCategoria])
 
 
   const filterLabel=useRef<HTMLLabelElement>(null)
@@ -254,6 +255,14 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       setIsMobile(window.innerWidth<=768)
     }
 
+    if(typeof window !== 'undefined'){
+      const Path=window.location.pathname
+      const segments=Path.split('/')
+      const result=segments.map((__,index)=>index!==0 ? segments.slice(0,index+1).join('/') : '/')
+      console.log(result)
+      setPath(result)
+    }
+
     window.addEventListener('scroll',handleScroll)
     window.addEventListener('resize',handleResize)
 
@@ -379,7 +388,42 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       </div>
       <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
         <div className='my-5 re1:my-[60px] text-gray-500 px-4 re1:px-0'>
-          <p><a href='/'>Home</a> &gt; {titleCategoria}</p>
+          <p>{path.map((path,index,self)=>{
+            if(index===0){
+              return <><a href='/'>Home</a> &gt;</>
+            }else if(index!== self.length-1){
+              const pathName=path.split('/')[1]
+              let nameCategPai=''
+              switch (pathName) {
+                case 'computadores-gamer':
+                  nameCategPai='Computadores Gamer'
+                  break;
+
+                case 'solucoes':
+                  nameCategPai='Solucões'
+                  break;
+                
+                case 'workstation':
+                  nameCategPai='Workstation'
+                  break;
+
+                case 'acessorios-gamer':
+                  nameCategPai='Acessórios Gamer'
+                  break;
+
+                case 'hardware':
+                  nameCategPai='Hardware'
+                  break;
+  
+                default:
+                  break;
+              }
+
+              return <><a href={'/'+pathName}>{nameCategPai}</a> &gt;</>
+            }else{
+              return <a href={path}>{titleCategoria}</a>
+            }
+          })}</p>
         </div>
         <div className='bg-transparent px-4 re1:px-0'>
           <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
