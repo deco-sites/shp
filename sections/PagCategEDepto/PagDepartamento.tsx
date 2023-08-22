@@ -23,7 +23,7 @@ export interface Props{
   }>
 }
 
-const fetchData=async (idCateg:string)=>{
+const fetchFilters=async (idCateg:string)=>{
   const url=`https://api.shopinfo.com.br/Deco/getFacetsByCategId.php?fq=C:/${idCateg}/`
   const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
   return data
@@ -231,7 +231,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     }
 
     (async()=>{
-      const pageData=await fetchData(idsDeCategoria)
+      const pageData=await fetchFilters(idsDeCategoria)
       const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
         const slugSplittado=obj.Slug!.split('-')
         const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
@@ -383,9 +383,12 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         </div>
         <div className='bg-transparent px-4 re1:px-0'>
           <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
-          <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText|| '<div>OII Luii</div>'}} />
-          <button className='font-bold mb-2 border-b border-b-primary' onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
-          <div className={hideDescSeo ? 'line-clamp-1 max-h-5' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || '<div>OII Luii</div>'}} />
+          <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText || ''}} />
+          {seoText && (
+          <>
+            <button className='font-bold mb-2 border-b border-b-primary' onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
+            <div className={hideDescSeo ? 'line-clamp-1 max-h-5' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || ''}} />
+          </>)}
         </div>
 
         <Benefits/>

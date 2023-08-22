@@ -167,33 +167,33 @@ const HeaderSHP = () => {
           {!isMobile && (
             <div className='hidden re1:flex gap-4'>
               <div onMouseOver={gamerHover} className={borderGamer}>
-                <p className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/computadores-gamer/' className='font-bold text-white text-sm cursor-pointer'>
                   PC Gamer
-                </p>
+                </a>
               </div>
 
               <div onMouseOver={officeHover} className={borderOffice}>
-                <p className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/solucoes' className='font-bold text-white text-sm cursor-pointer'>
                   Home Office
-                </p>
+                </a>
               </div>
 
               <div onMouseOver={workHover} className={borderWork}>
-                <p className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/workstation' className='font-bold text-white text-sm cursor-pointer'>
                   Workstation
-                </p>
+                </a>
               </div>
 
               <div onMouseOver={periHover} className={borderPeri}>
-                <p className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/acessorios-gamer' className='font-bold text-white text-sm cursor-pointer'>
                   Periféricos
-                </p>
+                </a>
               </div>
 
               <div onMouseOver={hardHover} className={borderHard}>
-                <p className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/hardware' className='font-bold text-white text-sm cursor-pointer'>
                   Hardware
-                </p>
+                </a>
               </div>
             </div>
           )
@@ -570,7 +570,7 @@ const HeaderSHP = () => {
                   links={[
                     {
                       name: 'Ver Tudo',
-                      link: '/pcgamer',
+                      link: '/computadores-gamer',
                     },
                     {
                       name: 'Start',
@@ -585,7 +585,7 @@ const HeaderSHP = () => {
                   links={[
                     {
                       name: 'Ver tudo',
-                      link: '/teste',
+                      link: '/solucoes',
                     },
                     {
                       name: 'Acessórios',
@@ -604,7 +604,7 @@ const HeaderSHP = () => {
                   links={[
                     {
                       name: 'Ver tudo',
-                      link: '/teste',
+                      link: '/workstation',
                     },
                     {
                       name: 'PC para Edição',
@@ -631,7 +631,7 @@ const HeaderSHP = () => {
                   links={[
                     {
                       name: 'Ver tudo',
-                      link: '/teste',
+                      link: '/acessorios-gamer',
                     },
                     {
                       name: 'Headset Gamer',
@@ -674,7 +674,7 @@ const HeaderSHP = () => {
                   links={[
                     {
                       name: 'Ver tudo',
-                      link: '/teste',
+                      link: '/hardware',
                     },
                     {
                       name: 'Cooler',
