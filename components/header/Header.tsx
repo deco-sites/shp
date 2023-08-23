@@ -297,27 +297,27 @@ const HeaderSHP = () => {
                   {
                     imgUrl:
                       'http://www.shopinfo.vteximg.com.br/arquivos/banner-menu-start.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/computadores-gamer/start',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/ids/160202/banner-menu-moba.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/computadores-gamer/moba-box',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-pc-stream.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/computadores-gamer/streamer',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/ids/322885/banner-menu-setup-gamer.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/computadores-gamer/setup-gamer',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/ids/370491/banner-menu-vai-jogar-o-que.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/teste',
                   },
                 ]}
               />
@@ -334,12 +334,12 @@ const HeaderSHP = () => {
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-escritorio-webcam.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/solucoes/acessorios',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-escritorio-pchome.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/solucoes/home',
                   },
                 ]}
               />
@@ -356,22 +356,22 @@ const HeaderSHP = () => {
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-edicao.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/workstation/pc-para-edicao',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-arquitetura.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/workstation/pc-para-arquitetura',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-engenheiro.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/workstation/pc-para-engenharia',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-modelagem3d.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/workstation/pc-para-modelagem-3d-e-2d',
                   },
                 ]}
               />
@@ -444,22 +444,22 @@ const HeaderSHP = () => {
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-hardware-processador.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/hardware/processador',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-hardware--placadevideo.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/hardware/placa-de-video',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-hardware-memora.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/hardware/memoria',
                   },
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-hardware-gabinete.png',
-                    linkTo: '/pcgamer',
+                    linkTo: '/hardware/gabinete',
                   },
                 ]}
                 subCategsNoImg={[
@@ -467,43 +467,43 @@ const HeaderSHP = () => {
                     name: 'Cooler',
                     iconUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/workstation/cooler',
                   },
                   {
                     name: 'Fonte',
                     iconUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/workstation/fonte',
                   },
                   {
                     name: 'HD',
                     iconUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/workstation/hd',
                   },
                   {
                     name: 'SSD',
                     iconUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/workstation/ssd',
                   },
                   {
                     name: 'Placa de rede',
                     iconUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/workstation/placa-de-rede',
                   },
                   {
                     name: 'Placa mãe',
                     iconUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/workstation/placa-mae',
                   },
                   {
                     name: 'Kit Upgrade',
                     iconUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/menu-icons.png',
-                    linkTo: '/teste',
+                    linkTo: '/workstation/kit-upgrade',
                   },
                 ]}
               />
@@ -574,7 +574,19 @@ const HeaderSHP = () => {
                     },
                     {
                       name: 'Start',
-                      link: '/teste',
+                      link: '/computadores-gamer/start',
+                    },
+                    {
+                      name: 'Moba Box',
+                      link: '/computadores-gamer/moba-box',
+                    },
+                    {
+                      name: 'PC para streamer',
+                      link: '/computadores-gamer/streamer',
+                    },
+                    {
+                      name: 'Setup Gamer',
+                      link: '/computadores-gamer/setup-gamer',
                     },
                   ]}
                 />
@@ -589,11 +601,11 @@ const HeaderSHP = () => {
                     },
                     {
                       name: 'Acessórios',
-                      link: '/teste',
+                      link: '/solucoes/acessorios',
                     },
                     {
                       name: 'PC Home',
-                      link: 'https://www.shopinfo.com.br/solucoes/home',
+                      link: '/solucoes/home',
                     },
                   ]}
                 />
@@ -608,19 +620,19 @@ const HeaderSHP = () => {
                     },
                     {
                       name: 'PC para Edição',
-                      link: '/teste',
+                      link: '/worsktation/pc-para-edicao',
                     },
                     {
                       name: 'PC para Arquitetura',
-                      link: '/pcgamer',
+                      link: '/workstation/pc-para-arquitetura',
                     },
                     {
                       name: 'PC para Engenharia',
-                      link: '/pcgamer',
+                      link: '/workstation/pc-para-engenharia',
                     },
                     {
                       name: 'PC para Modelagem 3D e 2D',
-                      link: '/pcgamer',
+                      link: '/workstation/pc-para-modelagem-3d-e-2d',
                     },
                   ]}
                 />
@@ -678,47 +690,47 @@ const HeaderSHP = () => {
                     },
                     {
                       name: 'Cooler',
-                      link: '/teste',
+                      link: '/hardware/cooler',
                     },
                     {
                       name: 'Fonte',
-                      link: '/pcgamer',
+                      link: '/hardware/fonte',
                     },
                     {
                       name: 'Gabinete',
-                      link: '/pcgamer',
+                      link: '/hardware/gabinete',
                     },
                     {
                       name: 'HD',
-                      link: '/pcgamer',
+                      link: '/hardware/hd',
                     },
                     {
                       name: 'SSD',
-                      link: '/pcgamer',
+                      link: '/hardware/ssd',
                     },
                     {
                       name: 'Memória',
-                      link: '/pcgamer',
+                      link: '/hardware/memoria',
                     },
                     {
                       name: 'Placa de rede',
-                      link: '/pcgamer',
+                      link: '/hardware/placa-de-rede',
                     },
                     {
                       name: 'Placa mãe',
-                      link: '/pcgamer',
+                      link: '/hardware/placa-mae',
                     },
                     {
                       name: 'Kit Upgrade',
-                      link: '/pcgamer',
+                      link: '/hardware/kit-upgrade',
                     },
                     {
                       name: 'Placa de vídeo',
-                      link: '/pcgamer',
+                      link: '/hardware/placa-de-video',
                     },
                     {
                       name: 'Processador',
-                      link: '/pcgamer',
+                      link: '/hardware/processador',
                     },
                   ]}
                 />
