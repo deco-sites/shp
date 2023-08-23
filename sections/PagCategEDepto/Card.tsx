@@ -54,6 +54,10 @@ const tagDiscount=(price:number, listPrice:number, pix?:number)=>{
 const ProdCard=({...props}:ProdCard)=>{
   const {productId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe, isAvailable} = props
 
+  const precoDeNum=parseFloat(precoDe)
+  const vistaNum=parseFloat(precoVista)
+  const percent= precoDeNum ? tagDiscount(vistaNum,precoDeNum,12) : 12
+
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
   const [trustPercent, setTrustPercent]=useState(0)
   
@@ -70,7 +74,7 @@ const ProdCard=({...props}:ProdCard)=>{
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
     border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
       <div className='flex px-3 pt-3 h-auto w-auto'>
-        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-12%</span>
+        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-{percent}%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
       <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-4'>
@@ -92,8 +96,8 @@ const ProdCard=({...props}:ProdCard)=>{
         <div className='flex flex-col px-3'>
           {isAvailable ? (
             <>
-              <span className='line-through text-[#b4b4b4] text-xs'>De: {parseFloat(precoDe).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>{parseFloat(DescontoPIX(parseFloat(precoVista), 12)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
+              <span className='line-through text-[#b4b4b4] text-xs'>De: {precoDeNum.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>{parseFloat(DescontoPIX(parseFloat(precoVista),12)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
               <span className='text-xs text-[#b4b4b4]'>{parcelas}x {parseFloat(valorParcela).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
             </>):(
               <p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>
