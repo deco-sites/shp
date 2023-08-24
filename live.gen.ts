@@ -19,14 +19,15 @@ import * as $$$$$11 from "./islands/PCNivelGamer.tsx";
 import * as $$$$$12 from "./islands/ProductImageZoom.tsx";
 import * as $$$$$13 from "./islands/RecommendedProds.tsx";
 import * as $$$$$14 from "./islands/SearchControls.tsx";
-import * as $$$$$15 from "./islands/SelectGamesIsland.tsx";
-import * as $$$$$16 from "./islands/ShelfIsland.tsx";
-import * as $$$$$17 from "./islands/ShippingSimulation.tsx";
-import * as $$$$$18 from "./islands/SliderJS.tsx";
-import * as $$$$$19 from "./islands/SpecificationIsland.tsx";
-import * as $$$$$20 from "./islands/TrustvoxIsland.tsx";
-import * as $$$$$21 from "./islands/VitrineIsland.tsx";
-import * as $$$$$22 from "./islands/WishlistButton.tsx";
+import * as $$$$$15 from "./islands/SearchMenuBarIsland.tsx";
+import * as $$$$$16 from "./islands/SelectGamesIsland.tsx";
+import * as $$$$$17 from "./islands/ShelfIsland.tsx";
+import * as $$$$$18 from "./islands/ShippingSimulation.tsx";
+import * as $$$$$19 from "./islands/SliderJS.tsx";
+import * as $$$$$20 from "./islands/SpecificationIsland.tsx";
+import * as $$$$$21 from "./islands/TrustvoxIsland.tsx";
+import * as $$$$$22 from "./islands/VitrineIsland.tsx";
+import * as $$$$$23 from "./islands/WishlistButton.tsx";
 import * as $$$$$$$$0 from "./sections/Acessorios.tsx";
 import * as $$$$$$$$1 from "./sections/BannerGrid.tsx";
 import * as $$$$$$$$2 from "./sections/BannerPLP.tsx";
@@ -249,14 +250,15 @@ const manifest = {
     "./islands/ProductImageZoom.tsx": $$$$$12,
     "./islands/RecommendedProds.tsx": $$$$$13,
     "./islands/SearchControls.tsx": $$$$$14,
-    "./islands/SelectGamesIsland.tsx": $$$$$15,
-    "./islands/ShelfIsland.tsx": $$$$$16,
-    "./islands/ShippingSimulation.tsx": $$$$$17,
-    "./islands/SliderJS.tsx": $$$$$18,
-    "./islands/SpecificationIsland.tsx": $$$$$19,
-    "./islands/TrustvoxIsland.tsx": $$$$$20,
-    "./islands/VitrineIsland.tsx": $$$$$21,
-    "./islands/WishlistButton.tsx": $$$$$22,
+    "./islands/SearchMenuBarIsland.tsx": $$$$$15,
+    "./islands/SelectGamesIsland.tsx": $$$$$16,
+    "./islands/ShelfIsland.tsx": $$$$$17,
+    "./islands/ShippingSimulation.tsx": $$$$$18,
+    "./islands/SliderJS.tsx": $$$$$19,
+    "./islands/SpecificationIsland.tsx": $$$$$20,
+    "./islands/TrustvoxIsland.tsx": $$$$$21,
+    "./islands/VitrineIsland.tsx": $$$$$22,
+    "./islands/WishlistButton.tsx": $$$$$23,
   },
   "sections": {
     "$live/sections/Conditional_Beta.tsx": i2$$$$$0,

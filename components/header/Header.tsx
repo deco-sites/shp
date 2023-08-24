@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'preact/hooks'
 import MenuItem from './MenuItem.tsx'
 import MenuItemDesk from './MenuItemDesktop.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
+import SearchMenuBar from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchMenuBar.tsx'
 
 const HeaderSHP = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
@@ -46,47 +47,6 @@ const HeaderSHP = () => {
   const handleClick = useCallback(() => {
     setMenuMobileClass('flex flex-col w-[80%] h-screen absolute top-0 bg-zinc-800')
   }, [])
-
-  const divInputSearchMobile = useRef<HTMLDivElement>(null)
-
-  const [search, setSearch] = useState('hidden')
-
-  //useEffect input search
-  useEffect(() => {
-    if (window.innerWidth <= 768) {
-      const outsideClick = (event: MouseEvent) => {
-        if (divInputSearchMobile.current && event.target) {
-          if (
-            !divInputSearchMobile.current.contains(event.target as Node) &&
-            search === ' '
-          ) {
-            setSearch('hidden')
-            if (
-              divInputSearchMobile.current.firstChild &&
-              divInputSearchMobile.current.firstChild instanceof
-                HTMLInputElement
-            ) {
-              divInputSearchMobile.current.firstChild.value = ''
-            }
-          }
-        }
-      }
-
-      document.addEventListener('click', outsideClick)
-
-      return () => {
-        document.removeEventListener('click', outsideClick)
-      }
-    }
-  }, [search])
-
-  const handleOpenSearch = () => {
-    if (window.innerWidth <= 768) {
-      setSearch(' ')
-    } else {
-      // executa o search caso seja PC
-    }
-  }
 
   const hideAll = () => {
     setOpenGamer('hidden')
@@ -199,25 +159,7 @@ const HeaderSHP = () => {
           )
           }
 
-          <div className='flex flex-row gap-2 re1:ml-60'>
-            <div className='flex flex-row-reverse'>
-              <input
-                type='text'
-                name='search'
-                placeholder='O que você procura...'
-                className='hidden re1:block w-48 text-white bg-zinc-800 placeholder:text-neutral-600 
-                p-2 border-neutral-600 border-[2px] outline-none top-[26px] rounded-lg focus:shadow-[0_0_5px_2px] focus:shadow-[#dd1f26]/30 
-              focus:border-[#dd1f26] absolute focus:w-2/5 transition-all duration-700'
-              />
-            </div>
-
-            <button onClick={handleOpenSearch} className='w-fit h-fit'>
-              <Image
-                src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png'
-                alt='lupinha' width={23} height={22} preload fetchPriority='high' loading='eager' decoding='sync'
-              />
-            </button>
-          </div>
+          <SearchMenuBar />
 
           <div className='hidden re1:block w-[2px] h-2/4 bg-neutral-600'></div>
 
@@ -266,22 +208,6 @@ const HeaderSHP = () => {
               alt='carrinho' width={24} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
             />
           </div>
-        </div>
-
-        <div
-          ref={divInputSearchMobile}
-          className={`flex w-full h-16 p-4 items-center justify-between absolute top-0 bg-zinc-900 z-[1] ${search} re1:hidden`}
-        >
-          <input
-            type='text'
-            name='search'
-            placeholder='O que você procura...'
-            className='placeholder:text-neutral-600 w-4/5 bg-zinc-900 outline-none p-4 text-white'
-          />
-          <Image
-            src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png'
-            alt='lupinha' width={23} height={22} preload fetchPriority='high' loading='eager' decoding='sync'
-          />
         </div>
 
         {!isMobile ? (

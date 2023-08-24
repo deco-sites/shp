@@ -14,14 +14,22 @@ const useSort = () =>
 const applySort = (e: JSX.TargetedEvent<HTMLSelectElement, Event>) => {
   const urlSearchParams = new URLSearchParams(window.location.search);
 
-  console.log(e.currentTarget.value);
-
   urlSearchParams.set(SORT_QUERY_PARAM, e.currentTarget.value);
   window.location.search = urlSearchParams.toString();
 };
 
 export type Props = Pick<ProductListingPage, "sortOptions">;
 
+const portugueseMappings = {
+  "relevance:desc": "Relevância",
+  "price:desc": "Maior Preço",
+  "price:asc": "Menor Preço",
+  "orders:desc": "Mais vendidos",
+  "name:desc": "Nome - de Z a A",
+  "name:asc": "Nome - de A a Z",
+  // "release:desc": "Relevância - Decrescente",
+  "discount:desc": "Maior desconto",
+};
 function Sort({ sortOptions }: Props) {
   const sort = useSort();
 
@@ -30,9 +38,12 @@ function Sort({ sortOptions }: Props) {
       id="sort"
       name="sort"
       onInput={applySort}
-      class="w-min h-[36px] px-1 rounded m-2 text-button font-button text-base-content cursor-pointer outline-none"
+      class="w-min h-[36px] px-1 rounded m-2 text-base-content cursor-pointer outline-none"
     >
-      {sortOptions.map(({ value, label }) => (
+      {sortOptions.map(({ value, label }) => ({
+        value,
+        label: portugueseMappings[label as keyof typeof portugueseMappings],
+      })).filter(({ label }) => label).map(({ value, label }) => (
         <option key={value} value={value} selected={value === sort}>
           <span class="text-sm">{label}</span>
         </option>
