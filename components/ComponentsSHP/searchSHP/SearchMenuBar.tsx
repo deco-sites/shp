@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 
-const searchMenuBar = async (term:string)=>{
-  const url='https://api.shopinfo.com.br/Deco/getProductsMenuSearch.php?ft='+term
+const searchMenuBarLoader = async (term:string)=>{
+  const url='url?ft='+term
   return (await fetch(url).then(async (r)=>{
     const resp=r.clone()
     const text=await r.text()
@@ -19,19 +19,28 @@ const SearchMenuBar=()=>{
   const divInputSearchMobile = useRef<HTMLDivElement>(null)
   const inputDesk=useRef<HTMLInputElement>(null)
   const inputMob=useRef<HTMLInputElement>(null)
+  const suggestionsDesk=useRef<HTMLDivElement>(null)
+  const suggestionsMob=useRef<HTMLDivElement>(null)
+  const abortController=useRef<AbortController | null>(null)
 
   const [openSearch, setOpenSearch] = useState(false)
   const [inputValue, setInputValue]=useState('')
   const [products,setProducts]=useState([])
+  const [openSuggestions, setOpenSuggestions]=useState(false)
 
   const fetchData=async ()=>{
-    const data=await searchMenuBar(inputValue)
+    if(inputValue === '') return
+
+    abortController.current && abortController.current.abort()
+
+    const data=await searchMenuBarLoader(inputValue)
     setProducts(data)
   }
 
   const handleClickLupaDesk = (event:MouseEvent) => {
     if (window.innerWidth <= 768) {
       setOpenSearch(true)
+      setProducts([])
     } else {
       // executa o search caso seja PC
       const Target=event.target as HTMLButtonElement
@@ -68,10 +77,14 @@ const SearchMenuBar=()=>{
     InputDesk.value=inputValue
     InputMob.value=inputValue
 
-    if(inputValue.length>3) fetchData()
+    //aqui eu limpo as sugestões
+    inputValue.length>=2 ? fetchData() : setProducts([])
   },[inputValue])
 
-  useEffect(()=>console.log(products),[products])
+  useEffect(()=>{
+    // aqui eu abro as sugestões caso haja produtos
+    products.length ? setOpenSuggestions(true) : setOpenSuggestions(false)
+  },[products])
 
   return(
     <>
@@ -87,6 +100,8 @@ const SearchMenuBar=()=>{
           focus:border-[#dd1f26] absolute focus:w-2/5 transition-all duration-700'
             onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
           />
+
+          <div ref={suggestionsDesk} className={`${openSuggestions && 're1:flex'} hidden w-2/5 mr-[3%] absolute bg-white`}>Batata...</div>
         </div>
 
         <button className='w-fit h-fit' onClick={handleClickLupaDesk}>
@@ -108,11 +123,16 @@ const SearchMenuBar=()=>{
             placeholder='O que você procura...'
             className='placeholder:text-neutral-600 w-4/5 bg-zinc-900 outline-none p-4 text-white'
             onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
+            onClick={(event)=>setInputValue((event.target as HTMLInputElement).value)}
           />
           <Image
             src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png'
             alt='lupinha' width={23} height={22} preload fetchPriority='high' loading='eager' decoding='sync'
           />
+        </div>
+
+        <div ref={suggestionsMob} className={`${openSuggestions ? 'flex' : 'hidden'} re1:hidden flex-col w-full re1:w-2/5 absolute border border-[#dd1f26] top-16 re1:top-24`}>
+          <p>batata</p>
         </div>
     </>
   )
