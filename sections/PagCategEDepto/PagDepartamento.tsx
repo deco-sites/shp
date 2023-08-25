@@ -207,15 +207,15 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     let scrolledDown=false
 
     const header=document.querySelector('body div.z-30.fixed')
-    header && ((header.children[0] as HTMLElement).style.opacity='.8')
+    header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.8)')
 
     const handleScroll=()=>{
       //header opacity
       if(window.scrollY > initialScrollY && !scrolledDown){
-        header && ((header.children[0] as HTMLElement).style.opacity='1')
+        header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,1)')
         scrolledDown=true
       }else if(window.scrollY <= initialScrollY && scrolledDown){
-        header && ((header.children[0] as HTMLElement).style.opacity='.8')
+        header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.8)')
         scrolledDown=false
       }
 
