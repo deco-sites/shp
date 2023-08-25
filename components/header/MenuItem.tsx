@@ -20,7 +20,7 @@ const menuItem = ({ rounded ,iconLink, itemName, links }: Props) => {
 
   return (
     <>
-      <button onClick={handleOpen} className={`flex w-[95%] bg-neutral-700 ${rounded} border-2 border-transparent h-12 text-white font-bold justify-between p-5 my-[2px] mx-auto items-center`}>
+      <button onClick={handleOpen} className={`flex w-[95%] bg-[#333] ${rounded} border-2 border-transparent h-12 text-white font-bold justify-between p-5 my-[2px] mx-auto items-center`}>
         <div className='flex gap-2'>
           <Image className='h-auto my-auto' src={iconLink} alt='iconLink' width={18} height={12}
             preload fetchPriority='low' decoding='auto' loading='lazy'
@@ -48,7 +48,7 @@ const menuItem = ({ rounded ,iconLink, itemName, links }: Props) => {
       </button>
       <div className={`w-[95%] mx-auto flex flex-col ${open}`}>
         {links.map((obj) => (
-          <div className='bg-stone-800 text-[#dd1f26] mb-1 p-3'>
+          <div className='bg-[#222] text-[#dd1f26] mb-1 p-3'>
             <a href={obj.link}>{obj.name}</a>
           </div>
         ))}

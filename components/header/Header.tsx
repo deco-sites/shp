@@ -45,7 +45,7 @@ const HeaderSHP = () => {
   const [menuMobileClass, setMenuMobileClass] = useState('hidden')
 
   const handleClick = useCallback(() => {
-    setMenuMobileClass('flex flex-col w-[80%] h-screen absolute top-0 bg-zinc-800')
+    setMenuMobileClass('flex flex-col w-[80%] h-screen absolute top-0 bg-[#1e1e1e]')
   }, [])
 
   const hideAll = () => {
@@ -104,7 +104,7 @@ const HeaderSHP = () => {
   return (
     <>
       <div className='z-30 fixed top-0 w-full'>
-        <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-zinc-900 items-center justify-center re1:py-4 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-24 re1:justify-around'>
+        <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-[#000] items-center justify-center re1:py-4 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-24 re1:justify-around'>
           {isMobile && (
             <button /* menuBar */
             className='w-fit h-fit mr-auto re1:hidden'
@@ -476,7 +476,7 @@ const HeaderSHP = () => {
 
               <div className='flex flex-col w-full h-screen overflow-y-auto scrollbar scrollbar-thin'>
                 <a
-                  className='flex w-[95%] bg-neutral-700 rounded-lg border-2 border-transparent h-12 text-white font-bold justify-between p-5 my-[2px] mx-auto items-center'
+                  className='flex w-[95%] bg-[#333] rounded-lg border-2 border-transparent h-12 text-white font-bold justify-between p-5 my-[2px] mx-auto items-center'
                   href='/teste'
                 >
                   <div className='flex gap-2'>
@@ -662,7 +662,7 @@ const HeaderSHP = () => {
                 />
 
                 <a
-                  className='flex w-[95%] bg-neutral-700 rounded-lg border-2 border-transparent h-12 text-[#53a752] font-bold justify-between p-5 my-[2px] mx-auto items-center'
+                  className='flex w-[95%] bg-[#333] rounded-lg border-2 border-transparent h-12 text-[#53a752] font-bold justify-between p-5 my-[2px] mx-auto items-center'
                   href='/teste'
                 >
                   <div className='flex gap-2'>
@@ -678,7 +678,7 @@ const HeaderSHP = () => {
                 </a>
 
                 <a
-                  className='flex w-[95%] bg-neutral-700 rounded-lg border-2 border-transparent h-12 text-[#53a752] font-bold justify-between p-5 my-[2px] mx-auto items-center'
+                  className='flex w-[95%] bg-[#333] rounded-lg border-2 border-transparent h-12 text-[#53a752] font-bold justify-between p-5 my-[2px] mx-auto items-center'
                   href='/teste'
                 >
                   <div className='flex gap-2'>

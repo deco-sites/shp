@@ -18,11 +18,11 @@ export interface Props {
 const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
   return (
     <div
-      className={`w-full h-48 bg-zinc-800 absolute gap-8 justify-center items-center hover:flex ${open}`}
+      className={`w-full h-48 bg-[#111] absolute gap-8 justify-center items-center hover:flex ${open}`}
     >
       <div className='flex gap-2'>
         {subCategs.map((img) => (
-          <div className='w-fit h-fit border-2 border-zinc-800 hover:border-[#dd1f26] border-solid rounded-lg'>
+          <div className='w-fit h-fit border-2 border-transparent hover:border-[#dd1f26] border-solid rounded-lg'>
             <a href={img.linkTo}>
               <Image
                 className='rounded-lg' src={img.imgUrl} alt='FotoCateg' width={120} height={120}
@@ -35,7 +35,7 @@ const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
 
       {subCategsNoImg && (
         <>
-          <div className='w-[2px] h-3/5 bg-neutral-500' />
+          <div className='w-[2px] h-3/5 bg-[#3d3d3d]' />
 
           <div className='grid grid-cols-3 gap-4'>
             {subCategsNoImg.map((el)=>(
