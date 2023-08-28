@@ -31,7 +31,6 @@ const fetchFilters=async (idCateg:string)=>{
 
 const fetchProducts=async (queryString:string)=>{
   const url=`https://api.shopinfo.com.br/Deco/getProductsList.php?${queryString}`
-  console.log(url)
   const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
   return data
 }
@@ -259,7 +258,6 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       const Path=window.location.pathname
       const segments=Path.split('/')
       const result=segments.map((__,index)=>index!==0 ? segments.slice(0,index+1).join('/') : '/')
-      console.log(result)
       setPath(result)
     }
 
@@ -331,13 +329,11 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         acc[label].push(value)
         return acc
       },{} as Record<string, string[]>)
-      console.log(filtrosByLabel)
 
       if(listFiltersDesk.current && selectedFilters.length){
         const keys=Object.keys(filtrosByLabel)
         const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
         const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
-        console.log(h5NaoDisp)
         h5S.forEach(h5=>{
           const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
           Input.value=''

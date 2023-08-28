@@ -6,8 +6,8 @@ import { putSizeInUrl } from 'deco-sites/shp/FunctionsSHP/AddSizeInUrl.ts'
 const searchMenuBarLoader = async (term:string, signal:AbortSignal)=>{
   const url='https://api.shopinfo.com.br/Deco/getProductsMenuSearch.php?ft='+term
 
-  //tentar criar uma rota do tinyFileManager
-  const urlAutocomplete=`https://www.shopinfo.com.br/buscaautocomplete/?productNameContains=${term}`
+  //futuramente arrumar pra usar somente esta api
+  const urlAutocomplete=`https://api.shopinfo.com.br/Deco/getAutoComplete.php?ft=${term}`
 
   const [prods, autocomplete]:any[]=await Promise.all(
     [
@@ -32,7 +32,12 @@ const searchMenuBarLoader = async (term:string, signal:AbortSignal)=>{
       }).catch(err=>console.error(err))
     ]
   )
-  return {prods,autocomplete}
+
+  const finalAutocomplete=autocomplete ? autocomplete.itemsReturned.filter((item:any)=>!item.items.length).map((item:any)=>{
+    item.href=item.href.split('https://www.shopinfo.com.br')[1]
+    return item
+  }) : []
+  return {prods:(prods || []), finalAutocomplete}
 }
 
 const SearchMenuBar=()=>{
@@ -47,16 +52,15 @@ const SearchMenuBar=()=>{
   const [openSearch, setOpenSearch] = useState(false)
   const [inputValue, setInputValue]=useState('')
   const [products,setProducts]=useState<any>([])
-  const [autoComplete,setAutoComplete]=useState<any>({})
+  const [autoComplete,setAutoComplete]=useState<any>([])
   const [openSuggestions, setOpenSuggestions]=useState(false)
 
   const fetchData=async ()=>{
     currentController.current = new AbortController()
-
     try {
       const data = await searchMenuBarLoader(inputValue, currentController.current.signal);
       setProducts(data.prods)
-      setAutoComplete(data.autocomplete)
+      setAutoComplete(data.finalAutocomplete)
       currentController.current = null; // Limpa a referência após a conclusão
     } catch (error) {
         // Verificar se o erro é um erro de aborto
@@ -84,6 +88,7 @@ const SearchMenuBar=()=>{
           if (!divInputSearchMobile.current.contains(event.target as Node) && openSearch) {
             setOpenSearch(false)
             setProducts([])
+            setAutoComplete([])
             if (divInputSearchMobile.current.firstChild instanceof HTMLInputElement) {
               divInputSearchMobile.current.firstChild.value = ''
             }
@@ -105,17 +110,15 @@ const SearchMenuBar=()=>{
     InputDesk.value=inputValue
     InputMob.value=inputValue
 
-    //aqui eu limpo as sugestões
-    inputValue.length>=2 ? fetchData() : (currentController.current && (currentController.current.abort(), currentController.current=null),setProducts([]))
+    //aqui eu limpo as sugestões quando input.length >=2 e cancela qlqr request antigo pra focar no ultimo q o usuário inputa
+    inputValue.length>=2 ? ((currentController.current && (currentController.current.abort(), currentController.current=null)),fetchData()) : (currentController.current && (currentController.current.abort(), currentController.current=null),setProducts([]),setAutoComplete([]))
   },[inputValue])
 
   useEffect(() => {
-    // aqui eu abro as sugestões caso haja produtos
-    products.length ? setOpenSuggestions(true) : setOpenSuggestions(false)
-    console.log(products)
-  }, [products])
-
-  useEffect(()=>console.log(autoComplete),[autoComplete])
+    // aqui eu abro as sugestões caso haja produtos ou autocomplete
+    (products.length || autoComplete.length) ? setOpenSuggestions(true) : setOpenSuggestions(false)
+    console.log(products,autoComplete)
+  }, [products,autoComplete])
 
   return(
     <>
@@ -134,6 +137,11 @@ const SearchMenuBar=()=>{
           />
 
           <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : ''} hidden flex-col w-2/5 mr-[3%] absolute border border-[#3d3d3d] border-t-transparent bg-[#111] top-3/4 rounded-b-lg rounded-br-lg`}>
+            {autoComplete.map((suggestion:any)=>(
+              <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 line-clamp-1 text-sm text-white ml-1'>
+                {suggestion.name}
+              </a>
+            ))}
             {products.map((product:any)=>(
               <a href={'/'+product.linkText+'/p'} className='flex flex-row items-center py-1 px-1'>
                 <Image src={putSizeInUrl((product.items[0].images[0].imageUrl as string),[32,32])} width={32} height={32} />
@@ -171,6 +179,11 @@ const SearchMenuBar=()=>{
         </div>
 
         <div ref={suggestionsMob} className={`${openSuggestions ? 'flex' : 'hidden'} re1:hidden flex-col w-full re1:w-2/5 absolute border border-[#3d3d3d] top-16 re1:top-24 bg-[#111] rounded-b-lg rounded-br-lg`}>
+          {autoComplete.map((suggestion:any)=>(
+            <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 line-clamp-1 text-sm text-white ml-1'>
+              {suggestion.name}
+            </a>
+          ))}
           {products.map((product:any)=>(
             <a href={'/'+product.linkText+'/p'} className='flex flex-row items-center py-1 px-1'>
               <Image src={putSizeInUrl((product.items[0].images[0].imageUrl as string),[32,32])} width={32} height={32} />
