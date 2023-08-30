@@ -172,14 +172,15 @@ import * as i2$$$22 from "deco-sites/std/loaders/vtex/legacy/productDetailsPage.
 import * as i2$$$23 from "deco-sites/std/loaders/vtex/legacy/productList.ts";
 import * as i2$$$24 from "deco-sites/std/loaders/vtex/legacy/productListingPage.ts";
 import * as i2$$$25 from "deco-sites/std/loaders/vtex/legacy/relatedProductsLoader.ts";
-import * as i2$$$26 from "deco-sites/std/loaders/vtex/navbar.ts";
-import * as i2$$$27 from "deco-sites/std/loaders/vtex/proxy.ts";
-import * as i2$$$28 from "deco-sites/std/loaders/vtex/user.ts";
-import * as i2$$$29 from "deco-sites/std/loaders/vtex/wishlist.ts";
-import * as i2$$$30 from "deco-sites/std/loaders/x/font.ts";
-import * as i2$$$31 from "deco-sites/std/loaders/x/image.ts";
-import * as i2$$$32 from "deco-sites/std/loaders/x/redirects.ts";
-import * as i2$$$33 from "deco-sites/std/loaders/x/redirectsFromCsv.ts";
+import * as i2$$$26 from "deco-sites/std/loaders/vtex/legacy/suggestions.ts";
+import * as i2$$$27 from "deco-sites/std/loaders/vtex/navbar.ts";
+import * as i2$$$28 from "deco-sites/std/loaders/vtex/proxy.ts";
+import * as i2$$$29 from "deco-sites/std/loaders/vtex/user.ts";
+import * as i2$$$30 from "deco-sites/std/loaders/vtex/wishlist.ts";
+import * as i2$$$31 from "deco-sites/std/loaders/x/font.ts";
+import * as i2$$$32 from "deco-sites/std/loaders/x/image.ts";
+import * as i2$$$33 from "deco-sites/std/loaders/x/redirects.ts";
+import * as i2$$$34 from "deco-sites/std/loaders/x/redirectsFromCsv.ts";
 import * as i2$$$$7 from "deco-sites/std/handlers/sitemap.ts";
 import * as i2$$$$8 from "deco-sites/std/handlers/vtex/sitemap.ts";
 import * as i2$$$$$5 from "deco-sites/std/sections/Analytics.tsx";
@@ -348,14 +349,15 @@ const manifest = {
     "deco-sites/std/loaders/vtex/legacy/productList.ts": i2$$$23,
     "deco-sites/std/loaders/vtex/legacy/productListingPage.ts": i2$$$24,
     "deco-sites/std/loaders/vtex/legacy/relatedProductsLoader.ts": i2$$$25,
-    "deco-sites/std/loaders/vtex/navbar.ts": i2$$$26,
-    "deco-sites/std/loaders/vtex/proxy.ts": i2$$$27,
-    "deco-sites/std/loaders/vtex/user.ts": i2$$$28,
-    "deco-sites/std/loaders/vtex/wishlist.ts": i2$$$29,
-    "deco-sites/std/loaders/x/font.ts": i2$$$30,
-    "deco-sites/std/loaders/x/image.ts": i2$$$31,
-    "deco-sites/std/loaders/x/redirects.ts": i2$$$32,
-    "deco-sites/std/loaders/x/redirectsFromCsv.ts": i2$$$33,
+    "deco-sites/std/loaders/vtex/legacy/suggestions.ts": i2$$$26,
+    "deco-sites/std/loaders/vtex/navbar.ts": i2$$$27,
+    "deco-sites/std/loaders/vtex/proxy.ts": i2$$$28,
+    "deco-sites/std/loaders/vtex/user.ts": i2$$$29,
+    "deco-sites/std/loaders/vtex/wishlist.ts": i2$$$30,
+    "deco-sites/std/loaders/x/font.ts": i2$$$31,
+    "deco-sites/std/loaders/x/image.ts": i2$$$32,
+    "deco-sites/std/loaders/x/redirects.ts": i2$$$33,
+    "deco-sites/std/loaders/x/redirectsFromCsv.ts": i2$$$34,
   },
   "handlers": {
     "$live/handlers/devPage.ts": i2$$$$0,
