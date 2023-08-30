@@ -5,9 +5,8 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Benefits from 'deco-sites/shp/sections/Benefits.tsx'
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
-import Card from 'deco-sites/shp/sections/PagCategEDepto/Card.tsx'
+import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
-import { arrToStream } from '$live/deps.ts'
 
 export interface Props{
   titleCategoria?:string

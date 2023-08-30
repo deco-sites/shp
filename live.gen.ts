@@ -19,15 +19,16 @@ import * as $$$$$11 from "./islands/PCNivelGamer.tsx";
 import * as $$$$$12 from "./islands/ProductImageZoom.tsx";
 import * as $$$$$13 from "./islands/RecommendedProds.tsx";
 import * as $$$$$14 from "./islands/SearchControls.tsx";
-import * as $$$$$15 from "./islands/SearchMenuBarIsland.tsx";
-import * as $$$$$16 from "./islands/SelectGamesIsland.tsx";
-import * as $$$$$17 from "./islands/ShelfIsland.tsx";
-import * as $$$$$18 from "./islands/ShippingSimulation.tsx";
-import * as $$$$$19 from "./islands/SliderJS.tsx";
-import * as $$$$$20 from "./islands/SpecificationIsland.tsx";
-import * as $$$$$21 from "./islands/TrustvoxIsland.tsx";
-import * as $$$$$22 from "./islands/VitrineIsland.tsx";
-import * as $$$$$23 from "./islands/WishlistButton.tsx";
+import * as $$$$$15 from "./islands/SearchIsland.tsx";
+import * as $$$$$16 from "./islands/SearchMenuBarIsland.tsx";
+import * as $$$$$17 from "./islands/SelectGamesIsland.tsx";
+import * as $$$$$18 from "./islands/ShelfIsland.tsx";
+import * as $$$$$19 from "./islands/ShippingSimulation.tsx";
+import * as $$$$$20 from "./islands/SliderJS.tsx";
+import * as $$$$$21 from "./islands/SpecificationIsland.tsx";
+import * as $$$$$22 from "./islands/TrustvoxIsland.tsx";
+import * as $$$$$23 from "./islands/VitrineIsland.tsx";
+import * as $$$$$24 from "./islands/WishlistButton.tsx";
 import * as $$$$$$$$0 from "./sections/Acessorios.tsx";
 import * as $$$$$$$$1 from "./sections/BannerGrid.tsx";
 import * as $$$$$$$$2 from "./sections/BannerPLP.tsx";
@@ -45,22 +46,22 @@ import * as $$$$$$$$13 from "./sections/Highlights.tsx";
 import * as $$$$$$$$14 from "./sections/LinkTree.tsx";
 import * as $$$$$$$$15 from "./sections/NossosNums.tsx";
 import * as $$$$$$$$16 from "./sections/OfertasFogo.tsx";
-import * as $$$$$$$$17 from "./sections/PagCategEDepto/Card.tsx";
-import * as $$$$$$$$18 from "./sections/PagCategEDepto/Filtro.tsx";
-import * as $$$$$$$$19 from "./sections/PagCategEDepto/FiltroMob.tsx";
-import * as $$$$$$$$20 from "./sections/PagCategEDepto/iconeNavegacional.tsx";
-import * as $$$$$$$$21 from "./sections/PagCategEDepto/PagDepartamento.tsx";
-import * as $$$$$$$$22 from "./sections/PagCategEDepto/PriceFilter.tsx";
-import * as $$$$$$$$23 from "./sections/PCNivelGamer.tsx";
-import * as $$$$$$$$24 from "./sections/ProductCompreJunto.tsx";
-import * as $$$$$$$$25 from "./sections/productDescription.tsx";
-import * as $$$$$$$$26 from "./sections/ProductDetails.tsx";
-import * as $$$$$$$$27 from "./sections/ProductGames.tsx";
-import * as $$$$$$$$28 from "./sections/ProductRecommendedProds.tsx";
-import * as $$$$$$$$29 from "./sections/ProductShelf.tsx";
-import * as $$$$$$$$30 from "./sections/ProductSpecification.tsx";
-import * as $$$$$$$$31 from "./sections/ProductTrustvox.tsx";
-import * as $$$$$$$$32 from "./sections/ReturnH1.tsx";
+import * as $$$$$$$$17 from "./sections/PagCategEDepto/Filtro.tsx";
+import * as $$$$$$$$18 from "./sections/PagCategEDepto/FiltroMob.tsx";
+import * as $$$$$$$$19 from "./sections/PagCategEDepto/iconeNavegacional.tsx";
+import * as $$$$$$$$20 from "./sections/PagCategEDepto/PagDepartamento.tsx";
+import * as $$$$$$$$21 from "./sections/PagCategEDepto/PriceFilter.tsx";
+import * as $$$$$$$$22 from "./sections/PCNivelGamer.tsx";
+import * as $$$$$$$$23 from "./sections/ProductCompreJunto.tsx";
+import * as $$$$$$$$24 from "./sections/productDescription.tsx";
+import * as $$$$$$$$25 from "./sections/ProductDetails.tsx";
+import * as $$$$$$$$26 from "./sections/ProductGames.tsx";
+import * as $$$$$$$$27 from "./sections/ProductRecommendedProds.tsx";
+import * as $$$$$$$$28 from "./sections/ProductShelf.tsx";
+import * as $$$$$$$$29 from "./sections/ProductSpecification.tsx";
+import * as $$$$$$$$30 from "./sections/ProductTrustvox.tsx";
+import * as $$$$$$$$31 from "./sections/ReturnH1.tsx";
+import * as $$$$$$$$32 from "./sections/SearchPage.tsx";
 import * as $$$$$$$$33 from "./sections/SearchResult.tsx";
 import * as $$$$$$$$34 from "./sections/Shelf.tsx";
 import * as $$$$$$$$35 from "./sections/SignNewsletter.tsx";
@@ -251,15 +252,16 @@ const manifest = {
     "./islands/ProductImageZoom.tsx": $$$$$12,
     "./islands/RecommendedProds.tsx": $$$$$13,
     "./islands/SearchControls.tsx": $$$$$14,
-    "./islands/SearchMenuBarIsland.tsx": $$$$$15,
-    "./islands/SelectGamesIsland.tsx": $$$$$16,
-    "./islands/ShelfIsland.tsx": $$$$$17,
-    "./islands/ShippingSimulation.tsx": $$$$$18,
-    "./islands/SliderJS.tsx": $$$$$19,
-    "./islands/SpecificationIsland.tsx": $$$$$20,
-    "./islands/TrustvoxIsland.tsx": $$$$$21,
-    "./islands/VitrineIsland.tsx": $$$$$22,
-    "./islands/WishlistButton.tsx": $$$$$23,
+    "./islands/SearchIsland.tsx": $$$$$15,
+    "./islands/SearchMenuBarIsland.tsx": $$$$$16,
+    "./islands/SelectGamesIsland.tsx": $$$$$17,
+    "./islands/ShelfIsland.tsx": $$$$$18,
+    "./islands/ShippingSimulation.tsx": $$$$$19,
+    "./islands/SliderJS.tsx": $$$$$20,
+    "./islands/SpecificationIsland.tsx": $$$$$21,
+    "./islands/TrustvoxIsland.tsx": $$$$$22,
+    "./islands/VitrineIsland.tsx": $$$$$23,
+    "./islands/WishlistButton.tsx": $$$$$24,
   },
   "sections": {
     "$live/sections/Conditional_Beta.tsx": i2$$$$$0,
@@ -284,22 +286,22 @@ const manifest = {
     "deco-sites/shp/sections/LinkTree.tsx": $$$$$$$$14,
     "deco-sites/shp/sections/NossosNums.tsx": $$$$$$$$15,
     "deco-sites/shp/sections/OfertasFogo.tsx": $$$$$$$$16,
-    "deco-sites/shp/sections/PagCategEDepto/Card.tsx": $$$$$$$$17,
-    "deco-sites/shp/sections/PagCategEDepto/Filtro.tsx": $$$$$$$$18,
-    "deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx": $$$$$$$$19,
-    "deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx": $$$$$$$$20,
-    "deco-sites/shp/sections/PagCategEDepto/PagDepartamento.tsx": $$$$$$$$21,
-    "deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx": $$$$$$$$22,
-    "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$23,
-    "deco-sites/shp/sections/ProductCompreJunto.tsx": $$$$$$$$24,
-    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$25,
-    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$26,
-    "deco-sites/shp/sections/ProductGames.tsx": $$$$$$$$27,
-    "deco-sites/shp/sections/ProductRecommendedProds.tsx": $$$$$$$$28,
-    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$29,
-    "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$30,
-    "deco-sites/shp/sections/ProductTrustvox.tsx": $$$$$$$$31,
-    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$32,
+    "deco-sites/shp/sections/PagCategEDepto/Filtro.tsx": $$$$$$$$17,
+    "deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx": $$$$$$$$18,
+    "deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx": $$$$$$$$19,
+    "deco-sites/shp/sections/PagCategEDepto/PagDepartamento.tsx": $$$$$$$$20,
+    "deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx": $$$$$$$$21,
+    "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$22,
+    "deco-sites/shp/sections/ProductCompreJunto.tsx": $$$$$$$$23,
+    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$24,
+    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$25,
+    "deco-sites/shp/sections/ProductGames.tsx": $$$$$$$$26,
+    "deco-sites/shp/sections/ProductRecommendedProds.tsx": $$$$$$$$27,
+    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$28,
+    "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$29,
+    "deco-sites/shp/sections/ProductTrustvox.tsx": $$$$$$$$30,
+    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$31,
+    "deco-sites/shp/sections/SearchPage.tsx": $$$$$$$$32,
     "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$33,
     "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$34,
     "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$35,

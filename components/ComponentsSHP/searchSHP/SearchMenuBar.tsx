@@ -52,13 +52,14 @@ const SearchMenuBar=()=>{
         }
     }
   }
+  
+  const redirectSearchPage=()=>{window.location.href='/s?q='+inputValue}
 
   const handleClickLupaDesk = (event:MouseEvent) => {
     if (window.innerWidth <= 768) {
       setOpenSearch(true)
     } else {
-      // adicionar evento pra ouvir esc também no desk e redirecionar pra página de busca quando houver uma
-      fetchData()
+      redirectSearchPage()
     }
   }
 
@@ -77,9 +78,15 @@ const SearchMenuBar=()=>{
         }
       }
 
+      const lupinha=divInputSearchMobile.current!.querySelector('img')!
+
+      lupinha.addEventListener('click',redirectSearchPage)
+
       document.addEventListener('click', outsideClick)
 
       return () => {
+        lupinha.removeEventListener('click',redirectSearchPage)
+
         document.removeEventListener('click', outsideClick)
       }
     }
@@ -114,6 +121,7 @@ const SearchMenuBar=()=>{
           focus:border-[#dd1f26] absolute focus:w-2/5 transition-all duration-700'
             onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
             onBlur={()=>(setTimeout(()=>setOpenSuggestions(false),500),currentController.current && currentController.current.abort())}
+            onKeyUp={(event:KeyboardEvent)=>event.key==='Enter' && redirectSearchPage()}
           />
 
           <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : ''} hidden flex-col w-2/5 mr-[3%] absolute border border-[#3d3d3d] border-t-transparent bg-[#111] top-3/4 rounded-b-lg rounded-br-lg`}>
@@ -150,6 +158,7 @@ const SearchMenuBar=()=>{
             className='placeholder:text-[#3d3d3d] w-4/5 bg-transparent outline-none p-4 text-white'
             onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
             onClick={(event)=>setInputValue((event.target as HTMLInputElement).value)}
+            onKeyUp={(event:KeyboardEvent)=>event.key==='Enter' && redirectSearchPage()}
           />
           <Image
             src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png'
