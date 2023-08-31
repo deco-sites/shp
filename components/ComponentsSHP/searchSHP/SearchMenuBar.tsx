@@ -53,7 +53,10 @@ const SearchMenuBar=()=>{
     }
   }
   
-  const redirectSearchPage=()=>{window.location.href='/s?q='+inputValue}
+  const redirectSearchPage=()=>{
+    console.log(inputValue)
+    window.location.href='/s?q='+inputValue
+  }
 
   const handleClickLupaDesk = (event:MouseEvent) => {
     if (window.innerWidth <= 768) {
@@ -78,21 +81,15 @@ const SearchMenuBar=()=>{
         }
       }
 
-      const lupinha=divInputSearchMobile.current!.querySelector('img')!
-
-      lupinha.addEventListener('click',redirectSearchPage)
-
       document.addEventListener('click', outsideClick)
 
       return () => {
-        lupinha.removeEventListener('click',redirectSearchPage)
-
         document.removeEventListener('click', outsideClick)
       }
     }
   }, [openSearch])
 
-  useEffect(()=>{  
+  useEffect(()=>{
     const InputDesk=inputDesk.current! as HTMLInputElement
     const InputMob=inputMob.current! as HTMLInputElement
     InputDesk.value=inputValue
@@ -163,6 +160,7 @@ const SearchMenuBar=()=>{
           <Image
             src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png'
             alt='lupinha' width={23} height={22} preload fetchPriority='high' loading='eager' decoding='sync'
+            onClick={redirectSearchPage}
           />
         </div>
 

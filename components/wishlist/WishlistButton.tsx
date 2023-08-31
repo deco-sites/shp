@@ -32,6 +32,7 @@ function WishlistButton({
       loading={fetching.value}
       aria-label="Add to wishlist"
       onClick={async (e) => {
+        console.log(productID)
         e.stopPropagation();
         e.preventDefault();
 

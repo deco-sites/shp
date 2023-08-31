@@ -63,9 +63,11 @@ const ProdCard=({...props}:ProdCard)=>{
   
   useEffect(()=>{
     const handleTrust=async()=>{
+      console.log('executou')
       const { products_rates }=await loaderTrustvox(productId, '79497')
       const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
       obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
+      console.log(obj)
     }
     handleTrust()
   },[])
@@ -128,7 +130,7 @@ const PcCard=({...props}:PcCard)=>{
   // },[])
 
   return(
-    <a className='flex flex-col h-[350px] w-full bg-[#262626] rounded-lg p-0 border relative
+    <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg p-0 border relative
     border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
       <div className='flex flex-col px-3 pt-8 re1:pt-3 h-auto w-auto'>
         <div>
@@ -196,22 +198,23 @@ const PcCard=({...props}:PcCard)=>{
 
 
 const Card=({product}:Props)=>{
-  // const PCGamer=product.categoriesIds.includes('/10/')
-  // const image=product.items[0].images[0].imageUrl
-  const productId=product.productID
-  const name=product.name
-  // const priceVista=product.items[0].sellers[0].commertialOffer.Price
-  // const priceDe=product.items[0].sellers[0].commertialOffer.ListPrice
-  // const linkProduto='/'+product.linkText+'/p'
-  // const avaibility=product.items[0].sellers[0].commertialOffer.IsAvailable
+  const PCGamer=product.category!.includes('Computadores gamer')
+  const image=product.image![0].url!
+  const productId=product.productID!
+  const name=product.name!
+  const priceVista=product.offers!.offers[0].price
+  const priceDe=product.offers!.offers[0].priceSpecification.find(price=>price.priceType==='https://schema.org/ListPrice')!.price
+  const linkProduto=product.url!
+  const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
+  const addProp=product.isVariantOf!.additionalProperty
 
-  // if(PCGamer){
-  //   return <PcCard  armazenamento={product.SSD || product.HD} imgUrl={image} prodName={name} memoria={product.Memória} 
-  //   placaVideo={product['Placa de vídeo']} linkProd={linkProduto} productId={productId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility}
-  //   processador={product.Processador} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={10} precoParcelado={priceVista} valorParcela={(parseFloat(priceVista)/10).toFixed(2)}/>
-  // }else{
-  //   return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe} precoVista={priceVista} parcelas={'10'} productId={productId} prodName={name} valorParcela={(parseFloat(priceVista)/10).toFixed(2)} isAvailable={avaibility}/>
-  // }
+  if(PCGamer){
+    return <PcCard  armazenamento={addProp.find(item=>(item.name==='SSD' || item.name==='HD'))!.value!} imgUrl={image} prodName={name} memoria={addProp.find(item=>item.name==='Memória')!.value!} 
+    placaVideo={addProp.find(item=>item.name==='Placa de vídeo')!.value!} linkProd={linkProduto} productId={productId} precoDe={priceDe.toString()} precoVista={priceVista.toString()} isAvailable={avaibility}
+    processador={addProp.find(item=>item.name==='Processador')!.value!} tipoArm={addProp.find(item=>item.name==='SSD') ? 'SSD' : 'HD'} parcelas={10} precoParcelado={priceVista.toString()} valorParcela={(priceVista/10).toFixed(2)}/>
+  }else{
+    return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe.toString()} precoVista={priceVista.toString()} parcelas={'10'} productId={productId} prodName={name} valorParcela={(priceVista/10).toFixed(2)} isAvailable={avaibility}/>
+  }
 }
 
 export default Card

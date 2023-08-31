@@ -128,7 +128,7 @@ const PcCard=({...props}:PcCard)=>{
   // },[])
 
   return(
-    <a className='flex flex-col h-[350px] w-full bg-[#262626] rounded-lg p-0 border relative
+    <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg p-0 border relative
     border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
       <div className='flex flex-col px-3 pt-8 re1:pt-3 h-auto w-auto'>
         <div>

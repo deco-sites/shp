@@ -1,7 +1,5 @@
+// deno-lint-ignore-file no-explicit-any
 import type { SectionProps } from '$live/mod.ts'
-import type { Product } from 'deco-sites/std/commerce/types.ts'
-import { LoaderContext } from '$live/mod.ts'
-import type  {Manifest}  from 'deco-sites/shp/live.gen.ts'
 import Search from 'deco-sites/shp/components/ComponentsSHP/searchSHP/Search.tsx'
 
 export interface Props {
@@ -10,17 +8,23 @@ export interface Props {
 
 export const loader: (
   True: Props,
-  _req: Request,
-  ctx: LoaderContext<unknown, Manifest>
-) => Promise<{ data: Product[], q:string }> = async ( __,_req, ctx) => {
+  _req: Request
+) => Promise<{ data:any, q:string }> = async ( __,_req) => {
   const REQ = _req
 
   const q = REQ.url.split('?q=')[1]
 
-  const data = await ctx.invoke(
-    'deco-sites/std/loaders/vtex/legacy/productList.ts',
-    { term:q, count: 20 }
-  ) || []
+  const url=`https://shopinfo.vtexcommercestable.com.br/api/catalog_system/pub/products/search/?ft=${q}&_from=0&_to=19`
+
+  const data=await fetch(url).then(async (r)=>{
+    const resp=r.clone()
+    const text=await r.text()
+    if(text==='empty'){
+      return null
+    }else{
+      return resp.json()
+    }
+  }).catch(err=>console.error(err)) || []
 
   return { data,q }
 }

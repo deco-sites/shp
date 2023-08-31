@@ -5,10 +5,10 @@ import Filtro from "deco-sites/shp/sections/PagCategEDepto/Filtro.tsx";
 import FiltroMob from "deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx";
 import PriceFilter from "deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx";
 import IconeNavegacional from "deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx";
-import Vitrine from "deco-sites/shp/sections/Vitrine.tsx";
+import Card from "deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx";
 
 export interface Props{
-  produtos:Product[]
+  produtos:any
   termo:string
   iconesNavegacionais:Array<{
     href:string,
@@ -25,7 +25,7 @@ const fetchProducts=async (queryString:string)=>{
 
 const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
-  const [loading, setLoading]=useState(true)
+  const [loading, setLoading]=useState(false)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
   const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:19})
   const [order,setOrder]=useState('selecione')
@@ -33,6 +33,8 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
   const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
   const [products, setProducts]=useState<any>(produtos)
   const [divFlut, setDivFlut]=useState(false)
+  const [fetchLength, setFetchLength]=useState(products.length)
+  const [showMore, setShowMore]=useState(false)
 
   const orderFilters=[
     {'Menor Preço':'OrderByPriceASC'},
@@ -65,6 +67,9 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
   useEffect(()=>{
     const handleResize=()=>setIsMobile(window.innerWidth<=768)
+
+    console.log(products)
+    products.forEach((product:any)=>console.log(product.productName))
 
     window.addEventListener('resize',handleResize)
 
@@ -111,12 +116,11 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
         <div className='flex w-full justify-center'>
           <div className='flex flex-col items-center w-full re1:w-[80%] px-4 re1:px-0'>
-              <Vitrine PcGamer={false} produtos={products}/>
-            {/* {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
+            {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
               <>
                 {products.length > 0 ? (
                   <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                    {products.map((product:any)=><Card product={product} />)}
+                    {products.map((product:any)=><p>{product.productName}</p>)}
                   </div>
                 ) : (
                   <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
@@ -130,7 +134,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
                   }
                 }}>{showMore ? <div className='loading loading-spinner'/> : 'Carregar mais Produtos'}</button>}
               </>
-            )} */}
+            )}
           </div>
         </div>
         
