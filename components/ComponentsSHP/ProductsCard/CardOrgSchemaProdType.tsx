@@ -58,7 +58,7 @@ const ProdCard=({...props}:ProdCard)=>{
   const vistaNum=parseFloat(precoVista)
   const percent= precoDeNum ? tagDiscount(vistaNum,precoDeNum,12) : 12
 
-  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
+  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
   const [trustPercent, setTrustPercent]=useState(0)
   
   useEffect(()=>{
