@@ -1,11 +1,8 @@
 // deno-lint-ignore-file no-window-prefix no-explicit-any
-import { Product } from "deco-sites/std/commerce/types.ts";
 import { useState, useEffect, useRef } from 'preact/hooks'
-import Filtro from "deco-sites/shp/sections/PagCategEDepto/Filtro.tsx";
-import FiltroMob from "deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx";
-import PriceFilter from "deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx";
 import IconeNavegacional from "deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx";
 import Card from "deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx";
+import CategoriaModal from 'deco-sites/shp/components/ComponentsSHP/searchSHP/CategoriaModal.tsx';
 
 export interface Props{
   produtos:any
@@ -24,7 +21,16 @@ interface Category{
 
 const fetchProducts=async (queryString:string)=>{
   const url=`https://api.shopinfo.com.br/Deco/getProductsList.php?${queryString}`
-  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
+  console.log(url)
+  const data=await fetch(url).then(async (r)=>{
+    const resp=r.clone()
+    const text=await r.text()
+    if(text==='empty'){
+      return null
+    }else{
+      return resp.json()
+    }
+  }).catch(err=>console.error('Error: ',err))
   return data
 }
 
@@ -46,15 +52,14 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
-  const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:produtos.length-1})
+  const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:produtos.length-1,first:1})
   const [order,setOrder]=useState('selecione')
-  const [filters,setFilters]=useState<any[]>([])
-  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
   const [products, setProducts]=useState<any>([])
   const [divFlut, setDivFlut]=useState(false)
   const [fetchLength, setFetchLength]=useState(produtos.length)
   const [showMore, setShowMore]=useState(false)
-  const [categories,setCategories]=useState<Category[]>()
+  const [categories,setCategories]=useState<Category[]>([])
+  const [category, setCategory]=useState<Category>({name:'selecione', value:'inicio'})
 
   const orderFilters=[
     {'Menor Preço':'OrderByPriceASC'},
@@ -67,7 +72,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
     {'Melhor Desconto':'OrderByBestDiscountDESC'}
   ]
   
-  const filterLabel=useRef<HTMLLabelElement>(null)
+  const categoryLabel=useRef<HTMLLabelElement>(null)
 
   const listFiltersDesk=useRef<HTMLUListElement>(null)
 
@@ -76,38 +81,83 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
   const contentWrapper=useRef<HTMLDivElement>(null)
 
   const getProductsStartY=()=>{
-    if(filterLabel.current){
-      const filterLabelRect=filterLabel.current.getBoundingClientRect()
-      const posY=filterLabelRect.top + window.scrollY
+    if(categoryLabel.current){
+      const categoryLabelRect=categoryLabel.current.getBoundingClientRect()
+      const posY=categoryLabelRect.top + window.scrollY
       return posY
     }else{
       return 700
     }
   }
 
+  const handleMoreProducts=async()=>{
+    !showMore && setLoading(true)
+    const queryString=[`ft=${termo}`,`_from=${fromTo.from}&_to=${fromTo.to}`]
+    order!=='selecione' && queryString.push(`O=${order}`)
+    category.value!=='' && queryString.unshift(`fq=C:${category.value}`)
+    const data= await fetchProducts(queryString.join('&'))
+    setFetchLength(data.length)
+    fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
+    setLoading(false)
+    setShowMore(false)
+  }
+
   useEffect(()=>{
     const handleResize=()=>setIsMobile(window.innerWidth<=768)
+
+    const handleScroll=()=>{
+      if(contentWrapper.current){
+        const contentRect=contentWrapper.current.getBoundingClientRect()
+        const endContent=contentRect.bottom + window.scrollY
+        if(window.scrollY > getProductsStartY() && window.scrollY < endContent){
+          console.log('libera bottom')
+          setDivFlut(true)
+        }else{
+          console.log('fecha bottom')
+          divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
+        }
+      }
+    }
     
-    if(typeof window!=='undefined'){ setProducts(produtos);setLoading(false)}
+    if(typeof window!=='undefined'){setProducts(produtos)}
 
     window.addEventListener('resize',handleResize)
+    window.addEventListener('scroll',handleScroll)
 
     return ()=>{
       window.removeEventListener('resize', handleResize)
+      window.removeEventListener('scroll',handleScroll)
     }
   },[])
 
   useEffect(()=>{
-    console.log(products)
-    setCategories(makeCategories(products))
+    (category.value==='' || category.value==='inicio') && setCategories(makeCategories(products))
+    setLoading(false)
   },[products])
 
+  useEffect(()=>{
+    if(category.value!=='inicio'){
+      typeof window!=='undefined' && setFromTo({from:0, to:19, first:0})
+    }
+  },[category])
+
+  useEffect(()=>{
+    if(order!=='selecione'){
+      typeof window!=='undefined' && setFromTo({from:0, to:19, first:0})
+    }
+  },[order])
+
+  useEffect(()=>{
+    if(fromTo.first!==1){
+      typeof window!=='undefined' && handleMoreProducts()
+    }
+  },[fromTo])
 
   return (
     <div className='w-full text-white appearance-none'>
       <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
         <div className='bg-transparent px-4 re1:px-0'>
-          <h4 className='text-3xl font-bold'>Sua busca por "{termo}"</h4>
+          <h4 className='text-3xl font-bold'>Sua busca por "{decodeURI(termo)}"</h4>
         </div>
 
         <div className='mb-8 re1:mb-0'>
@@ -119,11 +169,25 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
         </div>
 
         <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
-          <label className='w-[45%]' ref={filterLabel}>
-            <span className='font-bold'>Filtros</span>
-            <FiltroMob filters={filters} id='menu'/>
+          <label className='flex flex-col re1:focus-within:text-primary w-[45%] re1:w-auto'>
+            <span className='font-bold'>Categorias</span>
+            <select id='categorySelector' className='text-white hidden re1:select !outline-none bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+              onInput={(event)=>{
+                const Target=event.target as HTMLInputElement
+                const value=Target.value
+                const name=Target.querySelector(`option[value="${value}"]`)!.getAttribute('name')!
+                setCategory({name, value})
+              }}
+            >
+              <option disabled selected value='inicio' name='selecione'>Selecione</option>
+              <option value='' name='nenhuma'>Nenhuma</option>
+              {categories.map(category=>(
+                <option className='hover:bg-[#d1d1d1]' value={category.value} name={category.name}>{category.name.split('/').join(' ')}</option>
+              ))}
+            </select>
+            <CategoriaModal categories={categories} id='top'/>
           </label>
-          <label className='focus-within:text-primary w-[45%] re1:w-auto'>
+          <label className='flex flex-col focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por</span>
             <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
@@ -154,7 +218,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
                   if(fetchLength===20){
                     const {from,to}=fromTo
                     setShowMore(true)
-                    setFromTo({from:from+20, to:to+20})
+                    setFromTo({from:from+20, to:to+20, first:0})
                   }
                 }}>{showMore ? <div className='loading loading-spinner'/> : 'Carregar mais Produtos'}</button>}
               </>
@@ -166,8 +230,8 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
       </div>
       <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-[#111]`}>
           <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
-            <span className='font-bold'>Filtros</span>
-            <FiltroMob filters={filters} id='divFlut'/>
+            <span className='font-bold'>Categorias</span>
+            <CategoriaModal categories={categories} id={'bottom'}/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por:</span>
