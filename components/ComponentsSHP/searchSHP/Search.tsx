@@ -17,6 +17,11 @@ export interface Props{
   }>
 }
 
+interface Category{
+  name:string,
+  value:string
+}
+
 const fetchProducts=async (queryString:string)=>{
   const url=`https://api.shopinfo.com.br/Deco/getProductsList.php?${queryString}`
   const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
@@ -25,16 +30,31 @@ const fetchProducts=async (queryString:string)=>{
 
 const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
-  const [loading, setLoading]=useState(false)
+  const makeCategories=(prods:any)=>{
+    const categories:Category[]=[]
+    prods.forEach((prod:any)=>{
+      const categsName:string[]=prod.categories
+      const categsValues:string[]=prod.categoriesIds
+
+      for(let i=0;i<categsName.length-1;i++){
+        categories.push({name:categsName[i], value:categsValues[i]})
+      }
+    })
+
+    return categories.filter((obj,index,self)=>index===self.findIndex(item=>(item.name === obj.name && item.value === obj.value)))
+  }
+
+  const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
-  const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:19})
+  const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:produtos.length-1})
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<any[]>([])
   const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
-  const [products, setProducts]=useState<any>(produtos)
+  const [products, setProducts]=useState<any>([])
   const [divFlut, setDivFlut]=useState(false)
-  const [fetchLength, setFetchLength]=useState(products.length)
+  const [fetchLength, setFetchLength]=useState(produtos.length)
   const [showMore, setShowMore]=useState(false)
+  const [categories,setCategories]=useState<Category[]>()
 
   const orderFilters=[
     {'Menor Preço':'OrderByPriceASC'},
@@ -67,9 +87,8 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
   useEffect(()=>{
     const handleResize=()=>setIsMobile(window.innerWidth<=768)
-
-    console.log(products)
-    products.forEach((product:any)=>console.log(product.productName))
+    
+    if(typeof window!=='undefined'){ setProducts(produtos);setLoading(false)}
 
     window.addEventListener('resize',handleResize)
 
@@ -77,6 +96,11 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
       window.removeEventListener('resize', handleResize)
     }
   },[])
+
+  useEffect(()=>{
+    console.log(products)
+    setCategories(makeCategories(products))
+  },[products])
 
 
   return (
@@ -120,7 +144,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
               <>
                 {products.length > 0 ? (
                   <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                    {products.map((product:any)=><p>{product.productName}</p>)}
+                    {products.map((product:any)=><Card product={product}/>)}
                   </div>
                 ) : (
                   <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
