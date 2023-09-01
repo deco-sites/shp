@@ -34,21 +34,21 @@ const fetchProducts=async (queryString:string)=>{
   return data
 }
 
+const makeCategories=(prods:any)=>{
+  const categories:Category[]=[]
+  prods.forEach((prod:any)=>{
+    const categsName:string[]=prod.categories
+    const categsValues:string[]=prod.categoriesIds
+
+    for(let i=0;i<categsName.length-1;i++){
+      categories.push({name:categsName[i], value:categsValues[i]})
+    }
+  })
+
+  return categories.filter((obj,index,self)=>index===self.findIndex(item=>(item.name === obj.name && item.value === obj.value)))
+}
+
 const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
-
-  const makeCategories=(prods:any)=>{
-    const categories:Category[]=[]
-    prods.forEach((prod:any)=>{
-      const categsName:string[]=prod.categories
-      const categsValues:string[]=prod.categoriesIds
-
-      for(let i=0;i<categsName.length-1;i++){
-        categories.push({name:categsName[i], value:categsValues[i]})
-      }
-    })
-
-    return categories.filter((obj,index,self)=>index===self.findIndex(item=>(item.name === obj.name && item.value === obj.value)))
-  }
 
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
@@ -74,11 +74,27 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
   
   const categoryLabel=useRef<HTMLLabelElement>(null)
 
-  const listFiltersDesk=useRef<HTMLUListElement>(null)
-
   const divFlutLabel=useRef<HTMLLabelElement>(null)
 
   const contentWrapper=useRef<HTMLDivElement>(null)
+
+  const addModalFunctionality=()=>{
+    const modalTop=document.querySelector('dialog#top')!
+    const modalBottom=document.querySelector('dialog#bottom')!
+
+    const buttonTop=modalTop.querySelector('button#filtrar')!
+    const buttonBottom=modalBottom.querySelector('button#filtrar')!
+
+    buttonTop.addEventListener('click',()=>{
+      const valueSelected=modalTop.querySelector('input[type="radio"]:checked')! as HTMLInputElement
+      setCategory({name:valueSelected.name, value:valueSelected.value})
+    })
+
+    buttonBottom.addEventListener('click',()=>{
+      const valueSelected=modalTop.querySelector('input[type="radio"]:checked')! as HTMLInputElement
+      setCategory({name:valueSelected.name, value:valueSelected.value})
+    })
+  }
 
   const getProductsStartY=()=>{
     if(categoryLabel.current){
@@ -94,7 +110,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
     !showMore && setLoading(true)
     const queryString=[`ft=${termo}`,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
-    category.value!=='' && queryString.unshift(`fq=C:${category.value}`)
+    category.value!=='' && (category.value!=='inicio' && queryString.unshift(`fq=C:${category.value}`))
     const data= await fetchProducts(queryString.join('&'))
     setFetchLength(data.length)
     fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
@@ -110,16 +126,14 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
         const contentRect=contentWrapper.current.getBoundingClientRect()
         const endContent=contentRect.bottom + window.scrollY
         if(window.scrollY > getProductsStartY() && window.scrollY < endContent){
-          console.log('libera bottom')
           setDivFlut(true)
         }else{
-          console.log('fecha bottom')
           divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
         }
       }
     }
     
-    if(typeof window!=='undefined'){setProducts(produtos)}
+    if(typeof window!=='undefined'){setProducts(produtos), addModalFunctionality()}
 
     window.addEventListener('resize',handleResize)
     window.addEventListener('scroll',handleScroll)
@@ -182,7 +196,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
               <option disabled selected value='inicio' name='selecione'>Selecione</option>
               <option value='' name='nenhuma'>Nenhuma</option>
               {categories.map(category=>(
-                <option className='hover:bg-[#d1d1d1]' value={category.value} name={category.name}>{category.name.split('/').join(' ')}</option>
+                <option className='hover:bg-[#d1d1d1]' value={category.value} name={category.name}>{category.name.replaceAll('/',' ')}</option>
               ))}
             </select>
             <CategoriaModal categories={categories} id='top'/>
@@ -234,7 +248,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
             <CategoriaModal categories={categories} id={'bottom'}/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-            <span className='font-bold'>Ordenar Por:</span>
+            <span className='font-bold'>Ordenar Por</span>
             <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={event=>{
                 setOrder((event.target as HTMLSelectElement).value)

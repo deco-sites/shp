@@ -39,39 +39,31 @@ const CategoriaModal=({ categories, id }:Props)=>{
           <button className="btn btn-sm btn-circle absolute right-2 top-2 z-40 bg-[#3d3d3d] text-white border-transparent"
             onClick={(event)=>{
               event.preventDefault()
-              if(modal.current){
-                // const inputs=Array.from(modal.current.querySelectorAll('input[type="checkbox"]'))
-                // const priceInputs=Array.from(modal.current.querySelectorAll('input[name="min"], input[name="max"]'))
-
-                // const hasChecked=inputs.some(input=>(input as HTMLInputElement).checked===true)
-                // const hasPriceInputed=priceInputs.some(input=>(input as HTMLInputElement).value.length>0)
-
-                // if(hasChecked || hasPriceInputed){
-                //   alert('Existem filtros selecionados, clique em Filtrar!\n Ou deselecione os filtros')
-                // }else{
-                //   closeModal()
-                // }
-                closeModal()
-              }
+              closeModal()
             }}
           >✕</button>
 
           <div className='flex flex-col py-5 items-center gap-10 text-white'>
             <h2 className='text-2xl font-bold px-4'>Categorias</h2>
             <ul className='w-full'>
-              {categories.map(category=>(
+              <li className='py-1 px-2'>
                 <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                  <input type="radio" name="category" id={category.name} className='radio radio-primary'/>
-                  <span className='line-clamp-1 text-sm'>{category.name}</span>
+                  <input type="radio" name="category" id='nenhuma' className='radio radio-primary' value=''/>
+                  <span className='line-clamp-1 font-bold'>Nenhuma</span>
                 </label>
+              </li>
+              {categories.map(category=>(
+                <li className='py-1 px-2'>
+                  <label className='flex justify-start gap-2 cursor-pointer items-center'>
+                    <input type="radio" name="category" id={category.name} className='radio radio-primary' value={category.value}/>
+                    <span className='line-clamp-1 font-bold'>{category.name.replaceAll('/',' ')}</span>
+                  </label>
+                </li>
               ))}
             </ul>
             <div className='px-4 w-full'>
               <button onClick={()=>{
-                // const priceInputs=Array.from(modal.current!.querySelectorAll('input[name="min"], input[name="max"]'))
-                // const priceInputsLength=priceInputs.filter(input=>(input as HTMLInputElement).value.length===0).length
-                // const hasInputPriceVoid=(priceInputsLength>0 && priceInputsLength!==2)
-                // hasInputPriceVoid ? alert('Há somente um campo de preço preenchido!') : closeModal()
+                closeModal()
               }} id='filtrar' className='w-full bg-primary px-[5px] py-[10px] rounded-lg text-lg' type='button'>Filtrar</button>
             </div>
           </div>
