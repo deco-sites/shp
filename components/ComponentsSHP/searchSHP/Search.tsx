@@ -19,10 +19,11 @@ interface Category{
   value:string
 }
 
-const fetchProducts=async (queryString:string)=>{
+
+const fetchProducts=async (queryString:string, signal:AbortSignal)=>{
   const url=`https://api.shopinfo.com.br/Deco/getProductsList.php?${queryString}`
   console.log(url)
-  const data=await fetch(url).then(async (r)=>{
+  const data=await fetch(url,{signal}).then(async (r)=>{
     const resp=r.clone()
     const text=await r.text()
     if(text==='empty'){
@@ -78,21 +79,40 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
   const contentWrapper=useRef<HTMLDivElement>(null)
 
+  const componentWrapper=useRef<HTMLDivElement>(null)
+
+  const currentController=useRef<AbortController | null>(null)
+
   const addModalFunctionality=()=>{
-    const modalTop=document.querySelector('dialog#top')!
-    const modalBottom=document.querySelector('dialog#bottom')!
+    const modalTop=componentWrapper.current!.querySelector('dialog#top')!
+    const modalBottom=componentWrapper.current!.querySelector('dialog#bottom')!
 
     const buttonTop=modalTop.querySelector('button#filtrar')!
     const buttonBottom=modalBottom.querySelector('button#filtrar')!
 
+    const modalTopInputs=Array.from(modalTop.querySelectorAll('input[type="radio"]')) as HTMLInputElement[]
+    const modalBottomInputs=Array.from(modalBottom.querySelectorAll('input[type="radio"]')) as HTMLInputElement[]
+
+    const selectCategory=componentWrapper.current!.querySelector('select#categorySelector')! as HTMLSelectElement
+
     buttonTop.addEventListener('click',()=>{
-      const valueSelected=modalTop.querySelector('input[type="radio"]:checked')! as HTMLInputElement
-      setCategory({name:valueSelected.name, value:valueSelected.value})
+      const inputSelected=modalTop.querySelector('input[type="radio"]:checked')! as HTMLInputElement
+
+      (selectCategory.querySelector(`option[value="${inputSelected.value}"]`) as HTMLOptionElement).selected=true
+      
+      modalBottomInputs.find((input:HTMLInputElement)=>input.value===inputSelected.value)?.click()
+
+      setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
     })
 
     buttonBottom.addEventListener('click',()=>{
-      const valueSelected=modalTop.querySelector('input[type="radio"]:checked')! as HTMLInputElement
-      setCategory({name:valueSelected.name, value:valueSelected.value})
+      const inputSelected=modalBottom.querySelector('input[type="radio"]:checked')! as HTMLInputElement
+
+      (selectCategory.querySelector(`option[value="${inputSelected.value}"]`) as HTMLOptionElement).selected=true
+
+      modalTopInputs.find((input:HTMLInputElement)=>input.value===inputSelected.value)?.click()
+
+      setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
     })
   }
 
@@ -111,11 +131,24 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
     const queryString=[`ft=${termo}`,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
     category.value!=='' && (category.value!=='inicio' && queryString.unshift(`fq=C:${category.value}`))
-    const data= await fetchProducts(queryString.join('&'))
-    setFetchLength(data.length)
-    fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
-    setLoading(false)
-    setShowMore(false)
+    currentController.current = new AbortController()
+    try {
+      const data= await fetchProducts(queryString.join('&'), currentController.current.signal)
+      if(data){
+        setFetchLength(data.length)
+        fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
+        setLoading(false)
+        setShowMore(false)
+        currentController.current = null // Limpa a referência após a conclusão
+      }
+    } catch (error) {
+        // Verificar se o erro é um erro de aborto
+        if (error.name === 'AbortError') {
+            console.log('Fetch foi cancelado')
+        } else {
+            console.error(error)
+        }
+    }
   }
 
   useEffect(()=>{
@@ -133,7 +166,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
       }
     }
     
-    if(typeof window!=='undefined'){setProducts(produtos), addModalFunctionality()}
+    if(typeof window!=='undefined'){setProducts(produtos)}
 
     window.addEventListener('resize',handleResize)
     window.addEventListener('scroll',handleScroll)
@@ -144,6 +177,9 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
     }
   },[])
 
+
+  useEffect(()=>{typeof window!=='undefined' && addModalFunctionality()},[categories])
+
   useEffect(()=>{
     (category.value==='' || category.value==='inicio') && setCategories(makeCategories(products))
     setLoading(false)
@@ -151,7 +187,10 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
   useEffect(()=>{
     if(category.value!=='inicio'){
-      typeof window!=='undefined' && setFromTo({from:0, to:19, first:0})
+      if(typeof window!=='undefined'){
+        setFromTo({from:0, to:19, first:0})
+        console.log(category)
+      } 
     }
   },[category])
 
@@ -163,15 +202,15 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
   useEffect(()=>{
     if(fromTo.first!==1){
-      typeof window!=='undefined' && handleMoreProducts()
+      typeof window!=='undefined' && ((currentController.current && (currentController.current.abort(), currentController.current=null)),handleMoreProducts())
     }
   },[fromTo])
 
   return (
-    <div className='w-full text-white appearance-none'>
+    <div ref={componentWrapper} className='w-full text-white appearance-none'>
       <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
-        <div className='bg-transparent px-4 re1:px-0'>
-          <h4 className='text-3xl font-bold'>Sua busca por "{decodeURI(termo)}"</h4>
+        <div className='bg-transparent px-4 re1:px-0 mt-10 re1:mt-14 mb-3 re1:mb-6'>
+          <h4 className='text-xl re1:text-3xl'>Sua busca por "<span className='font-bold'>{decodeURI(termo)}</span>" {(category.name!=='' && category.name!=='selecione' && category.name!=='nenhuma') && (<>+ "<span className='font-bold'>{category.name.split('/').filter(item=>item!=='').join(' ')}</span>"</>)}</h4>
         </div>
 
         <div className='mb-8 re1:mb-0'>
@@ -183,25 +222,35 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
         </div>
 
         <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
-          <label className='flex flex-col re1:focus-within:text-primary w-[45%] re1:w-auto'>
+          <label className='flex flex-col re1:focus-within:text-primary w-[45%] re1:w-64'>
             <span className='font-bold'>Categorias</span>
-            <select id='categorySelector' className='text-white hidden re1:select !outline-none bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+            <select id='categorySelector' className='hidden re1:inline-flex text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 const Target=event.target as HTMLInputElement
                 const value=Target.value
                 const name=Target.querySelector(`option[value="${value}"]`)!.getAttribute('name')!
+                
+                const modalTop=componentWrapper.current!.querySelector('dialog#top')!
+                const modalBottom=componentWrapper.current!.querySelector('dialog#bottom')!
+
+                const inputTop=modalTop.querySelector(`input[value="${value}"]`) as HTMLInputElement
+                const inputBottom=modalBottom.querySelector(`input[value="${value}"]`) as HTMLInputElement
+
+                inputTop.click()
+                inputBottom.click()
+
                 setCategory({name, value})
               }}
             >
               <option disabled selected value='inicio' name='selecione'>Selecione</option>
-              <option value='' name='nenhuma'>Nenhuma</option>
+              <option className='hover:!bg-[#d1d1d1]' value='' name='nenhuma'>Nenhuma</option>
               {categories.map(category=>(
-                <option className='hover:bg-[#d1d1d1]' value={category.value} name={category.name}>{category.name.replaceAll('/',' ')}</option>
+                <option className='hover:!bg-[#d1d1d1] line-clamp-1' value={category.value} name={category.name}>{category.name.replaceAll('/',' ')}</option>
               ))}
             </select>
             <CategoriaModal categories={categories} id='top'/>
           </label>
-          <label className='flex flex-col focus-within:text-primary w-[45%] re1:w-auto'>
+          <label className='flex flex-col focus-within:text-primary w-[45%] re1:w-64'>
             <span className='font-bold'>Ordenar Por</span>
             <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
@@ -210,7 +259,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
             >
               <option disabled selected value='selecione'>Selecione</option>
               {orderFilters.map(filter=>(
-                <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+                <option className='hover:!bg-[#d1d1d1] line-clamp-1' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
               ))}
             </select>
           </label>

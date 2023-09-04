@@ -95,8 +95,30 @@ const SearchMenuBar=()=>{
     InputDesk.value=inputValue
     InputMob.value=inputValue
 
-    //aqui eu limpo as sugestões quando input.length >=2 e cancela qlqr request antigo pra focar no ultimo q o usuário inputa
-    inputValue.length>=2 ? ((currentController.current && (currentController.current.abort(), currentController.current=null)),fetchData()) : (currentController.current && (currentController.current.abort(), currentController.current=null),setAutoComplete([]))
+    // Cancelar requisição pendente caso inputValue seja vazio
+    if (inputValue.length < 2) {
+      if (currentController.current) {
+        currentController.current.abort();
+      }
+        setAutoComplete([])
+        return
+    }
+
+    // Adicionar um pequeno atraso antes de reenviar a solicitação, devido a atualizações do inputMob e inputDesk
+    const delay = setTimeout(() => {
+      // Reenviar solicitação apenas se inputValue tiver 2 ou mais caracteres
+      if (inputValue.length >= 2) {
+        if (currentController.current) {
+            currentController.current.abort();
+            currentController.current = null;
+        }
+        fetchData()
+      }
+    }, 300)
+
+  // Limpar o timeout anterior ao reexecutar o efeito
+  return () => clearTimeout(delay)
+
   },[inputValue])
 
   useEffect(() => {

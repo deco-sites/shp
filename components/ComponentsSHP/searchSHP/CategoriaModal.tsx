@@ -1,4 +1,4 @@
-import { useRef, useState } from 'preact/hooks'
+import { useRef, useState, useEffect } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 
 
@@ -13,6 +13,10 @@ interface Props{
 const CategoriaModal=({ categories, id }:Props)=>{
   const modal=useRef<HTMLDialogElement>(null)
   const [modalOpen, setModalOpen]=useState(false)
+  const [openedValue, setOpenedValue]=useState('')
+  const [selectedValue,setSelectedValue]=useState('')
+
+  const categsList=useRef<HTMLUListElement>(null)
 
   const openModal=()=>{
     if(modal.current && !modalOpen){
@@ -28,6 +32,18 @@ const CategoriaModal=({ categories, id }:Props)=>{
     }
   }
 
+  useEffect(()=>{
+    if(modalOpen && categsList.current){
+      if(!categsList.current.querySelector('input:checked')){(categsList.current.querySelector('input#nenhuma') as HTMLInputElement).click()}
+      const alreadySelectedValue=(categsList.current.querySelector('input:checked') as HTMLInputElement).value
+      setOpenedValue(alreadySelectedValue)
+    }
+  },[modalOpen])
+
+  // useEffect(()=>{
+  //   console.log(openedValue)
+  // },[openedValue])
+
   return(
     <div className='re1:hidden' >
       <button className='bg-transparent border border-white w-full h-12 px-10 rounded-lg' onClick={openModal}>
@@ -39,23 +55,31 @@ const CategoriaModal=({ categories, id }:Props)=>{
           <button className="btn btn-sm btn-circle absolute right-2 top-2 z-40 bg-[#3d3d3d] text-white border-transparent"
             onClick={(event)=>{
               event.preventDefault()
-              closeModal()
+              if(openedValue!==selectedValue){
+                alert('Você selecionou um valor diferente do anterior, portanto clique no botão para filtrar ou volte para o anterior!')
+              }else{
+                closeModal()
+              }
             }}
           >✕</button>
 
           <div className='flex flex-col py-5 items-center gap-10 text-white'>
             <h2 className='text-2xl font-bold px-4'>Categorias</h2>
-            <ul className='w-full'>
+            <ul ref={categsList} className='w-full'>
               <li className='py-1 px-2'>
                 <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                  <input type="radio" name="category" id='nenhuma' className='radio radio-primary' value=''/>
+                  <input type="radio" name="category" id='nenhuma' className='radio radio-primary' value=''
+                    onInput={(event)=>setSelectedValue((event.target as HTMLInputElement).value)}
+                  />
                   <span className='line-clamp-1 font-bold'>Nenhuma</span>
                 </label>
               </li>
               {categories.map(category=>(
                 <li className='py-1 px-2'>
                   <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                    <input type="radio" name="category" id={category.name} className='radio radio-primary' value={category.value}/>
+                    <input type="radio" name="category" id={category.name} className='radio radio-primary' value={category.value}
+                      onInput={(event)=>setSelectedValue((event.target as HTMLInputElement).value)}
+                    />
                     <span className='line-clamp-1 font-bold'>{category.name.replaceAll('/',' ')}</span>
                   </label>
                 </li>
