@@ -3,13 +3,17 @@ import type { SectionProps } from '$live/mod.ts'
 import Search from 'deco-sites/shp/components/ComponentsSHP/searchSHP/Search.tsx'
 
 export interface Props {
-  True:true
+  iconesNavegacionais:Array<{
+    href:string,
+    categoryName:string,
+    imgUrl:string
+  }>
 }
 
 export const loader: (
-  True: Props,
+  iconesNavegacionais:Props['iconesNavegacionais'],
   _req: Request
-) => Promise<{ data:any, q:string }> = async ( __,_req) => {
+) => Promise<{ data:any, q:string, iconesNavegacionais:Props['iconesNavegacionais'] }> = async (iconesNavegacionais,_req) => {
   const REQ = _req
 
   const q = REQ.url.split('?q=')[1]
@@ -26,17 +30,17 @@ export const loader: (
     }
   }).catch(err=>console.error(err)) || []
 
-  return { data,q }
+  return { data, q, iconesNavegacionais }
 }
 
-const SearchPage=({data, q}:SectionProps<typeof loader>)=>{
+const SearchPage=({data, q, iconesNavegacionais=[]}:SectionProps<typeof loader>)=>{
   
   if(!data.length){
-    return <p>Sua busca por '{q}' não obteve resultados</p>
+    return <p>Sua busca por "{encodeURI(q)}" não obteve resultados</p>
   }
 
   return(
-    <Search produtos={data} termo={q} iconesNavegacionais={[]}/>
+    <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais}/>
   )
 }
 

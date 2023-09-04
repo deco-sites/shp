@@ -49,7 +49,7 @@ const makeCategories=(prods:any)=>{
   return categories.filter((obj,index,self)=>index===self.findIndex(item=>(item.name === obj.name && item.value === obj.value)))
 }
 
-const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
+const Search=({produtos, termo, iconesNavegacionais}:Props)=>{
 
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
@@ -215,7 +215,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
         <div className='mb-8 re1:mb-0'>
           <ul className='flex re1:items-center justify-start re1:justify-around gap-4 re1:gap-0 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
-            {iconesNavegacionais.map((icon)=>(
+            {iconesNavegacionais.length && iconesNavegacionais.map((icon)=>(
               <IconeNavegacional href={icon.href} imgUrl={icon.imgUrl} categoryName={icon.categoryName} />
             ))}
           </ul>
