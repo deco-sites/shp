@@ -1,3 +1,1 @@
-barra de busca:
-  -adicionar evento pra ouvir esc também no desk e redirecionar pra página de busca quando houver uma
-  
+Arrumar valor de parcela no CardProdTypeVtex

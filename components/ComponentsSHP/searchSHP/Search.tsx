@@ -183,6 +183,7 @@ const Search=({produtos, termo, iconesNavegacionais}:Props)=>{
   useEffect(()=>{
     (category.value==='' || category.value==='inicio') && setCategories(makeCategories(products))
     setLoading(false)
+    console.log(products)
   },[products])
 
   useEffect(()=>{
