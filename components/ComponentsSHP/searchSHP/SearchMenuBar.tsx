@@ -39,11 +39,12 @@ const SearchMenuBar=()=>{
   const [inputValue, setInputValue]=useState('')
   const [autoComplete,setAutoComplete]=useState<any>([])
   const [openSuggestions, setOpenSuggestions]=useState(false)
+  const finalInputValue = useRef<string>('')
 
   const fetchData=async ()=>{
     currentController.current = new AbortController()
     try {
-      const data = await searchMenuBarLoader(inputValue, currentController.current.signal)
+      const data = await searchMenuBarLoader(finalInputValue.current, currentController.current.signal)
       setAutoComplete(data)
       currentController.current = null // Limpa a referência após a conclusão
     } catch (error) {
@@ -98,6 +99,8 @@ const SearchMenuBar=()=>{
     InputDesk.value=inputValue
     InputMob.value=inputValue
 
+    console.log(`input:"${inputValue}"`)
+
     // Cancelar requisição pendente caso inputValue seja vazio
     if (inputValue.length < 2) {
       if (currentController.current) {
@@ -109,6 +112,10 @@ const SearchMenuBar=()=>{
 
     // Adicionar um pequeno atraso antes de reenviar a solicitação, devido a atualizações do inputMob e inputDesk
     const delay = setTimeout(() => {
+
+      //necessário devido ao delay atrasar a filtragem dos nomes das sugestions
+      finalInputValue.current=inputValue
+
       // Reenviar solicitação apenas se inputValue tiver 2 ou mais caracteres
       if (inputValue.length >= 2) {
         if (currentController.current) {
@@ -117,7 +124,7 @@ const SearchMenuBar=()=>{
         }
         fetchData()
       }
-    }, 100)
+    }, 200)
 
   // Limpar o timeout anterior ao reexecutar o efeito
   return () => clearTimeout(delay)
@@ -156,8 +163,11 @@ const SearchMenuBar=()=>{
                   </a>
                 )
               }else{
-                const fqName=suggestion.name.split(inputValue)[1].trim()
-                const href=`/s?q=${inputValue}&fqName=${fqName}`
+
+                //esta parte 
+                const fqName=suggestion.name.replace(finalInputValue.current.trim(),'').trim()
+                const href=`/s?q=${finalInputValue.current}&fqName=${fqName}`
+                console.log('desk'+fqName)
 
                 return(
                 <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-white ml-1'>
@@ -208,8 +218,11 @@ const SearchMenuBar=()=>{
                 </a>
               )
             }else{
-              const fqName=suggestion.name.split(inputValue)[1].trim()
-              const href=`/s?q=${inputValue}&fqName=${fqName}`
+
+              //esta parte aqui
+              const fqName=suggestion.name.replace(finalInputValue.current.trim(),'').trim()
+              const href=`/s?q=${finalInputValue.current}&fqName=${fqName}`
+              console.log('mob'+fqName)
 
               return(
               <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-white ml-1'>
