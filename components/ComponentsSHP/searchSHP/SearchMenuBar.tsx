@@ -145,12 +145,12 @@ const SearchMenuBar=()=>{
 
           <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : ''} hidden flex-col w-2/5 mr-[3%] absolute border border-[#3d3d3d] border-t-transparent bg-[#111] top-3/4 rounded-b-lg rounded-br-lg`}>
             {autoComplete.map((suggestion:any)=>suggestion.thumbUrl ? (
-                <a href={suggestion.href} className='flex flex-row items-center py-1 px-1'>
+                <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727]'>
                   <Image src={suggestion.thumbUrl.replace('25-25/1','32-32/1')} width={32} height={32} loading='eager' decoding='async' fetchPriority='high'/>
                   <p className='line-clamp-1 text-sm text-white ml-1'>{suggestion.name}</p>
                 </a>
               ) : (
-                <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 line-clamp-1 text-sm text-white ml-1'>
+                <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 line-clamp-1 text-sm text-white ml-1 hover:bg-[#272727]'>
                   {suggestion.name}
                 </a>
             ))}
