@@ -7,6 +7,10 @@ import CategoriaModal from 'deco-sites/shp/components/ComponentsSHP/searchSHP/Ca
 export interface Props{
   produtos:any
   termo:string
+  categoria?:{
+    name:string,
+    value:string
+  },
   iconesNavegacionais:Array<{
     href:string,
     categoryName:string,
@@ -49,7 +53,7 @@ const makeCategories=(prods:any)=>{
   return categories.filter((obj,index,self)=>index===self.findIndex(item=>(item.name === obj.name && item.value === obj.value)))
 }
 
-const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
+const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'selecione', value:'inicio'} }:Props)=>{
 
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
@@ -60,7 +64,7 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
   const [fetchLength, setFetchLength]=useState(produtos.length)
   const [showMore, setShowMore]=useState(false)
   const [categories,setCategories]=useState<Category[]>([])
-  const [category, setCategory]=useState<Category>({name:'selecione', value:'inicio'})
+  const [category, setCategory]=useState<Category>(categoria)
 
   const orderFilters=[
     {'Menor Preço':'OrderByPriceASC'},
@@ -190,7 +194,6 @@ const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
     if(category.value!=='inicio'){
       if(typeof window!=='undefined'){
         setFromTo({from:0, to:19, first:0})
-        console.log(category)
       } 
     }
   },[category])
