@@ -65,6 +65,8 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
   const [showMore, setShowMore]=useState(false)
   const [categories,setCategories]=useState<Category[]>([])
   const [category, setCategory]=useState<Category>(categoria)
+  const [first,setFirst]=useState(true)
+  const [showFqCateg, setShowFqCateg]=useState(true)
 
   const orderFilters=[
     {'Menor Preço':'OrderByPriceASC'},
@@ -134,7 +136,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
     !showMore && setLoading(true)
     const queryString=[`ft=${termo}`,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
-    category.value!=='' && (category.value!=='inicio' && queryString.unshift(`fq=C:${category.value}`))
+    category.value!=='' && (!first && queryString.unshift(`fq=C:${category.value}`))
     currentController.current = new AbortController()
     try {
       const data= await fetchProducts(queryString.join('&'), currentController.current.signal)
@@ -191,8 +193,10 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
   },[products])
 
   useEffect(()=>{
-    if(category.value!=='inicio'){
+    if(!first){
       if(typeof window!=='undefined'){
+        console.log('executou effect do category')
+        setShowFqCateg(false)
         setFromTo({from:0, to:19, first:0})
       } 
     }
@@ -209,6 +213,11 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
       typeof window!=='undefined' && ((currentController.current && (currentController.current.abort(), currentController.current=null)),handleMoreProducts())
     }
   },[fromTo])
+
+  useEffect(()=>{
+    (category.value==='inicio') && setShowFqCateg(false)
+    setFirst(false)
+  },[])
 
   return (
     <div ref={componentWrapper} className='w-full text-white appearance-none'>
@@ -228,7 +237,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
         <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
           <label className='flex flex-col re1:focus-within:text-primary w-[45%] re1:w-64'>
             <span className='font-bold'>Categorias</span>
-            <select id='categorySelector' className='hidden re1:inline-flex text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+            <select value={category.value} id='categorySelector' className='hidden re1:inline-flex text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 const Target=event.target as HTMLInputElement
                 const value=Target.value
@@ -246,7 +255,9 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
                 setCategory({name, value})
               }}
             >
-              <option disabled selected value='inicio' name='selecione'>Selecione</option>
+              
+              <option disabled value='inicio' name='selecione'>Selecione</option>
+              {showFqCateg && <option disabled value={category.value} name={category.name}>{category.name}</option>}
               <option className='hover:!bg-[#d1d1d1]' value='' name='nenhuma'>Nenhuma</option>
               {categories.map(category=>(
                 <option className='hover:!bg-[#d1d1d1] line-clamp-1' value={category.value} name={category.name}>{category.name.replaceAll('/',' ')}</option>
