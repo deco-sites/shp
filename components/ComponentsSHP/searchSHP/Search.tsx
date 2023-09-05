@@ -108,7 +108,14 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
       
       modalBottomInputs.find((input:HTMLInputElement)=>input.value===inputSelected.value)?.click()
 
-      setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
+      // if(showFqCateg){
+      //   if(inputSelected.value!==fqValue){
+          
+      //     setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
+      //   }
+      // }else{
+        setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
+      // }
     })
 
     buttonBottom.addEventListener('click',()=>{
@@ -118,7 +125,14 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
 
       modalTopInputs.find((input:HTMLInputElement)=>input.value===inputSelected.value)?.click()
 
-      setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
+      // if(showFqCateg){
+      //   if(inputSelected.value!==fqValue){
+      //     console.log( fqValue)
+      //     setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
+      //   }
+      // }else{
+        setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
+      // }
     })
   }
 
@@ -255,7 +269,6 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
                 setCategory({name, value})
               }}
             >
-              
               <option disabled value='inicio' name='selecione'>Selecione</option>
               {showFqCateg && <option disabled value={category.value} name={category.name}>{category.name}</option>}
               <option className='hover:!bg-[#d1d1d1]' value='' name='nenhuma'>Nenhuma</option>
@@ -263,7 +276,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
                 <option className='hover:!bg-[#d1d1d1] line-clamp-1' value={category.value} name={category.name}>{category.name.replaceAll('/',' ')}</option>
               ))}
             </select>
-            <CategoriaModal categories={categories} id='top'/>
+            <CategoriaModal categories={categories} id='top' showFqOption={showFqCateg ? {name:category.name, value:category.value} : undefined}/>
           </label>
           <label className='flex flex-col focus-within:text-primary w-[45%] re1:w-64'>
             <span className='font-bold'>Ordenar Por</span>
@@ -309,7 +322,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
       <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-[#111]`}>
           <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
             <span className='font-bold'>Categorias</span>
-            <CategoriaModal categories={categories} id={'bottom'}/>
+            <CategoriaModal categories={categories} id={'bottom'} showFqOption={showFqCateg ? {name:category.name, value:category.value} : undefined}/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por</span>
