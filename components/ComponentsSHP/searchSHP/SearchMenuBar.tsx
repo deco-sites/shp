@@ -114,7 +114,7 @@ const SearchMenuBar=()=>{
         }
         fetchData()
       }
-    }, 300)
+    }, 100)
 
   // Limpar o timeout anterior ao reexecutar o efeito
   return () => clearTimeout(delay)

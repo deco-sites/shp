@@ -49,7 +49,7 @@ const makeCategories=(prods:any)=>{
   return categories.filter((obj,index,self)=>index===self.findIndex(item=>(item.name === obj.name && item.value === obj.value)))
 }
 
-const Search=({produtos, termo, iconesNavegacionais}:Props)=>{
+const Search=({produtos, termo, iconesNavegacionais=[]}:Props)=>{
 
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
