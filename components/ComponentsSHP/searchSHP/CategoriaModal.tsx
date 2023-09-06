@@ -7,19 +7,15 @@ interface Props{
     name:string,
     value:string
   }>,
-  id:string,
-  showFqOption?:{
-    name:string,
-    value:string
-  }
+  id:string
 }
 
-const CategoriaModal=({ categories, id, showFqOption }:Props)=>{
+const CategoriaModal=({ categories, id }:Props)=>{
 
   const modal=useRef<HTMLDialogElement>(null)
   const [modalOpen, setModalOpen]=useState(false)
   const [openedValue, setOpenedValue]=useState('')
-  const [selectedValue,setSelectedValue]=useState(showFqOption ? showFqOption.value.toString() : '')
+  const [selectedValue,setSelectedValue]=useState('')
 
   const categsList=useRef<HTMLUListElement>(null)
 
@@ -67,14 +63,6 @@ const CategoriaModal=({ categories, id, showFqOption }:Props)=>{
           <div className='flex flex-col py-5 items-center gap-10 text-white'>
             <h2 className='text-2xl font-bold px-4'>Categorias</h2>
             <ul ref={categsList} className='w-full'>
-              {showFqOption && (
-                <li className='py-1 px-2'>
-                  <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                    <input checked disabled type="radio" name="category" id={showFqOption.name} className='radio radio-primary' value={showFqOption.value}/>
-                    <span className='line-clamp-1 font-bold'>{showFqOption.name.replaceAll('/',' ')}</span>
-                  </label>
-                </li>
-              )}
               <li className='py-1 px-2'>
                 <label className='flex justify-start gap-2 cursor-pointer items-center'>
                   <input type="radio" name="category" id='nenhuma' className='radio radio-primary' value=''

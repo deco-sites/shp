@@ -1,6 +1,7 @@
 // deno-lint-ignore-file no-explicit-any
 import type { SectionProps } from '$live/mod.ts'
 import Search from 'deco-sites/shp/components/ComponentsSHP/searchSHP/Search.tsx'
+import SearchSub from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchSub.tsx'
 
 export interface Props {
   iconesNavegacionais:Array<{
@@ -63,9 +64,7 @@ const SearchPage=({data, q, iconesNavegacionais, fqName, fqVal}:SectionProps<typ
     return <p>Sua busca por "{encodeURI(q)}" não obteve resultados</p>
   }
 
-  return(
-    <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} categoria={(fqName && fqVal) ? {name:fqName, value:fqVal} : undefined}/>
-  )
+  return (fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais}/>
 }
 
 export default SearchPage

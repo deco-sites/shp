@@ -7,10 +7,6 @@ import CategoriaModal from 'deco-sites/shp/components/ComponentsSHP/searchSHP/Ca
 export interface Props{
   produtos:any
   termo:string
-  categoria?:{
-    name:string,
-    value:string
-  },
   iconesNavegacionais:Array<{
     href:string,
     categoryName:string,
@@ -53,7 +49,7 @@ const makeCategories=(prods:any)=>{
   return categories.filter((obj,index,self)=>index===self.findIndex(item=>(item.name === obj.name && item.value === obj.value)))
 }
 
-const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'selecione', value:'inicio'} }:Props)=>{
+const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
@@ -64,9 +60,8 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
   const [fetchLength, setFetchLength]=useState(produtos.length)
   const [showMore, setShowMore]=useState(false)
   const [categories,setCategories]=useState<Category[]>([])
-  const [category, setCategory]=useState<Category>(categoria)
+  const [category, setCategory]=useState<Category>({name:'selecione', value:'inicio'})
   const [first,setFirst]=useState(true)
-  const [showFqCateg, setShowFqCateg]=useState(true)
 
   const orderFilters=[
     {'Menor Preço':'OrderByPriceASC'},
@@ -108,14 +103,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
       
       modalBottomInputs.find((input:HTMLInputElement)=>input.value===inputSelected.value)?.click()
 
-      // if(showFqCateg){
-      //   if(inputSelected.value!==fqValue){
-          
-      //     setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
-      //   }
-      // }else{
-        setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
-      // }
+      setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
     })
 
     buttonBottom.addEventListener('click',()=>{
@@ -125,14 +113,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
 
       modalTopInputs.find((input:HTMLInputElement)=>input.value===inputSelected.value)?.click()
 
-      // if(showFqCateg){
-      //   if(inputSelected.value!==fqValue){
-      //     console.log( fqValue)
-      //     setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
-      //   }
-      // }else{
-        setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
-      // }
+      setCategory({name:inputSelected.getAttribute('id')!, value:inputSelected.value})
     })
   }
 
@@ -203,14 +184,11 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
   useEffect(()=>{
     (category.value==='' || category.value==='inicio') && setCategories(makeCategories(products))
     setLoading(false)
-    console.log(products)
   },[products])
 
   useEffect(()=>{
     if(!first){
       if(typeof window!=='undefined'){
-        console.log('executou effect do category')
-        setShowFqCateg(false)
         setFromTo({from:0, to:19, first:0})
       } 
     }
@@ -229,7 +207,6 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
   },[fromTo])
 
   useEffect(()=>{
-    (category.value==='inicio') && setShowFqCateg(false)
     setFirst(false)
   },[])
 
@@ -237,7 +214,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
     <div ref={componentWrapper} className='w-full text-white appearance-none'>
       <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
         <div className='bg-transparent px-4 re1:px-0 mt-10 re1:mt-14 mb-3 re1:mb-6'>
-          <h4 className='text-xl re1:text-3xl'>Sua busca por "<span className='font-bold'>{decodeURI(termo)}</span>" {(category.name!=='' && category.name!=='selecione' && category.name!=='nenhuma') && (<>+ "<span className='font-bold'>{category.name.split('/').filter(item=>item!=='').join(' ')}</span>"</>)}</h4>
+          <h4 className='text-xl re1:text-3xl'>Sua busca por "<span className='font-bold'>{decodeURI(termo)}</span>"</h4>
         </div>
 
         <div className='mb-8 re1:my-10'>
@@ -274,13 +251,12 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
               }}
             >
               <option disabled value='inicio' name='selecione'>Selecione</option>
-              {showFqCateg && <option disabled value={category.value} name={category.name}>{category.name}</option>}
               <option className='hover:!bg-[#d1d1d1]' value='' name='nenhuma'>Nenhuma</option>
               {categories.map(category=>(
                 <option className='hover:!bg-[#d1d1d1] line-clamp-1' value={category.value} name={category.name}>{category.name.replaceAll('/',' ')}</option>
               ))}
             </select>
-            <CategoriaModal categories={categories} id='top' showFqOption={showFqCateg ? {name:category.name, value:category.value} : undefined}/>
+            <CategoriaModal categories={categories} id='top'/>
           </label>
           <label className='flex flex-col focus-within:text-primary w-[45%] re1:w-64'>
             <span className='font-bold'>Ordenar Por</span>
@@ -326,7 +302,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
       <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-[#111]`}>
           <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
             <span className='font-bold'>Categorias</span>
-            <CategoriaModal categories={categories} id={'bottom'} showFqOption={showFqCateg ? {name:category.name, value:category.value} : undefined}/>
+            <CategoriaModal categories={categories} id={'bottom'}/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por</span>
