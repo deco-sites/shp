@@ -240,9 +240,13 @@ const Search=({ produtos, termo, iconesNavegacionais=[], categoria={name:'seleci
           <h4 className='text-xl re1:text-3xl'>Sua busca por "<span className='font-bold'>{decodeURI(termo)}</span>" {(category.name!=='' && category.name!=='selecione' && category.name!=='nenhuma') && (<>+ "<span className='font-bold'>{category.name.split('/').filter(item=>item!=='').join(' ')}</span>"</>)}</h4>
         </div>
 
-        <div className='mb-8 re1:mb-0'>
+        <div className='mb-8 re1:my-10'>
+          <div className='text-xl re1:text-2xl flex justify-between items-center w-full mb-4 px-4 re1:px-0'>
+            <p>Principais categorias</p>
+            <hr className='border-[#262626] w-[40%] re1:w-[80%]'/>
+          </div>
           <ul className='flex re1:items-center justify-start re1:justify-around gap-4 re1:gap-0 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
-            {iconesNavegacionais.length && iconesNavegacionais.map((icon)=>(
+            {iconesNavegacionais.map((icon)=>(
               <IconeNavegacional href={icon.href} imgUrl={icon.imgUrl} categoryName={icon.categoryName} />
             ))}
           </ul>

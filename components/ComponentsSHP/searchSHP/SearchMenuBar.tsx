@@ -1,7 +1,10 @@
 // deno-lint-ignore-file no-explicit-any
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
-import { putSizeInUrl } from 'deco-sites/shp/FunctionsSHP/AddSizeInUrl.ts'
+import { SectionProps, LoaderContext } from 'deco/mod.ts'
+import type  {Manifest}  from 'deco-sites/shp/live.gen.ts'
+import { Runtime } from "deco-sites/shp/runtime.ts"
+import loader from 'deco-sites/shp/loaders/getSubCategories.ts'
 
 const searchMenuBarLoader = async (term:string, signal:AbortSignal)=>{
   const url=`https://api.shopinfo.com.br/Deco/getAutoComplete.php?ft=${term}`
@@ -27,7 +30,6 @@ const searchMenuBarLoader = async (term:string, signal:AbortSignal)=>{
 }
 
 const SearchMenuBar=()=>{
-
   const divInputSearchMobile = useRef<HTMLDivElement>(null)
   const inputDesk=useRef<HTMLInputElement>(null)
   const inputMob=useRef<HTMLInputElement>(null)
@@ -99,8 +101,6 @@ const SearchMenuBar=()=>{
     InputDesk.value=inputValue
     InputMob.value=inputValue
 
-    console.log(`input:"${inputValue}"`)
-
     // Cancelar requisição pendente caso inputValue seja vazio
     if (inputValue.length < 2) {
       if (currentController.current) {
@@ -135,6 +135,14 @@ const SearchMenuBar=()=>{
     // aqui eu abro as sugestões caso haja produtos ou autocomplete
     (autoComplete.length) ? setOpenSuggestions(true) : setOpenSuggestions(false)
   }, [autoComplete])
+
+  useEffect(()=>{
+    (async()=>{
+      const data=await loader()
+
+      console.log(data)
+    })()
+  },[])
 
   return(
     <>
