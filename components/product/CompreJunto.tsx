@@ -21,12 +21,14 @@ interface objBuyTogether{
 const loaderSearchAPI= async (skuId:string)=>{
   const url=`https://api.shopinfo.com.br/Deco/getProductBySku.php?sku=${skuId}`
   const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
+  console.log(data)
   return data
 }
 
 const loaderBuyTogether=async(skuId:string):Promise<objBuyTogether[]>=>{
   const url=`https://api.shopinfo.com.br/Deco/getBuyTogetherValuesBySku.php?sku=${skuId}`
   const data=(await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))) || []
+  console.log(data)
   return data
 }
 
@@ -58,6 +60,7 @@ const CompreJunto=({page}:Props)=>{
   }
 
   useEffect(()=>{
+    console.log(product)
     handleData()
   },[])
 

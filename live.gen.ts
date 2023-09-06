@@ -62,7 +62,7 @@ import * as $$$$$$$$28 from "./sections/ProductShelf.tsx";
 import * as $$$$$$$$29 from "./sections/ProductSpecification.tsx";
 import * as $$$$$$$$30 from "./sections/ProductTrustvox.tsx";
 import * as $$$$$$$$31 from "./sections/ReturnH1.tsx";
-import * as $$$$$$$$32 from "./sections/SearchPage.tsx";
+import * as $$$$$$$$32 from "./sections/Search/SearchPage.tsx";
 import * as $$$$$$$$33 from "./sections/SearchResult.tsx";
 import * as $$$$$$$$34 from "./sections/Shelf.tsx";
 import * as $$$$$$$$35 from "./sections/SignNewsletter.tsx";
@@ -341,7 +341,7 @@ const manifest = {
     "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$29,
     "deco-sites/shp/sections/ProductTrustvox.tsx": $$$$$$$$30,
     "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$31,
-    "deco-sites/shp/sections/SearchPage.tsx": $$$$$$$$32,
+    "deco-sites/shp/sections/Search/SearchPage.tsx": $$$$$$$$32,
     "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$33,
     "deco-sites/shp/sections/Shelf.tsx": $$$$$$$$34,
     "deco-sites/shp/sections/SignNewsletter.tsx": $$$$$$$$35,

@@ -1,30 +1,27 @@
 // deno-lint-ignore-file no-explicit-any
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
-import { SectionProps, LoaderContext } from 'deco/mod.ts'
-import type  {Manifest}  from 'deco-sites/shp/live.gen.ts'
-import { Runtime } from "deco-sites/shp/runtime.ts"
-import loader from 'deco-sites/shp/loaders/getSubCategories.ts'
+import { Runtime } from 'deco-sites/shp/runtime.ts'
 
 const searchMenuBarLoader = async (term:string, signal:AbortSignal)=>{
-  const url=`https://api.shopinfo.com.br/Deco/getAutoComplete.php?ft=${term}`
+  const url=`https://api.shopinfo.com.br/Deco/getAutoComplete.php?ft=${encodeURI(term)}`
 
   const autocomplete=await fetch(url, {signal}).then(async (r)=>{
-        const resp=r.clone()
-        const text=await r.text()
-        if(text==='empty'){
-          return text
-        }else{
-          return resp.json()
-        }
-      }).catch(err=>console.error(err))
+    const resp=r.clone()
+    const text=await r.text()
+    if(text==='empty'){
+      return
+    }else if(text.split('')[0]==='<'){
+      return
+    }else{
+      return resp.json()
+    }
+  }).catch(err=>console.error(err))
 
   const finalAutocomplete=autocomplete ? autocomplete.itemsReturned.map((item:any)=>{
     item.href=item.href.split('https://www.shopinfo.com.br')[1]
     return item
   }) : []
-
-  console.log(finalAutocomplete)
 
   return finalAutocomplete
 }
@@ -42,12 +39,28 @@ const SearchMenuBar=()=>{
   const [autoComplete,setAutoComplete]=useState<any>([])
   const [openSuggestions, setOpenSuggestions]=useState(false)
   const finalInputValue = useRef<string>('')
+  const [categories, setCategories]=useState([])
 
   const fetchData=async ()=>{
     currentController.current = new AbortController()
     try {
-      const data = await searchMenuBarLoader(finalInputValue.current, currentController.current.signal)
-      setAutoComplete(data)
+      const valueInputed=finalInputValue.current
+      const data = await searchMenuBarLoader(valueInputed, currentController.current.signal)
+      const filteredData=data.map((suggestion:any)=>{
+        if(!suggestion.thumbUrl){
+          const possibleCategoryName=suggestion.name.replace(valueInputed.trim(),'').trim().toLowerCase()
+          const possibleCategoryObj:any=categories.find((obj:any)=>obj.name.toLowerCase()===possibleCategoryName)
+          if(possibleCategoryObj){
+            if(possibleCategoryObj.children.some((child:any)=>child.name.toLowerCase()===valueInputed.toLowerCase().trim())){
+              return suggestion
+            }
+          }
+        }else{
+          return suggestion
+        }
+      }).filter((item:any)=>item!==undefined)
+
+      setAutoComplete(filteredData)
       currentController.current = null // Limpa a referência após a conclusão
     } catch (error) {
         // Verificar se o erro é um erro de aborto
@@ -133,14 +146,13 @@ const SearchMenuBar=()=>{
 
   useEffect(() => {
     // aqui eu abro as sugestões caso haja produtos ou autocomplete
-    (autoComplete.length) ? setOpenSuggestions(true) : setOpenSuggestions(false)
+    autoComplete.length ? setOpenSuggestions(true) : setOpenSuggestions(false)
   }, [autoComplete])
 
   useEffect(()=>{
     (async()=>{
-      const data=await loader()
-
-      console.log(data)
+      const data=await Runtime.invoke({key:'deco-sites/shp/loaders/getSubCategories.ts'})
+      setCategories(data)
     })()
   },[])
 
@@ -171,11 +183,8 @@ const SearchMenuBar=()=>{
                   </a>
                 )
               }else{
-
-                //esta parte 
                 const fqName=suggestion.name.replace(finalInputValue.current.trim(),'').trim()
                 const href=`/s?q=${finalInputValue.current}&fqName=${fqName}`
-                console.log('desk'+fqName)
 
                 return(
                 <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-white ml-1'>
@@ -226,11 +235,8 @@ const SearchMenuBar=()=>{
                 </a>
               )
             }else{
-
-              //esta parte aqui
               const fqName=suggestion.name.replace(finalInputValue.current.trim(),'').trim()
               const href=`/s?q=${finalInputValue.current}&fqName=${fqName}`
-              console.log('mob'+fqName)
 
               return(
               <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-white ml-1'>
