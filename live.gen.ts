@@ -55,14 +55,14 @@ import * as $$$$$$$$20 from "./sections/PagCategEDepto/iconeNavegacional.tsx";
 import * as $$$$$$$$21 from "./sections/PagCategEDepto/PagDepartamento.tsx";
 import * as $$$$$$$$22 from "./sections/PagCategEDepto/PriceFilter.tsx";
 import * as $$$$$$$$23 from "./sections/PCNivelGamer.tsx";
-import * as $$$$$$$$24 from "./sections/ProductCompreJunto.tsx";
-import * as $$$$$$$$25 from "./sections/productDescription.tsx";
-import * as $$$$$$$$26 from "./sections/ProductDetails.tsx";
-import * as $$$$$$$$27 from "./sections/ProductGames.tsx";
-import * as $$$$$$$$28 from "./sections/ProductRecommendedProds.tsx";
-import * as $$$$$$$$29 from "./sections/ProductShelf.tsx";
-import * as $$$$$$$$30 from "./sections/ProductSpecification.tsx";
-import * as $$$$$$$$31 from "./sections/ProductTrustvox.tsx";
+import * as $$$$$$$$24 from "./sections/Product/ProductCompreJunto.tsx";
+import * as $$$$$$$$25 from "./sections/Product/ProductDescription.tsx";
+import * as $$$$$$$$26 from "./sections/Product/ProductDetails.tsx";
+import * as $$$$$$$$27 from "./sections/Product/ProductGames.tsx";
+import * as $$$$$$$$28 from "./sections/Product/ProductRecommendedProds.tsx";
+import * as $$$$$$$$29 from "./sections/Product/ProductSpecification.tsx";
+import * as $$$$$$$$30 from "./sections/Product/ProductTrustvox.tsx";
+import * as $$$$$$$$31 from "./sections/ProductShelf.tsx";
 import * as $$$$$$$$32 from "./sections/ReturnH1.tsx";
 import * as $$$$$$$$33 from "./sections/Search/SearchPage.tsx";
 import * as $$$$$$$$34 from "./sections/SearchResult.tsx";
@@ -335,14 +335,14 @@ const manifest = {
     "deco-sites/shp/sections/PagCategEDepto/PagDepartamento.tsx": $$$$$$$$21,
     "deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx": $$$$$$$$22,
     "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$$$23,
-    "deco-sites/shp/sections/ProductCompreJunto.tsx": $$$$$$$$24,
-    "deco-sites/shp/sections/productDescription.tsx": $$$$$$$$25,
-    "deco-sites/shp/sections/ProductDetails.tsx": $$$$$$$$26,
-    "deco-sites/shp/sections/ProductGames.tsx": $$$$$$$$27,
-    "deco-sites/shp/sections/ProductRecommendedProds.tsx": $$$$$$$$28,
-    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$29,
-    "deco-sites/shp/sections/ProductSpecification.tsx": $$$$$$$$30,
-    "deco-sites/shp/sections/ProductTrustvox.tsx": $$$$$$$$31,
+    "deco-sites/shp/sections/Product/ProductCompreJunto.tsx": $$$$$$$$24,
+    "deco-sites/shp/sections/Product/ProductDescription.tsx": $$$$$$$$25,
+    "deco-sites/shp/sections/Product/ProductDetails.tsx": $$$$$$$$26,
+    "deco-sites/shp/sections/Product/ProductGames.tsx": $$$$$$$$27,
+    "deco-sites/shp/sections/Product/ProductRecommendedProds.tsx": $$$$$$$$28,
+    "deco-sites/shp/sections/Product/ProductSpecification.tsx": $$$$$$$$29,
+    "deco-sites/shp/sections/Product/ProductTrustvox.tsx": $$$$$$$$30,
+    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$$$31,
     "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$$$32,
     "deco-sites/shp/sections/Search/SearchPage.tsx": $$$$$$$$33,
     "deco-sites/shp/sections/SearchResult.tsx": $$$$$$$$34,

@@ -287,7 +287,7 @@ const Specification=({page}:Props)=>{
               </div>
 
               {/* Specs Table */}
-              <table className='w-screen re1:w-[40vw]'>
+              <table className='w-screen re1:w-[25vw] re4:w-[40vw]'>
                 <tbody>
                   {specs.map(item=>(
                     <tr className='even:bg-[#151515] text-left'>
