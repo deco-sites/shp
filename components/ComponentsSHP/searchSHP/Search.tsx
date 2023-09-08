@@ -218,7 +218,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
         </div>
 
         <div className='mb-8 re1:my-10'>
-          <div className='text-xl re1:text-2xl flex justify-between items-center w-full mb-4 px-4 re1:px-0'>
+          <div className='text-xl flex justify-between items-center w-full mb-4 px-4 re1:px-0'>
             <p>Principais categorias</p>
             <hr className='border-[#262626] w-[40%] re1:w-[80%]'/>
           </div>

@@ -2,6 +2,7 @@
 import type { SectionProps } from '$live/mod.ts'
 import Search from 'deco-sites/shp/components/ComponentsSHP/searchSHP/Search.tsx'
 import SearchSub from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchSub.tsx'
+import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 
 export interface Props {
   iconesNavegacionais:Array<{
@@ -61,7 +62,26 @@ export  const loader = async (
 const SearchPage=({data, q, iconesNavegacionais, fqName, fqVal}:SectionProps<typeof loader>)=>{
   
   if(!data.length){
-    return <p>Sua busca por "{encodeURI(q)}" não obteve resultados</p>
+    return (
+      <div className='re1:px-[5%] re4:px-[15%] appearance-none'>
+        <div className='flex flex-col items-center justify-center gap-10 bg-transparent px-4 re1:px-0 mt-14 re1:mt-18 mb-6 re1:mb-10'>
+          <p className='text-5xl re1:text-7xl font-bold text-white'>Vish, Pinou</p>
+          <h4 className='text-lg re1:text-3xl text-center'>Sua busca por "<span className='font-bold text-white'>{decodeURI(q)}</span>" não obteve resultados!</h4>
+          <a href='/' className='bg-primary py-[10px] px-[50px] text-white rounded-lg'>Voltar para a Home</a>
+        </div>
+
+        <div className='my-8 re1:my-4'>
+          <div className='text-xl flex justify-between items-center w-full mb-4 px-4 re1:px-0'>
+            <p>Principais categorias</p>
+            <hr className='border-[#262626] w-[40%] re1:w-[80%]'/>
+          </div>
+          <ul className='flex re1:items-center justify-start re1:justify-around gap-4 re1:gap-0 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
+            {iconesNavegacionais.map((icon)=>(
+              <IconeNavegacional href={icon.href} imgUrl={icon.imgUrl} categoryName={icon.categoryName} />
+            ))}
+          </ul>
+        </div>
+      </div>)
   }
 
   return (fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais}/>
