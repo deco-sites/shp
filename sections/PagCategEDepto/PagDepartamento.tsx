@@ -426,14 +426,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         <div className='bg-transparent px-4 re1:px-0'>
           <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
           <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText || ''}} />
-          {seoText && (
-          <>
-            <button className='font-bold mb-2 border-b border-b-primary' onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
-            <div className={hideDescSeo ? 'line-clamp-1 max-h-5' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || ''}} />
-          </>)}
         </div>
-
-        <Benefits/>
 
         <div className='mb-8 re1:mb-0'>
           <div className='text-xl re1:text-2xl flex justify-between items-center w-full mb-4 px-4 re1:px-0'>
@@ -496,7 +489,12 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </div>
         </div>
         
-        
+        {seoText && (
+          <div className='my-10 re1:my-8'>
+            <button className={`font-bold mb-2 border-b border-b-primary ${hideDescSeo && 'relative top-32 re1:top-28'}`} onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
+            <div className={hideDescSeo ? 'line-clamp-4 max-h-24 re1:max-h-20' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || ''}} />
+          </div>)
+        }
       </div>
       <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-[#111]`}>
           <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
