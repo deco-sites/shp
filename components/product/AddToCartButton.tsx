@@ -25,7 +25,7 @@ function AddToCartButton(
   });
 
   return (
-    <Button data-deco="add-to-cart" {...props} class="w-full re1:w-[250px] flex gap-3 bg-[#dd1f26] border-[#dd1f26] hover:border-[#dd1f26] hover:bg-[#dd1f26]">
+    <Button data-deco="add-to-cart" {...props} class="w-full re1:w-[200px] re4:w-[250px] flex gap-3 bg-[#dd1f26] border-[#dd1f26] hover:border-[#dd1f26] hover:bg-[#dd1f26]">
       <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png'
         width={22} height={20} decoding='auto' fetchPriority='high' loading='eager' 
       />

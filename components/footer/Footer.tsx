@@ -175,7 +175,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
             </div>
           </div>
           <div className='flex flex-col re1:flex-row items-center gap-5 justify-center re1:bg-[#1e1e1e] my-5 re1:w-screen re1:-ml-[12.5%]'>
-            <h1 className='text-white text-2xl font-bold'>Formas de pagamento</h1>
+            <h1 className='text-white text-2xl re1:text-lg re4:text-2xl font-bold'>Formas de pagamento</h1>
             <ul className='grid grid-cols-3 re1:flex re1:justify-evenly re1:items-center gap-10 re1:gap-5 re1:py-5'>
               {FormasPagamento.map(element=>(
                 <li>
@@ -189,7 +189,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
           <div className='flex flex-col re1:flex-row-reverse gap-3 py-5 re1:justify-between re1:px-6'>
             <a href='https://vtex.com/'>
               <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-vtex.png' className='my-auto'
-                width={84} height={30} loading='lazy' decoding='sync' fetchPriority='low'
+                width={108} height={40} loading='lazy' decoding='sync' fetchPriority='low'
               />
             </a>
             <p className='text-xs re1:max-w-[1000px]'>

@@ -299,8 +299,8 @@ function ProductInfo({ page, pix }: Props) {
                   <span class='line-through text-base-300 text-xs'>
                     De: {formatPrice(listPrice, offers!.priceCurrency!)}
                   </span>
-                  <p class='font-medium text-xl flex gap-1'>
-                    <span className='text-[#dd1f26] text-3xl font-bold'>
+                  <p class='font-medium text-xl re1:text-sm re4:text-lg flex gap-1'>
+                    <span className='text-[#dd1f26] text-3xl re1:text-2xl re4:text-3xl font-bold'>
                       {formatPrice(((pix !== 1 && price !== undefined && pix) ? (price-(price*(pix/100))) : price ), offers!.priceCurrency!)}
                     </span>
                     <span>no PIX</span>
