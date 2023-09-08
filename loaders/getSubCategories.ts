@@ -3,7 +3,9 @@ const loader=async()=>{
     const resp=r.clone()
     const text=await r.text()
     if(text==='empty'){
-      return null
+      return 
+    }else if(text.split('')[0]==='<'){
+      return
     }else{
       return resp.json()
     }

@@ -7,6 +7,7 @@ import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
+import {Runtime} from 'deco-sites/shp/runtime.ts'
 
 export interface Props{
   fqName:string
@@ -27,10 +28,10 @@ const fetchFilters=async (idCateg:string)=>{
 }
 
 const fetchProducts=async (queryString:string)=>{
-  const url=`https://api.shopinfo.com.br/Deco/getProductsList.php?${queryString}`
-  console.log(url)
-  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
-  return data
+  return await Runtime.invoke({
+    key:'deco-sites/shp/loaders/getProductsList.ts',
+    props:{queryString}
+  })
 }
 
 const getBrands=async()=>{

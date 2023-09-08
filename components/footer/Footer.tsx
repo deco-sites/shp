@@ -116,7 +116,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
           </div>
         </div>
         <div className='hidden re1:flex divider w-screen -ml-[12.5%] before:bg-[#3d3d3d] after:bg-[#3d3d3d]'/>
-        <div className='flex flex-col re1:flex-row-reverse mt-10 items-center justify-center gap-5 re1:justify-between re1:px-16'>
+        <div className='flex flex-col re1:flex-row-reverse mt-10 items-center justify-center gap-5 re1:justify-between re4:px-16'>
           <a href='https://www.google.com/maps/place/Shopinfo/@-22.9015759,-47.0589666,15z/data=!4m6!3m5!1s0x94c8c8b2da3b18f5:0x9619346fc41db902!8m2!3d-22.9015759!4d-47.0589666!16s%2Fg%2F1ptxvm9d0?entry=ttu' 
             className='bg-[#dd1f26] rounded-lg px-5 py-2 flex flex-col re1:flex-row gap-2 items-center justify-center'>
             <div className='flex gap-2 items-center'>

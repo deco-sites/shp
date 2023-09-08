@@ -1,8 +1,9 @@
 // deno-lint-ignore-file no-window-prefix no-explicit-any
 import { useState, useEffect, useRef } from 'preact/hooks'
-import IconeNavegacional from "deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx";
-import Card from "deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx";
-import CategoriaModal from 'deco-sites/shp/components/ComponentsSHP/searchSHP/CategoriaModal.tsx';
+import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
+import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
+import CategoriaModal from 'deco-sites/shp/components/ComponentsSHP/searchSHP/CategoriaModal.tsx'
+import { Runtime } from 'deco-sites/shp/runtime.ts';
 
 export interface Props{
   produtos:any
@@ -21,18 +22,17 @@ interface Category{
 
 
 const fetchProducts=async (queryString:string, signal:AbortSignal)=>{
+  // não vou poder usar o loader por conta do abort
   const url=`https://api.shopinfo.com.br/Deco/getProductsList.php?${queryString}`
-  console.log(url)
-  const data=await fetch(url,{signal}).then(async (r)=>{
-    const resp=r.clone()
-    const text=await r.text()
-    if(text==='empty'){
-      return null
-    }else{
-      return resp.json()
-    }
-  }).catch(err=>console.error('Error: ',err))
-  return data
+    return await fetch(url,{signal}).then(async (r)=>{
+      const resp=r.clone()
+      const text=await r.text()
+      if(text==='empty'){
+        return null
+      }else{
+        return resp.json()
+      }
+    }).catch(err=>console.error('Error: ',err))
 }
 
 const makeCategories=(prods:any)=>{
@@ -131,7 +131,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
     !showMore && setLoading(true)
     const queryString=[`ft=${termo}`,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
-    category.value!=='' && (!first && queryString.unshift(`fq=C:${category.value}`))
+    if(category.value!=='' && category.value!=='inicio') (!first && queryString.unshift(`fq=C:${category.value}`))
     currentController.current = new AbortController()
     try {
       const data= await fetchProducts(queryString.join('&'), currentController.current.signal)
