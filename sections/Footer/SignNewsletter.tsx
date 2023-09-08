@@ -1,4 +1,4 @@
-const signNewsletter=()=>{
+const SignNewsletter=()=>{
   return(
     <div className='my-5 w-full text-white bg-[#3d3d3d] px-[10%] py-6'>
       <label className='text-center font-bold flex flex-col gap-2 my-4 re1:my-6'>
@@ -22,4 +22,4 @@ const signNewsletter=()=>{
   )
 }
 
-export default signNewsletter
+export default SignNewsletter
