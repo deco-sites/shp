@@ -227,10 +227,15 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
 
       const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands,...pageData!.SpecificationFilters, 'Faixa de Preço': priceFilters}
 
+      const arrAllCategFiltersObj:FilterObj[]=[]
+
       const arrFilterObj:FilterObj[]=[]
 
-      //entender pq tá funcionando, ou talvez esteja funcionando somente pra marcas
-      const keys=filters.map(filter=>filter.label)
+      for(const key in dataFilters){
+        arrAllCategFiltersObj.push({label:key , values:dataFilters[key]})
+      }
+
+      const keys=arrAllCategFiltersObj.map(filter=>filter.label)
       const productsFields:FiltroObj[]=[]
       products.forEach((product:any)=>{
         const fields=[]
@@ -243,6 +248,8 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
         }
         productsFields.push(...fields)
       })
+
+      console.log(productsFields)
 
       const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
       const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
