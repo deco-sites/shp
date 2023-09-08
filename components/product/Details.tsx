@@ -1,5 +1,6 @@
 // deno-lint-ignore-file
 import { Picture, Source } from 'deco-sites/std/components/Picture.tsx'
+import {Runtime} from 'deco-sites/shp/runtime.ts'
 import { useId, useEffect, useState, useCallback, useRef } from 'preact/hooks'
 import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
 import Breadcrumb from 'deco-sites/fashion/components/ui/Breadcrumb.tsx'
@@ -206,12 +207,6 @@ export interface Props {
     )
   }
 
-async function loaderTrustvox(productId:string, storeId:string){
-  const url=`https://trustvox.com.br/widget/shelf/v2/products_rates?codes[]=${productId}&store_id=${storeId}`
-  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
-  return data
-}
-
 function ProductInfo({ page, pix }: Props) {
     const {  product } = page
     const { description, productID, offers, name, isVariantOf, brand, additionalProperty } = product
@@ -231,10 +226,12 @@ function ProductInfo({ page, pix }: Props) {
 
     const [renderizado, setRenderizado]=useState(false)
     useEffect(()=>{
-      
       (async()=>{
         setRenderizado(true)
-        const { products_rates }=await loaderTrustvox(isVariantOf!.productGroupID, '79497')
+        const { products_rates }=await Runtime.invoke({
+          key:'deco-sites/shp/loaders/getTrustvox.ts',
+          props:{productId:isVariantOf!.productGroupID, storeId:'79497'}
+        })
         const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
         setTrustPercent(obj.average*20)
         setObjTrust(obj)

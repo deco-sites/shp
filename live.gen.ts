@@ -3,6 +3,7 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $$$0 from "./loaders/getSubCategories.ts";
+import * as $$$1 from "./loaders/getTrustvox.ts";
 import * as $$$$0 from "./routes/api/[...catchall].tsx";
 import * as $$$$1 from "./routes/_app.tsx";
 import * as $$$$$0 from "./islands/AcessoriosIsland.tsx";
@@ -226,6 +227,7 @@ const manifest = {
     "$live/loaders/workflows/events.ts": i1$2,
     "$live/loaders/workflows/get.ts": i1$3,
     "deco-sites/shp/loaders/getSubCategories.ts": $$$0,
+    "deco-sites/shp/loaders/getTrustvox.ts": $$$1,
     "deco-sites/std/loaders/linxImpulse/autocompletes/popular.ts": i2$$$0,
     "deco-sites/std/loaders/linxImpulse/autocompletes/suggestions.ts": i2$$$1,
     "deco-sites/std/loaders/linxImpulse/pages/recommendations.ts": i2$$$2,

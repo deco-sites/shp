@@ -5,7 +5,7 @@ import { JSX } from 'preact'
 import { renderToString } from 'preact-render-to-string'
 import Image from 'deco-sites/std/components/Image.tsx'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts';
-//import ProdRecommended from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/ProdRecommended.tsx'
+import {Runtime} from 'deco-sites/shp/runtime.ts'
 
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage>
@@ -59,12 +59,6 @@ const recomendacoesV2Loader = async (param: string) => {
   return data
 }
 
-const loaderTrustvox= async (productId:string, storeId:string)=>{
-  const url=`https://trustvox.com.br/widget/shelf/v2/products_rates?codes[]=${productId}&store_id=${storeId}`
-  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
-  return data
-}
-
 interface ProdCard{
   productId:string
   prodName:string
@@ -84,7 +78,10 @@ const ProdCard=({...props}:ProdCard)=>{
   
   useEffect(()=>{
     const handleTrust=async()=>{
-      const { products_rates }=await loaderTrustvox(productId, '79497')
+      const { products_rates }=await Runtime.invoke({
+        key:'deco-sites/shp/loaders/getTrustvox.ts',
+        props:{productId, storeId:'79497'}
+      })
       const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
       setTrustPercent(obj.average*20)
       setObjTrust(obj)
@@ -153,7 +150,10 @@ const PcCard=({...props}:PcCard)=>{
   
   useEffect(()=>{
     const handleTrust=async()=>{
-      const { products_rates }=await loaderTrustvox(productId, '79497')
+      const { products_rates }=await Runtime.invoke({
+        key:'deco-sites/shp/loaders/getTrustvox.ts',
+        props:{productId, storeId:'79497'}
+      })
       const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
       setTrustPercent(obj.average*20)
       setObjTrust(obj)
