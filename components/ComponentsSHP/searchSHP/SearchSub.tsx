@@ -1,8 +1,6 @@
 // deno-lint-ignore-file no-window-prefix no-explicit-any
 import { useEffect, useState, useRef } from 'preact/hooks'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
-import Image from 'deco-sites/std/packs/image/components/Image.tsx'
-import Benefits from 'deco-sites/shp/sections/Benefits.tsx'
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
@@ -22,14 +20,15 @@ export interface Props{
 }
 
 const fetchFilters=async (idCateg:string)=>{
-  const url=`https://api.shopinfo.com.br/Deco/getFacetsByCategId.php?fq=C:/${idCateg}/`
-  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
-  return data
+  return await Runtime.invoke({
+    key:'deco-sites/shp/loaders/getFacetsByCategId.ts',
+    props:{categoryId:idCateg}
+  })
 }
 
 const fetchProducts=async (queryString:string)=>{
   return await Runtime.invoke({
-    key:'deco-sites/shp/loaders/getProductsList.ts',
+    key:'deco-sites/shp/loaders/getProductsSearchAPI.ts',
     props:{queryString}
   })
 }

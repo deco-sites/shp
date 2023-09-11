@@ -24,15 +24,15 @@ export interface Props{
 }
 
 const fetchFilters=async (idCateg:string)=>{
-  // trocar pro loader e ver no tiny segunda
-  const url=`https://api.shopinfo.com.br/Deco/getFacetsByCategId.php?fq=C:/${idCateg}/`
-  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
-  return data
+  return await Runtime.invoke({
+    key:'deco-sites/shp/loaders/getFacetsByCategId.ts',
+    props:{categoryId:idCateg}
+  })
 }
 
 const fetchProducts=async (queryString:string)=>{
   return await Runtime.invoke({
-    key:'deco-sites/shp/loaders/getProductsList.ts',
+    key:'deco-sites/shp/loaders/getProductsSearchAPI.ts',
     props:{queryString}
   })
 }

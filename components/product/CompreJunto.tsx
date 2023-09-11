@@ -7,6 +7,7 @@ import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
+import {Runtime} from 'deco-sites/shp/runtime.ts'
 
 export interface Props{
   page:LoaderReturnType<ProductDetailsPage>
@@ -17,19 +18,18 @@ interface objBuyTogether{
   promotion:string,
 }
 
-//solução temporária pro bloqueio do cors na vtex quando no cliente e não consigo passar o retorno da func pro clientSide se ela for feita no serverSide
 const loaderSearchAPI= async (skuId:string)=>{
-  const url=`https://api.shopinfo.com.br/Deco/getProductBySku.php?sku=${skuId}`
-  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
-  console.log(data)
-  return data
+  return await Runtime.invoke({
+    key:'deco-sites/shp/loaders/getProductsSearchAPI.ts',
+    props:{queryString:`fq=skuId:${skuId}`}
+  })
 }
 
 const loaderBuyTogether=async(skuId:string):Promise<objBuyTogether[]>=>{
-  const url=`https://api.shopinfo.com.br/Deco/getBuyTogetherValuesBySku.php?sku=${skuId}`
-  const data=(await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))) || []
-  console.log(data)
-  return data
+  return await Runtime.invoke({
+    key:'deco-sites/shp/loaders/getBuyTogetherValuesBySku.ts',
+    props:{skuId}
+  }) || []
 }
 
 const CompreJunto=({page}:Props)=>{
@@ -60,7 +60,6 @@ const CompreJunto=({page}:Props)=>{
   }
 
   useEffect(()=>{
-    console.log(product)
     handleData()
   },[])
 
@@ -81,7 +80,7 @@ const CompreJunto=({page}:Props)=>{
           const finalPriceArr=priceComPromoEPix.split('')
           finalPriceArr[finalPriceArr.lastIndexOf('.')]=','
           const finalPrice=finalPriceArr.join('')
-          const link=fetch[0].link
+          const link='/'+fetch[0].linkText+'/p'
 
           const skuProdB=obj.sku.includes(product.sku) ? obj.sku.replace(product.sku, '').replace(',','') : obj.sku
     
