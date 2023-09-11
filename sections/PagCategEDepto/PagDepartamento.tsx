@@ -249,6 +249,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       for(const key in dataFilters){
         arrFilterObj.push({label:key , values:dataFilters[key]})
       }
+
       setFilters(arrFilterObj)
     })()
     
@@ -295,6 +296,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       const Input=input as HTMLInputElement
       (filterValues.includes(Input.value) && filterFqs.includes(Input.getAttribute('data-fq')!))? (Input.checked=true) : (Input.checked=false)
     })
+
+    console.log(selectedFilters)
   },[selectedFilters])
 
   useEffect(()=>{
@@ -440,6 +443,36 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </ul>
         </div>
 
+        <ul className='flex re1:hidden justify-start items-center gap-4 w-full mb-4 px-4 overflow-x-auto'>
+          {selectedFilters.map((filter)=>{
+            if(filter.fq==='P'){
+              const nameDecoded=decodeURIComponent(filter.value)
+              const numbers=nameDecoded.split(' TO ').map((item)=>parseFloat(item.replace(/\D/g, '')).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}))
+              return (
+                <div className='flex gap-1 p-1 border border-white rounded-lg justify-between max-h-[80px]'
+                  onClick={()=>setSelectedFilters(prevFilters=>
+                    prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                  )}
+                >
+                  <p className='whitespace-nowrap text-xs'>{numbers.join(' - ')}</p>
+                  <span className='text-[#dd1f26] text-xs my-auto font-bold'>✕</span>
+                </div>
+              )
+            }else{
+              return (
+                <div className='flex gap-1 p-1 border border-white rounded-lg justify-between max-h-[80px]'
+                  onClick={()=>setSelectedFilters(prevFilters=>
+                    prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                  )}
+                >
+                  <p className='whitespace-nowrap text-xs'>{decodeURIComponent(filter.value).replaceAll('@dot@','.')}</p>
+                  <span className='text-[#dd1f26] text-xs my-auto font-bold'>✕</span>
+                </div>
+              )
+            }
+          })}
+        </ul>
+        
         <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
           <label className='w-[45%]' ref={filterLabel}>
             <span className='font-bold'>Filtros</span>
@@ -490,7 +523,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         </div>
         
         {seoText && (
-          <div className='my-10 re1:my-8'>
+          <div className='my-10 re1:my-8 px-4 re1:px-0'>
             <button className={`font-bold mb-2 border-b border-b-primary ${hideDescSeo && 'relative top-32 re1:top-28'}`} onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
             <div className={hideDescSeo ? 'line-clamp-4 max-h-24 re1:max-h-20' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || ''}} />
           </div>)
