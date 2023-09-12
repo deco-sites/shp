@@ -8,7 +8,7 @@ import Prod from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/Prod.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import type { Product } from 'deco-sites/std/commerce/types.ts'
-import type { LoaderReturnType } from 'deco/types.ts'
+import type { LoaderReturnType } from '$live/types.ts'
 
 export interface VitrineProps {
   PcGamer: boolean

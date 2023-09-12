@@ -1,6 +1,6 @@
 import Button from 'deco-sites/fashion/components/ui/Button.tsx'
 import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
-import type { LoaderReturnType } from 'deco/types.ts'
+import type { LoaderReturnType } from '$live/types.ts'
 
 import ProductSelector from './ProductVariantSelector.tsx'
 import ProductImageZoom from 'deco-sites/fashion/islands/ProductImageZoom.tsx'

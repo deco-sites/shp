@@ -1,5 +1,5 @@
 import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
-import type { LoaderReturnType } from 'deco/types.ts'
+import type { LoaderReturnType } from '$live/types.ts'
 import Description from 'deco-sites/shp/components/product/Description.tsx'
 
 export interface Props {
