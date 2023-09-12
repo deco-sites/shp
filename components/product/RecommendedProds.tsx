@@ -1,5 +1,5 @@
 import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
-import type { LoaderReturnType } from '$live/types.ts'
+import type { LoaderReturnType } from 'deco/types.ts'
 import { useEffect, useState } from 'preact/hooks'
 import { JSX } from 'preact'
 import { renderToString } from 'preact-render-to-string'

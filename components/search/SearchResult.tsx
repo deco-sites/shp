@@ -5,7 +5,7 @@ import { SendEventOnLoad } from "deco-sites/fashion/sdk/analytics.tsx";
 import { mapProductToAnalyticsItem } from "deco-sites/std/commerce/utils/productToAnalyticsItem.ts";
 import { useOffer } from "deco-sites/fashion/sdk/useOffer.ts";
 import ProductGallery, { Columns } from "../product/ProductGallery.tsx";
-import type { LoaderReturnType } from "$live/types.ts";
+import type { LoaderReturnType } from "deco/types.ts";
 import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
 
 export interface Props {

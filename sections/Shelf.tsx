@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from 'preact/hooks'
 import Vitrine from 'deco-sites/shp/sections/Vitrine.tsx'
-import type { SectionProps } from '$live/mod.ts'
+import type { SectionProps } from 'deco/mod.ts'
 import type { Product } from 'deco-sites/std/commerce/types.ts'
-import { LoaderContext } from '$live/mod.ts'
+import { LoaderContext } from 'deco/mod.ts'
 import type  {Manifest}  from 'deco-sites/shp/live.gen.ts'
 
 export interface Props {

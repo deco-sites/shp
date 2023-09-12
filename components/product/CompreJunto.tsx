@@ -1,5 +1,5 @@
 import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
-import type { LoaderReturnType } from '$live/types.ts'
+import type { LoaderReturnType } from 'deco/types.ts'
 import {JSX} from 'preact'
 import { useState, useEffect, useId, useRef } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
