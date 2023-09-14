@@ -17,14 +17,14 @@ interface PcCard{
   parcelas:number
   linkProd:string
   imgUrl:string
+  isAvailable:boolean
+  precoDe:string
+  precoParcelado:string
   placaVideo:string
   processador:string
   memoria:string
   armazenamento:string
   tipoArm:string
-  precoDe:string
-  precoParcelado:string
-  isAvailable:boolean
 }
 
 interface ProdCard{

@@ -4,11 +4,10 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { Product } from 'deco-sites/std/commerce/types.ts'
 import { useEffect, useState, useRef } from 'preact/hooks'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
-
-//arrumar pra amanha usar o runtime ao inves do loader no começo
+import CampanhaCard from "deco-sites/shp/components/ComponentsSHP/ProductsCard/CampanhaCard.tsx";
 
 export type Props={
-  /**@description Escreva aqui para onde é o frete grátis */
+  /**@description Escreva aqui o texto da tag de frete grátis */
   freteGratis?:string
   collection:string
   produtos: LoaderReturnType<Product[] | null>
@@ -38,7 +37,7 @@ const loaderData= async(idCollection:string, order?:string, filter?:string):Prom
   })
 }
 
-const Campanha=({collection, produtos, bannerUrl, tipo}:Props)=>{
+const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis}:Props)=>{
   const onlyProds=produtos
 
   const [filterSelected, setFilterSelected]=useState<Filter>({index:777,value:'inicio',fqType:''})
@@ -105,7 +104,9 @@ const Campanha=({collection, produtos, bannerUrl, tipo}:Props)=>{
       ))}
     </div>
 
-    
+    <div className='grid grid-cols-4'>
+        {products.map(product=><CampanhaCard product={product} frete={freteGratis}/>)}
+    </div>
   </>)
 }
 
