@@ -21,6 +21,7 @@ interface CardProps{
   objTrust:ObjTrust
   trustPercent:number
   timeRemaining: TimeRemaining
+  quantidade:number
 } 
 
 interface CardPCProps extends CardProps{
@@ -36,6 +37,7 @@ export type Props={
   product:Product
   frete?:string
   timeRemaining: TimeRemaining
+  quantidade:number
 }
 
 const CardProd=(props:CardProps)=>{
@@ -71,7 +73,7 @@ const CardProd=(props:CardProps)=>{
           </div>
           <div className='flex items-center justify-around bg-primary p-[10px] gap-2'>
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" height={30} width={30}  x="30px" y="30px" viewBox="0 0 31.802 31.802" enable-background="new 0 0 31.802 31.802;" ><g><path d="M29.484,9.939l-3.896-4.673l-2.703,2.255c-1.198-0.8-2.539-1.396-3.969-1.771V3.609h2.164V0h-8.868v3.609h2.475v1.74 C7.792,5.805,2.317,11.545,2.317,18.553c0,7.307,5.943,13.249,13.248,13.249c7.307,0,13.249-5.942,13.249-13.249 c0-2.396-0.649-4.64-1.767-6.581L29.484,9.939z M16.081,29.301v-3.109h-0.515v3.137c-2.809,0-5.361-1.09-7.282-2.857 c0.229-0.148,0.391-0.396,0.391-0.691c0-0.465-0.378-0.842-0.843-0.842c-0.276,0-0.51,0.143-0.664,0.349 c-1.481-1.845-2.373-4.181-2.375-6.726H7.47v-0.515H4.818c0.123-2.621,1.183-4.996,2.856-6.803 c0.155,0.184,0.378,0.309,0.638,0.309c0.465,0,0.842-0.377,0.842-0.843c0-0.236-0.099-0.448-0.255-0.601 c1.836-1.453,4.149-2.328,6.666-2.328v3.615h0.515V7.806c2.266,0.107,4.348,0.914,6.038,2.216 c-0.119,0.145-0.203,0.325-0.203,0.53c0,0.466,0.377,0.843,0.844,0.843c0.236,0,0.449-0.101,0.603-0.258 c1.729,1.818,2.828,4.236,2.953,6.908h-2.535v0.514h2.562c-0.002,2.106-0.619,4.066-1.668,5.729 c-0.144-0.114-0.316-0.192-0.514-0.192c-0.466,0-0.843,0.378-0.843,0.843c0,0.285,0.151,0.524,0.368,0.679 C21.813,27.762,19.11,29.157,16.081,29.301z"></path><path d="M16.234,10.708v4.16c1.786,0.315,3.153,1.817,3.276,3.662l4.089-0.669C23.163,14.051,20.079,11.035,16.234,10.708z"></path></g></svg>
-            <p className='text-center font-bold'>ESTA OFERTA<br/>ESTÁ ATIVA</p>
+            <p className='text-center font-bold re1:text-sm re5:text-base leading-5'>ESTA OFERTA<br/>ESTÁ ATIVA</p>
           </div>
         </div>
       </div>
@@ -90,15 +92,21 @@ const CardProd=(props:CardProps)=>{
           <p className='mt-5'>ou em {props.parcelas}x de {props.valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
         </div>
   
-        <div className='flex flex-col items-center justify-center bg-[#353535] py-[10px]'>
-          <div className='text-center'>
-            <span>Essa oferta<br/>termina em:</span>
-            <div className='bg-primary rounded-lg flex justify-around p-1 items-center w-44'>
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" height={30} width={30}  x="30px" y="30px" viewBox="0 0 31.802 31.802" enable-background="new 0 0 31.802 31.802;" ><g><path d="M29.484,9.939l-3.896-4.673l-2.703,2.255c-1.198-0.8-2.539-1.396-3.969-1.771V3.609h2.164V0h-8.868v3.609h2.475v1.74 C7.792,5.805,2.317,11.545,2.317,18.553c0,7.307,5.943,13.249,13.248,13.249c7.307,0,13.249-5.942,13.249-13.249 c0-2.396-0.649-4.64-1.767-6.581L29.484,9.939z M16.081,29.301v-3.109h-0.515v3.137c-2.809,0-5.361-1.09-7.282-2.857 c0.229-0.148,0.391-0.396,0.391-0.691c0-0.465-0.378-0.842-0.843-0.842c-0.276,0-0.51,0.143-0.664,0.349 c-1.481-1.845-2.373-4.181-2.375-6.726H7.47v-0.515H4.818c0.123-2.621,1.183-4.996,2.856-6.803 c0.155,0.184,0.378,0.309,0.638,0.309c0.465,0,0.842-0.377,0.842-0.843c0-0.236-0.099-0.448-0.255-0.601 c1.836-1.453,4.149-2.328,6.666-2.328v3.615h0.515V7.806c2.266,0.107,4.348,0.914,6.038,2.216 c-0.119,0.145-0.203,0.325-0.203,0.53c0,0.466,0.377,0.843,0.844,0.843c0.236,0,0.449-0.101,0.603-0.258 c1.729,1.818,2.828,4.236,2.953,6.908h-2.535v0.514h2.562c-0.002,2.106-0.619,4.066-1.668,5.729 c-0.144-0.114-0.316-0.192-0.514-0.192c-0.466,0-0.843,0.378-0.843,0.843c0,0.285,0.151,0.524,0.368,0.679 C21.813,27.762,19.11,29.157,16.081,29.301z"></path><path d="M16.234,10.708v4.16c1.786,0.315,3.153,1.817,3.276,3.662l4.089-0.669C23.163,14.051,20.079,11.035,16.234,10.708z"></path></g></svg>
-              <span className='font-bold text-lg'>{`${days}D ${hours}:${minutes}:${seconds}`}</span>
-            </div>
+        <div className='flex flex-col items-center justify-around bg-[#353535] py-[10px] text-center'>
+        <div>
+          <span className='text-sm'>Restam:</span>
+          <div className='bg-[#00a74c] text-2xl font-bold rounded-lg w-fit p-[10px] mx-auto'>{props.quantidade}</div>
+          <span className='text-sm'>Itens Disponíveis</span>
+        </div>
+      
+        <div>  
+          <span>Essa oferta<br/>termina em:</span>
+          <div className='bg-primary rounded-lg flex justify-around p-1 items-center w-44'>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" height={25} width={25}  x="0px" y="0px" viewBox="0 0 31.802 31.802" enable-background="new 0 0 31.802 31.802;" ><g><path d="M29.484,9.939l-3.896-4.673l-2.703,2.255c-1.198-0.8-2.539-1.396-3.969-1.771V3.609h2.164V0h-8.868v3.609h2.475v1.74 C7.792,5.805,2.317,11.545,2.317,18.553c0,7.307,5.943,13.249,13.248,13.249c7.307,0,13.249-5.942,13.249-13.249 c0-2.396-0.649-4.64-1.767-6.581L29.484,9.939z M16.081,29.301v-3.109h-0.515v3.137c-2.809,0-5.361-1.09-7.282-2.857 c0.229-0.148,0.391-0.396,0.391-0.691c0-0.465-0.378-0.842-0.843-0.842c-0.276,0-0.51,0.143-0.664,0.349 c-1.481-1.845-2.373-4.181-2.375-6.726H7.47v-0.515H4.818c0.123-2.621,1.183-4.996,2.856-6.803 c0.155,0.184,0.378,0.309,0.638,0.309c0.465,0,0.842-0.377,0.842-0.843c0-0.236-0.099-0.448-0.255-0.601 c1.836-1.453,4.149-2.328,6.666-2.328v3.615h0.515V7.806c2.266,0.107,4.348,0.914,6.038,2.216 c-0.119,0.145-0.203,0.325-0.203,0.53c0,0.466,0.377,0.843,0.844,0.843c0.236,0,0.449-0.101,0.603-0.258 c1.729,1.818,2.828,4.236,2.953,6.908h-2.535v0.514h2.562c-0.002,2.106-0.619,4.066-1.668,5.729 c-0.144-0.114-0.316-0.192-0.514-0.192c-0.466,0-0.843,0.378-0.843,0.843c0,0.285,0.151,0.524,0.368,0.679 C21.813,27.762,19.11,29.157,16.081,29.301z"></path><path d="M16.234,10.708v4.16c1.786,0.315,3.153,1.817,3.276,3.662l4.089-0.669C23.163,14.051,20.079,11.035,16.234,10.708z"></path></g></svg>
+            <span className='font-bold text-xl w-[80%]'>{`${days}D ${hours}:${minutes}:${seconds}`}</span>
           </div>
         </div>
+      </div>
       </div>
     </a>)
 }
@@ -136,7 +144,7 @@ const CardPC=({placaVideo, processador, memoria, armazenamento, tipoArm,...props
           height={15}
           loading='lazy'
         />
-        <span className='font-bold'>{placaVideo}</span>
+        <span className='font-bold text-sm'>{placaVideo}</span>
       </label>
 
       <div className='flex gap-6'>
@@ -148,7 +156,7 @@ const CardPC=({placaVideo, processador, memoria, armazenamento, tipoArm,...props
             height={15}
             loading='lazy'
           />
-          <span>{processador}</span>
+          <span className='text-sm'>{processador}</span>
         </label>
         <label className='flex gap-2 items-center'>
           <Image
@@ -158,7 +166,7 @@ const CardPC=({placaVideo, processador, memoria, armazenamento, tipoArm,...props
             height={15}
             loading='lazy'
           />
-          <span>{memoria}</span>
+          <span className='text-sm'>{memoria}</span>
         </label>
         <label className='flex gap-2 items-center'>
           <Image
@@ -168,23 +176,26 @@ const CardPC=({placaVideo, processador, memoria, armazenamento, tipoArm,...props
             height={15}
             loading='lazy'
           />
-          <span>{(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}</span>
+          <span className='text-sm'>{(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}</span>
         </label>
       </div>
 
-      <div className='flex h-[60px]'>
+      <div className='flex h-[60px] w-full'>
         <div className='flex h-full'>
-          <div className='bg-[#1e1e1e] p-[10px] flex items-center justify-around'>frete</div>
-          <div className='flex items-center justify-around bg-primary p-[10px]'>
+          <div className='bg-[#1e1e1e] p-[10px] flex items-center justify-around gap-2'>
+            <Image src='https://shopinfo.vteximg.com.br/arquivos/icon-frete-white.png' width={46} height={30}/>
+            {props.frete ? (<p className='text-center font-bold re1:text-sm re5:text-base leading-5' dangerouslySetInnerHTML={{__html:props.frete}}/>) : (<p className='text-center font-bold re1:text-sm re5:text-base leading-5'>Frete Grátis</p>)}
+          </div>
+          <div className='flex items-center justify-around bg-primary p-[10px] gap-2'>
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" height={30} width={30}  x="30px" y="30px" viewBox="0 0 31.802 31.802" enable-background="new 0 0 31.802 31.802;" ><g><path d="M29.484,9.939l-3.896-4.673l-2.703,2.255c-1.198-0.8-2.539-1.396-3.969-1.771V3.609h2.164V0h-8.868v3.609h2.475v1.74 C7.792,5.805,2.317,11.545,2.317,18.553c0,7.307,5.943,13.249,13.248,13.249c7.307,0,13.249-5.942,13.249-13.249 c0-2.396-0.649-4.64-1.767-6.581L29.484,9.939z M16.081,29.301v-3.109h-0.515v3.137c-2.809,0-5.361-1.09-7.282-2.857 c0.229-0.148,0.391-0.396,0.391-0.691c0-0.465-0.378-0.842-0.843-0.842c-0.276,0-0.51,0.143-0.664,0.349 c-1.481-1.845-2.373-4.181-2.375-6.726H7.47v-0.515H4.818c0.123-2.621,1.183-4.996,2.856-6.803 c0.155,0.184,0.378,0.309,0.638,0.309c0.465,0,0.842-0.377,0.842-0.843c0-0.236-0.099-0.448-0.255-0.601 c1.836-1.453,4.149-2.328,6.666-2.328v3.615h0.515V7.806c2.266,0.107,4.348,0.914,6.038,2.216 c-0.119,0.145-0.203,0.325-0.203,0.53c0,0.466,0.377,0.843,0.844,0.843c0.236,0,0.449-0.101,0.603-0.258 c1.729,1.818,2.828,4.236,2.953,6.908h-2.535v0.514h2.562c-0.002,2.106-0.619,4.066-1.668,5.729 c-0.144-0.114-0.316-0.192-0.514-0.192c-0.466,0-0.843,0.378-0.843,0.843c0,0.285,0.151,0.524,0.368,0.679 C21.813,27.762,19.11,29.157,16.081,29.301z"></path><path d="M16.234,10.708v4.16c1.786,0.315,3.153,1.817,3.276,3.662l4.089-0.669C23.163,14.051,20.079,11.035,16.234,10.708z"></path></g></svg>
-            <p className='text-center font-bold'>ESTA OFERTA<br/>ESTÁ ATIVA</p>
+            <p className='text-center font-bold re1:text-sm re5:text-base leading-5'>ESTA OFERTA<br/>ESTÁ ATIVA</p>
           </div>
         </div>
 
-        <div className='form-control h-full'>
-          <label className='label cursor-pointer'>
+        <div className='form-control h-full justify-center'>
+          <label className='label cursor-pointer gap-2'>
             <input type='checkbox' className='toggle toggle-sm toggle-primary' />
-            <span className='label-text'>Compare com outros PCs</span> 
+            <span className='text-xs'>Compare com<br/>outros PCs</span> 
           </label>
         </div>
       </div>
@@ -204,12 +215,18 @@ const CardPC=({placaVideo, processador, memoria, armazenamento, tipoArm,...props
         <p className='mt-5'>ou em {props.parcelas}x de {props.valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
       </div>
 
-      <div className='flex flex-col items-center justify-center bg-[#353535] py-[10px]'>
-        <div className='text-center'>
+      <div className='flex flex-col items-center justify-around bg-[#353535] py-[10px] text-center'>
+        <div>
+          <span className='text-sm'>Restam:</span>
+          <div className='bg-[#00a74c] text-2xl font-bold rounded-lg w-fit p-[10px] mx-auto'>{props.quantidade}</div>
+          <span className='text-sm'>Itens Disponíveis</span>
+        </div>
+      
+        <div>  
           <span>Essa oferta<br/>termina em:</span>
           <div className='bg-primary rounded-lg flex justify-around p-1 items-center w-44'>
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" height={30} width={30}  x="30px" y="30px" viewBox="0 0 31.802 31.802" enable-background="new 0 0 31.802 31.802;" ><g><path d="M29.484,9.939l-3.896-4.673l-2.703,2.255c-1.198-0.8-2.539-1.396-3.969-1.771V3.609h2.164V0h-8.868v3.609h2.475v1.74 C7.792,5.805,2.317,11.545,2.317,18.553c0,7.307,5.943,13.249,13.248,13.249c7.307,0,13.249-5.942,13.249-13.249 c0-2.396-0.649-4.64-1.767-6.581L29.484,9.939z M16.081,29.301v-3.109h-0.515v3.137c-2.809,0-5.361-1.09-7.282-2.857 c0.229-0.148,0.391-0.396,0.391-0.691c0-0.465-0.378-0.842-0.843-0.842c-0.276,0-0.51,0.143-0.664,0.349 c-1.481-1.845-2.373-4.181-2.375-6.726H7.47v-0.515H4.818c0.123-2.621,1.183-4.996,2.856-6.803 c0.155,0.184,0.378,0.309,0.638,0.309c0.465,0,0.842-0.377,0.842-0.843c0-0.236-0.099-0.448-0.255-0.601 c1.836-1.453,4.149-2.328,6.666-2.328v3.615h0.515V7.806c2.266,0.107,4.348,0.914,6.038,2.216 c-0.119,0.145-0.203,0.325-0.203,0.53c0,0.466,0.377,0.843,0.844,0.843c0.236,0,0.449-0.101,0.603-0.258 c1.729,1.818,2.828,4.236,2.953,6.908h-2.535v0.514h2.562c-0.002,2.106-0.619,4.066-1.668,5.729 c-0.144-0.114-0.316-0.192-0.514-0.192c-0.466,0-0.843,0.378-0.843,0.843c0,0.285,0.151,0.524,0.368,0.679 C21.813,27.762,19.11,29.157,16.081,29.301z"></path><path d="M16.234,10.708v4.16c1.786,0.315,3.153,1.817,3.276,3.662l4.089-0.669C23.163,14.051,20.079,11.035,16.234,10.708z"></path></g></svg>
-            <span className='font-bold text-lg'>{`${days}D ${hours}:${minutes}:${seconds}`}</span>
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#fff" height={25} width={25}  x="0px" y="0px" viewBox="0 0 31.802 31.802" enable-background="new 0 0 31.802 31.802;" ><g><path d="M29.484,9.939l-3.896-4.673l-2.703,2.255c-1.198-0.8-2.539-1.396-3.969-1.771V3.609h2.164V0h-8.868v3.609h2.475v1.74 C7.792,5.805,2.317,11.545,2.317,18.553c0,7.307,5.943,13.249,13.248,13.249c7.307,0,13.249-5.942,13.249-13.249 c0-2.396-0.649-4.64-1.767-6.581L29.484,9.939z M16.081,29.301v-3.109h-0.515v3.137c-2.809,0-5.361-1.09-7.282-2.857 c0.229-0.148,0.391-0.396,0.391-0.691c0-0.465-0.378-0.842-0.843-0.842c-0.276,0-0.51,0.143-0.664,0.349 c-1.481-1.845-2.373-4.181-2.375-6.726H7.47v-0.515H4.818c0.123-2.621,1.183-4.996,2.856-6.803 c0.155,0.184,0.378,0.309,0.638,0.309c0.465,0,0.842-0.377,0.842-0.843c0-0.236-0.099-0.448-0.255-0.601 c1.836-1.453,4.149-2.328,6.666-2.328v3.615h0.515V7.806c2.266,0.107,4.348,0.914,6.038,2.216 c-0.119,0.145-0.203,0.325-0.203,0.53c0,0.466,0.377,0.843,0.844,0.843c0.236,0,0.449-0.101,0.603-0.258 c1.729,1.818,2.828,4.236,2.953,6.908h-2.535v0.514h2.562c-0.002,2.106-0.619,4.066-1.668,5.729 c-0.144-0.114-0.316-0.192-0.514-0.192c-0.466,0-0.843,0.378-0.843,0.843c0,0.285,0.151,0.524,0.368,0.679 C21.813,27.762,19.11,29.157,16.081,29.301z"></path><path d="M16.234,10.708v4.16c1.786,0.315,3.153,1.817,3.276,3.662l4.089-0.669C23.163,14.051,20.079,11.035,16.234,10.708z"></path></g></svg>
+            <span className='font-bold text-xl w-[80%]'>{`${days}D ${hours}:${minutes}:${seconds}`}</span>
           </div>
         </div>
       </div>
@@ -217,7 +234,7 @@ const CardPC=({placaVideo, processador, memoria, armazenamento, tipoArm,...props
   </a>)
 }
 
-const Card=({product, frete, timeRemaining}:Props)=>{
+const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
   const offer=product.offers!.offers![0]!
 
   const imgUrl=product.image![0].url!
@@ -260,36 +277,37 @@ const Card=({product, frete, timeRemaining}:Props)=>{
     handleTrust()
   },[])
 
-  if(product.additionalProperty!.some(propValue=>propValue.propertyID==='10' && propValue.name==='category')){
-    const additionalProp:PropertyValue[]=product.isVariantOf!.additionalProperty!
+  // if(product.additionalProperty!.some(propValue=>propValue.propertyID==='10' && propValue.name==='category')){
+  //   const additionalProp:PropertyValue[]=product.isVariantOf!.additionalProperty!
 
-    if(!additionalProp.length){return null}
+  //   if(!additionalProp.length){return null}
 
-    const armaz=(additionalProp.find(propVal=>propVal.name==='SSD') || additionalProp.find(propVal=>propVal.name==='HD'))!
+
+  //   const armaz=(additionalProp.find(propVal=>propVal.name==='SSD') || additionalProp.find(propVal=>propVal.name==='HD'))!
     
-    return <CardPC 
-      placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')!.value!}
-      processador={additionalProp.find(item=>item.name==='Processador')!.value!}
-      armazenamento={armaz!.value!}
-      tipoArm={armaz!.name!}
-      memoria={additionalProp.find(item=>item.name==='Memória')!.value!}
-      frete={frete!}
-      parcelas={maxInstallments}
-      imgUrl={imgUrl}
-      pix={pix}
-      linkProd={linkProd}
-      prodName={prodName}
-      prodId={prodId}
-      precoDe={precoDe}
-      precoVista={precoVista}
-      valorParcela={valorParcela}
-      objTrust={objTrust}
-      trustPercent={trustPercent}
-      timeRemaining={timeRemaining}
-    />
+  //   return <CardPC 
+  //     placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')!.value!}
+  //     processador={additionalProp.find(item=>item.name==='Processador')!.value!}
+  //     armazenamento={armaz!.value!}
+  //     tipoArm={armaz!.name!}
+  //     memoria={additionalProp.find(item=>item.name==='Memória')!.value!}
+  //     frete={frete!}
+  //     parcelas={maxInstallments}
+  //     imgUrl={imgUrl}
+  //     pix={pix}
+  //     linkProd={linkProd}
+  //     prodName={prodName}
+  //     prodId={prodId}
+  //     precoDe={precoDe}
+  //     precoVista={precoVista}
+  //     valorParcela={valorParcela}
+  //     objTrust={objTrust}
+  //     trustPercent={trustPercent}
+  //     timeRemaining={timeRemaining}
+  //     quantidade={quantidade}
+  //   />
 
-    // return <p>{product.name}</p>
-  }else{
+  // }else{
     return <CardProd
       parcelas={maxInstallments}
       imgUrl={imgUrl}
@@ -303,8 +321,9 @@ const Card=({product, frete, timeRemaining}:Props)=>{
       objTrust={objTrust}
       trustPercent={trustPercent}
       timeRemaining={timeRemaining}
+      quantidade={quantidade}
     />
-  }
+  //}
 }
 
 export default Card

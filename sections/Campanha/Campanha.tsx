@@ -6,8 +6,13 @@ import { useEffect, useState, useRef } from 'preact/hooks'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CampanhaCard.tsx'
 import useTimer,{ TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
+import prodQntd from 'deco-sites/shp/FunctionsSHP/productQntHotsite.ts'
+import {JSX} from 'preact'
 
+//montando interface com infos que precisam de descricao no ADMIN
 interface NeedDesc{
+  /** @description formato AAAA-MM-DD*/
+  inicioDaOferta:string
   /** @description formato AAAA-MM-DD*/
   finalDaOferta:string
   /**@description Escreva aqui o texto da tag de frete grátis */
@@ -43,7 +48,7 @@ const loaderData= async(idCollection:string, order?:string, filter?:string):Prom
   })
 }
 
-const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOferta}:Props)=>{
+const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOferta, inicioDaOferta}:Props)=>{
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
   const timeRemaining:TimeRemaining=useTimer(finalDate)
 
@@ -51,6 +56,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
 
   const [filterSelected, setFilterSelected]=useState<Filter>({index:777,value:'inicio',fqType:''})
   const [products, setProducts]=useState<Product[]>(produtos || [])
+  const [readyQuantities, setReadyQuantities]=useState<number[]>([])
   const [order, setOrder]=useState('')
 
   const ulFilters=useRef<HTMLUListElement>(null)
@@ -69,7 +75,12 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
   },[filterSelected])
 
   useEffect(()=>{
-    console.log(products)
+    (async()=>{
+      const prodPromises=products.map(product=>prodQntd(product, new Date(inicioDaOferta), new Date(finalDaOferta)))
+      const readyPromises=await Promise.all(prodPromises)
+
+      setReadyQuantities(readyPromises)
+    })()
   },[products])
 
   const handleClickFilters=(event:MouseEvent)=>{
@@ -113,8 +124,8 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
       ))}
     </div>
 
-    <div className='flex flex-col gap-5 w-full re1:px-[5%] re4:px-[15%]'>
-        {products.map(product=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining}/>)}
+    <div className='flex flex-col gap-5 w-full re1:px-[5%] re4:px-[10%]'>
+      {products.map((product,index)=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={readyQuantities[index]}/>)}
     </div>
   </>)
 }
