@@ -7,7 +7,6 @@ import {Runtime} from 'deco-sites/shp/runtime.ts'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CampanhaCard.tsx'
 import useTimer,{ TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import prodQntd from 'deco-sites/shp/FunctionsSHP/productQntHotsite.ts'
-import {JSX} from 'preact'
 
 //montando interface com infos que precisam de descricao no ADMIN
 interface NeedDesc{
@@ -76,6 +75,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
 
   useEffect(()=>{
     (async()=>{
+      console.log(products)
       const prodPromises=products.map(product=>prodQntd(product, new Date(inicioDaOferta), new Date(finalDaOferta)))
       const readyPromises=await Promise.all(prodPromises)
 
@@ -124,7 +124,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
       ))}
     </div>
 
-    <div className='flex flex-col gap-5 w-full re1:px-[5%] re4:px-[10%]'>
+    <div className='flex flex-col gap-5 w-full px-[10px] re1:px-[5%] re4:px-[10%]'>
       {products.map((product,index)=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={readyQuantities[index]}/>)}
     </div>
   </>)
