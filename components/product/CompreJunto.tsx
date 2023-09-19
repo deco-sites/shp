@@ -76,7 +76,7 @@ const CompreJunto=({page}:Props)=>{
           const image = fetch[0].items[0].images[0].imageUrl
           const name = fetch[0].productName
           const price= fetch[0].items[0].sellers[0].commertialOffer.Installments[0].Value
-          const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),12)
+          const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),15)
           // const finalPriceArr=priceComPromoEPix
           // finalPriceArr[finalPriceArr.lastIndexOf('.')]=','
           // const finalPrice=finalPriceArr.join('')
