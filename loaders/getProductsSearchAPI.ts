@@ -4,6 +4,7 @@ export interface Props{
 
 const loader=async ({queryString}:Props)=>{
   const url=`https://shopinfo.vtexcommercestable.com.br/api/catalog_system/pub/products/search?${queryString}`
+  console.log('Fetching: '+url)
   return await fetch(url).then(async (r)=>{
     const resp=r.clone()
     const text=await r.text()

@@ -114,7 +114,7 @@ const ProdCard=({...props}:ProdCard)=>{
         </div>
         <div className='flex flex-col re1:px-3'>
           <span className='line-through text-base-300 text-xs'>{precoDe}</span>
-          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>R$ {DescontoPIX(parseFloat(precoVista), 12)}</span> no pix</p>
+          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>R$ {DescontoPIX(parseFloat(precoVista), 15)}</span> no pix</p>
           <span className='text-xs text-base-300'>{parcelas}x R$ {valorParcela} sem juros</span>
         </div>
       </div>
@@ -143,7 +143,7 @@ const PcCard=({...props}:PcCard)=>{
   const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado} = props
   const precoDeNum=precoDe!=='' ? parseFloat((precoDe.split('R$ ')[1]).replace('.','').replace(',','.')) : parseFloat(precoParcelado.replace('.','').replace(',','.'))
   const vistaNum=parseFloat(precoVista.replace('.','').replace(',','.'))
-  const percent=precoDe!=='' ? Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100) : 12
+  const percent=precoDe!=='' ? Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100) : 15
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
   const [trustPercent, setTrustPercent]=useState(0)

@@ -17,14 +17,14 @@ interface PcCard{
   parcelas:number
   linkProd:string
   imgUrl:string
+  isAvailable:boolean
+  precoDe:string
+  precoParcelado:string
   placaVideo:string
   processador:string
   memoria:string
   armazenamento:string
   tipoArm:string
-  precoDe:string
-  precoParcelado:string
-  isAvailable:boolean
 }
 
 interface ProdCard{
@@ -51,7 +51,7 @@ const ProdCard=({...props}:ProdCard)=>{
 
   const precoDeNum=parseFloat(precoDe)
   const vistaNum=parseFloat(precoVista)
-  const percent= precoDeNum ? tagDiscount(vistaNum,precoDeNum,12) : 12
+  const percent= precoDeNum ? tagDiscount(vistaNum,precoDeNum,15) : 15
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
   const [trustPercent, setTrustPercent]=useState(0)
@@ -95,7 +95,7 @@ const ProdCard=({...props}:ProdCard)=>{
           {isAvailable ? (
             <>
               <span className='line-through text-[#b4b4b4] text-xs'>De: {precoDeNum.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>{parseFloat(DescontoPIX(parseFloat(precoVista),12)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
+              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>{DescontoPIX(parseFloat(precoVista),15).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
               <span className='text-xs text-[#b4b4b4]'>{parcelas}x {parseFloat(valorParcela).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
             </>):(
               <p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>
@@ -110,7 +110,7 @@ const PcCard=({...props}:PcCard)=>{
   const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado, isAvailable} = props
   const precoDeNum=parseFloat(precoDe)
   const vistaNum=parseFloat(precoVista)
-  const percent= precoDeNum ? tagDiscount(vistaNum,precoDeNum,12) : 12
+  const percent= precoDeNum ? tagDiscount(vistaNum,precoDeNum,15) : 15
   const arm=(armazenamento || '').toString().toUpperCase()
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
@@ -185,7 +185,7 @@ const PcCard=({...props}:PcCard)=>{
         {isAvailable ? (
         <>
           <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x {parseFloat(valorParcela).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-          <p className='text-[11px] text-[#b4b4b4]'>ou por {parseFloat(DescontoPIX(parseFloat(precoVista),12)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
+          <p className='text-[11px] text-[#b4b4b4]'>ou por {DescontoPIX(parseFloat(precoVista),15).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
           <input type='checkbox' name='compare' className='checkbox checkbox-primary checkbox-sm'/>

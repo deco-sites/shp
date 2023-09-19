@@ -76,10 +76,10 @@ const CompreJunto=({page}:Props)=>{
           const image = fetch[0].items[0].images[0].imageUrl
           const name = fetch[0].productName
           const price= fetch[0].items[0].sellers[0].commertialOffer.Installments[0].Value
-          const priceComPromoEPix=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),12)
-          const finalPriceArr=priceComPromoEPix.split('')
-          finalPriceArr[finalPriceArr.lastIndexOf('.')]=','
-          const finalPrice=finalPriceArr.join('')
+          const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),15)
+          // const finalPriceArr=priceComPromoEPix
+          // finalPriceArr[finalPriceArr.lastIndexOf('.')]=','
+          // const finalPrice=finalPriceArr.join('')
           const link='/'+fetch[0].linkText+'/p'
 
           const skuProdB=obj.sku.includes(product.sku) ? obj.sku.replace(product.sku, '').replace(',','') : obj.sku
@@ -92,7 +92,7 @@ const CompreJunto=({page}:Props)=>{
                 <div>
                   <div>
                     <p className='text-sm font-bold text-[#dd1f26]'>por mais</p>
-                    <span className='text-lg font-bold flex items-baseline'>R$ {finalPrice}<p className='text-[#dd1f26] text-xs ml-1'>no pix</p></span>
+                    <span className='text-lg font-bold flex items-baseline'>{finalPrice.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}<p className='text-[#dd1f26] text-xs ml-1'>no pix</p></span>
                   </div>
                   <button data-skus={`['${product.sku}', '${skuProdB}']`} 
                     class="btn no-animation w-full hidden re1:flex gap-3 bg-[#dd1f26] border-[#dd1f26] hover:border-[#dd1f26] hover:bg-[#dd1f26]"
