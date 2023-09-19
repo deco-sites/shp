@@ -11,6 +11,8 @@ import FiltroMob from 'deco-sites/shp/sections/Campanha/FiltroMob.tsx'
 
 //montando interface com infos que precisam de descricao no ADMIN
 interface NeedDesc{
+  /**@description Setas padrão entre os filtros */
+  setasPadrao:boolean
   /** @description formato AAAA-MM-DD*/
   inicioDaOferta:string
   /** @description formato AAAA-MM-DD*/
@@ -48,7 +50,7 @@ const loaderData= async(idCollection:string, order?:string, filter?:string):Prom
   })
 }
 
-const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOferta, inicioDaOferta}:Props)=>{
+const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOferta, inicioDaOferta, setasPadrao}:Props)=>{
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
   const timeRemaining:TimeRemaining=useTimer(finalDate)
 
@@ -56,6 +58,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
   const [products, setProducts]=useState<Product[]>(produtos || [])
   const [readyQuantities, setReadyQuantities]=useState<number[]>([])
   const [order, setOrder]=useState('inicio')
+  const [loading,setLoading]=useState(true)
 
   const ulFilters=useRef<HTMLUListElement>(null)
   const filtrosMob=useRef<HTMLDivElement>(null)
@@ -72,6 +75,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
   ]
 
   const fetchData=async()=>{
+    setLoading(true)
     const filterVal=filterSelected.fqType==='P' ? '['+filterSelected.value+']' : filterSelected.value
     const Filter=filterSelected.value==='' ? undefined : `${filterSelected.fqType}:${filterVal}`
     const data=await loaderData(collection, order, Filter)
@@ -97,6 +101,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
       const readyPromises=await Promise.all(prodPromises)
 
       setReadyQuantities(readyPromises)
+      setLoading(false)
     })()
   },[products])
 
@@ -164,9 +169,12 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
 
       {/* Desktop */}
       {tipo!==null && (typeof tipo!=='string' && (
-        <ul className='hidden re1:grid gap-20 my-4 items-center justify-center px-8' style={{ gridTemplateColumns: `repeat(${tipo.tipoDeFiltro.length+1}, auto)` }} ref={ulFilters}>
+        <ul className='hidden re1:grid gap-32 my-4 items-center justify-center px-8' style={{ gridTemplateColumns: `repeat(${tipo.tipoDeFiltro.length+1}, auto)` }} ref={ulFilters}>
           {tipo.tipoDeFiltro.map((filtro,idx)=>(
-            <li data-index={idx} data-value={filtro.value} data-fq={filtro.fqType} className='flex-none cursor-pointer py-2 border-b-2 border-b-transparent'>
+            <li data-index={idx} data-value={filtro.value} data-fq={filtro.fqType} 
+              className={`flex cursor-pointer py-2 border-b-2 border-b-transparent ${setasPadrao && `after:content-[""] after:min-w-[70%] 
+              after:min-h-full after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/lp-captacao-black-2021-seta.png)] after:bg-contain after:bg-no-repeat after:bg-center after:-rotate-90`}`}
+            >
               <Image src={filtro.iconURL} width={filtro.iconTamanho.width} height={filtro.iconTamanho.height}
                 onClick={handleClickFilters}
                 className='hover:scale-105'
@@ -204,7 +212,9 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
           </label>
         </div>
       ))}
-      {products.map((product,index)=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={readyQuantities[index]}/>)}
+      {loading ? <p>carregando</p> : 
+        (products.map((product,index)=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={readyQuantities[index]}/>))
+      }
     </div>
   </>)
 }
