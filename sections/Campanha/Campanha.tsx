@@ -51,8 +51,6 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
   const timeRemaining:TimeRemaining=useTimer(finalDate)
 
-  const onlyProds=produtos
-
   const [filterSelected, setFilterSelected]=useState<Filter>({index:777,value:'inicio',fqType:''})
   const [products, setProducts]=useState<Product[]>(produtos || [])
   const [readyQuantities, setReadyQuantities]=useState<number[]>([])
@@ -100,8 +98,14 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
     <div className='bg-[#262626]'>
       <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block'/></a>
       <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden'/></a>
+      
+      {/* Código */}
+      {(tipo!==null && typeof tipo==='string') && (
+        <div dangerouslySetInnerHTML={{__html:tipo}}/>
+      )}
 
-      {tipo!==undefined && (typeof tipo!=='string' ? (
+      {/* Desktop */}
+      {tipo!==null && (typeof tipo!=='string' && (
         <ul className='hidden re1:grid gap-20 my-4 items-center justify-center px-8' style={{ gridTemplateColumns: `repeat(${tipo.tipoDeFiltro.length+1}, auto)` }} ref={ulFilters}>
           {tipo.tipoDeFiltro.map((filtro,idx)=>(
             <li data-index={idx} data-value={filtro.value} data-fq={filtro.fqType} className='flex-none cursor-pointer py-2 border-b-2 border-b-transparent'>
@@ -119,12 +123,12 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
               />
             </li>
         </ul>
-      ) : (
-        <div dangerouslySetInnerHTML={{__html:tipo}}/>
       ))}
+
+      
     </div>
 
-    <div className='flex flex-col gap-5 w-full px-[10px] re1:px-[5%] re4:px-[10%]'>
+    <div className='flex flex-col gap-5 w-full px-[10px] py-[10px] re1:px-[5%] re4:px-[10%]'>
       {products.map((product,index)=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={readyQuantities[index]}/>)}
     </div>
   </>)

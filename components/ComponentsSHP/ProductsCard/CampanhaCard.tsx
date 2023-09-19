@@ -379,8 +379,11 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
 }
 
 const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
-  const offer=product.offers!.offers![0]!
+  const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
 
+  if(!avaibility){return null}
+
+  const offer=product.offers!.offers![0]!
   const imgUrl=product.image![0].url!
   const maxInstallments=(()=>{
     let maxInstallments=0
@@ -395,6 +398,7 @@ const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
 
     return maxInstallments
   })()
+
   const linkProd=product.isVariantOf!.url!
   const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))!.effects.parameters[0].value!
   const prodName=product.name!

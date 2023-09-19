@@ -28,9 +28,11 @@ export interface Filtros{
 
 export type Codigo=string
 
+export type Vazio=null
+
 export interface TipoDeFiltro{
   /**
-   * @description Selecione entre Filtros ou Código 
+   * @description Selecione entre Filtros, Código ou deixe vazio caso não haja ambos! 
    */
-  tipo?:Filtros | Codigo
+  tipo:Filtros | Codigo | Vazio
 }
