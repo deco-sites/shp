@@ -32,7 +32,7 @@ export type Vazio=null
 
 export interface TipoDeFiltro{
   /**
-   * @description Selecione entre Filtros, Código ou deixe vazio caso não haja ambos! 
+   * @description Selecione entre Filtros, Código ou deixe vazio caso não haja ambos! Caso seja código, porfavor use classes TailwindCSS e sintaxe HTML normal, sem JSX!
    */
   tipo:Filtros | Codigo | Vazio
 }

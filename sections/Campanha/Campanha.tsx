@@ -13,13 +13,19 @@ import FiltroMob from 'deco-sites/shp/sections/Campanha/FiltroMob.tsx'
 interface NeedDesc{
   /**@description Setas padrão entre os filtros */
   setasPadrao:boolean
+  /**@description Escreva aqui o texto da tag de frete grátis */
+  freteGratis?:string
+}
+
+interface Contador{
+  contador:true
   /** @description formato AAAA-MM-DD*/
   inicioDaOferta:string
   /** @description formato AAAA-MM-DD*/
   finalDaOferta:string
-  /**@description Escreva aqui o texto da tag de frete grátis */
-  freteGratis?:string
 }
+
+interface SemContador{contador:false}
 
 export type Props={
   collection:string
@@ -29,7 +35,7 @@ export type Props={
     mobile:string
     linkCta?:string
   } 
-} & NeedDesc & TipoDeFiltro
+} & NeedDesc & TipoDeFiltro & (Contador | SemContador)
 
 type Filter={
   index:number
@@ -50,9 +56,9 @@ const loaderData= async(idCollection:string, order?:string, filter?:string):Prom
   })
 }
 
-const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOferta, inicioDaOferta, setasPadrao}:Props)=>{
-  const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
-  const timeRemaining:TimeRemaining=useTimer(finalDate)
+const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao, ...props}:Props)=>{
+  const finalDate = props.contador ? new Date(props.finalDaOferta) : undefined
+  const timeRemaining:TimeRemaining|undefined=props.contador ? useTimer(finalDate) : undefined
 
   const [filterSelected, setFilterSelected]=useState<Filter>({index:777,value:'inicio',fqType:''})
   const [products, setProducts]=useState<Product[]>(produtos || [])
@@ -97,7 +103,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
   useEffect(()=>{
     (async()=>{
       console.log(products)
-      const prodPromises=products.map(product=>prodQntd(product, new Date(inicioDaOferta), new Date(finalDaOferta)))
+      const prodPromises=products.map(product=>prodQntd(product, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02')))
       const readyPromises=await Promise.all(prodPromises)
 
       setReadyQuantities(readyPromises)
@@ -156,16 +162,15 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
     setFilterSelected({index,value,fqType})
   }
 
+
   return (
   <>
     <div className='bg-[#262626]'>
-      <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block'/></a>
-      <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden'/></a>
+      <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block' preload loading='eager'/></a>
+      <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden' preload loading='eager'/></a>
       
       {/* Código */}
-      {(tipo!==null && typeof tipo==='string') && (
-        <div dangerouslySetInnerHTML={{__html:tipo}}/>
-      )}
+      {(tipo!==null && typeof tipo==='string') && <div dangerouslySetInnerHTML={{__html:tipo}}/>}   
 
       {/* Desktop */}
       {tipo!==null && (typeof tipo!=='string' && (
@@ -212,7 +217,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
           </label>
         </div>
       ))}
-      {loading ? <p>carregando</p> : 
+      {loading ? <div className='loading loading-spinner w-32 mx-auto my-5 text-primary'/> : 
         (products.map((product,index)=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={readyQuantities[index]}/>))
       }
     </div>
