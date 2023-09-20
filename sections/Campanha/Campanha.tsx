@@ -11,13 +11,21 @@ import FiltroMob from 'deco-sites/shp/sections/Campanha/FiltroMob.tsx'
 
 //montando interface com infos que precisam de descricao no ADMIN
 interface NeedDesc{
+  /**@description Setas padrão entre os filtros */
+  setasPadrao:boolean
+  /**@description Escreva aqui o texto da tag de frete grátis */
+  freteGratis?:string
+}
+
+interface Contador{
+  contador:true
   /** @description formato AAAA-MM-DD*/
   inicioDaOferta:string
   /** @description formato AAAA-MM-DD*/
   finalDaOferta:string
-  /**@description Escreva aqui o texto da tag de frete grátis */
-  freteGratis?:string
 }
+
+interface SemContador{contador:false}
 
 export type Props={
   collection:string
@@ -27,7 +35,7 @@ export type Props={
     mobile:string
     linkCta?:string
   } 
-} & NeedDesc & TipoDeFiltro
+} & NeedDesc & TipoDeFiltro & (Contador | SemContador)
 
 type Filter={
   index:number
@@ -48,14 +56,15 @@ const loaderData= async(idCollection:string, order?:string, filter?:string):Prom
   })
 }
 
-const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOferta, inicioDaOferta}:Props)=>{
-  const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
-  const timeRemaining:TimeRemaining=useTimer(finalDate)
+const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao, ...props}:Props)=>{
+  const finalDate = props.contador ? new Date(props.finalDaOferta) : undefined
+  const timeRemaining:TimeRemaining|undefined=props.contador ? useTimer(finalDate) : undefined
 
   const [filterSelected, setFilterSelected]=useState<Filter>({index:777,value:'inicio',fqType:''})
   const [products, setProducts]=useState<Product[]>(produtos || [])
   const [readyQuantities, setReadyQuantities]=useState<number[]>([])
   const [order, setOrder]=useState('inicio')
+  const [loading,setLoading]=useState(true)
 
   const ulFilters=useRef<HTMLUListElement>(null)
   const filtrosMob=useRef<HTMLDivElement>(null)
@@ -72,6 +81,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
   ]
 
   const fetchData=async()=>{
+    setLoading(true)
     const filterVal=filterSelected.fqType==='P' ? '['+filterSelected.value+']' : filterSelected.value
     const Filter=filterSelected.value==='' ? undefined : `${filterSelected.fqType}:${filterVal}`
     const data=await loaderData(collection, order, Filter)
@@ -93,10 +103,11 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
   useEffect(()=>{
     (async()=>{
       console.log(products)
-      const prodPromises=products.map(product=>prodQntd(product, new Date(inicioDaOferta), new Date(finalDaOferta)))
+      const prodPromises=products.map(product=>prodQntd(product, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02')))
       const readyPromises=await Promise.all(prodPromises)
 
       setReadyQuantities(readyPromises)
+      setLoading(false)
     })()
   },[products])
 
@@ -151,22 +162,24 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
     setFilterSelected({index,value,fqType})
   }
 
+
   return (
   <>
     <div className='bg-[#262626]'>
-      <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block'/></a>
-      <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden'/></a>
+      <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block' preload loading='eager'/></a>
+      <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden' preload loading='eager'/></a>
       
       {/* Código */}
-      {(tipo!==null && typeof tipo==='string') && (
-        <div dangerouslySetInnerHTML={{__html:tipo}}/>
-      )}
+      {(tipo!==null && typeof tipo==='string') && <div dangerouslySetInnerHTML={{__html:tipo}}/>}   
 
       {/* Desktop */}
       {tipo!==null && (typeof tipo!=='string' && (
-        <ul className='hidden re1:grid gap-20 my-4 items-center justify-center px-8' style={{ gridTemplateColumns: `repeat(${tipo.tipoDeFiltro.length+1}, auto)` }} ref={ulFilters}>
+        <ul className='hidden re1:grid gap-32 my-4 items-center justify-center px-8' style={{ gridTemplateColumns: `repeat(${tipo.tipoDeFiltro.length+1}, auto)` }} ref={ulFilters}>
           {tipo.tipoDeFiltro.map((filtro,idx)=>(
-            <li data-index={idx} data-value={filtro.value} data-fq={filtro.fqType} className='flex-none cursor-pointer py-2 border-b-2 border-b-transparent'>
+            <li data-index={idx} data-value={filtro.value} data-fq={filtro.fqType} 
+              className={`flex cursor-pointer py-2 border-b-2 border-b-transparent ${setasPadrao && `after:content-[""] after:min-w-[70%] 
+              after:min-h-full after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/lp-captacao-black-2021-seta.png)] after:bg-contain after:bg-no-repeat after:bg-center after:-rotate-90`}`}
+            >
               <Image src={filtro.iconURL} width={filtro.iconTamanho.width} height={filtro.iconTamanho.height}
                 onClick={handleClickFilters}
                 className='hover:scale-105'
@@ -204,7 +217,9 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, finalDaOfer
           </label>
         </div>
       ))}
-      {products.map((product,index)=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={readyQuantities[index]}/>)}
+      {loading ? <div className='loading loading-spinner w-32 mx-auto my-5 text-primary'/> : 
+        (products.map((product,index)=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={readyQuantities[index]}/>))
+      }
     </div>
   </>)
 }
