@@ -38,7 +38,7 @@ const calculaComAData=(qtdInit:number, diasAtivos:number, diasAteAcabar:number)=
   return qtdProd
 }
 
-const prodQntd=async(prod:Product, initialDate:Date, finalDate:Date)=>{
+const prodQntd=(prod:Product, initialDate:Date, finalDate:Date)=>{
   const actualDate=new Date()
 
   const diasAtivos=Math.floor((finalDate.getTime() - initialDate.getTime())/ (1000 * 60 * 60 * 24))
@@ -47,7 +47,7 @@ const prodQntd=async(prod:Product, initialDate:Date, finalDate:Date)=>{
 
   if(diasAteAcabar < 1){diasAteAcabar = 1}
 
-  const preQtd= (await fetch('https://api.shopinfo.com.br/getQtdItems/productsInitialQtd.json').then(resp=>resp.json()).catch(_err=>console.error(_err))) || DataJson as PreQtd
+  const preQtd= DataJson as PreQtd
 
   let qtdInitial:number
 

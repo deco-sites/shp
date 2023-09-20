@@ -6,8 +6,6 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 
-//promoção baseada entre o listPrice e o salePrice com desconto do pix
-
 interface CardProps{
   prodId:string
   prodName:string

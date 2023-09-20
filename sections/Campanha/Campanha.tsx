@@ -1,5 +1,5 @@
 import { LoaderReturnType } from 'deco/mod.ts'
-import type { TipoDeFiltro } from 'deco-sites/shp/types/CampanhaTypes.ts'
+import { TipoDeFiltro, Filtros } from 'deco-sites/shp/types/CampanhaTypes.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { Product } from 'deco-sites/std/commerce/types.ts'
 import { useEffect, useState, useRef } from 'preact/hooks'
@@ -62,7 +62,6 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
 
   const [filterSelected, setFilterSelected]=useState<Filter>({index:777,value:'inicio',fqType:''})
   const [products, setProducts]=useState<Product[]>(produtos || [])
-  const [readyQuantities, setReadyQuantities]=useState<number[]>([])
   const [order, setOrder]=useState('inicio')
   const [loading,setLoading]=useState(true)
 
@@ -101,18 +100,11 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   },[order])
 
   useEffect(()=>{
-    (async()=>{
-      console.log(products)
-      const prodPromises=products.map(product=>prodQntd(product, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02')))
-      const readyPromises=await Promise.all(prodPromises)
-
-      setReadyQuantities(readyPromises)
-      setLoading(false)
-    })()
+    setLoading(false)
   },[products])
 
   useEffect(()=>{
-    if(typeof window!=='undefined'){
+    if(typeof window!=='undefined' && !(tipo===null || typeof tipo==='string')){
       const LisMobile=Array.from(filtrosMob.current!.querySelectorAll('dialog li'))
       LisMobile.forEach((li)=>{(li as HTMLLIElement).addEventListener('click',handleClickMobFilters)})
     }
@@ -218,7 +210,10 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         </div>
       ))}
       {loading ? <div className='loading loading-spinner w-32 mx-auto my-5 text-primary'/> : 
-        (products.map((product,index)=><Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={readyQuantities[index]}/>))
+        (products.map((product)=>{
+          const quantidade=prodQntd(product, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02'))
+          return <Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade}/>
+        }))
       }
     </div>
   </>)
