@@ -6,8 +6,6 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 
-//promoção baseada entre o listPrice e o salePrice com desconto do pix
-
 interface CardProps{
   prodId:string
   prodName:string
@@ -80,7 +78,7 @@ const CardProd=(props:CardProps)=>{
 
       <div className='flex re1:block re1:w-[20%] h-full'>
         <div className='w-[32%] re1:w-full re1:h-full flex items-center justify-center'>
-          <Image src={props.imgUrl} width={180} height={180} loading='lazy' decoding='sync' fetchPriority='low' className='w-[78%] re1:w-[60%]'/>
+          <Image src={props.imgUrl} width={180} height={180} loading='lazy' decoding='sync' fetchPriority='low' className='w-[78%]'/>
         </div>
 
         {/* Mobile */}
@@ -210,7 +208,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
 
     <div className='flex re1:block re1:w-[20%]'>
       <div className='w-[32%] re1:w-full re1:h-full flex items-center justify-center'>
-        <Image src={props.imgUrl} width={180} height={180} loading='lazy' decoding='sync' fetchPriority='low' className='w-[78%] re1:w-[60%]'/>
+        <Image src={props.imgUrl} width={180} height={180} loading='lazy' decoding='sync' fetchPriority='low' className='w-[78%]'/>
       </div>
 
       {/* Mobile */}
