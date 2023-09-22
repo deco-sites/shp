@@ -36,8 +36,10 @@ const Institucional=({Divs}:Props)=>{
     if(typeof window!=='undefined'){
       if(window.location.hash){
         const id=window.location.hash.substring(1)
-        const divId=accordionWrapper.current?.querySelector(`div#${id}`)
+        const divId=accordionWrapper.current?.querySelector(`div#pai-${id}`)
         divId && ((divId.querySelector('input[type="radio"]') as HTMLInputElement).checked=true)
+        divId?.querySelector(`div#${id}`)?.scrollIntoView({behavior:'smooth'})
+        window.scrollBy(0, -100)
       }
     }
 
@@ -60,17 +62,20 @@ const Institucional=({Divs}:Props)=>{
           </ul>
         </div>
 
-        <div className='flex w-full mt-16 re1:mt-40'>
-          <div className='hidden re1:block'>
+        <div className='flex w-full mt-16 re1:mt-40 re1:justify-between'>
+          <div className='hidden re1:flex flex-col border border-[#3d3d3d] items-center justify-around w-[20%] h-72 text-sm text-center p-[20px]'>
             <a href='https://api.whatsapp.com/send?phone=5519982013576' className='border border-[#dd1f26] rounded-lg p-[10px] font-black w-[140px] text-[#dd1f26] hover:text-white hover:bg-[#dd1f26]'>(19) 98201-3576</a>
+            <p className='text-base text-white'>(19) 3308-7222</p>
+            <p className='text-white'>De segunda à sexta das 08:30h às 18h e sábados de 08:30h às 13h</p>
+            <a href='/institucional/contato' className='border border-[#dd1f26] rounded-lg p-[10px] font-black w-[140px] text-[#dd1f26] hover:text-white hover:bg-[#dd1f26]'>FALE CONOSCO</a>
           </div>
 
-          <div ref={accordionWrapper} className='join join-vertical w-full re1:w-[40%] rounded-none'>
+          <div ref={accordionWrapper} className='join join-vertical w-full re1:w-[70%] rounded-none'>
             {Divs.map((element)=>{
               return (
-                <div id={element.id} className='collapse collapse-arrow join-item border-y border-y-[#3d3d3d] first:border-t-0 last:border-b-0'>
+                <div id={'pai-'+element.id} className='collapse collapse-arrow join-item border-y border-y-[#3d3d3d] first:border-t-0 last:border-b-0'>
                 <input type='radio' name='my-accordion' />
-                <div  className='collapse-title text-2xl font-medium'>{element.title}</div>
+                <div id={element.id} className='collapse-title text-2xl font-medium'>{element.title}</div>
                 <div className='collapse-content' dangerouslySetInnerHTML={{__html:element.text}}/>
               </div>)
             })}
