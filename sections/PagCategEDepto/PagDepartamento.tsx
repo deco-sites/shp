@@ -297,7 +297,6 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       (filterValues.includes(Input.value) && filterFqs.includes(Input.getAttribute('data-fq')!))? (Input.checked=true) : (Input.checked=false)
     })
 
-    console.log(selectedFilters)
   },[selectedFilters])
 
   useEffect(()=>{
@@ -388,10 +387,10 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
         />
       </div>
       <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
-        <div className='my-5 re1:my-[60px] text-gray-500 px-4 re1:px-0'>
+        <div className='my-5 re1:my-[60px] px-4 re1:px-0'>
           <p>{path.map((path,index,self)=>{
             if(index===0){
-              return <><a href='/'>Home</a> &gt;</>
+              return <><a className='underline' href='/'>Home</a> &gt;</>
             }else if(index!== self.length-1){
               const pathName=path.split('/')[1]
               let nameCategPai=''
@@ -420,9 +419,9 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
                   break;
               }
 
-              return <><a href={'/'+pathName}>{nameCategPai}</a> &gt;</>
+              return <><a className='underline' href={'/'+pathName}>{nameCategPai}</a> &gt;</>
             }else{
-              return <a href={path}>{titleCategoria}</a>
+              return <a className='font-bold' href={path}>{titleCategoria}</a>
             }
           })}</p>
         </div>
