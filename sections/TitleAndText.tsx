@@ -8,7 +8,7 @@ export interface Props{
 
 const TitleAndText=({title, text, classes}:Props)=>{
   return <div className={classes ? classes : 'w-full'}>
-    <p className='text-lg re1:text-2xl font-bold'>{title}</p>
+    <p className='text-xl re1:text-4xl font-bold'>{title}</p>
     <div dangerouslySetInnerHTML={{__html:text}}/>
   </div>
 }

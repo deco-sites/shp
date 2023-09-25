@@ -67,28 +67,28 @@ const InstitucionalContato=()=>{
                     </label>
                     <div class="_field-wrapper">
                       <select class='bg-transparent outline-none border border-[#828282] rounded-lg h-[40px] px-[15px] w-full' name="field[38]" id="field[38]" required>
-                        <option class='bg-[#111] text-white selected:bg-[#3d3d3d]' value="Tipo de Solicitação" selected disabled>
+                        <option class='bg-[#111] text-white checked:bg-[#3d3d3d]' value="Tipo de Solicitação" checked disabled>
                           Tipo de Solicitação
                         </option>
-                        <option class='bg-[#111] text-white selected:bg-[#3d3d3d]' value="Esclarecer uma dúvida" >
+                        <option class='bg-[#111] text-white checked:bg-[#3d3d3d]' value="Esclarecer uma dúvida" >
                           Esclarecer uma dúvida
                         </option>
-                        <option class='bg-[#111] text-white selected:bg-[#3d3d3d]' value="Fazer uma sugestão" >
+                        <option class='bg-[#111] text-white checked:bg-[#3d3d3d]' value="Fazer uma sugestão" >
                           Fazer uma sugestão
                         </option>
-                        <option class='bg-[#111] text-white selected:bg-[#3d3d3d]' value="Fazer uma reclamação" >
+                        <option class='bg-[#111] text-white checked:bg-[#3d3d3d]' value="Fazer uma reclamação" >
                           Fazer uma reclamação
                         </option>
-                        <option class='bg-[#111] text-white selected:bg-[#3d3d3d]' value="Fazer um elogio" >
+                        <option class='bg-[#111] text-white checked:bg-[#3d3d3d]' value="Fazer um elogio" >
                           Fazer um elogio
                         </option>
-                        <option class='bg-[#111] text-white selected:bg-[#3d3d3d]' value="Troca e devolução" >
+                        <option class='bg-[#111] text-white checked:bg-[#3d3d3d]' value="Troca e devolução" >
                           Troca e devolução
                         </option>
-                        <option class='bg-[#111] text-white selected:bg-[#3d3d3d]' value="Cancelamento" >
+                        <option class='bg-[#111] text-white checked:bg-[#3d3d3d]' value="Cancelamento" >
                           Cancelamento
                         </option>
-                        <option class='bg-[#111] text-white selected:bg-[#3d3d3d]' value="Desistência" >
+                        <option class='bg-[#111] text-white checked:bg-[#3d3d3d]' value="Desistência" >
                           Desistência
                         </option>
                       </select>
