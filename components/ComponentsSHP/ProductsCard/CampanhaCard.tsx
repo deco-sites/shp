@@ -343,7 +343,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
 
         <div className='form-control h-full justify-center'>
           <label className='label cursor-pointer gap-2'>
-            <input type='checkbox' className='toggle toggle-sm toggle-primary' />
+            <input type='checkbox' id='COMPARE-PC' className='toggle toggle-sm toggle-primary' />
             <span className='text-xs'>Compare com<br/>outros PCs</span> 
           </label>
         </div>

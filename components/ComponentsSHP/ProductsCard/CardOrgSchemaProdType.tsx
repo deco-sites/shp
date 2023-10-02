@@ -188,7 +188,7 @@ const PcCard=({...props}:PcCard)=>{
           <p className='text-[11px] text-[#b4b4b4]'>ou por {DescontoPIX(parseFloat(precoVista),15).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
-          <input type='checkbox' name='compare' className='checkbox checkbox-primary checkbox-sm'/>
+          <input type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-sm'/>
           <p>Compare</p>
         </label>
       </div>

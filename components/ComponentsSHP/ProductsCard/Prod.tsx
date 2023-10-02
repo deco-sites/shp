@@ -48,16 +48,6 @@ const Prod = ({ ...props }: ProdProps) => {
           </span>
           <p className='text-xs'>ou por {parseFloat(props.precoPIX.toString()).toLocaleString('pt-BR',{style:'currency', currency:'BRL'})} no Pix</p>
         </div>
-
-        <label htmlFor='compare' className='flex gap-1'>
-          <input
-            type='checkbox'
-            name='compare'
-            id='compare'
-            className='rounded-full checked:bg-red-500'
-          />
-          <p>Compare</p>
-        </label>
       </a>
     )
   }
