@@ -5,6 +5,7 @@ import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import WishlistButton from "deco-sites/shp/islands/WishlistButton.tsx";
 import {Runtime} from 'deco-sites/shp/runtime.ts'
 import { ObjTrust } from "deco-sites/shp/types/types.ts";
+import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 
 export interface Props{
   product:any
@@ -80,10 +81,11 @@ const ProdCard=({...props}:CardProps)=>{
 }
 
 const PcCard=({...props}:CardPCProps)=>{
-  const {prodId, prodName, precoVista, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, valorParcela, isAvailable, pix} = props
+  const {prodId, prodName, precoVista, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, valorParcela, isAvailable, pix, precoDe} = props
   const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
-  const diffPercent=Math.ceil(-1*(((100*salePricePix)/props.precoDe)-100))
+  const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
   const arm=(armazenamento || '').toString().toUpperCase()
+  const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
 
   return(
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg p-0 border relative
@@ -144,7 +146,14 @@ const PcCard=({...props}:CardPCProps)=>{
           <p className='text-[11px] text-[#b4b4b4]'>ou por {salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
-          <input type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-sm'/>
+          <input type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-sm' onChange={(event)=>{
+              const Target=event.target as HTMLInputElement
+              const pcObj:PcContextProps={
+                placaVideo, processador, memoria, armazenamento:arm, tipoArm, flagPercent:diffPercent,
+                name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
+              }
+              Target.checked ? addPC(pcObj) : removePC(pcObj.name, pcObj.id)
+          }}/>
           <p>Compare</p>
         </label>
       </div>

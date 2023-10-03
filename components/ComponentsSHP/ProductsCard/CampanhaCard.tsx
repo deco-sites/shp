@@ -5,6 +5,7 @@ import { ObjTrust } from 'deco-sites/shp/types/types.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
+import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 
 interface CardProps{
   prodId:string
@@ -171,6 +172,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
   const {days, hours, minutes, seconds} = props.timeRemaining || {days:'00', hours:'00', minutes:'00', seconds:'00'}
   const salePricePix=DescontoPIX(props.precoVista, parseFloat(props.pix))
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/props.precoDe)-100))
+  const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
 
   return (
   <a href={props.linkProd} className='flex flex-col re1:flex-row w-full h-[215px] re1:h-[245px] bg-[#171717] hover:shadow-[0_10px_25px_0] hover:shadow-[rgba(0,0,0,.85)]
@@ -343,7 +345,16 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
 
         <div className='form-control h-full justify-center'>
           <label className='label cursor-pointer gap-2'>
-            <input type='checkbox' id='COMPARE-PC' className='toggle toggle-sm toggle-primary' />
+            <input type='checkbox' id='COMPARE-PC' className='toggle toggle-sm toggle-primary' onChange={(event)=>{
+              const Target=event.target as HTMLInputElement
+              const pcObj:PcContextProps={
+                placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent,
+                name:props.prodName, id:props.prodId, parcelas:props.parcelas, valorParcela:props.valorParcela,
+                precoDe:props.precoDe, precoVista:props.precoVista, linkProd:props.linkProd, imgUrl:props.imgUrl, pix:props.pix
+              }
+
+              Target.checked ? addPC(pcObj) : removePC(pcObj.name, pcObj.id)
+            }}/>
             <span className='text-xs'>Compare com<br/>outros PCs</span> 
           </label>
         </div>
