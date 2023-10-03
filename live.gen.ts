@@ -124,9 +124,10 @@ import * as i1$$$$$6 from "$live/matchers/MatchHost.ts";
 import * as i1$$$$$7 from "$live/matchers/MatchLocation.ts";
 import * as i1$$$$$8 from "$live/matchers/MatchMulti.ts";
 import * as i1$$$$$9 from "$live/matchers/MatchNegate.ts";
-import * as i1$$$$$10 from "$live/matchers/MatchRandom.ts";
-import * as i1$$$$$11 from "$live/matchers/MatchSite.ts";
-import * as i1$$$$$12 from "$live/matchers/MatchUserAgent.ts";
+import * as i1$$$$$10 from "$live/matchers/MatchNever.ts";
+import * as i1$$$$$11 from "$live/matchers/MatchRandom.ts";
+import * as i1$$$$$12 from "$live/matchers/MatchSite.ts";
+import * as i1$$$$$13 from "$live/matchers/MatchUserAgent.ts";
 import * as i1$$$$$$0 from "$live/flags/audience.ts";
 import * as i1$$$$$$1 from "$live/flags/everyone.ts";
 import * as i1$$$$$$2 from "$live/flags/flag.ts";
@@ -422,9 +423,10 @@ const manifest = {
     "$live/matchers/MatchLocation.ts": i1$$$$$7,
     "$live/matchers/MatchMulti.ts": i1$$$$$8,
     "$live/matchers/MatchNegate.ts": i1$$$$$9,
-    "$live/matchers/MatchRandom.ts": i1$$$$$10,
-    "$live/matchers/MatchSite.ts": i1$$$$$11,
-    "$live/matchers/MatchUserAgent.ts": i1$$$$$12,
+    "$live/matchers/MatchNever.ts": i1$$$$$10,
+    "$live/matchers/MatchRandom.ts": i1$$$$$11,
+    "$live/matchers/MatchSite.ts": i1$$$$$12,
+    "$live/matchers/MatchUserAgent.ts": i1$$$$$13,
   },
   "flags": {
     "$live/flags/audience.ts": i1$$$$$$0,

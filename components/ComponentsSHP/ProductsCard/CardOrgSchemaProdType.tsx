@@ -1,25 +1,32 @@
+import { Offer, Product, PropertyValue } from 'deco-sites/std/commerce/types.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { useState, useEffect} from 'preact/hooks'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import WishlistButton from 'deco-sites/shp/islands/WishlistButton.tsx'
-import { Product } from 'deco-sites/std/commerce/types.ts'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
+import { ObjTrust } from 'deco-sites/shp/types/types.ts'
 
 export interface Props{
   product:Product
+  pix:string
 }
 
-interface PcCard{
-  productId:string
+interface ProdCard{
+  prodId:string
   prodName:string
-  precoVista:string
-  valorParcela:string
+  precoVista:number
+  valorParcela:number
   parcelas:number
   linkProd:string
   imgUrl:string
+  precoDe:number
+  pix:string
+  objTrust?:ObjTrust
+  trustPercent?:number
   isAvailable:boolean
-  precoDe:string
-  precoParcelado:string
+}
+
+interface PcCard extends ProdCard{
   placaVideo:string
   processador:string
   memoria:string
@@ -27,43 +34,24 @@ interface PcCard{
   tipoArm:string
 }
 
-interface ProdCard{
-  productId:string
-  prodName:string
-  precoVista:string
-  valorParcela:string
-  parcelas:string
-  imgUrl:string
-  linkProd:string
-  precoDe:string
-  isAvailable:boolean
-}
-
-const tagDiscount=(price:number, listPrice:number, pix?:number)=>{
-  const precoOriginal = listPrice
-  const precoComDesconto  = pix ? price-(price*(pix/100)) : price
-  const desconto = precoOriginal - precoComDesconto
-  return Math.ceil((desconto / precoOriginal)*100)
-}
 
 const ProdCard=({...props}:ProdCard)=>{
-  const {productId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe, isAvailable} = props
+  const {prodId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe, isAvailable, pix} = props
+  const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
+  const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
-  const precoDeNum=parseFloat(precoDe)
-  const vistaNum=parseFloat(precoVista)
-  const percent= precoDeNum ? tagDiscount(vistaNum,precoDeNum,15) : 15
 
-  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
+  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':prodId, 'average':0, 'count':0, 'product_name':prodName})
   const [trustPercent, setTrustPercent]=useState(0)
   
   useEffect(()=>{
     const handleTrust=async()=>{
       const { products_rates }=await Runtime.invoke({
         key:'deco-sites/shp/loaders/getTrustvox.ts',
-        props:{productId, storeId:'79497'}
+        props:{prodId, storeId:'79497'}
       })
       const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
-      obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
+      obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({'product_code':prodId, 'average':0, 'count':0, 'product_name':prodName})
     }
     handleTrust()
   },[])
@@ -72,7 +60,7 @@ const ProdCard=({...props}:ProdCard)=>{
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
     border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
       <div className='flex px-3 pt-3 h-auto w-auto'>
-        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-{percent}%</span>
+        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-{diffPercent}%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
       <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-4'>
@@ -94,9 +82,9 @@ const ProdCard=({...props}:ProdCard)=>{
         <div className='flex flex-col px-3'>
           {isAvailable ? (
             <>
-              <span className='line-through text-[#b4b4b4] text-xs'>De: {precoDeNum.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>{DescontoPIX(parseFloat(precoVista),15).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
-              <span className='text-xs text-[#b4b4b4]'>{parcelas}x {parseFloat(valorParcela).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
+              <span className='line-through text-[#b4b4b4] text-xs'>De: {precoDe.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>{salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
+              <span className='text-xs text-[#b4b4b4]'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
             </>):(
               <p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>
             )}
@@ -107,20 +95,18 @@ const ProdCard=({...props}:ProdCard)=>{
 }
 
 const PcCard=({...props}:PcCard)=>{
-  const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado, isAvailable} = props
-  const precoDeNum=parseFloat(precoDe)
-  const vistaNum=parseFloat(precoVista)
-  const percent= precoDeNum ? tagDiscount(vistaNum,precoDeNum,15) : 15
-  const arm=(armazenamento || '').toString().toUpperCase()
+  const {prodId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, isAvailable, pix} = props
+  const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
+  const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
-  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
+  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':prodId, 'average':0, 'count':0, 'product_name':prodName})
   const [trustPercent, setTrustPercent]=useState(0)
   
   // useEffect(()=>{
   //   const handleTrust=async()=>{
   //     const { products_rates }=await Runtime.invoke({
   //       key:'deco-sites/shp/loaders/getTrustvox.ts',
-  //       props:{productId, storeId:'79497'}
+  //       props:{prodId, storeId:'79497'}
   //     })
   //     const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
   //     obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({'product_code':productId, 'average':0, 'count':0, 'product_name':prodName})
@@ -145,9 +131,9 @@ const PcCard=({...props}:PcCard)=>{
               </div>
             }
           </div>
-          <span className={`absolute h-[30px] w-[35px] ${objTrust?.average !==0 && 'mt-[8%] re1:mt-[6%]'} flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg`}>-{percent}%</span>
+          <span className={`absolute h-[30px] w-[35px] ${objTrust?.average !==0 && 'mt-[8%] re1:mt-[6%]'} flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg`}>-{diffPercent}%</span>
         </div>
-        <div className='absolute ml-[65%] re1:ml-[73%] mt-[-18%] re1:mt-[-6.5%]'><WishlistButton productID={productId} variant='icon'/></div>
+        <div className='absolute ml-[65%] re1:ml-[73%] mt-[-18%] re1:mt-[-6.5%]'><WishlistButton productID={prodId} variant='icon'/></div>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
         <div className='text-green-500 flex flex-col gap-1 w-[85px] absolute mt-[45%] re1:mt-[50%]'>
           <p className='text-white font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90 px-1'>{processador}</p>
@@ -177,15 +163,14 @@ const PcCard=({...props}:PcCard)=>{
               loading='lazy'
               fetchPriority='low' decoding='sync'
             />
-            <p className='text-[10px] line-clamp-1'>{(arm.includes('HD') || arm.includes('SSD')) ? 
-              armazenamento: `${tipoArm} ${arm}`}
+            <p className='text-[10px] line-clamp-1'>{(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}
             </p>
           </label>
         </div>
         {isAvailable ? (
         <>
-          <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x {parseFloat(valorParcela).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-          <p className='text-[11px] text-[#b4b4b4]'>ou por {DescontoPIX(parseFloat(precoVista),15).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
+          <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+          <p className='text-[11px] text-[#b4b4b4]'>ou por {salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
           <input type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-sm'/>
@@ -198,22 +183,70 @@ const PcCard=({...props}:PcCard)=>{
 
 
 const Card=({product}:Props)=>{
-  const PCGamer=product.category!.includes('Computadores gamer')
-  const image=product.image![0].url!
-  const productId=product.productID!
-  const name=product.name!
-  const priceVista=product.offers!.offers[0].price
-  const priceDe=product.offers!.offers[0].priceSpecification.find(price=>price.priceType==='https://schema.org/ListPrice')!.price
-  const linkProduto=product.url!
   const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
-  const addProp=product.isVariantOf!.additionalProperty
 
-  if(PCGamer){
-    return <PcCard  armazenamento={addProp.find(item=>(item.name==='SSD' || item.name==='HD'))!.value!} imgUrl={image} prodName={name} memoria={addProp.find(item=>item.name==='Memória')!.value!} 
-    placaVideo={addProp.find(item=>item.name==='Placa de vídeo')!.value!} linkProd={linkProduto} productId={productId} precoDe={priceDe.toString()} precoVista={priceVista.toString()} isAvailable={avaibility}
-    processador={addProp.find(item=>item.name==='Processador')!.value!} tipoArm={addProp.find(item=>item.name==='SSD') ? 'SSD' : 'HD'} parcelas={10} precoParcelado={priceVista.toString()} valorParcela={(priceVista/10).toFixed(2)}/>
+  const offer=product.offers!.offers![0]!
+  const imgUrl=product.image![0].url!
+  const maxInstallments=(()=>{
+    let maxInstallments=0
+
+    offer.priceSpecification.forEach((item)=>{
+      if (item.priceComponentType === "https://schema.org/Installment") {
+        const { billingDuration } = item
+        if(billingDuration! > maxInstallments){maxInstallments = billingDuration!}
+      }
+    })
+
+    return maxInstallments
+  })()
+
+  const linkProd=product.isVariantOf!.url!
+  const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))!.effects.parameters[0].value!
+  const prodName=product.name!
+
+  //na vdd RefId pra passar no trustvox
+  const prodId=product.inProductGroupWithID!
+  const precoDe=offer.priceSpecification.find(item=>item.priceType==='https://schema.org/ListPrice')!.price!
+  const precoVista=offer.price!
+  const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)!.billingIncrement!
+
+  if(product.additionalProperty!.some(propValue=>propValue.propertyID==='10' && propValue.name==='category')){
+    const additionalProp:PropertyValue[]=product.isVariantOf!.additionalProperty!
+
+    if(!additionalProp.length){return null}
+
+    const armaz=(additionalProp.find(propVal=>propVal.name==='SSD') || additionalProp.find(propVal=>propVal.name==='HD'))!
+
+    return <PcCard 
+      placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')?.value || ''}
+      processador={additionalProp.find(item=>item.name==='Processador')!.value!}
+      armazenamento={armaz!.value!}
+      tipoArm={armaz!.name!}
+      memoria={additionalProp.find(item=>item.name==='Memória')!.value!}
+      parcelas={maxInstallments}
+      imgUrl={imgUrl}
+      pix={pix}
+      linkProd={linkProd}
+      prodName={prodName}
+      prodId={prodId}
+      precoDe={precoDe}
+      precoVista={precoVista}
+      valorParcela={valorParcela}
+      isAvailable={avaibility}
+    />
   }else{
-    return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe.toString()} precoVista={priceVista.toString()} parcelas={'10'} productId={productId} prodName={name} valorParcela={(priceVista/10).toFixed(2)} isAvailable={avaibility}/>
+    return <ProdCard
+      parcelas={maxInstallments}
+      imgUrl={imgUrl}
+      pix={pix}
+      linkProd={linkProd}
+      prodName={prodName}
+      prodId={prodId}
+      precoDe={precoDe}
+      precoVista={precoVista}
+      valorParcela={valorParcela}
+      isAvailable={avaibility}
+    />
   }
 }
 

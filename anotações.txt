@@ -1,1 +1,1 @@
-Arrumar valor de parcela no CardProdTypeVtex pf
+Arrumar tipo padrão dos Prods
