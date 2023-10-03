@@ -1,5 +1,6 @@
 import { useContext, useState, useCallback, useEffect } from 'preact/hooks'
 import { createContext, FunctionalComponent } from 'preact'
+import Compare from 'deco-sites/shp/sections/Compare/Compare.tsx'
 
 export interface PcContextProps{
   name:string
@@ -54,7 +55,7 @@ const CompareContextProvider:FunctionalComponent=({children})=>{
     removePC
   }
 
-  return <CompareContext.Provider value={value}>{children}</CompareContext.Provider>
+  return <CompareContext.Provider value={value}>{children}{PCs.length>=4 && <Compare PCs={PCs}/>}</CompareContext.Provider>
 }
 
 export default CompareContextProvider
