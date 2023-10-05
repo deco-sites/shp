@@ -353,7 +353,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
                 precoDe:props.precoDe, precoVista:props.precoVista, linkProd:props.linkProd, imgUrl:props.imgUrl, pix:props.pix
               }
 
-              Target.checked ? addPC(pcObj) : removePC(pcObj.name, pcObj.id)
+              Target.checked ? (PCs.length<4 ? addPC(pcObj) : (Target.checked=false, alert('Só é possível comparar 4 items por vez!'))) : removePC(pcObj.name, pcObj.id)
             }}/>
             <span className='text-xs'>Compare com<br/>outros PCs</span> 
           </label>

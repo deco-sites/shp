@@ -1,10 +1,10 @@
 {
   "tasks": {
     "start": "deno run -A --unstable --watch=tailwind.css,sections/,functions/,loaders/,actions/,workflows/,accounts/ dev.ts",
-    "component": "deno eval 'import \"$live/scripts/component.ts\"'",
-    "release": "deno eval 'import \"$live/scripts/release.ts\"'",
+    "component": "deno eval 'import \"deco/scripts/component.ts\"'",
+    "release": "deno eval 'import \"decp/scripts/release.ts\"'",
     "check": "deno lint && deno check dev.ts main.ts",
-    "update": "deno eval 'import \"$live/scripts/update.ts\"'",
+    "update": "deno eval 'import \"deco/scripts/update.ts\"'",
     "cleanLocalStorage" : "deno eval 'localStorage.clear()'"
   },
   "githooks": {

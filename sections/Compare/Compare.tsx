@@ -1,55 +1,51 @@
-import { useState, useEffect } from 'preact/hooks'
-import {PcContextProps} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import Image from 'deco-sites/std/packs/image/components/Image.tsx'
+import CompareModal from 'deco-sites/shp/sections/Compare/CompareModal.tsx'
 
 interface Props{
   PCs:PcContextProps[]
 }
 
-const CompareModal = () => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  const openModal = () => {
-    setIsOpen(true)
-  }
-
-  const closeModal = () => {
-    setIsOpen(false)
-  }
-
+const Vazio=()=>{
   return (
-    <div>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={openModal}
+    <div className='w-[20%] h-full hidden re1:flex relative'>
+      <div className='w-full h-full rounded-lg bg-[#1e1e1e]'/>
+      <svg className='absolute -right-[12px] -top-[12px]' xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
+        <circle cx="12.5" cy="12.5" r="12.5" fill="#DD1F26"></circle>
+        <rect x="6" y="11" width="13" height="3" fill="white"></rect>
+      </svg>
+    </div>
+  )
+}
+
+const PCCard=({PC}:{PC:PcContextProps})=>{ 
+  const {removePC}:CompareContextType=useCompareContext()
+  return (
+    <div className='w-full re1:w-[20%] h-full flex gap-1 relative'>
+      <svg className='absolute -right-[10%] re1:-right-[12px] top-[25%] re1:-top-[12px] cursor-pointer' xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none"
+        onClick={()=>removePC(PC.name, PC.id)}
       >
-        Abrir Modal
-      </button>
-
-      {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50" onClick={closeModal}></div>
-
-          <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-            <div className="modal-content text-left">
-              <div className="flex justify-between items-center pb-3">
-                <p className="text-2xl font-bold">Minha Modal</p>
-                <button className="modal-close p-2 -mt-2 -mr-2 rounded-full hover:bg-gray-300" onClick={closeModal}>
-                  <svg className="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-                    <path d="M1 1l6 6 6-6M1 17l6-6 6 6" fillRule="evenodd" stroke="none" strokeWidth="1"/>
-                  </svg>
-                </button>
-              </div>
-              <p>Conteúdo da modal aqui...</p>
-            </div>
-          </div>
-        </div>
-      )}
+        <circle cx="12.5" cy="12.5" r="12.5" fill="#DD1F26"></circle>
+        <rect x="6" y="11" width="13" height="3" fill="white"></rect>
+      </svg>
+      <Image className='my-auto' width={59} height={59} src={PC.imgUrl} fetchPriority='high' decoding='sync' loading='eager'/>
+      <p className='text-sm line-clamp-3 h-[90%] my-auto text-white'>{PC.name}</p>
     </div>
   )
 }
 
 const Compare=({PCs}:Props)=>{
-  return null
+  return (
+    <div className='fixed bottom-0 left-0 w-full re1:h-[100px] bg-black flex flex-col re1:flex-row p-[15px] re1:py-[15px] re1:px-0 z-10'>
+      <div className='flex flex-col-reverse gap-2 re1:gap-0 re1:flex-row w-[90%] justify-around mb-2 re1:mb-0'>
+        {PCs[0] ? <PCCard PC={PCs[0]}/> : <Vazio />}
+        {PCs[1] ? <PCCard PC={PCs[1]}/> : <Vazio />}
+        {PCs[2] ? <PCCard PC={PCs[2]}/> : <Vazio />}
+        {PCs[3] ? <PCCard PC={PCs[3]}/> : <Vazio />}
+      </div>
+      <CompareModal PCs={PCs}/>
+    </div>
+  )
 }
 
 

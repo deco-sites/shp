@@ -182,7 +182,7 @@ const PcCard=({...props}:PcCard)=>{
               placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent,
               name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
             }
-            Target.checked ? addPC(pcObj) : removePC(pcObj.name, pcObj.id)
+            Target.checked ? (PCs.length<4 ? addPC(pcObj) : (Target.checked=false, alert('Só é possível comparar 4 items por vez!'))) : removePC(pcObj.name, pcObj.id)
           }}/>
           <p>Compare</p>
         </label>
