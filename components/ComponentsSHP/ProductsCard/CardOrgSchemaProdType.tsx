@@ -1,6 +1,6 @@
 import { Offer, Product, PropertyValue } from 'deco-sites/std/commerce/types.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
-import { useState, useEffect} from 'preact/hooks'
+import { useState, useEffect, useRef} from 'preact/hooks'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import WishlistButton from 'deco-sites/shp/islands/WishlistButton.tsx'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
@@ -103,7 +103,18 @@ const PcCard=({...props}:PcCard)=>{
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':prodId, 'average':0, 'count':0, 'product_name':prodName})
   const [trustPercent, setTrustPercent]=useState(0)
 
+  const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
+  const pcObj:PcContextProps={
+    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent,
+    name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
+  }
+
+  useEffect(()=>{
+    if(!PCs.some((pc)=>pc.id===pcObj.id && pc.name===pcObj.name)){
+      compareInput.current && (compareInput.current.checked=false)
+    }
+  },[PCs])
   
   // useEffect(()=>{
   //   const handleTrust=async()=>{
@@ -176,12 +187,8 @@ const PcCard=({...props}:PcCard)=>{
           <p className='text-[11px] text-[#b4b4b4]'>ou por {salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
-          <input type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-sm' onChange={(event)=>{
+          <input ref={compareInput} type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-sm' onChange={(event)=>{
             const Target=event.target as HTMLInputElement
-            const pcObj:PcContextProps={
-              placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent,
-              name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
-            }
             Target.checked ? (PCs.length<4 ? addPC(pcObj) : (Target.checked=false, alert('Só é possível comparar 4 items por vez!'))) : removePC(pcObj.name, pcObj.id)
           }}/>
           <p>Compare</p>

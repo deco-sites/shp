@@ -55,24 +55,24 @@ const SpecPeca=({ ...props }:PecaProps)=>{
         <p className='text-xs re1:text-sm text-[#3d3d3d] my-4'>{props.pecaCateg}</p>
         <p className='text-sm re1:text-base text-white max-w-[160px] text-center'>{props.pecaName}</p>
       </div>
-        <dialog id={props.modalId.toString()} ref={modal} className='bg-[#111]/40 min-h-full min-w-[100vw] fixed p-0 top-0'>
-          <form method='dialog' className='p-10 re1:p-12 h-screen re1:h-[70vh] w-4/5 re1:w-2/5 bg-[#303030] ml-auto re1:m-auto re1:mt-[15vh] rounded-lg overflow-y-scroll'>
-            <button
-              onClick={()=>modal.current?.close()}
-              className='absolute top-0 re1:top-[15.5vh] left-[20%] re1:left-[30.25%] m-3 border-[#dd1f26] rounded-full border text-[#dd1f26] w-5 h-5 flex items-center justify-center text-xs'
-            >✕</button>
-            <div className='flex flex-col gap-5 text-white [overflow-wrap:break-word]'>
-              <div className="p-5 bg-[#0a0a0a]">
-              {data[0] ? (
-                <img className='m-auto' src={data[0]} width={300} height={300}/>
-              ) : (
-                <div className='h-[300px] w-[300px]'/>
-              )}
-              </div>
-              <div dangerouslySetInnerHTML={{__html: (data[1] || '') + defaultMsg }} />
+      <dialog id={props.modalId.toString()} ref={modal} className='bg-[#111]/40 min-h-full min-w-[100vw] fixed p-0 top-0'>
+        <form method='dialog' className='p-10 re1:p-12 h-screen re1:h-[70vh] w-4/5 re1:w-2/5 bg-[#303030] ml-auto re1:m-auto re1:mt-[15vh] rounded-lg overflow-y-scroll'>
+          <button
+            onClick={()=>modal.current?.close()}
+            className='absolute top-0 re1:top-[15.5vh] left-[20%] re1:left-[30.25%] m-3 border-[#dd1f26] rounded-full border text-[#dd1f26] w-5 h-5 flex items-center justify-center text-xs'
+          >✕</button>
+          <div className='flex flex-col gap-5 text-white [overflow-wrap:break-word]'>
+            <div className="p-5 bg-[#0a0a0a]">
+            {data[0] ? (
+              <Image className='m-auto' src={data[0]} width={300} height={300}/>
+            ) : (
+              <div className='h-[300px] w-[300px]'/>
+            )}
             </div>
-          </form>
-        </dialog>
+            <div dangerouslySetInnerHTML={{__html: (data[1] || '') + defaultMsg }} />
+          </div>
+        </form>
+      </dialog>
     </>
   )
 }

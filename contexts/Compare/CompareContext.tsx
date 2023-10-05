@@ -24,6 +24,7 @@ export interface CompareContextType {
   PCs: Array<PcContextProps>
   addPC: (pc: PcContextProps) => void
   removePC: (name:string, id:string) => void
+  removeAll:() => void
 }
 
 const CompareContext=createContext<CompareContextType | undefined>(undefined)
@@ -49,10 +50,15 @@ const CompareContextProvider:FunctionalComponent=({children})=>{
     setPCs(prevPCs=>prevPCs.filter(PC=>(PC.name!==name && PC.id!==id)))
   },[])
 
+  const removeAll=useCallback(()=>{
+    setPCs([])
+  },[])
+
   const value:CompareContextType={
     PCs,
     addPC,
-    removePC
+    removePC,
+    removeAll
   }
 
   return <CompareContext.Provider value={value}>{children}{PCs.length>=1 && <Compare PCs={PCs}/>}</CompareContext.Provider>
