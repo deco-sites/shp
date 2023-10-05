@@ -172,7 +172,7 @@ const PcCard=({...props}:PcCard)=>{
         </div>
         {isAvailable ? (
         <>
-          <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+          <span className='text-lg font-bold text-green-500 leading-3 mt-4'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
           <p className='text-[11px] text-[#b4b4b4]'>ou por {salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>

@@ -17,9 +17,9 @@ const CompareModal = ({PCs}:Props) => {
   }
 
   return (
-    <div>
+    <>
       <button
-        className="bg-primary m-auto text-white font-bold py-2 px-4 rounded-lg w-full"
+        className="bg-primary text-white font-bold px-2 py-1 re1:p-[18px] my-auto rounded-lg w-full"
         onClick={openModal}
       >
         Comparar
@@ -44,7 +44,7 @@ const CompareModal = ({PCs}:Props) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   )
 }
 
