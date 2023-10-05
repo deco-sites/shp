@@ -55,7 +55,7 @@ const CompareContextProvider:FunctionalComponent=({children})=>{
     removePC
   }
 
-  return <CompareContext.Provider value={value}>{children}{PCs.length>=4 && <Compare PCs={PCs}/>}</CompareContext.Provider>
+  return <CompareContext.Provider value={value}>{children}{PCs.length>=1 && <Compare PCs={PCs}/>}</CompareContext.Provider>
 }
 
 export default CompareContextProvider
