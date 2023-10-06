@@ -1,7 +1,7 @@
 import { LoaderReturnType } from 'deco/mod.ts'
 import { TipoDeFiltro, Filtros } from 'deco-sites/shp/types/CampanhaTypes.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
-import { Product } from 'deco-sites/std/commerce/types.ts'
+import { Product } from 'apps/commerce/types.ts'
 import { useEffect, useState, useRef } from 'preact/hooks'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CampanhaCard.tsx'

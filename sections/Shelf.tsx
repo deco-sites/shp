@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from 'preact/hooks'
 import Vitrine from 'deco-sites/shp/sections/Vitrine.tsx'
 import type { SectionProps } from '$live/mod.ts'
-import type { Product } from 'deco-sites/std/commerce/types.ts'
+import type { Product } from 'apps/commerce/types.ts'
 import { LoaderContext } from '$live/mod.ts'
-import type  {Manifest}  from 'deco-sites/shp/live.gen.ts'
+import type {Manifest}  from 'deco-sites/shp/manifest.gen.ts'
 
 export interface Props {
   fqType: string
@@ -17,11 +17,11 @@ export const loader: (
   const REQ = _req
 
   const q = REQ.url.split('?q=')[1].split(',')
-  const fqs = q.map((fq: string) => `${fqType.fqType}:${fq}`)
+  const fqs = q.map((fq: string) => `fq=${fqType.fqType}:${fq}`)
 
   const data = await ctx.invoke(
-    'deco-sites/std/loaders/vtex/legacy/productList.ts',
-    { fq: fqs, count: 50 }
+    'deco-sites/shp/loaders/getProductsSearchAPIProdType.ts',
+    { queryString:fqs.join(',')+'&_from=0&_to=49' }
   ) || []
 
   return { data }

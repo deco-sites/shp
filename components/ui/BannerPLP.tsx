@@ -1,7 +1,7 @@
 import { Picture, Source } from "deco-sites/std/components/Picture.tsx";
 import type { LoaderReturnType } from "$live/types.ts";
 import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
-import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
+import type { ProductListingPage } from "apps/commerce/types.ts";
 
 export interface Banner {
   /** @description RegExp to enable this banner on the current URL. Use /feminino/* to display this banner on feminino category  */

@@ -1,5 +1,5 @@
 // deno-lint-ignore-file
-import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
+import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import {JSX} from 'preact'
 import { renderToString } from 'preact-render-to-string'
 import { useEffect, useState, useRef, useId } from 'preact/hooks'

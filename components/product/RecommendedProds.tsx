@@ -1,4 +1,4 @@
-import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
+import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import type { LoaderReturnType } from '$live/types.ts'
 import { useEffect, useState } from 'preact/hooks'
 import { JSX } from 'preact'

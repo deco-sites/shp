@@ -1,7 +1,7 @@
 //criado a partir da lógica do arquivo:
 //api da shopinfo/getQtdItems/hotsiteDataProducts.php
 
-import { Product } from 'deco-sites/std/commerce/types.ts'
+import { Product } from 'apps/commerce/types.ts'
 
 type PreQtd={
   [key:string]:{

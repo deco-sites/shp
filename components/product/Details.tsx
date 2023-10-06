@@ -2,7 +2,7 @@
 import { Picture, Source } from 'deco-sites/std/components/Picture.tsx'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
 import { useId, useEffect, useState, useCallback, useRef } from 'preact/hooks'
-import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
+import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import Breadcrumb from 'deco-sites/fashion/components/ui/Breadcrumb.tsx'
 import Slider from 'deco-sites/fashion/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/fashion/components/ui/SliderJS.tsx'

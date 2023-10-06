@@ -1,4 +1,4 @@
-import { Offer, Product, PropertyValue } from 'deco-sites/std/commerce/types.ts'
+import { Offer, Product, PropertyValue } from 'apps/commerce/types.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { useState, useEffect, useRef} from 'preact/hooks'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'

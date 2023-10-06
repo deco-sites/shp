@@ -7,7 +7,7 @@ import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
-import type { Product } from 'deco-sites/std/commerce/types.ts'
+import type { Product } from 'apps/commerce/types.ts'
 import type { LoaderReturnType } from '$live/types.ts'
 
 export interface Props {

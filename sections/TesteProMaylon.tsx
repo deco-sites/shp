@@ -7,7 +7,7 @@ import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/MaylonCard.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
-import { Product } from "deco-sites/std/commerce/types.ts";
+import { Product } from "apps/commerce/types.ts";
 
 export interface Props{
   titleCategoria?:string
