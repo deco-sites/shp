@@ -8,6 +8,7 @@ import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
+import {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 
 export interface Props{
   titleCategoria?:string
@@ -87,6 +88,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   const [divFlut, setDivFlut]=useState(false)
   const [showMore, setShowMore]=useState(false)
   const [path,setPath]=useState<string[]>([titleCategoria])
+
+  const {PCs, removeAll}=useCompareContext()
 
 
   const filterLabel=useRef<HTMLLabelElement>(null)
@@ -297,6 +300,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
       (filterValues.includes(Input.value) && filterFqs.includes(Input.getAttribute('data-fq')!))? (Input.checked=true) : (Input.checked=false)
     })
 
+    PCs.length && removeAll()
   },[selectedFilters])
 
   useEffect(()=>{
@@ -307,6 +311,8 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     typeof window!=='undefined' && setFromTo({from:0, to:19})
 
     Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
+
+    PCs.length && removeAll()
   },[order])
 
   useEffect(()=>{

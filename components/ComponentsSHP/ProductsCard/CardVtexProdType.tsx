@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
-import { useState, useEffect} from 'preact/hooks'
+import { useState, useEffect, useRef} from 'preact/hooks'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import WishlistButton from "deco-sites/shp/islands/WishlistButton.tsx";
 import {Runtime} from 'deco-sites/shp/runtime.ts'
@@ -33,6 +33,7 @@ interface CardPCProps extends CardProps{
   memoria:string
   armazenamento:string
   tipoArm:string
+  fonte:string
   frete?:string
 }
 
@@ -81,11 +82,22 @@ const ProdCard=({...props}:CardProps)=>{
 }
 
 const PcCard=({...props}:CardPCProps)=>{
-  const {prodId, prodName, precoVista, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, valorParcela, isAvailable, pix, precoDe} = props
+  const {prodId, prodName, precoVista, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, valorParcela, isAvailable, pix, precoDe, fonte} = props
   const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
   const arm=(armazenamento || '').toString().toUpperCase()
+  const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
+  const pcObj:PcContextProps={
+    placaVideo, processador, memoria, armazenamento:arm, tipoArm, flagPercent:diffPercent, fonte,
+    name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
+  }
+
+  useEffect(()=>{
+    if(!PCs.some((pc)=>pc.id===pcObj.id && pc.name===pcObj.name)){
+      compareInput.current && (compareInput.current.checked=false)
+    }
+  },[PCs])
 
   return(
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg p-0 border relative
@@ -142,16 +154,12 @@ const PcCard=({...props}:CardPCProps)=>{
         </div>
         {isAvailable ? (
         <>
-          <span className='text-xl font-bold text-green-500 leading-3 mt-4'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+          <span className='text-lg font-bold text-green-500 leading-3 mt-4'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
           <p className='text-[11px] text-[#b4b4b4]'>ou por {salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
-          <input type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-sm' onChange={(event)=>{
+          <input ref={compareInput} type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-sm' onChange={(event)=>{
               const Target=event.target as HTMLInputElement
-              const pcObj:PcContextProps={
-                placaVideo, processador, memoria, armazenamento:arm, tipoArm, flagPercent:diffPercent,
-                name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
-              }
               Target.checked ? (PCs.length<4 ? addPC(pcObj) : (Target.checked=false, alert('Só é possível comparar 4 items por vez!'))) : removePC(pcObj.name, pcObj.id)
           }}/>
           <p>Compare</p>
@@ -205,7 +213,7 @@ const Card=({product, pix='12'}:Props)=>{
   if(PCGamer){
     return <PcCard  armazenamento={product.SSD || product.HD} imgUrl={image} prodName={name} memoria={product.Memória} objTrust={{'product_code':prodId, 'average':0, 'count':0, 'product_name':name}} trustPercent={0}
     placaVideo={product['Placa de vídeo']} linkProd={linkProduto} prodId={prodId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility}
-    processador={product.Processador} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix}/>
+    processador={product.Processador} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix} fonte={product.Fonte}/>
   }else{
     return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe} precoVista={priceVista} parcelas={maxInstallments} objTrust={objTrust}
       trustPercent={trustPercent} prodId={prodId} prodName={name} valorParcela={valorParcela} isAvailable={avaibility} pix={pix}/>

@@ -1,1 +1,1 @@
-Arrumar vitrine pra comportar compare
+Adicionar removeAll(compare) quando filtrar os pcs

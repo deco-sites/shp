@@ -4,6 +4,7 @@ import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNaveg
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import CategoriaModal from 'deco-sites/shp/components/ComponentsSHP/searchSHP/CategoriaModal.tsx'
 import { Runtime } from 'deco-sites/shp/runtime.ts';
+import { useCompareContext } from "deco-sites/shp/contexts/Compare/CompareContext.tsx";
 
 export interface Props{
   produtos:any
@@ -62,6 +63,8 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
   const [categories,setCategories]=useState<Category[]>([])
   const [category, setCategory]=useState<Category>({name:'selecione', value:'inicio'})
   const [first,setFirst]=useState(true)
+
+  const {PCs, removeAll}=useCompareContext()
 
   const orderFilters=[
     {'Menor Preço':'OrderByPriceASC'},
@@ -192,12 +195,16 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
         setFromTo({from:0, to:19, first:0})
       } 
     }
+
+    PCs.length && removeAll()
   },[category])
 
   useEffect(()=>{
     if(order!=='selecione'){
       typeof window!=='undefined' && setFromTo({from:0, to:19, first:0})
     }
+
+    PCs.length && removeAll()
   },[order])
 
   useEffect(()=>{

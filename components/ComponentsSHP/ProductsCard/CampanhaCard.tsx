@@ -1,5 +1,5 @@
 import { Offer, Product, PropertyValue } from 'deco-sites/std/commerce/types.ts'
-import { useState, useEffect } from 'preact/hooks'
+import { useState, useEffect, useRef } from 'preact/hooks'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
 import { ObjTrust } from 'deco-sites/shp/types/types.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
@@ -31,6 +31,7 @@ interface CardPCProps extends CardProps{
   armazenamento:string
   tipoArm:string
   frete?:string
+  fonte:string
 }
 
 export type Props={
@@ -172,7 +173,19 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
   const {days, hours, minutes, seconds} = props.timeRemaining || {days:'00', hours:'00', minutes:'00', seconds:'00'}
   const salePricePix=DescontoPIX(props.precoVista, parseFloat(props.pix))
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/props.precoDe)-100))
+  const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
+  const pcObj:PcContextProps={
+    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent, fonte:props.fonte,
+    name:props.prodName, id:props.prodId, parcelas:props.parcelas, valorParcela:props.valorParcela,
+    precoDe:props.precoDe, precoVista:props.precoVista, linkProd:props.linkProd, imgUrl:props.imgUrl, pix:props.pix
+  }
+
+  useEffect(()=>{
+    if(!PCs.some((pc)=>pc.id===pcObj.id && pc.name===pcObj.name)){
+      compareInput.current && (compareInput.current.checked=false)
+    }
+  },[PCs])
 
   return (
   <a href={props.linkProd} className='flex flex-col re1:flex-row w-full h-[215px] re1:h-[245px] bg-[#171717] hover:shadow-[0_10px_25px_0] hover:shadow-[rgba(0,0,0,.85)]
@@ -345,14 +358,8 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
 
         <div className='form-control h-full justify-center'>
           <label className='label cursor-pointer gap-2'>
-            <input type='checkbox' id='COMPARE-PC' className='toggle toggle-sm toggle-primary' onChange={(event)=>{
+            <input ref={compareInput} type='checkbox' id='COMPARE-PC' className='toggle toggle-sm toggle-primary' onChange={(event)=>{
               const Target=event.target as HTMLInputElement
-              const pcObj:PcContextProps={
-                placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent,
-                name:props.prodName, id:props.prodId, parcelas:props.parcelas, valorParcela:props.valorParcela,
-                precoDe:props.precoDe, precoVista:props.precoVista, linkProd:props.linkProd, imgUrl:props.imgUrl, pix:props.pix
-              }
-
               Target.checked ? (PCs.length<4 ? addPC(pcObj) : (Target.checked=false, alert('Só é possível comparar 4 items por vez!'))) : removePC(pcObj.name, pcObj.id)
             }}/>
             <span className='text-xs'>Compare com<br/>outros PCs</span> 
@@ -449,6 +456,10 @@ const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
 
     const armaz=(additionalProp.find(propVal=>propVal.name==='SSD') || additionalProp.find(propVal=>propVal.name==='HD'))!
     
+    if(!additionalProp.find(item=>item.name==='Memória')){
+      return null
+    }
+
     return <CardPC 
       NLI={prodName.slice(prodName.indexOf('NLI'),prodName.length).split(' ')[0]}
       placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')!.value!}
@@ -456,6 +467,7 @@ const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
       armazenamento={armaz!.value!}
       tipoArm={armaz!.name!}
       memoria={additionalProp.find(item=>item.name==='Memória')!.value!}
+      fonte={additionalProp.find(item=>item.name==='Fonte')!.value!}
       frete={frete!}
       parcelas={maxInstallments}
       imgUrl={imgUrl}
