@@ -6,7 +6,7 @@ import { mapProductToAnalyticsItem } from "deco-sites/std/commerce/utils/product
 import { useOffer } from "deco-sites/fashion/sdk/useOffer.ts";
 import ProductGallery, { Columns } from "../product/ProductGallery.tsx";
 import type { LoaderReturnType } from "$live/types.ts";
-import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
+import type { ProductListingPage } from "apps/commerce/types.ts";
 
 export interface Props {
   page: LoaderReturnType<ProductListingPage | null>;

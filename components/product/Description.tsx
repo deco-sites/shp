@@ -1,4 +1,4 @@
-import type { ProductDetailsPage } from 'deco-sites/std/commerce/types.ts'
+import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 

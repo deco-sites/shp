@@ -1,7 +1,7 @@
 import { useCart } from "deco-sites/std/packs/vtex/hooks/useCart.ts";
 import { formatPrice } from "deco-sites/fashion/sdk/format.ts";
 import Button from "deco-sites/fashion/components/ui/Button.tsx";
-import { AnalyticsEvent } from "deco-sites/std/commerce/types.ts";
+import { AnalyticsEvent } from "apps/commerce/types.ts";
 import { sendEvent } from "deco-sites/fashion/sdk/analytics.tsx";
 import { useUI } from "deco-sites/fashion/sdk/useUI.ts";
 import CartItem from "./CartItem.tsx";
@@ -16,7 +16,7 @@ declare global {
 }
 
 const CHECKOUT_URL =
-  "https://bravtexfashionstore.vtexcommercestable.com.br/checkout";
+  "https://shopinfo.vtexcommercestable.com.br/checkout";
 
 function Cart() {
   const { displayCart } = useUI();

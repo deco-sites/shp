@@ -1,1 +1,1 @@
-Adicionar removeAll(compare) quando filtrar os pcs
+Precisa arrumar encontreSelectGames

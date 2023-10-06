@@ -1,11 +1,14 @@
 {
   "tasks": {
-    "start": "deno run -A --unstable --watch=tailwind.css,sections/,functions/,loaders/,actions/,workflows/,accounts/ dev.ts",
+    "start": "deno task bundle && DECO_SITE_NAME=shp deno run -A --unstable --watch=static/sw.js,tailwind.css,sections/,functions/,loaders/,actions/,workflows/,accounts/ dev.ts",
+    "gen": "deno run -A dev.ts --gen-only",
     "component": "deno eval 'import \"deco/scripts/component.ts\"'",
-    "release": "deno eval 'import \"decp/scripts/release.ts\"'",
-    "check": "deno lint && deno check dev.ts main.ts",
+    "release": "deno eval 'import \"deco/scripts/release.ts\"'",
     "update": "deno eval 'import \"deco/scripts/update.ts\"'",
-    "cleanLocalStorage" : "deno eval 'localStorage.clear()'"
+    "check": "deno lint && deno check dev.ts main.ts",
+    "install": "deno eval 'import \"deco/scripts/apps/install.ts\"'",
+    "uninstall": "deno eval 'import \"deco/scripts/apps/uninstall.ts\"'",
+    "bundle": "deno eval 'import \"deco/scripts/apps/bundle.ts\"' deco-sites/shp"
   },
   "githooks": {
     "pre-commit": "check"

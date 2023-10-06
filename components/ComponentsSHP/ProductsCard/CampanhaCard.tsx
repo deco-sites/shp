@@ -1,4 +1,4 @@
-import { Offer, Product, PropertyValue } from 'deco-sites/std/commerce/types.ts'
+import { Offer, Product, PropertyValue } from 'apps/commerce/types.ts'
 import { useState, useEffect, useRef } from 'preact/hooks'
 import {Runtime} from 'deco-sites/shp/runtime.ts'
 import { ObjTrust } from 'deco-sites/shp/types/types.ts'

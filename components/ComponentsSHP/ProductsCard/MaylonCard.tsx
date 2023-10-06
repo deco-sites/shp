@@ -1,4 +1,4 @@
-import { Product, PropertyValue } from 'deco-sites/std/commerce/types.ts'
+import { Product, PropertyValue } from 'apps/commerce/types.ts'
 
 export interface Props{
   product:Product

@@ -5,7 +5,7 @@ import Slider from "deco-sites/fashion/components/ui/Slider.tsx";
 import { useId } from "preact/hooks";
 import { useOffer } from "deco-sites/fashion/sdk/useOffer.ts";
 import type { LoaderReturnType } from "$live/types.ts";
-import type { Product } from "deco-sites/std/commerce/types.ts";
+import type { Product } from "apps/commerce/types.ts";
 
 export interface Props {
   title: string;

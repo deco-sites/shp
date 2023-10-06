@@ -4,7 +4,7 @@ import Button from "deco-sites/fashion/components/ui/Button.tsx";
 import QuantitySelector from "deco-sites/fashion/components/ui/QuantitySelector.tsx";
 import { useCart } from "deco-sites/std/packs/vtex/hooks/useCart.ts";
 import { formatPrice } from "deco-sites/fashion/sdk/format.ts";
-import { AnalyticsEvent } from "deco-sites/std/commerce/types.ts";
+import { AnalyticsEvent } from "apps/commerce/types.ts";
 import { sendEvent } from "deco-sites/fashion/sdk/analytics.tsx";
 
 declare global {

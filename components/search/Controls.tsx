@@ -5,7 +5,7 @@ import Sort from "deco-sites/fashion/components/search/Sort.tsx";
 import Modal from "deco-sites/fashion/components/ui/Modal.tsx";
 import Breadcrumb from "deco-sites/fashion/components/ui/Breadcrumb.tsx";
 import { useSignal } from "@preact/signals";
-import type { ProductListingPage } from "deco-sites/std/commerce/types.ts";
+import type { ProductListingPage } from "apps/commerce/types.ts";
 
 type Props =
   & Pick<ProductListingPage, "filters" | "breadcrumb" | "sortOptions">
