@@ -103,7 +103,7 @@ const HeaderSHP = () => {
 
   return (
     <>
-      <div className='z-30 fixed top-0 w-full'>
+      <div className='z-10 fixed top-0 w-full'>
         <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-[#000] items-center justify-center re1:py-4 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-24 re1:justify-around'>
           {isMobile && (
             <button /* menuBar */
