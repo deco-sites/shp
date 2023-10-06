@@ -33,6 +33,7 @@ interface PcCard extends ProdCard{
   memoria:string
   armazenamento:string
   tipoArm:string
+  fonte:string
 }
 
 
@@ -96,7 +97,7 @@ const ProdCard=({...props}:ProdCard)=>{
 }
 
 const PcCard=({...props}:PcCard)=>{
-  const {prodId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, isAvailable, pix} = props
+  const {prodId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, isAvailable, pix, fonte} = props
   const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
@@ -106,7 +107,7 @@ const PcCard=({...props}:PcCard)=>{
   const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
   const pcObj:PcContextProps={
-    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent,
+    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent, fonte,
     name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
   }
 
@@ -241,6 +242,7 @@ const Card=({product}:Props)=>{
       tipoArm={armaz!.name!}
       memoria={additionalProp.find(item=>item.name==='Memória')!.value!}
       parcelas={maxInstallments}
+      fonte={additionalProp.find(item=>item.name==='Fonte')!.value!}
       imgUrl={imgUrl}
       pix={pix}
       linkProd={linkProd}

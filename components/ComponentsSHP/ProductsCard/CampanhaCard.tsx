@@ -31,6 +31,7 @@ interface CardPCProps extends CardProps{
   armazenamento:string
   tipoArm:string
   frete?:string
+  fonte:string
 }
 
 export type Props={
@@ -175,7 +176,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
   const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
   const pcObj:PcContextProps={
-    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent,
+    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent, fonte:props.fonte,
     name:props.prodName, id:props.prodId, parcelas:props.parcelas, valorParcela:props.valorParcela,
     precoDe:props.precoDe, precoVista:props.precoVista, linkProd:props.linkProd, imgUrl:props.imgUrl, pix:props.pix
   }
@@ -466,6 +467,7 @@ const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
       armazenamento={armaz!.value!}
       tipoArm={armaz!.name!}
       memoria={additionalProp.find(item=>item.name==='Memória')!.value!}
+      fonte={additionalProp.find(item=>item.name==='Fonte')!.value!}
       frete={frete!}
       parcelas={maxInstallments}
       imgUrl={imgUrl}

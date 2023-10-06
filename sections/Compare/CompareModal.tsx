@@ -32,11 +32,11 @@ const Especificacoes=({PCs}:Props)=>{
   const [isOpen, setIsOpen]=useState(true)
   
   return(
-    <div className='w-full text-white border border-[#1b1b1b] py-[15px] bg-[#141414]'>
+    <div className='w-full text-white border border-[#1b1b1b]  bg-[#141414]'>
       <div className='flex w-full justify-start items-center gap-1'
         onClick={()=>setIsOpen(prevState=>!prevState)}
       >
-        <p className='text-2xl font-bold'>Especificações</p>
+        <p className='text-2xl font-bold p-[8px]'>Especificações</p>
         <Icon 
           id={isOpen ? 'ChevronUp' : 'ChevronDown'}
           size={16}
@@ -56,6 +56,18 @@ const Especificacoes=({PCs}:Props)=>{
         <div className='p-[8px] grid grid-cols-5 gap-7 bg-[#1b1b1b]'>
           <p>Memória</p>
           {PCs.map(pc=><p>{pc.memoria}</p>)}
+        </div>
+        <div className='p-[8px] grid grid-cols-5 gap-7'>
+          <p>Armazenamento</p>
+          {PCs.map(pc=><p>{pc.armazenamento}</p>)}
+        </div>
+        <div className='p-[8px] grid grid-cols-5 gap-7 bg-[#1b1b1b]'>
+          <p>Fonte</p>
+          {PCs.map(pc=><p>{pc.fonte}</p>)}
+        </div>
+        <div className='p-[8px] grid grid-cols-5 gap-7'>
+          <p>Garantia</p>
+          {PCs.map(__=><p>1 Ano</p>)}
         </div>
       </div>
     </div>

@@ -18,6 +18,7 @@ export interface PcContextProps{
   tipoArm:string
   pix:string
   flagPercent:number
+  fonte:string
 }
 
 export interface CompareContextType {

@@ -33,6 +33,7 @@ interface CardPCProps extends CardProps{
   memoria:string
   armazenamento:string
   tipoArm:string
+  fonte:string
   frete?:string
 }
 
@@ -81,14 +82,14 @@ const ProdCard=({...props}:CardProps)=>{
 }
 
 const PcCard=({...props}:CardPCProps)=>{
-  const {prodId, prodName, precoVista, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, valorParcela, isAvailable, pix, precoDe} = props
+  const {prodId, prodName, precoVista, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, valorParcela, isAvailable, pix, precoDe, fonte} = props
   const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
   const arm=(armazenamento || '').toString().toUpperCase()
   const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
   const pcObj:PcContextProps={
-    placaVideo, processador, memoria, armazenamento:arm, tipoArm, flagPercent:diffPercent,
+    placaVideo, processador, memoria, armazenamento:arm, tipoArm, flagPercent:diffPercent, fonte,
     name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
   }
 
@@ -212,7 +213,7 @@ const Card=({product, pix='12'}:Props)=>{
   if(PCGamer){
     return <PcCard  armazenamento={product.SSD || product.HD} imgUrl={image} prodName={name} memoria={product.Memória} objTrust={{'product_code':prodId, 'average':0, 'count':0, 'product_name':name}} trustPercent={0}
     placaVideo={product['Placa de vídeo']} linkProd={linkProduto} prodId={prodId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility}
-    processador={product.Processador} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix}/>
+    processador={product.Processador} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix} fonte={product.Fonte}/>
   }else{
     return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe} precoVista={priceVista} parcelas={maxInstallments} objTrust={objTrust}
       trustPercent={trustPercent} prodId={prodId} prodName={name} valorParcela={valorParcela} isAvailable={avaibility} pix={pix}/>
