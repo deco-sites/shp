@@ -296,7 +296,6 @@ const testeProMaylon=({bannerUrl, descText, idsDeCategoria, seoText, titleCatego
       const Input=input as HTMLInputElement
       (filterValues.includes(Input.value) && filterFqs.includes(Input.getAttribute('data-fq')!))? (Input.checked=true) : (Input.checked=false)
     })
-
   },[selectedFilters])
 
   useEffect(()=>{
@@ -334,48 +333,48 @@ const testeProMaylon=({bannerUrl, descText, idsDeCategoria, seoText, titleCatego
         return acc
       },{} as Record<string, string[]>)
 
-      if(listFiltersDesk.current && selectedFilters.length){
-        const keys=Object.keys(filtrosByLabel)
-        const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
-        const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
-        h5S.forEach(h5=>{
-          const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-          Input.value=''
+      // if(listFiltersDesk.current && selectedFilters.length){
+      //   const keys=Object.keys(filtrosByLabel)
+      //   const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
+      //   const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
+      //   h5S.forEach(h5=>{
+      //     const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
+      //     Input.value=''
 
-          const key=h5.innerText
-          Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-            const Li=li as HTMLLIElement
-            if(filtrosByLabel[key].includes(Li.innerText)){
-              Li.removeAttribute('data-filtered')
-            }else{
-              Li.setAttribute('data-filtered','filtrado')
-            }
-          })
+      //     const key=h5.innerText
+      //     Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
+      //       const Li=li as HTMLLIElement
+      //       if(filtrosByLabel[key].includes(Li.innerText)){
+      //         Li.removeAttribute('data-filtered')
+      //       }else{
+      //         Li.setAttribute('data-filtered','filtrado')
+      //       }
+      //     })
           
-        })
+      //   })
 
-        h5NaoDisp.forEach(h5=>{
-          const divPai=h5.parentElement! as HTMLDivElement
-          divPai.classList.replace('flex','hidden')
-        })
-      }else if(listFiltersDesk.current){
-        const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
-        h5S.forEach(h5=>{
-          const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-          Input.value=''
+      //   h5NaoDisp.forEach(h5=>{
+      //     const divPai=h5.parentElement! as HTMLDivElement
+      //     divPai.classList.replace('flex','hidden')
+      //   })
+      // }else if(listFiltersDesk.current){
+      //   const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
+      //   h5S.forEach(h5=>{
+      //     const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
+      //     Input.value=''
 
-          Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-            const Li=li as HTMLLIElement
-            Li.removeAttribute('data-filtered')
-          })
-        })
+      //     Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
+      //       const Li=li as HTMLLIElement
+      //       Li.removeAttribute('data-filtered')
+      //     })
+      //   })
 
-        const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
-        h5NaoDisp.forEach(h5=>{
-          const divPai=h5.parentElement! as HTMLDivElement
-          divPai.classList.replace('hidden','flex')
-        })
-      }
+      //   const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
+      //   h5NaoDisp.forEach(h5=>{
+      //     const divPai=h5.parentElement! as HTMLDivElement
+      //     divPai.classList.replace('hidden','flex')
+      //   })
+      // }
     }
   },[products])
 
