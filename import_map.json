@@ -3,9 +3,9 @@
     "deco-sites/shp/": "./",
     "deco-sites/fashion/": "./",
     "$store/": "./",
-    "deco-sites/std/": "https://denopkg.com/deco-sites/std@1.22.9/",
-    "$live/": "https://denopkg.com/deco-cx/deco@1.36.2/",
-    "deco/": "https://denopkg.com/deco-cx/deco@1.36.2/",
+    "deco-sites/std/": "https://denopkg.com/deco-sites/std@1.22.11/",
+    "$live/": "https://denopkg.com/deco-cx/deco@1.45.0/",
+    "deco/": "https://denopkg.com/deco-cx/deco@1.45.0/",
     "$fresh/": "https://deno.land/x/fresh@1.5.2/",
     "preact": "https://esm.sh/preact@10.15.1",
     "preact/": "https://esm.sh/preact@10.15.1/",
@@ -13,8 +13,8 @@
     "@preact/signals": "https://esm.sh/*@preact/signals@1.1.3",
     "@preact/signals-core": "https://esm.sh/@preact/signals-core@1.3.0",
     "std/": "https://deno.land/std@0.190.0/",
-    "partytown/": "https://denopkg.com/deco-cx/partytown@0.4.7/",
+    "partytown/": "https://denopkg.com/deco-cx/partytown@0.4.8/",
     "daisyui": "npm:daisyui@3.5.0",
-    "apps/": "https://denopkg.com/deco-cx/apps@0.7.0/"
+    "apps/": "https://denopkg.com/deco-cx/apps@0.19.2/"
   }
 }

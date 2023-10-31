@@ -84,7 +84,7 @@ function Result({
           </div>
         </div>
       </div>
-      <SendEventOnLoad
+      {/* <SendEventOnLoad
         event={{
           name: "view_item_list",
           params: {
@@ -100,7 +100,7 @@ function Result({
             ),
           },
         }}
-      />
+      /> */}
     </>
   );
 }

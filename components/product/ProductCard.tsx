@@ -39,19 +39,19 @@ function ProductCard({ product, preload, itemListName }: Props) {
   const { listPrice, price } = useOffer(offers);
   const possibilities = useVariantPossibilities(product);
   const variants = Object.entries(Object.values(possibilities)[0] ?? {});
-  const clickEvent = {
-    name: "select_item" as const,
-    params: {
-      item_list_name: itemListName,
-      items: [
-        mapProductToAnalyticsItem({
-          product,
-          price,
-          listPrice,
-        }),
-      ],
-    },
-  };
+  // const clickEvent = {
+  //   name: "select_item" as const,
+  //   params: {
+  //     item_list_name: itemListName,
+  //     items: [
+  //       mapProductToAnalyticsItem({
+  //         product,
+  //         price,
+  //         listPrice,
+  //       }),
+  //     ],
+  //   },
+  // };
 
   return (
     <div
