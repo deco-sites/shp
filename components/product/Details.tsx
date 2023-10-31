@@ -261,7 +261,7 @@ function ProductInfo({ page, pix }: Props) {
         <div className='flex flex-col gap-3'>
           <div>
             <ul className='flex gap-[10px] overflow-x-scroll re1:overflow-x-auto whitespace-nowrap scrollbar-none'>
-              <li className='flex items-center justify-center bg-[#3d3d3d] border border-[#828282] hover:border-[#dd1f26] py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>12% no PIX Junho</li>
+              <li className='flex items-center justify-center bg-[#3d3d3d] border border-[#828282] hover:border-[#dd1f26] py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>12% no Pix</li>
               {Flags.map(flag=><li className='flex items-center justify-center bg-[#3d3d3d] border border-[#828282] hover:border-[#dd1f26] py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>{flag}</li>)}
             </ul>
           </div>
