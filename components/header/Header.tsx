@@ -3,6 +3,7 @@ import MenuItem from './MenuItem.tsx'
 import MenuItemDesk from './MenuItemDesktop.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import SearchMenuBar from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchMenuBar.tsx'
+import Cart from 'deco-sites/shp/components/minicart/Cart.tsx'
 
 const HeaderSHP = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
@@ -101,8 +102,23 @@ const HeaderSHP = () => {
     setOpenHard('flex'), setBorderHard('border-b-2 border-[#dd1f26]')
   }
 
+  const [openMinicart, setOpenMinicart]=useState(false)
+
   return (
     <>
+      <div className={`${openMinicart ? 'flex' : 'hidden'} flex-col z-30 fixed w-full items-end`}>
+        <div className='bg-[#111] w-screen re1:w-[400px] h-screen'>
+          <div className='flex justify-between h-[90px] items-center px-8 text-xl font-bold text-white'>
+            <label className='flex gap-2'>
+              <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png' width={22} height={20} decoding='sync' loading='lazy'/>
+              <p>Carrinho</p>
+            </label>
+            <p className='font-bold' onClick={()=>{setOpenMinicart(false)}}>✕</p>
+          </div>
+          <Cart />
+        </div>
+      </div>
+      
       <div className='z-10 fixed top-0 w-full'>
         <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-[#000] items-center justify-center re1:py-4 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-24 re1:justify-around'>
           {isMobile && (
@@ -184,14 +200,16 @@ const HeaderSHP = () => {
               </div>
             </a>
 
-            <a href='/teste' className='flex items-center gap-1'>
+            <a  className='flex items-center gap-1'>
               <div className='hidden w-fit h-fit border-[#dd1f26] border-2 p-2 rounded-lg ml-0 re1:block'>
                 <Image
                   src='https://shopinfo.vteximg.com.br/arquivos/header__cart.png'
                   alt='carrinho' width={24} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
                 />
               </div>
-              <div className='hover:text-white text-neutral-500 font-bold text-sm'>
+              <div className='hover:text-white text-neutral-500 font-bold text-sm'
+                onClick={()=>{setOpenMinicart(true)}}
+              >
                 Carrinho
               </div>
             </a>

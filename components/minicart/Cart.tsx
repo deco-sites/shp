@@ -10,7 +10,7 @@ import Coupon from "./Coupon.tsx";
 declare global {
   interface Window {
     DECO_SITES_STD: {
-      sendAnalyticsEvent: (args: AnalyticsEvent) => void;
+      sendAnalyticsEvent: (args: unknown) => void;
     };
   }
 }

@@ -1,1 +1,4 @@
 Precisa arrumar encontreSelectGames
+Valor do pix no site = 12%
+
+depois preciso criar uma variável global
