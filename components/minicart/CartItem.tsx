@@ -41,9 +41,9 @@ function CartItem({ index }: Props) {
       <Image
         src={imageUrl}
         alt={skuName}
-        width={70}
-        height={70}
-        class="object-cover object-center"
+        width={80}
+        height={80}
+        class="object-cover object-center m-auto"
       />
       <div class="flex-grow">
         <span className='text-white line-clamp-2'>{name}</span>
@@ -55,7 +55,7 @@ function CartItem({ index }: Props) {
             {isGift
               ? "Grátis"
               : (<p>
-                  <span className='text-[#dd1f26]'>{formatPrice(sellingPrice / 100, currencyCode!, locale)}</span> ou <span className='text-[#dd1f26]'>{DescontoPIX(sellingPrice / 100, 12).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</span> no pix
+                  <span className='text-[#dd1f26] font-bold'>{formatPrice(sellingPrice / 100, currencyCode!, locale)}</span> ou <span className='text-[#dd1f26] font-bold'>{DescontoPIX(sellingPrice / 100, 12).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</span> no pix
                 </p>)}
           </span>
         </div>
@@ -101,9 +101,9 @@ function CartItem({ index }: Props) {
         }}
         disabled={loading.value || isGift}
         loading={loading.value}
-        class="btn btn-ghost"
+        class="btn btn-ghost w-[32px] min-h-[32px] h-[32px] p-0"
       >
-        <Icon id="Trash" width={20} height={20} />
+        <Icon id="Trash" width={20} height={20} class="m-auto"/>
       </Button>
     </div>
   );

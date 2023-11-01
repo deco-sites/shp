@@ -2,3 +2,5 @@ Precisa arrumar encontreSelectGames
 Valor do pix no site = 12%
 
 depois preciso criar uma variável global
+
+trocar ideia com a deco de como manter o mais atualizado possivel
