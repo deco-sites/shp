@@ -6,11 +6,12 @@ import { useCart } from "deco-sites/std/packs/vtex/hooks/useCart.ts";
 import { formatPrice } from "deco-sites/fashion/sdk/format.ts";
 import { AnalyticsEvent } from "apps/commerce/types.ts";
 import { sendEvent } from "deco-sites/fashion/sdk/analytics.tsx";
+import { DescontoPIX } from "deco-sites/shp/FunctionsSHP/DescontoPix.ts";
 
 declare global {
   interface Window {
     DECO_SITES_STD: {
-      sendAnalyticsEvent: (args: AnalyticsEvent) => void;
+      sendAnalyticsEvent: (args: unknown) => void;
     };
   }
 }
@@ -40,20 +41,22 @@ function CartItem({ index }: Props) {
       <Image
         src={imageUrl}
         alt={skuName}
-        width={108}
-        height={150}
-        class="object-cover object-center"
+        width={80}
+        height={80}
+        class="object-cover object-center m-auto"
       />
       <div class="flex-grow">
-        <span>{name}</span>
-        <div class="flex items-center gap-2">
-          <span class="line-through text-base-300 text-sm">
+        <span className='text-white line-clamp-2'>{name}</span>
+        <div class="flex flex-col items-baseline">
+          <span class="line-through text-[#828282] text-sm">
             {formatPrice(listPrice / 100, currencyCode!, locale)}
           </span>
-          <span class="text-sm text-secondary">
+          <span class="text-sm text-white">
             {isGift
               ? "Grátis"
-              : formatPrice(sellingPrice / 100, currencyCode!, locale)}
+              : (<p>
+                  <span className='text-[#dd1f26] font-bold'>{formatPrice(sellingPrice / 100, currencyCode!, locale)}</span> ou <span className='text-[#dd1f26] font-bold'>{DescontoPIX(sellingPrice / 100, 12).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</span> no pix
+                </p>)}
           </span>
         </div>
         <div class="mt-6 max-w-min">
@@ -98,9 +101,9 @@ function CartItem({ index }: Props) {
         }}
         disabled={loading.value || isGift}
         loading={loading.value}
-        class="btn btn-ghost"
+        class="btn btn-ghost w-[32px] min-h-[32px] h-[32px] p-0"
       >
-        <Icon id="Trash" width={20} height={20} />
+        <Icon id="Trash" width={20} height={20} class="m-auto"/>
       </Button>
     </div>
   );

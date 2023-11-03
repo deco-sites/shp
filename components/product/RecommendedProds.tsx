@@ -114,7 +114,7 @@ const ProdCard=({...props}:ProdCard)=>{
         </div>
         <div className='flex flex-col re1:px-3'>
           <span className='line-through text-base-300 text-xs'>{precoDe}</span>
-          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>R$ {DescontoPIX(parseFloat(precoVista), 15)}</span> no pix</p>
+          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>{DescontoPIX(parseFloat(precoVista), 12).toLocaleString('pt-BR', {style:'currency',currency:'BRL'})}</span> no pix</p>
           <span className='text-xs text-base-300'>{parcelas}x R$ {valorParcela} sem juros</span>
         </div>
       </div>
@@ -221,7 +221,7 @@ const PcCard=({...props}:PcCard)=>{
             {prodName}
           </p>
           <span className='line-through text-base-300 text-xs leading-3'>{precoDe!=='' ? precoDe : `DE: R$ ${precoDeNum}`}</span>
-          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>R$ {precoVista}</span> no pix</p>
+          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>{precoVista}</span> no pix</p>
           <span className='text-xs text-base-300 leading-3'>{parcelas}x R$ {valorParcela} sem juros</span>
         </div>
       </div>
