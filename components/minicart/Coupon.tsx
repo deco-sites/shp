@@ -49,6 +49,7 @@ function Coupon() {
           <Button
             type="submit"
             htmlFor="coupon"
+            class="bg-[#dd1f26] border-none outline-none hover:bg-[#dd1f26] text-white"
             loading={loading.value}
             onClick={applyCouponToCart}
           >
