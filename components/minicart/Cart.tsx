@@ -59,7 +59,7 @@ function Cart() {
       {/* Cart Items */}
       <ul
         role="list"
-        class="px-2 flex-grow overflow-y-auto flex flex-col h-full max-h-[66vh]"
+        class="px-2 flex-grow overflow-y-auto flex flex-col h-full max-h-[66vh] scrollbar-shp"
       >
         {cart.value.items.map((_, index) => (
           <li class='py-4 border-y border-y-[#292929]'>
@@ -87,13 +87,13 @@ function Cart() {
           <div class="border-t border-[#292929] pt-4 flex flex-col justify-end items-end gap-2 mx-4">
             <div class="flex justify-between items-center w-full">
               <span>Total no PIX</span>
-              <span class="font-medium text-xl">
-                {productsPricePix?.reduce((acc, item)=>acc+item,0)}
+              <span class="font-bold text-xl  text-[#00e480]">
+                {productsPricePix?.reduce((acc, item)=>acc+item,0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
               </span>
             </div>
             <div class="flex justify-between items-center w-full">
               <span>Total</span>
-              <span class="font-medium text-xl">
+              <span class="font-bold text-xl">
                 {formatPrice(total.value / 100, currencyCode!, locale)}
               </span>
             </div>
