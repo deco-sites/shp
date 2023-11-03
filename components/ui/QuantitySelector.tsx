@@ -33,7 +33,7 @@ function QuantitySelector({ onChange, quantity, disabled, loading }: Props) {
     <div class="form-control">
       <div class="input-group">
         <Button
-          class="btn-square btn-outline border-[#cccccc] btn-xs"
+          class="btn-square btn-outline"
           onClick={decrement}
           disabled={disabled}
           loading={loading}
@@ -41,7 +41,7 @@ function QuantitySelector({ onChange, quantity, disabled, loading }: Props) {
           -
         </Button>
         <input
-          class="input input-xs !outline-none border-[#cccccc] border-x-0 text-center text-white font-bold bg-[#000] disabled:bg-[#000]"
+          class="input border-base-content border-x-0 text-center"
           type="number"
           inputMode="numeric"
           pattern="[0-9]*"
@@ -52,7 +52,7 @@ function QuantitySelector({ onChange, quantity, disabled, loading }: Props) {
           onBlur={(e) => onChange?.(e.currentTarget.valueAsNumber)}
         />
         <Button
-          class="btn-square btn-outline border-[#cccccc] btn-xs"
+          class="btn-square btn-outline"
           onClick={increment}
           disabled={disabled}
           loading={loading}

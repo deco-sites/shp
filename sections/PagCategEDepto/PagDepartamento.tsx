@@ -210,7 +210,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
     const initialScrollY=0
     let scrolledDown=false
 
-    const header=document.querySelector('body div.z-10.fixed')
+    const header=document.querySelector('body div.z-30.fixed')
     header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.8)')
 
     const handleScroll=()=>{

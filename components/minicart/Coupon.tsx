@@ -51,7 +51,6 @@ function Coupon() {
             htmlFor="coupon"
             loading={loading.value}
             onClick={applyCouponToCart}
-            class="bg-[#dd1f26] border-none outline-none hover:bg-[#dd1f26] text-white"
           >
             Ok
           </Button>
