@@ -1,1 +1,3 @@
 Precisa arrumar encontreSelectGames
+
+bugs pra arrumar, home e comparador
