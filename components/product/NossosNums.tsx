@@ -308,7 +308,7 @@ const NossosNums = () => {
             {sliderItemsMobile().map((item) => item)}
           </Slider>
 
-          <ul className='carousel justify-center gap-4 z-10 mt-6'>
+          <ul className='carousel justify-center gap-4 z-[5] mt-6'>
             {sliderItemsMobile().map((__, index) => (
               <Slider.Dot index={index}>
                 <div className='bg-[#2d2d2d] group-disabled:bg-[#dd1f26] rounded-full h-[12px] w-[12px]' />

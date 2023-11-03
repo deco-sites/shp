@@ -63,7 +63,7 @@ const Filtro=({title, values}:Props)=>{
           <Image src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png' width={15} height={15}
             decoding='sync' loading='lazy' fetchPriority='low' onClick={handleInput}/>
         </label>
-        <ul ref={valuesList} className={`flex flex-col gap-2 bg-[#141414] overflow-y-auto max-h-[300px]`}>
+        <ul ref={valuesList} className={`flex flex-col gap-2 bg-[#141414] overflow-y-auto max-h-[300px] re1:scrollbar-shp`}>
           {values.map(filter=>(
             <li className='py-1 px-2 data-[filtered]:!hidden'>
               <label className='flex justify-start gap-2 cursor-pointer items-center'>

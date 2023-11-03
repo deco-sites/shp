@@ -44,7 +44,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
             className='absolute top-0 left-0 w-full h-full object-cover' fetchPriority='low' width={390} height={674}
           />
 
-          <div className='z-10 relative'>
+          <div className='z-[5] relative'>
             <div className='flex flex-col justify-center items-center'>
               <h1 className='text-2xl '>ESCOLHA SEU PC GAMER</h1>
               <p className='text-lg'>de acordo com seu nível de jogo</p>
@@ -105,7 +105,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
             src='https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background.jpg' loading='lazy' preload
              className='absolute top-0 left-0 w-full h-full object-cover' fetchPriority='low' width={1864} height={642}
           />
-          <div className='relative z-10'>
+          <div className='relative z-[5]'>
             <div className='flex flex-col justify-center items-center'>
               <h1 className='text-2xl '>ESCOLHA SEU PC GAMER</h1>
               <p className='text-lg'>de acordo com seu nível de jogo</p>

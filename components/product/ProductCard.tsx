@@ -62,7 +62,7 @@ function ProductCard({ product, preload, itemListName }: Props) {
     >
       <figure class="relative " style={{ aspectRatio: `${WIDTH} / ${HEIGHT}` }}>
         {/* Wishlist button */}
-        <div class="absolute top-0 right-0 z-10">
+        <div class="absolute top-0 right-0 z-[5]">
           <WishlistIcon productGroupID={productGroupID} productID={productID} />
         </div>
         {/* Product Images */}

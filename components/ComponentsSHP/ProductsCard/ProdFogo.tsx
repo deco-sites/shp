@@ -17,7 +17,7 @@ const ProdFogo = ({...props}: Props) => {
 
   return (
     <a href={props.productUrl} className="flex flex-col w-72 justify-between rounded-lg bg-white p-2 h-44">
-      <label className="flex h-8 justify-between z-10">
+      <label className="flex h-8 justify-between z-[5]">
         <div className="bg-[#dd1f26] rounded-lg flex justify-around p-1 items-center w-40">
           <Image width={16} height={20} src="https://shopinfo.vteximg.com.br/arquivos/icon-esquenta-black.png"
             loading='lazy'

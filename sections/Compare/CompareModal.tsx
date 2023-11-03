@@ -184,7 +184,7 @@ const CompareModal = ({PCs}:Props) => {
               <p className='text-xl re1:text-3xl font-bold text-center'>Comparação dos<br/>Produtos</p>
               <button className='absolute -right-[5%] re1:right-0 -top-[5%] re1:top-0 cursor-poiter btn btn-sm btn-circle bg-[#3d3d3d] border-transparent' onClick={closeModal}>✕</button>
             </div>
-            <div className='flex flex-col gap-10 relative re1:static overflow-y-auto overflow-x-auto w-full'>
+            <div className='flex flex-col gap-10 relative re1:static overflow-y-auto overflow-x-auto w-full re1:scrollbar-shp'>
               <div className='grid grid-cols-5 gap-7 min-w-max re1:min-w-[unset]'><div className='w-[180px]'/>{PCs.map((PC)=><PCCard PC={PC}/>)}</div>
               <Especificacoes PCs={PCs} />
               <Games PCs={PCs} />

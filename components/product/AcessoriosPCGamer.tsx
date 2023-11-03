@@ -121,7 +121,7 @@ const Acessorios = () => {
               </Slider.Item>
             </Slider>
 
-            <ul className='carousel justify-center gap-4 z-10'>
+            <ul className='carousel justify-center gap-4 z-[5]'>
               <li>
                 <Slider.Dot index={0}>
                   <div className='bg-[#2d2d2d] group-disabled:bg-[#dd1f26] rounded-full h-[12px] w-[12px]' />

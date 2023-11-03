@@ -28,7 +28,7 @@ const Game=({gameName, imgUrl}:gameProps)=>{
         width={125} height={150} fetchPriority='low' 
       />
 
-      <div className={`relative z-10 top-[8px] ml-auto right-[8px] w-[15px] h-[15px] border border-[#dd1f26] ${checked ? 'bg-[#dd1f26]' : 'bg-gray-700'}`}/>
+      <div className={`relative z-[5] top-[8px] ml-auto right-[8px] w-[15px] h-[15px] border border-[#dd1f26] ${checked ? 'bg-[#dd1f26]' : 'bg-gray-700'}`}/>
     </div>
   )
 }
