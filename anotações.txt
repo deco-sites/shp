@@ -1,3 +1,6 @@
 Precisa arrumar encontreSelectGames
 
 bugs pra arrumar, home e comparador
+
+Possiveis melhoras: 
+-Breadcrumb nas pag de categ
