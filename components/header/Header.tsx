@@ -250,7 +250,7 @@ const HeaderSHP = () => {
                   },
                   {
                     imgUrl:
-                      'https://shopinfo.vteximg.com.br/arquivos/ids/160202/banner-menu-moba.png',
+                      'https://shopinfo.vteximg.com.br/arquivos/banner-menu-moba.png',
                     linkTo: '/computadores-gamer/moba-box',
                   },
                   {
@@ -260,12 +260,12 @@ const HeaderSHP = () => {
                   },
                   {
                     imgUrl:
-                      'https://shopinfo.vteximg.com.br/arquivos/ids/322885/banner-menu-setup-gamer.png',
+                      'https://shopinfo.vteximg.com.br/arquivos/banner-menu-setup-gamer.png',
                     linkTo: '/computadores-gamer/setup-gamer',
                   },
                   {
                     imgUrl:
-                      'https://shopinfo.vteximg.com.br/arquivos/ids/370491/banner-menu-vai-jogar-o-que.png',
+                      'https://shopinfo.vteximg.com.br/arquivos/banner-menu-vai-jogar-o-que.png',
                     linkTo: '/teste',
                   },
                 ]}
