@@ -1,6 +1,7 @@
 Precisa arrumar encontreSelectGames
 
-bugs pra arrumar, home e comparador
+bugs pra arrumar: comparador
+- Fiz a gambiarra pra parar o Uncaught mas tem que arrumar lógica do modal para atualizar os games quando atualiza o context
 
 Possiveis melhoras: 
 -Breadcrumb nas pag de categ

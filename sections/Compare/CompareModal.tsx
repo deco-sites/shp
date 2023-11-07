@@ -104,9 +104,8 @@ const Games=({PCs}:Props)=>{
       const arrayFPS=PCs.map(PC=>fetchFPS(PC))
       const promisesFPS=await Promise.all(arrayFPS)
       setFps(promisesFPS)
-      console.log(promisesFPS)
     })()
-  },[])
+  },[PCs])
 
   useEffect(()=>{
     if(fps.some(item=>item!==undefined)){
