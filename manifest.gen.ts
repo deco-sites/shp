@@ -57,7 +57,8 @@ import * as $$$$$$44 from "./sections/TitleAndText.tsx";
 import * as $$$$$$45 from "./sections/Vitrine.tsx";
 import * as $$$$$$46 from "./sections/WhatsApp.tsx";
 import * as $$$$$$47 from "./sections/WishlistGallery.tsx";
-import * as $$$$$$$$$$$0 from "./apps/site.ts";
+import * as $$$$$$$$$$$0 from "./apps/decohub.ts";
+import * as $$$$$$$$$$$1 from "./apps/site.ts";
 
 const manifest = {
   "loaders": {
@@ -120,7 +121,8 @@ const manifest = {
     "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$47,
   },
   "apps": {
-    "deco-sites/shp/apps/site.ts": $$$$$$$$$$$0,
+    "deco-sites/shp/apps/decohub.ts": $$$$$$$$$$$0,
+    "deco-sites/shp/apps/site.ts": $$$$$$$$$$$1,
   },
   "name": "deco-sites/shp",
   "baseUrl": import.meta.url,
