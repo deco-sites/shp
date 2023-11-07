@@ -133,7 +133,7 @@ const Games=({PCs}:Props)=>{
             <div className='text-xs re1:text-base items-center p-[8px] grid grid-cols-5 gap-7 border border-[#1b1b1b] odd:bg-[#1b1b1b]'>
               <p className='w-[180px] capitalize'>{game}</p>
               {fps.map((gamesFps,idx)=>{
-                if(gamesFps){
+                if(gamesFps && PCs[idx]){
                   return <p title={PCs[idx].name} className='line-clamp-3 mx-auto w-[180px] text-center'>{gamesFps[game]===0 ? '' : gamesFps[game] + ' FPS'}</p>
                 }else{
                   return <div className='w-[180px]' />
