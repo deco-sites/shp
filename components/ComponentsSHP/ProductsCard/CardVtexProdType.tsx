@@ -3,7 +3,7 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { useState, useEffect, useRef} from 'preact/hooks'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import WishlistButton from "deco-sites/shp/islands/WishlistButton.tsx";
-import {Runtime} from 'deco-sites/shp/runtime.ts'
+import {invoke} from 'deco-sites/shp/runtime.ts'
 import { ObjTrust } from "deco-sites/shp/types/types.ts";
 import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 
@@ -199,10 +199,8 @@ const Card=({product, pix='12'}:Props)=>{
     
   useEffect(()=>{
     const handleTrust=async()=>{
-      const data=await Runtime.invoke({
-        key:'deco-sites/shp/loaders/getTrustvox.ts',
-        props:{productId:prodId, storeId:'79497'}
-      })
+      const data=await invoke['deco-sites/shp'].loaders.getTrustvox({productId:prodId, storeId:'79497'})
+      
       const {products_rates}:{products_rates:ObjTrust[]}=data
       const obj:ObjTrust=products_rates[0]
       obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({product_code:prodId, average:0, count:0, product_name:name})

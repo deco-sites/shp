@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
 import { Picture, Source } from 'deco-sites/std/components/Picture.tsx'
-import {Runtime} from 'deco-sites/shp/runtime.ts'
+import {invoke} from 'deco-sites/shp/runtime.ts'
 import { useId, useEffect, useState, useCallback, useRef } from 'preact/hooks'
 import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import Breadcrumb from 'deco-sites/fashion/components/ui/Breadcrumb.tsx'
@@ -228,10 +228,8 @@ function ProductInfo({ page, pix }: Props) {
     useEffect(()=>{
       (async()=>{
         setRenderizado(true)
-        const { products_rates }=await Runtime.invoke({
-          key:'deco-sites/shp/loaders/getTrustvox.ts',
-          props:{productId:isVariantOf!.productGroupID, storeId:'79497'}
-        })
+        const { products_rates }=await invoke['deco-sites/shp'].loaders.getTrustvox({productId:isVariantOf!.productGroupID, storeId:'79497'}) 
+        
         const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
         setTrustPercent(obj.average*20)
         setObjTrust(obj)

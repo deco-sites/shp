@@ -3,7 +3,7 @@ import { TipoDeFiltro, Filtros } from 'deco-sites/shp/types/CampanhaTypes.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { Product } from 'apps/commerce/types.ts'
 import { useEffect, useState, useRef } from 'preact/hooks'
-import {Runtime} from 'deco-sites/shp/runtime.ts'
+import {invoke} from 'deco-sites/shp/runtime.ts'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CampanhaCard.tsx'
 import useTimer,{ TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import prodQntd from 'deco-sites/shp/FunctionsSHP/productQntHotsite.ts'
@@ -50,10 +50,7 @@ const loaderData= async(idCollection:string, order?:string, filter?:string):Prom
   arrQueryString.push('_from=0&_to=49')
   const queryString=encodeURI(arrQueryString.join('&'))
 
-  return await Runtime.invoke({
-    key:'deco-sites/shp/loaders/getProductsSearchAPIProdType.ts',
-    props:{queryString}
-  })
+  return await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString})
 }
 
 const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao, ...props}:Props)=>{

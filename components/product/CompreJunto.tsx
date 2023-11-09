@@ -7,7 +7,7 @@ import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
-import {Runtime} from 'deco-sites/shp/runtime.ts'
+import {invoke} from 'deco-sites/shp/runtime.ts'
 
 export interface Props{
   page:LoaderReturnType<ProductDetailsPage>
@@ -18,19 +18,10 @@ interface objBuyTogether{
   promotion:string,
 }
 
-const loaderSearchAPI= async (skuId:string)=>{
-  return await Runtime.invoke({
-    key:'deco-sites/shp/loaders/getProductsSearchAPI.ts',
-    props:{queryString:`fq=skuId:${skuId}`}
-  })
-}
+const loaderSearchAPI= async (skuId:string)=>await invoke['deco-sites/shp'].loaders.getProductsSearchAPI({queryString:`fq=skuId:${skuId}`})
 
-const loaderBuyTogether=async(skuId:string):Promise<objBuyTogether[]>=>{
-  return await Runtime.invoke({
-    key:'deco-sites/shp/loaders/getBuyTogetherValuesBySku.ts',
-    props:{skuId}
-  }) || []
-}
+const loaderBuyTogether=async(skuId:string):Promise<objBuyTogether[]>=> await invoke['deco-sites/shp'].loaders.getBuyTogetherValuesBySku({skuId:skuId}) || []
+
 
 const CompreJunto=({page}:Props)=>{
   const {product}=page
