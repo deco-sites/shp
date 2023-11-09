@@ -17,52 +17,54 @@ function WishlistButton({
 }: Props) {
   const { user } = useUser();
   const item = { sku: productID, productId: productGroupID };
-  const { loading, addItem, removeItem, getItem } = useWishlist();
-  const listItem = useComputed(() => getItem(item));
+  //const { loading, addItem, removeItem, getItem } = useWishlist();
+  // const listItem = useComputed(() => getItem(item));
   const fetching = useSignal(false);
 
   const isUserLoggedIn = Boolean(user.value?.email);
-  const inWishlist = Boolean(listItem.value);
+  // const inWishlist = Boolean(listItem.value);
 
   return (
     <Button
       class={variant === "icon"
         ? "btn-circle btn-ghost gap-1"
         : "btn-outline gap-1"}
-      loading={fetching.value}
+      loading={fetching?.value}
       aria-label="Add to wishlist"
       onClick={async (e) => {
         console.log(productID)
         e.stopPropagation();
-        e.preventDefault();
+        await e.preventDefault();
 
-        if (!isUserLoggedIn) {
-          window.alert("Please log in before adding to your wishlist");
+        // if (!isUserLoggedIn) {
+        //   window.alert("Please log in before adding to your wishlist");
 
-          return;
-        }
+        //   return;
+        // }
 
-        if (loading.value) {
-          return;
-        }
+        // if (loading.value) {
+        //   return;
+        // }
 
-        try {
-          fetching.value = true;
-          inWishlist
-            ? await removeItem({ id: listItem.value!.id }!)
-            : await addItem(item);
-        } finally {
-          fetching.value = false;
-        }
+        // try {
+        //   fetching.value = true;
+        //   inWishlist
+        //     ? await removeItem({ id: listItem.value!.id }!)
+        //     : await addItem(item);
+        // } finally {
+        //   fetching.value = false;
+        // }
       }}
     >
       <Icon
         id="Heart"
         size={20}
         strokeWidth={2}
-        fill={inWishlist ? "black" : "none"}
+        // fill={inWishlist ? "black" : "none"}
+        fill={"none"}
       />
-      {variant === "icon" ? null : inWishlist ? "Remover" : "Favoritar"}
+      {/* {variant === "icon" ? null : inWishlist ? "Remover" : "Favoritar"} */}
+      {variant === "icon" && null }
     </Button>
   );
 }
