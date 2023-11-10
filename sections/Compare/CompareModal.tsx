@@ -2,7 +2,7 @@ import { useState, useEffect } from 'preact/hooks'
 import {PcContextProps, useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Icon from "deco-sites/shp/components/ui/Icon.tsx";
-import {Runtime} from 'deco-sites/shp/runtime.ts'
+import {invoke} from 'deco-sites/shp/runtime.ts'
 
 interface Props{
   PCs:PcContextProps[]
@@ -93,12 +93,7 @@ const Games=({PCs}:Props)=>{
   const [hide,setHide]=useState(true)
   
   useEffect(()=>{
-    const fetchFPS=async(PC:PcContextProps)=>{
-      return await Runtime.invoke({
-        key:'deco-sites/shp/loaders/getParamFps.ts',
-        props:{processador:PC.processador ,placaVideo:PC.placaVideo}
-      })
-    }
+    const fetchFPS=async(PC:PcContextProps)=>await invoke['deco-sites/shp'].loaders.getParamFps({processador:PC.processador ,placaVideo:PC.placaVideo});
 
     (async()=>{
       const arrayFPS=PCs.map(PC=>fetchFPS(PC))

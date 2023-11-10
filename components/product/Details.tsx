@@ -1,6 +1,6 @@
 // deno-lint-ignore-file
 import { Picture, Source } from 'deco-sites/std/components/Picture.tsx'
-import {Runtime} from 'deco-sites/shp/runtime.ts'
+import {invoke} from 'deco-sites/shp/runtime.ts'
 import { useId, useEffect, useState, useCallback, useRef } from 'preact/hooks'
 import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import Breadcrumb from 'deco-sites/fashion/components/ui/Breadcrumb.tsx'
@@ -14,7 +14,7 @@ import { useOffer } from 'deco-sites/fashion/sdk/useOffer.ts'
 import { formatPrice } from 'deco-sites/fashion/sdk/format.ts'
 import { SendEventOnLoad } from 'deco-sites/fashion/sdk/analytics.tsx'
 import { mapProductToAnalyticsItem } from 'deco-sites/std/commerce/utils/productToAnalyticsItem.ts'
-import AddToCartButton from 'deco-sites/fashion/islands/AddToCartButton.tsx'
+import Button from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
 import ShippingSimulation from 'deco-sites/fashion/islands/ShippingSimulation.tsx'
 import ProductSelector from './ProductVariantSelector.tsx'
 import ProductImageZoom from 'deco-sites/fashion/islands/ProductImageZoom.tsx'
@@ -228,10 +228,8 @@ function ProductInfo({ page, pix }: Props) {
     useEffect(()=>{
       (async()=>{
         setRenderizado(true)
-        const { products_rates }=await Runtime.invoke({
-          key:'deco-sites/shp/loaders/getTrustvox.ts',
-          props:{productId:isVariantOf!.productGroupID, storeId:'79497'}
-        })
+        const { products_rates }=await invoke['deco-sites/shp'].loaders.getTrustvox({productId:isVariantOf!.productGroupID, storeId:'79497'}) 
+        
         const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
         setTrustPercent(obj.average*20)
         setObjTrust(obj)
@@ -308,13 +306,14 @@ function ProductInfo({ page, pix }: Props) {
                 </div>
                 <div className='hidden re1:block'>
                   {(seller && renderizado) && (
-                    <AddToCartButton
-                    skuId={productID}
-                    sellerId={seller}
-                    price={price ?? 0}
-                    discount={price && listPrice ? listPrice - price : 0}
-                    name={product.name ?? ''}
-                    productGroupId={product.isVariantOf?.productGroupID ?? ''}
+                    <Button
+                      url={product?.url ?? ''}
+                      productID={productID}
+                      seller={seller}
+                      price={price ?? 0}
+                      discount={price && listPrice ? listPrice - price : 0}
+                      name={product.name ?? ''}
+                      productGroupID={product.isVariantOf?.productGroupID ?? ''}
                     />
                   )}
                 </div>
@@ -347,16 +346,17 @@ function ProductInfo({ page, pix }: Props) {
             </div>
             {/* Add to Cart and Favorites button */}
             <div class='mt-4 re1:hidden flex flex-col gap-2'>
-            {(seller && renderizado)&& (
-                <AddToCartButton
-                  skuId={productID}
-                  sellerId={seller}
-                  price={price ?? 0}
-                  discount={price && listPrice ? listPrice - price : 0}
-                  name={product.name ?? ''}
-                  productGroupId={product.isVariantOf?.productGroupID ?? ''}
-                />
-              )}
+            {(seller && renderizado) && (
+              <Button
+                url={product?.url ?? ''}
+                productID={productID}
+                seller={seller}
+                price={price ?? 0}
+                discount={price && listPrice ? listPrice - price : 0}
+                name={product.name ?? ''}
+                productGroupID={product.isVariantOf?.productGroupID ?? ''}
+              />
+            )}
             </div>
             {/* Shipping Simulation */}
             {renderizado && (

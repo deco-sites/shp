@@ -1,7 +1,7 @@
 import { Signal, useSignal } from "@preact/signals";
 import { useCallback } from "preact/hooks";
-import Button from "deco-sites/fashion/components/ui/Button.tsx";
-import { formatPrice } from "deco-sites/fashion/sdk/format.ts";
+import Button from "$store/components/ui/Button.tsx";
+import { formatPrice } from "$store/sdk/format.ts";
 import { useCart } from "deco-sites/std/packs/vtex/hooks/useCart.ts";
 import Image from 'deco-sites/std/components/Image.tsx'
 import type {
@@ -32,8 +32,8 @@ function ShippingContent({ simulation }: {
     [] as Sla[],
   ) ?? [];
 
-  const locale = cart.value?.clientPreferencesData.locale || "pt-BR";
-  const currencyCode = cart.value?.storePreferencesData.currencyCode || "BRL";
+  const locale = cart.value?.clientPreferencesData?.locale || "pt-BR";
+  const currencyCode = cart.value?.storePreferencesData?.currencyCode || "BRL";
 
   if (simulation.value == null) {
     return null;

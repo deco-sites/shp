@@ -121,7 +121,7 @@ const HeaderSHP = () => {
             </label>
             <p id='close-minicart' className='font-bold cursor-pointer' onClick={()=>{setOpenMinicart(false)}}>✕</p>
           </div>
-          <Cart />
+          <Cart platform="vtex"/>
         </div>
       </div>
       

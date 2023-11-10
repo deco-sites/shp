@@ -1,7 +1,7 @@
 // deno-lint-ignore-file no-explicit-any
 import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
-import { Runtime } from 'deco-sites/shp/runtime.ts'
+import { invoke } from 'deco-sites/shp/runtime.ts'
 
 const searchMenuBarLoader = async (term:string, signal:AbortSignal)=>{
   const url=`https://api.shopinfo.com.br/Deco/getAutoComplete.php?ft=${encodeURI(term)}`
@@ -151,7 +151,7 @@ const SearchMenuBar=()=>{
 
   useEffect(()=>{
     (async()=>{
-      const data=await Runtime.invoke({key:'deco-sites/shp/loaders/getSubCategories.ts'})
+      const data=await invoke['deco-sites/shp'].loaders.getSubCategories()
       setCategories(data)
     })()
   },[])

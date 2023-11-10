@@ -6,7 +6,7 @@ import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/MaylonCard.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
-import {Runtime} from 'deco-sites/shp/runtime.ts'
+import {invoke} from 'deco-sites/shp/runtime.ts'
 import { Product } from "apps/commerce/types.ts";
 
 export interface Props{
@@ -23,19 +23,9 @@ export interface Props{
   }>
 }
 
-const fetchFilters=async (idCateg:string)=>{
-  return await Runtime.invoke({
-    key:'deco-sites/shp/loaders/getFacetsByCategId.ts',
-    props:{categoryId:idCateg}
-  })
-}
+const fetchFilters=async (idCateg:string)=>await invoke['deco-sites/shp'].loaders.getFacetsByCategId({categoryId:idCateg})
 
-const fetchProducts=async (queryString:string)=>{
-  return await Runtime.invoke({
-    key:'deco-sites/shp/loaders/getProductsSearchAPIProdType.ts',
-    props:{queryString}
-  })
-}
+const fetchProducts=async (queryString:string)=>await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString})
 
 const replaceClasses=(desc:string)=>{
   let string=desc

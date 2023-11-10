@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'preact/hooks'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import CategoriaModal from 'deco-sites/shp/components/ComponentsSHP/searchSHP/CategoriaModal.tsx'
-import { Runtime } from 'deco-sites/shp/runtime.ts';
 import { useCompareContext } from "deco-sites/shp/contexts/Compare/CompareContext.tsx";
 
 export interface Props{

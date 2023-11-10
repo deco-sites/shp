@@ -1,6 +1,6 @@
 import { Offer, Product, PropertyValue } from 'apps/commerce/types.ts'
 import { useState, useEffect, useRef } from 'preact/hooks'
-import {Runtime} from 'deco-sites/shp/runtime.ts'
+import { invoke } from 'deco-sites/shp/runtime.ts'
 import { ObjTrust } from 'deco-sites/shp/types/types.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
@@ -438,10 +438,7 @@ const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
     
   useEffect(()=>{
     const handleTrust=async()=>{
-      const data=await Runtime.invoke({
-        key:'deco-sites/shp/loaders/getTrustvox.ts',
-        props:{productId:prodId, storeId:'79497'}
-      })
+      const data=await invoke["deco-sites/shp"].loaders.getTrustvox({productId:prodId, storeId:'79497'})
       const {products_rates}:{products_rates:ObjTrust[]}=data
       const obj:ObjTrust=products_rates[0]
       obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({product_code:prodId, average:0, count:0, product_name:prodName})
