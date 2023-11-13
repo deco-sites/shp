@@ -20,12 +20,14 @@ const HeaderSHP = () => {
 
     handleResize()
     
-    // deno-lint-ignore no-window-prefix
-    window.addEventListener('resize', handleResize)
-
-    return () => {
+    if(typeof window !=='undefined'){
       // deno-lint-ignore no-window-prefix
-      window.removeEventListener('resize', handleResize)
+      window.addEventListener('resize', handleResize)
+      
+      return () => {
+        // deno-lint-ignore no-window-prefix
+        window.removeEventListener('resize', handleResize)
+      }
     }
   }, [])
 

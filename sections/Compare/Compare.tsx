@@ -1,4 +1,4 @@
-import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import CompareContextProvider, { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import CompareModal from 'deco-sites/shp/sections/Compare/CompareModal.tsx'
 
@@ -36,6 +36,7 @@ const PCCard=({PC}:{PC:PcContextProps})=>{
 
 const Compare=({PCs}:Props)=>{
   return (
+    <CompareContextProvider>
     <div className='fixed bottom-0 left-0 w-full re1:h-[100px] bg-black flex flex-col re1:flex-row p-[15px] re1:py-[15px] re1:px-0 z-[5]'>
       <div className='flex flex-col gap-2 re1:gap-0 re1:flex-row w-[90%] justify-around mb-2 re1:mb-0'>
         {PCs[0] ? <PCCard PC={PCs[0]}/> : <Vazio />}
@@ -45,6 +46,7 @@ const Compare=({PCs}:Props)=>{
       </div>
       <CompareModal PCs={PCs}/>
     </div>
+    </CompareContextProvider>
   )
 }
 

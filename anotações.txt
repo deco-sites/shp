@@ -1,8 +1,8 @@
 Precisa arrumar encontreSelectGames
 - Footer pra note
 
-bugs pra arrumar: comparador
-- Fiz a gambiarra pra parar o Uncaught mas tem que arrumar lógica do modal para atualizar os games quando atualiza o context
+Bugs pra arrumar: 
+- Comparador: fiz a gambiarra pra parar o Uncaught mas tem que arrumar lógica do modal para atualizar os games quando atualiza o context
 - Carrinho: atualizado, porém não to consegiundo add produtos nele
 - Header com aviso do preact falando q é lazy
 - E tentar remover Header do _app.tsx, porém ele n renderiza de primeira

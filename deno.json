@@ -8,7 +8,8 @@
     "check": "deno lint && deno check dev.ts main.ts",
     "install": "deno eval 'import \"deco/scripts/apps/install.ts\"'",
     "uninstall": "deno eval 'import \"deco/scripts/apps/uninstall.ts\"'",
-    "bundle": "deno eval 'import \"deco/scripts/apps/bundle.ts\"' deco-sites/shp"
+    "bundle": "deno eval 'import \"deco/scripts/apps/bundle.ts\"' deco-sites/shp",
+    "clearLocalStorage": "deno eval 'localStorage.clear()'"
   },
   "githooks": {
     "pre-commit": "check"

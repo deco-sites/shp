@@ -1,1 +1,1 @@
-export { default } from 'deco-sites/shp/components/header/Header.tsx'
+export { default } from 'deco-sites/shp/sections/Header/Header.tsx'
