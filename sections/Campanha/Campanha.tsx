@@ -8,6 +8,7 @@ import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CampanhaC
 import useTimer,{ TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import prodQntd from 'deco-sites/shp/FunctionsSHP/productQntHotsite.ts'
 import FiltroMob from 'deco-sites/shp/sections/Campanha/FiltroMob.tsx'
+import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 
 //montando interface com infos que precisam de descricao no ADMIN
 interface NeedDesc{
@@ -153,7 +154,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
 
 
   return (
-  <>
+  <CompareContextProvider>
     <div className='bg-[#262626]'>
       <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block' preload loading='eager'/></a>
       <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden' preload loading='eager'/></a>
@@ -213,7 +214,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         }))
       }
     </div>
-  </>)
+  </CompareContextProvider>)
 }
 
 export default Campanha

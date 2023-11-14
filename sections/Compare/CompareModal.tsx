@@ -154,6 +154,8 @@ const Games=({PCs}:Props)=>{
 const CompareModal = ({PCs}:Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  useEffect(()=>{PCs.length<1 && closeModal()},[PCs])
+
   const openModal = () => {
     setIsOpen(true)
   }

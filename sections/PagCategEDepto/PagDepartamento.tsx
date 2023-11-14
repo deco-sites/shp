@@ -8,7 +8,7 @@ import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
-import {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 
 export interface Props{
   titleCategoria?:string
@@ -65,7 +65,7 @@ interface FiltroObj{
   value:string
 }
 
-const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria='', iconesNavegacionais}:Props)=>{
+export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria='', iconesNavegacionais}:Props)=>{
   const [hideDescSeo,setHideDescSeo]=useState(true)
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
@@ -376,6 +376,7 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
   },[products])
 
   return(
+    <>
     <div className='w-full text-white appearance-none'>
       <div className='absolute top-0 z-[-1] '>
         <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
@@ -545,7 +546,16 @@ const pagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCateg
           </label>
         </div>
     </div>
+    </>
   )
 }
 
-export default pagDepartamento
+const finalSection=(props:Props)=>{
+  return (
+    <CompareContextProvider>
+      <PagDepartamento {...props}/>
+    </CompareContextProvider>
+  )
+}
+
+export default finalSection

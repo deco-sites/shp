@@ -41,14 +41,14 @@ export const useCompareContext=():CompareContextType=>{
 const CompareContextProvider:FunctionalComponent=({children})=>{
   const [PCs, setPCs]=useState<PcContextProps[]>([])
 
-  useEffect(()=>console.log(PCs),[PCs])
-
   const addPC= useCallback((pc:PcContextProps)=>{
     setPCs(prevPCs=> [...prevPCs, pc])
+    // console.log(`Adding: name:${pc.name}, id:${pc.id}`)
   },[])
 
   const removePC=useCallback((name:string, id:string)=>{
     setPCs(prevPCs=>prevPCs.filter(PC=>(PC.name!==name && PC.id!==id)))
+    // console.log(`Removing: name:${name}, id:${id}`)
   },[])
 
   const removeAll=useCallback(()=>{

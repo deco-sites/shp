@@ -32,10 +32,11 @@ import * as $$24 from "./islands/ShelfIsland.tsx";
 import * as $$25 from "./islands/ShippingSimulation.tsx";
 import * as $$26 from "./islands/SliderJS.tsx";
 import * as $$27 from "./islands/SpecificationIsland.tsx";
-import * as $$28 from "./islands/TesteMaylonIsland.tsx";
-import * as $$29 from "./islands/TrustvoxIsland.tsx";
-import * as $$30 from "./islands/VitrineIsland.tsx";
-import * as $$31 from "./islands/WishlistButton.tsx";
+import * as $$28 from "./islands/TesteIsland.tsx";
+import * as $$29 from "./islands/TesteMaylonIsland.tsx";
+import * as $$30 from "./islands/TrustvoxIsland.tsx";
+import * as $$31 from "./islands/VitrineIsland.tsx";
+import * as $$32 from "./islands/WishlistButton.tsx";
 
 const manifest = {
   routes: {
@@ -71,10 +72,11 @@ const manifest = {
     "./islands/ShippingSimulation.tsx": $$25,
     "./islands/SliderJS.tsx": $$26,
     "./islands/SpecificationIsland.tsx": $$27,
-    "./islands/TesteMaylonIsland.tsx": $$28,
-    "./islands/TrustvoxIsland.tsx": $$29,
-    "./islands/VitrineIsland.tsx": $$30,
-    "./islands/WishlistButton.tsx": $$31,
+    "./islands/TesteIsland.tsx": $$28,
+    "./islands/TesteMaylonIsland.tsx": $$29,
+    "./islands/TrustvoxIsland.tsx": $$30,
+    "./islands/VitrineIsland.tsx": $$31,
+    "./islands/WishlistButton.tsx": $$32,
   },
   baseUrl: import.meta.url,
 };
