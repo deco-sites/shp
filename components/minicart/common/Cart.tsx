@@ -6,6 +6,7 @@ import { AnalyticsItem } from "apps/commerce/types.ts";
 import CartItem, { Item, Props as ItemProps } from "./CartItem.tsx";
 import Coupon, { Props as CouponProps } from "./Coupon.tsx";
 import FreeShippingProgressBar from "./FreeShippingProgressBar.tsx";
+import { DescontoPIX } from "../../../FunctionsSHP/DescontoPix.ts";
 
 interface Props {
   items: Item[];
@@ -40,11 +41,11 @@ function Cart({
 }: Props) {
   const { displayCart } = useUI();
   const isEmtpy = items.length === 0;
+  const productsPricePix:number[]|undefined=items.map(item=>DescontoPIX(item.price.sale, 12))
 
   return (
     <div
       class="flex flex-col justify-center items-center overflow-hidden"
-      style={{ minWidth: "calc(min(100vw, 425px))", maxWidth: "425px" }}
     >
       {isEmtpy
         ? (
@@ -63,19 +64,19 @@ function Cart({
         : (
           <>
             {/* Free Shipping Bar */}
-            <div class="px-2 py-4 w-full">
+            {/* <div class="px-2 py-4 w-full">
               <FreeShippingProgressBar
                 total={total}
                 locale={locale}
                 currency={currency}
                 target={freeShippingTarget}
               />
-            </div>
+            </div> */}
 
             {/* Cart Items */}
             <ul
               role="list"
-              class="mt-6 px-2 flex-grow overflow-y-auto flex flex-col gap-6 w-full"
+              class="px-2 flex-grow overflow-y-auto flex flex-col h-full max-h-[66vh] scrollbar-shp"
             >
               {items.map((item, index) => (
                 <li key={index}>
@@ -120,6 +121,12 @@ function Cart({
                     {formatPrice(total, currency, locale)}
                   </span>
                 </div>
+                <div class="flex justify-between items-center w-full">
+                  <span>Total no PIX</span>
+                  <span class="font-bold text-xl  text-[#00e480]">
+                    {productsPricePix?.reduce((acc, item)=>acc+item,0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+                  </span>
+                </div>
                 <span class="text-sm text-base-300">
                   Taxas e fretes serão calculados no checkout
                 </span>
@@ -129,7 +136,7 @@ function Cart({
                 <a class="inline-block w-full" href={checkoutHref}>
                   <Button
                     data-deco="buy-button"
-                    class="btn-primary btn-block"
+                    class="w-full bg-[#dd1f26] hover:bg-[#dd1f26] text-white"
                     disabled={loading || isEmtpy}
                     onClick={() => {
                       sendEvent({
@@ -145,7 +152,7 @@ function Cart({
                       });
                     }}
                   >
-                    Fechar pedido
+                    Ir para Checkout
                   </Button>
                 </a>
               </div>

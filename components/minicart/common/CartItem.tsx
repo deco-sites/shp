@@ -69,13 +69,13 @@ function CartItem({item, index, locale, currency, onUpdateQuantity, itemToAnalyt
         <span className='text-white line-clamp-2'>{name}</span>
         <div class="flex flex-col items-baseline">
           <span class="line-through text-[#828282] text-sm">
-            {formatPrice(list / 100, currency, locale)}
+            {formatPrice(list, currency, locale)}
           </span>
           <span class="text-sm text-white">
             {isGift
               ? "Grátis"
               : (<p>
-                  <span className='text-[#dd1f26] font-bold'>{formatPrice(sale / 100, currency, locale)}</span> ou <span className='text-[#dd1f26] font-bold'>{DescontoPIX(sale / 100, 12).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</span> no pix
+                  <span className='text-[#dd1f26] font-bold'>{formatPrice(sale, currency, locale)}</span> ou <span className='text-[#dd1f26] font-bold'>{DescontoPIX(sale, 12).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</span> no pix
                 </p>)}
           </span>
         </div>

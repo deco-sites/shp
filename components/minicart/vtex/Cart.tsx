@@ -38,7 +38,7 @@ function Cart() {
 
         return item && itemToAnalyticsItem({ ...item, coupon }, index);
       }}
-      checkoutHref="/checkout"
+      checkoutHref="https://shopinfo.vtexcommercestable.com.br/checkout"
     />
   );
 }
