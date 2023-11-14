@@ -4,8 +4,12 @@ import MenuItemDesk from './MenuItemDesktop.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import SearchMenuBar from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchMenuBar.tsx'
 import Cart from 'deco-sites/shp/components/minicart/Cart.tsx'
+// import {IS_BROWSER} from '$fresh/runtime.ts'
 
 const HeaderSHP = () => {
+  
+  // console.log(IS_BROWSER ? 'BROWSER' : 'SERVER')
+
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
 
   const handleResize = useCallback(() => {
@@ -123,7 +127,7 @@ const HeaderSHP = () => {
             </label>
             <p id='close-minicart' className='font-bold cursor-pointer' onClick={()=>{setOpenMinicart(false)}}>✕</p>
           </div>
-          <Cart platform="vtex"/>
+          {/* <Cart platform="vtex"/> */}
         </div>
       </div>
       
