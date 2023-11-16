@@ -6,6 +6,7 @@ import { AnalyticsItem } from "apps/commerce/types.ts";
 import CartItem, { Item, Props as ItemProps } from "./CartItem.tsx";
 import Coupon, { Props as CouponProps } from "./Coupon.tsx";
 import FreeShippingProgressBar from "./FreeShippingProgressBar.tsx";
+import { DescontoPIX } from "../../../FunctionsSHP/DescontoPix.ts";
 
 interface Props {
   items: Item[];
@@ -40,11 +41,12 @@ function Cart({
 }: Props) {
   const { displayCart } = useUI();
   const isEmtpy = items.length === 0;
+  const productsPricePix:number[]|undefined=items.map(item=>DescontoPIX(item.price.sale, 12))
+  const totalPix=productsPricePix?.reduce((acc, item)=>acc+item,0)
 
   return (
     <div
-      class="flex flex-col justify-center items-center overflow-hidden"
-      style={{ minWidth: "calc(min(100vw, 425px))", maxWidth: "425px" }}
+      class="flex flex-col justify-center items-center overflow-hidden h-[90vh]"
     >
       {isEmtpy
         ? (
@@ -63,22 +65,22 @@ function Cart({
         : (
           <>
             {/* Free Shipping Bar */}
-            <div class="px-2 py-4 w-full">
+            {/* <div class="px-2 py-4 w-full">
               <FreeShippingProgressBar
                 total={total}
                 locale={locale}
                 currency={currency}
                 target={freeShippingTarget}
               />
-            </div>
+            </div> */}
 
             {/* Cart Items */}
             <ul
               role="list"
-              class="mt-6 px-2 flex-grow overflow-y-auto flex flex-col gap-6 w-full"
+              class="px-2 flex-grow overflow-y-auto flex flex-col h-full max-h-[66vh] scrollbar-shp"
             >
               {items.map((item, index) => (
-                <li key={index}>
+                <li key={index} className='py-4 border-y border-y-[#292929]'>
                   <CartItem
                     item={item}
                     index={index}
@@ -95,14 +97,6 @@ function Cart({
             <footer class="w-full">
               {/* Subtotal */}
               <div class="border-t border-base-200 py-2 flex flex-col">
-                {discounts > 0 && (
-                  <div class="flex justify-between items-center px-4">
-                    <span class="text-sm">Descontos</span>
-                    <span class="text-sm">
-                      {formatPrice(discounts, currency, locale)}
-                    </span>
-                  </div>
-                )}
                 <div class="w-full flex justify-between px-4 text-sm">
                   <span>Subtotal</span>
                   <span class="px-4">
@@ -113,14 +107,25 @@ function Cart({
               </div>
 
               {/* Total */}
-              <div class="border-t border-base-200 pt-4 flex flex-col justify-end items-end gap-2 mx-4">
+              <div class="border-t border-base-200 pt-4 flex flex-col justify-end items-end gap-2 mx-4 text-white">
                 <div class="flex justify-between items-center w-full">
                   <span>Total</span>
                   <span class="font-medium text-xl">
                     {formatPrice(total, currency, locale)}
                   </span>
                 </div>
-                <span class="text-sm text-base-300">
+                <div class="flex justify-between items-center w-full">
+                  <p className='block'>
+                    <span>Total no PIX</span>
+                    <span class="flex justify-between items-center text-sm">
+                      (Economize: {formatPrice((total-totalPix), currency, locale)})
+                    </span>
+                  </p>
+                  <span class="font-bold text-xl">
+                    {totalPix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+                  </span>
+                </div>
+                <span class="text-sm text-[#828282]">
                   Taxas e fretes serão calculados no checkout
                 </span>
               </div>
@@ -129,7 +134,7 @@ function Cart({
                 <a class="inline-block w-full" href={checkoutHref}>
                   <Button
                     data-deco="buy-button"
-                    class="btn-primary btn-block"
+                    class="w-full bg-[#dd1f26] hover:bg-[#dd1f26] text-white border-none outline-none"
                     disabled={loading || isEmtpy}
                     onClick={() => {
                       sendEvent({
@@ -137,7 +142,8 @@ function Cart({
                         params: {
                           coupon,
                           currency,
-                          value: total - discounts,
+                          // discounts tem sinal negativo ent soma-se ao total
+                          value: total + discounts,
                           items: items
                             .map((_, index) => itemToAnalyticsItem(index))
                             .filter((x): x is AnalyticsItem => Boolean(x)),
@@ -145,7 +151,7 @@ function Cart({
                       });
                     }}
                   >
-                    Fechar pedido
+                    Ir para Checkout
                   </Button>
                 </a>
               </div>

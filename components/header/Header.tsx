@@ -120,14 +120,14 @@ const HeaderSHP = () => {
         }}
       >
         <div id='minicartContent' className='bg-[#111] w-screen re1:w-[400px] h-screen'>
-          <div className='flex justify-between h-[10vh] items-center px-8 text-xl font-bold text-white'>
+          <div className='flex justify-between h-[10vh] items-center px-4 text-xl font-bold text-white'>
             <label className='flex gap-2'>
               <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png' width={22} height={20} decoding='sync' loading='lazy' class='max-h-[22px] m-auto'/>
               <p>Carrinho</p>
             </label>
             <p id='close-minicart' className='font-bold cursor-pointer' onClick={()=>{setOpenMinicart(false)}}>✕</p>
           </div>
-          {/* <Cart platform="vtex"/> */}
+          <Cart platform="vtex"/>
         </div>
       </div>
       

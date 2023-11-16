@@ -42,8 +42,8 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
   return (
     <>
       <SignNewsletter />
-      <footer className='bg-[#111] px-[10%] overflow-x-hidden'>
-        <div className='hidden re1:flex divider w-screen h-0 before:bg-[#dd1f26] after:bg-[#dd1f26] -ml-[12.5%]'/>
+      <footer className='bg-[#111] px-[10%] re1:px-[5%] re4:px-[10%] overflow-x-hidden'>
+        <div className='hidden re1:flex divider w-screen h-0 before:bg-[#dd1f26] after:bg-[#dd1f26] -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%]'/>
         <div className='flex flex-col re1:flex-row re1:gap-4 re1:pt-4'>
           <div className='text-white re1:text-sm my-5 re1:my-0'>
             <h1 className='text-xl font-bold'>Atendimento</h1>
@@ -63,7 +63,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
             ))}
           </div>
         </div>
-        <div className='hidden re1:flex divider w-screen -ml-[12.5%] before:bg-[#3d3d3d] after:bg-[#3d3d3d]'/>
+        <div className='hidden re1:flex divider w-screen -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%] before:bg-[#3d3d3d] after:bg-[#3d3d3d]'/>
         <div className='flex flex-col mt-5 re1:flex-row py-3 re1:py-0'>
           <div className='flex flex-col gap-4 re1:gap-1 re1:flex-row re1:w-1/2 re1:pr-7 re1:justify-between'>
             <ListSomething title='Institucional' list={Institucional}/>
@@ -115,7 +115,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
             </div>
           </div>
         </div>
-        <div className='hidden re1:flex divider w-screen -ml-[12.5%] before:bg-[#3d3d3d] after:bg-[#3d3d3d]'/>
+        <div className='hidden re1:flex divider w-screen -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%] before:bg-[#3d3d3d] after:bg-[#3d3d3d]'/>
         <div className='flex flex-col re1:flex-row-reverse mt-10 items-center justify-center gap-5 re1:justify-between re4:px-16'>
           <a href='https://www.google.com/maps/place/Shopinfo/@-22.9015759,-47.0589666,15z/data=!4m6!3m5!1s0x94c8c8b2da3b18f5:0x9619346fc41db902!8m2!3d-22.9015759!4d-47.0589666!16s%2Fg%2F1ptxvm9d0?entry=ttu' 
             className='bg-[#dd1f26] rounded-lg px-5 py-2 flex flex-col re1:flex-row gap-2 items-center justify-center'>
