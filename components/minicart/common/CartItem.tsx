@@ -66,12 +66,12 @@ function CartItem({item, index, locale, currency, onUpdateQuantity, itemToAnalyt
         class="object-cover object-center m-auto"
       />
       <div class="flex-grow">
-        <span className='text-white line-clamp-2'>{name}</span>
+        <span className='text-white line-clamp-2 text-sm re1:text-base'>{name}</span>
         <div class="flex flex-col items-baseline">
-          <span class="line-through text-[#828282] text-sm">
+          <span class="line-through text-[#828282] text-xs re1:text-sm">
             {formatPrice(list, currency, locale)}
           </span>
-          <span class="text-sm text-white">
+          <span class="text-xs re1:text-sm text-white">
             {isGift
               ? "Grátis"
               : (<p>
