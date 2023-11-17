@@ -1,9 +1,6 @@
 Precisa arrumar encontreSelectGames
-- Footer pra note
 
 Bugs pra arrumar: 
-- Carrinho: atualizado, porém não to conseguindo add produtos nele
-- Cart component com uncaught do preact falando q é lazy
 
 Possiveis melhoras: 
 -Breadcrumb nas pag de categ
