@@ -42,7 +42,7 @@ function ProductDetails({ page, pix }: Props) {
    */
 
   return (
-    <div class='py-10 re1:p-10 bg-[#111] text-white'>
+    <div class='py-10 re1:p-10 bg-base-100 text-secondary'>
       {page ? <Details page={page} pix={pix}/> : <NotFound />}
     </div>
   )

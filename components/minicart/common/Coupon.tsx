@@ -43,7 +43,7 @@ function Coupon({ coupon, onAddCoupon }: Props) {
               placeholder={"Cupom"}
             />
             <Button
-              class="join-item bg-[#dd1f26] border-none outline-none hover:bg-[#dd1f26] text-white"
+              class="join-item bg-primary border-none outline-none hover:bg-primary text-secondary"
               type="submit"
               htmlFor="coupon"
               loading={loading}

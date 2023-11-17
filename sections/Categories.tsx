@@ -17,7 +17,7 @@ const Categories = ({ Categs }: Props) => {
           <a
             href={categ.linkTo}
             className='min-h-[40px] min-w-[90px] bg-[#d3d2d2] text-center border-transparent border-[2px] rounded-lg
-        hover:re1:bg-black hover:re1:text-white transition-all duration-700 font-bold text-xs text-[#3d3d3d] flex flex-col justify-around items-center'
+        hover:re1:bg-black hover:re1:text-secondary transition-all duration-700 font-bold text-xs text-neutral flex flex-col justify-around items-center'
           >
             {/* <img
               src={categ.categImg}

@@ -14,10 +14,10 @@ export interface Props {
 const PCGamerIdeal = ({ peca = [] }: Props) => {
   return (
     <div className='my-5'>
-      <p className='text-center text-2xl font-bold text-[#3d3d3d]'>
+      <p className='text-center text-2xl font-bold text-neutral'>
         Encontre seu Pc Gamer Ideal
       </p>
-      <div className='grid grid-cols-2 mx-2 my-4 rounded-lg text-[#3d3d3d] gap-4 re1:flex re1:justify-center'>
+      <div className='grid grid-cols-2 mx-2 my-4 rounded-lg text-neutral gap-4 re1:flex re1:justify-center'>
         {peca?.map((peca, index) => (
           <div className='flex flex-col justify-center items-center'>
             <label className='flex gap-1 items-center h-[25px]'>
@@ -43,7 +43,7 @@ const PCGamerIdeal = ({ peca = [] }: Props) => {
             </div>
           </div>
         ))}
-        <button className='bg-[#dd1f26] text-lg w-[200px] re1:flex rounded-lg text-white pl-[45px] py-[6px] h-[31px] items-center justify-center hidden self-end'>
+        <button className='bg-primary text-lg w-[200px] re1:flex rounded-lg text-secondary pl-[45px] py-[6px] h-[31px] items-center justify-center hidden self-end'>
           <b>Buscar</b>
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -67,7 +67,7 @@ const PCGamerIdeal = ({ peca = [] }: Props) => {
         </button>
       </div>
       <div className='flex justify-center w-5/6 mx-auto mt-8 re1:hidden'>
-        <button className='bg-[#dd1f26] text-lg w-full flex rounded-lg text-white pl-[45px] py-2 justify-center items-center'>
+        <button className='bg-primary text-lg w-full flex rounded-lg text-secondary pl-[45px] py-2 justify-center items-center'>
           <b>Buscar</b>
           <svg
             xmlns='http://www.w3.org/2000/svg'

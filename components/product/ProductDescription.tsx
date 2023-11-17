@@ -14,7 +14,7 @@ const ProductDescription=({ page }: Props)=>{
    */
 
   return (
-    <div class='bg-[#111] text-white'>
+    <div class='bg-base-100 text-secondary'>
       {page ? <Description page={page}/> : null}
     </div>
   )

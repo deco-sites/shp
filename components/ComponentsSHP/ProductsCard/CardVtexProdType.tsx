@@ -45,9 +45,9 @@ const ProdCard=({...props}:CardProps)=>{
 
   return(
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
-    border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
+    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
       <div className='flex px-3 pt-3 h-auto w-auto'>
-        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-{diffPercent}%</span>
+        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg'>-{diffPercent}%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
       <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-4'>
@@ -55,7 +55,7 @@ const ProdCard=({...props}:CardProps)=>{
           {prodName}
         </p>
         <div className='flex items-center justify-center my-[20px]'> 
-          <hr className='block border-t-[#111] w-full'/>
+          <hr className='block border-t-base-100 w-full'/>
           {/* Trustvox */}
           {props.objTrust?.average ===0 ? null :
             <div className='flex justify-center items-center absolute'>
@@ -70,10 +70,10 @@ const ProdCard=({...props}:CardProps)=>{
           {isAvailable ? (
             <>
               <span className='line-through text-[#b4b4b4] text-xs'>De: {precoDe.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-              <p className='text-xs'><span className='text-green-500 text-xl font-bold'>{salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
+              <p className='text-xs'><span className='text-success text-xl font-bold'>{salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
               <span className='text-xs text-[#b4b4b4]'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
             </>):(
-              <p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>
+              <p className='text-xl text-primary font-bold'>Produto Esgotado</p>
             )}
         </div>
       </div>
@@ -101,7 +101,7 @@ const PcCard=({...props}:CardPCProps)=>{
 
   return(
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg p-0 border relative
-    border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
+    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
       <div className='flex flex-col px-3 pt-8 re1:pt-3 h-auto w-auto'>
         <div>
           <div className='flex items-center justify-start mt-[-12%] re1:mt-0'>
@@ -115,12 +115,12 @@ const PcCard=({...props}:CardPCProps)=>{
               </div>
             }
           </div>
-          <span className={`absolute h-[30px] w-[35px] ${props.objTrust?.average !==0 && 'mt-[8%] re1:mt-[6%]'} flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg`}>-{diffPercent}%</span>
+          <span className={`absolute h-[30px] w-[35px] ${props.objTrust?.average !==0 && 'mt-[8%] re1:mt-[6%]'} flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg`}>-{diffPercent}%</span>
         </div>
         <div className='absolute ml-[65%] re1:ml-[73%] mt-[-18%] re1:mt-[-6.5%]'><WishlistButton productID={prodId} variant='icon'/></div>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
-        <div className='text-green-500 flex flex-col gap-1 w-[85px] absolute mt-[45%] re1:mt-[50%]'>
-          <p className='text-white font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90 px-1'>{processador}</p>
+        <div className='text-success flex flex-col gap-1 w-[85px] absolute mt-[45%] re1:mt-[50%]'>
+          <p className='text-secondary font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90 px-1'>{processador}</p>
           <p className='font-bold line-clamp-2 text-xs bg-[#000000] bg-opacity-90 px-1'>{placaVideo}</p>
         </div>
       </div>
@@ -154,9 +154,9 @@ const PcCard=({...props}:CardPCProps)=>{
         </div>
         {isAvailable ? (
         <>
-          <span className='text-lg font-bold text-green-500 leading-3 mt-4'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+          <span className='text-lg font-bold text-success leading-3 mt-4'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
           <p className='text-[11px] text-[#b4b4b4]'>ou por {salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
-        </>) : (<p className='text-xl text-[#dd1f26] font-bold'>Produto Esgotado</p>)}
+        </>) : (<p className='text-xl text-primary font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
           <input ref={compareInput} type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-sm' onChange={(event)=>{
               const Target=event.target as HTMLInputElement

@@ -395,7 +395,7 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
   },[products])
 
   return(
-    <div className='w-full text-white appearance-none'>
+    <div className='w-full text-secondary appearance-none'>
       <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
         <div className='bg-transparent px-4 re1:px-0 mt-10 re1:mt-14 mb-3 re1:mb-6'>
           <h4 className='text-xl re1:text-3xl'>Sua busca por "<span className='font-bold'>{decodeURI(termo)}</span>" + "<span className='font-bold'>{fqName}</span>"</h4>
@@ -420,7 +420,7 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por</span>
-            <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
               }}
@@ -462,14 +462,14 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
           </div>
         </div>   
       </div>
-      <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-[#111]`}>
+      <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
           <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
             <span className='font-bold'>Filtros</span>
             <FiltroMob filters={filters} id='divFlut'/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por:</span>
-            <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={event=>{
                 setOrder((event.target as HTMLSelectElement).value)
                 isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})

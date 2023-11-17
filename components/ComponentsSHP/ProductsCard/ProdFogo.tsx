@@ -16,20 +16,20 @@ const ProdFogo = ({...props}: Props) => {
   const {days, hours, minutes, seconds} = props.timeRemaining || {days:'00', hours:'00', minutes:'00', seconds:'00'};
 
   return (
-    <a href={props.productUrl} className="flex flex-col w-72 justify-between rounded-lg bg-white p-2 h-44">
+    <a href={props.productUrl} className="flex flex-col w-72 justify-between rounded-lg bg-secondary p-2 h-44">
       <label className="flex h-8 justify-between z-[5]">
-        <div className="bg-[#dd1f26] rounded-lg flex justify-around p-1 items-center w-40">
+        <div className="bg-primary rounded-lg flex justify-around p-1 items-center w-40">
           <Image width={16} height={20} src="https://shopinfo.vteximg.com.br/arquivos/icon-esquenta-black.png"
             loading='lazy'
           />
           <label>
-            <p className="flex flex-col text-white">
+            <p className="flex flex-col text-secondary">
               <p className="text-[10px]">A OFERTA EXPIRA EM</p>
               <span className="font-bold text-sm leading-3">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
             </p>
           </label>
         </div>
-        <div className="flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg">
+        <div className="flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg">
           {props.discountFlag}%
         </div>
       </label>
@@ -43,7 +43,7 @@ const ProdFogo = ({...props}: Props) => {
             {props.nome}
           </span>
 
-          <span className="text-lg text-[#dd1f26] font-bold">
+          <span className="text-lg text-primary font-bold">
             10x {props.preco10.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
           </span>
           <p className="text-xs font-semibold">ou por {parseFloat(props.precoPIX.toString()).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>

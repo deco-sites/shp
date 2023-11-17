@@ -1,6 +1,6 @@
 const SignNewsletter=()=>{
   return(
-    <div className='my-5 w-full text-white bg-[#3d3d3d] px-[10%] py-6'>
+    <div className='my-5 w-full text-secondary bg-neutral px-[10%] py-6'>
       <label className='text-center font-bold flex flex-col gap-2 my-4 re1:my-6'>
         <h1 className='text-2xl re1:text-3xl'>Assine a Newsletter Shopinfo</h1>
         <p className='text-base re1:text-lg'>Tenha acesso às promoções e novidades antes de todo mundo.</p>
@@ -14,7 +14,7 @@ const SignNewsletter=()=>{
           appearance-none bg-transparent text-sm outline-none re1:w-[350px]' 
           type='text' name='email' placeholder='Digite seu email'
         />
-        <input className='border border-[#dd1f26] bg-[#dd1f26] font-bold text-lg rounded-lg placeholder
+        <input className='border border-primary bg-primary font-bold text-lg rounded-lg placeholder
           px-3 py-1 cursor-pointer re1:w-[150px]' type='submit' value='Assinar' 
         />
       </div>

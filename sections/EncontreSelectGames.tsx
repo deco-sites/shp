@@ -138,11 +138,11 @@ const BTNFinal= () => {
   return (
     <div className='flex gap-2'>
       {count.value>=2 && (
-        <button className='btn btn-circle min-w-[45px] min-h-[45px] max-h-[45px] max-w-[45px] bg-transparent hover:bg-transparent border border-[#dd1f26] hover:border-[#dd1f26]'
+        <button className='btn btn-circle min-w-[45px] min-h-[45px] max-h-[45px] max-w-[45px] bg-transparent hover:bg-transparent border border-primary hover:border-primary'
           onClick={()=>count.value>1 && count.value--}
         >
           <Icon
-            class='text-[#dd1f26]'
+            class='text-primary'
             size={25}
             id='ChevronLeft'
             strokeWidth={3}
@@ -150,7 +150,7 @@ const BTNFinal= () => {
         </button>
       )}
       <button
-        className='bg-[#dd1f26] rounded-lg px-5 py-2 text-white font-bold flex gap-2 items-center justify-center'
+        className='bg-primary rounded-lg px-5 py-2 text-secondary font-bold flex gap-2 items-center justify-center'
         onClick={handleButtonClick}
         >
         {count.value<3 ? (
@@ -246,20 +246,20 @@ const selectGames=({Games=[]}:Props)=>{
       <div className='flex flex-col items-center w-[90vw] re1:w-[70vw] mx-auto gap-8'>
 
         <div className='flex flex-col items-center justify-center w-4/6'>
-          <h1 className='font-bold text-white re1:text-3xl text-xl mb-4 text-center'>Encontre o PC Gamer Completo para seus Jogos</h1>
+          <h1 className='font-bold text-secondary re1:text-3xl text-xl mb-4 text-center'>Encontre o PC Gamer Completo para seus Jogos</h1>
           <div className='flex items-center justify-center gap-5 re1:text-base text-sm'>
-            <label className='flex flex-col items-center content-center text-white gap-1'>
-              <div className={`flex rounded-full border border-white w-[50px] h-[50px] items-center justify-center ${count.value>=1 && 'bg-[#dd1f26]'}`}>1</div>
+            <label className='flex flex-col items-center content-center text-secondary gap-1'>
+              <div className={`flex rounded-full border border-secondary w-[50px] h-[50px] items-center justify-center ${count.value>=1 && 'bg-primary'}`}>1</div>
               <p className='text-center'>Selecione seus<br/> jogos</p>
             </label>
             <hr className='re1:w-[100px] w-10 relative re1:bottom-6 bottom-8'/>
-            <label className='flex flex-col items-center content-center text-white gap-1'>
-              <div className={`flex rounded-full border border-white w-[50px] h-[50px] items-center justify-center ${count.value>=2 && 'bg-[#dd1f26]'}`}>2</div>
+            <label className='flex flex-col items-center content-center text-secondary gap-1'>
+              <div className={`flex rounded-full border border-secondary w-[50px] h-[50px] items-center justify-center ${count.value>=2 && 'bg-primary'}`}>2</div>
               <p className='text-center'>Escolha o<br/>preço</p>
             </label>
             <hr className='re1:w-[100px] w-10 relative re1:bottom-6 bottom-8'/>
-            <label className='flex flex-col items-center content-center text-white gap-1'>
-              <div className={`flex rounded-full border border-white w-[50px] h-[50px] items-center justify-center ${count.value>=3 && 'bg-[#dd1f26]'}`}>3</div>
+            <label className='flex flex-col items-center content-center text-secondary gap-1'>
+              <div className={`flex rounded-full border border-secondary w-[50px] h-[50px] items-center justify-center ${count.value>=3 && 'bg-primary'}`}>3</div>
               <p className='text-center'>Selecione<br/>o Desempenho</p>
             </label>
           </div>
@@ -272,7 +272,7 @@ const selectGames=({Games=[]}:Props)=>{
               <div className='hidden re1:flex justify-center items-center prev'>
                 <Slider.PrevButton class='btn bg-transparent hover:bg-transparent border-none relative'>
                   <Icon
-                    class='text-[#dd1f26]'
+                    class='text-primary'
                     size={25}
                     id='ChevronLeft'
                     strokeWidth={3}
@@ -289,7 +289,7 @@ const selectGames=({Games=[]}:Props)=>{
               <div class='hidden re1:flex items-center justify-center next'>
                 <Slider.NextButton class='btn bg-transparent hover:bg-transparent border-none relative'>
                   <Icon
-                    class='text-[#dd1f26]'
+                    class='text-primary'
                     size={25}
                     id='ChevronRight'
                     strokeWidth={3}
@@ -304,9 +304,9 @@ const selectGames=({Games=[]}:Props)=>{
 
           {count.value===2 && (
             <div className='flex items-center h-[300px]'>
-              <div className='flex flex-col items-center justify-center text-white gap-10'>
+              <div className='flex flex-col items-center justify-center text-secondary gap-10'>
                 <div className="flex re1:gap-12 gap-3 items-center justify-between">
-                  <label className='flex items-center text-green-500 text-lg font-bold'>
+                  <label className='flex items-center text-success text-lg font-bold'>
                     <p>R$</p>
                     <input className='bg-transparent text-end appearance-none focus:outline-none w-[60px]' type='text' 
                       maxLength={5}
@@ -318,7 +318,7 @@ const selectGames=({Games=[]}:Props)=>{
                     <p>,00</p>
                   </label>
                   <div className='self-center'>
-                  <hr className='w-[2px] h-[70px] bg-white'/>
+                  <hr className='w-[2px] h-[70px] bg-secondary'/>
                   </div>
                   <label className='flex items-center gap-2'>
                       <span className='text-lg font-bold'>
@@ -329,7 +329,7 @@ const selectGames=({Games=[]}:Props)=>{
                 </div>
         
                 <label className='re1:w-[600px] w-[300px] flex flex-col items-start'>
-                  <div className='h-[4px] relative top-[4px] bg-[#dd1f26]' style={{width:`${percentRange()}%`}}/>
+                  <div className='h-[4px] relative top-[4px] bg-primary' style={{width:`${percentRange()}%`}}/>
                   <input
                     type="range"
                     min={minPrice.value}
@@ -339,7 +339,7 @@ const selectGames=({Games=[]}:Props)=>{
                     onInput={(event)=>setRangeVal((event.target as HTMLInputElement).value)}
                     className="appearance-none w-full h-[4px] bg-[#615d5d] rounded-md outline-none focus:outline-none
                     [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-[20px] [&::-webkit-slider-thumb]:rounded-md 
-                    [&::-webkit-slider-thumb]:w-[40px] [&::-webkit-slider-thumb]:bg-[#dd1f26] cursor-pointer"
+                    [&::-webkit-slider-thumb]:w-[40px] [&::-webkit-slider-thumb]:bg-primary cursor-pointer"
                   />
                 </label>
               </div>
@@ -348,26 +348,26 @@ const selectGames=({Games=[]}:Props)=>{
 
           {count.value===3 && (
             <div className='flex items-center h-[300px]'>
-              <div className='flex flex-col items-center justify-center text-white gap-6'>
+              <div className='flex flex-col items-center justify-center text-secondary gap-6'>
                 <div className="flex gap-12 items-center justify-center">
                   <label className='flex gap-2 items-center'>
-                    {block60.value && (<span className='text-5xl text-[#dd1f26] font-bold tooltip tooltip-bottom mr-1' data-tip='Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!'>!</span>)}
+                    {block60.value && (<span className='text-5xl text-primary font-bold tooltip tooltip-bottom mr-1' data-tip='Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!'>!</span>)}
                     <div className={`flex flex-col text-sm re1:text-lg font-bold items-start ${block60.value && 'brightness-50 cursor-not-allowed'}`}>
                       <p>Acima de</p>
                       <p>60FPS</p>
                     </div>
-                    <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
+                    <input className='checked:bg-primary border border-primary rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
                       onClick={()=>{if(!block144.value)checkboxChecked.value='60+'}} disabled={block60.value}
                     />
                   </label>
-                  <hr className='w-[2px] h-[70px] bg-white'/>
+                  <hr className='w-[2px] h-[70px] bg-secondary'/>
                   <label className='flex gap-2 items-center'>
-                    {block144.value && (<span className='text-[#dd1f26] font-bold text-5xl tooltip tooltip-bottom mr-1' data-tip='Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!'>!</span>)}
+                    {block144.value && (<span className='text-primary font-bold text-5xl tooltip tooltip-bottom mr-1' data-tip='Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!'>!</span>)}
                     <div className={`flex flex-col text-sm re1:text-lg font-bold items-start ${block144.value && 'brightness-50 cursor-not-allowed'}`}>
                       <p>Acima de</p>
                       <p>144FPS</p>
                     </div>
-                    <input className='checked:bg-[#dd1f26] border border-[#dd1f26] rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
+                    <input className='checked:bg-primary border border-primary rounded-full appearance-none h-5 w-5' type="radio" name='fps' 
                       onClick={()=>{if(!block144.value)checkboxChecked.value='144+'}} disabled={block144.value}
                     />
                   </label>

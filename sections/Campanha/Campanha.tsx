@@ -119,13 +119,13 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     const filtrosMobCurrent=filtrosMob.current!
     const liMobAlreadySelected=filtrosMobCurrent.querySelector(`dialog li[data-index="${filterSelected.index}"]`)
 
-    liAlreadySelected && (liAlreadySelected as HTMLLIElement).classList.replace('border-b-[#dd1f26]','border-b-transparent')
-    liMobAlreadySelected && (liMobAlreadySelected as HTMLLIElement).classList.replace('text-[#dd1f26]','text-white')
+    liAlreadySelected && (liAlreadySelected as HTMLLIElement).classList.replace('border-b-primary','border-b-transparent')
+    liMobAlreadySelected && (liMobAlreadySelected as HTMLLIElement).classList.replace('text-primary','text-secondary')
 
     const liMobWillSelect=filtrosMobCurrent.querySelector(`dialog li[data-index="${index}"]`)
     
-    Target.classList.replace('border-b-transparent','border-b-[#dd1f26]')
-    liMobWillSelect && (liMobWillSelect as HTMLLIElement).classList.replace('text-white','text-[#dd1f26]')
+    Target.classList.replace('border-b-transparent','border-b-primary')
+    liMobWillSelect && (liMobWillSelect as HTMLLIElement).classList.replace('text-secondary','text-primary')
     
     setFilterSelected({index,value,fqType})
   }
@@ -141,13 +141,13 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     const filtrosMobCurrent=filtrosMob.current!
     const liMobAlreadySelected=filtrosMobCurrent.querySelector(`dialog li[data-index="${filterSelected.index}"]`)
 
-    liAlreadySelected && (liAlreadySelected as HTMLLIElement).classList.replace('border-b-[#dd1f26]','border-b-transparent')
-    liMobAlreadySelected && (liMobAlreadySelected as HTMLLIElement).classList.replace('text-[#dd1f26]','text-white')
+    liAlreadySelected && (liAlreadySelected as HTMLLIElement).classList.replace('border-b-primary','border-b-transparent')
+    liMobAlreadySelected && (liMobAlreadySelected as HTMLLIElement).classList.replace('text-primary','text-secondary')
 
     const liDeskWillSelect=ulFiltersCurrent.querySelector(`li[data-index="${index}"]`)
     
-    Target.classList.replace('text-white','text-[#dd1f26]')
-    liDeskWillSelect && (liDeskWillSelect as HTMLLIElement).classList.replace('border-b-transparent','border-b-[#dd1f26]')
+    Target.classList.replace('text-secondary','text-primary')
+    liDeskWillSelect && (liDeskWillSelect as HTMLLIElement).classList.replace('border-b-transparent','border-b-primary')
     
     setFilterSelected({index,value,fqType})
   }
@@ -194,7 +194,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
           <FiltroMob filters={tipo.tipoDeFiltro}/>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por</span>
-            <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
               }}

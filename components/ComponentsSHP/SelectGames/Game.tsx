@@ -20,7 +20,7 @@ const Game=({gameName, imgUrl}:gameProps)=>{
   
 
   return (
-    <div className={`block relative border-[2px] w-[125px] h-[150px] cursor-pointer  ${checked ? 'border-[#dd1f26] shadow-[#dd1f26]/30 shadow-lg' : 'border-transparent'} rounded-lg`}
+    <div className={`block relative border-[2px] w-[125px] h-[150px] cursor-pointer  ${checked ? 'border-primary shadow-primary/30 shadow-lg' : 'border-transparent'} rounded-lg`}
       onClick={handleClick}
     >
       <Image
@@ -28,7 +28,7 @@ const Game=({gameName, imgUrl}:gameProps)=>{
         width={125} height={150} fetchPriority='low' 
       />
 
-      <div className={`relative z-[5] top-[8px] ml-auto right-[8px] w-[15px] h-[15px] border border-[#dd1f26] ${checked ? 'bg-[#dd1f26]' : 'bg-gray-700'}`}/>
+      <div className={`relative z-[5] top-[8px] ml-auto right-[8px] w-[15px] h-[15px] border border-primary ${checked ? 'bg-primary' : 'bg-gray-700'}`}/>
     </div>
   )
 }

@@ -89,9 +89,9 @@ const ProdCard=({...props}:ProdCard)=>{
 
   return(
     <a className='flex flex-row re1:flex-col h-36 re1:h-[370px] w-[90vw] re1:w-[18%] bg-[#262626] rounded-lg p-3 re1:p-0 border
-    border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
+    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
       <div className='flex re1:px-3 re1:pt-3 w-[30%] h-auto re1:w-auto'>
-        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-12%</span>
+        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg'>-12%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
       <div className='flex flex-col re1:flex-col-reverse justify-between w-[65%] ml-[5%] re1:ml-0 re1:w-full re1:h-[50%] re1:pb-3'>
@@ -99,7 +99,7 @@ const ProdCard=({...props}:ProdCard)=>{
           {prodName}
         </p>
         <div className='flex items-center justify-start re1:justify-center'> 
-          <hr className='hidden re1:block border-t-[#111] w-full'/>
+          <hr className='hidden re1:block border-t-base-100 w-full'/>
           {/* Trustvox */}
           {objTrust?.average ===0 ? null :
             <div className='flex justify-center items-center absolute'>
@@ -111,9 +111,9 @@ const ProdCard=({...props}:ProdCard)=>{
           }
         </div>
         <div className='flex flex-col re1:px-3'>
-          <span className='line-through text-base-300 text-xs'>{precoDe}</span>
-          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>{DescontoPIX(parseFloat(precoVista), 12).toLocaleString('pt-BR', {style:'currency',currency:'BRL'})}</span> no pix</p>
-          <span className='text-xs text-base-300'>{parcelas}x R$ {valorParcela} sem juros</span>
+          <span className='line-through text-base-content text-xs'>{precoDe}</span>
+          <p className='text-xs'><span className='text-success text-lg font-bold'>{DescontoPIX(parseFloat(precoVista), 12).toLocaleString('pt-BR', {style:'currency',currency:'BRL'})}</span> no pix</p>
+          <span className='text-xs text-base-content'>{parcelas}x R$ {valorParcela} sem juros</span>
         </div>
       </div>
     </a>
@@ -159,14 +159,14 @@ const PcCard=({...props}:PcCard)=>{
 
   return(
     <a className='flex flex-row re1:flex-col h-36 re1:h-[370px] w-[90vw] re1:w-[18%] bg-[#262626] rounded-lg p-3 re1:p-0 border
-    border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]' href={linkProd}>
+    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
       <div className='flex re1:px-3 re1:pt-3 w-[30%] h-auto re1:w-auto'>
-        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-green-500 text-white text-[12px] p-1 font-bold rounded-lg'>-{percent}%</span>
+        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg'>-{percent}%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
       <div className='flex flex-col re1:flex-col-reverse justify-between w-[65%] ml-[5%] re1:ml-0 re1:w-full re1:h-[50%] re1:pb-3'>
         <div className='re1:px-3'>
-          <p className='text-green-500 font-bold line-clamp-1 text-xs re1:text-base'>{placaVideo}</p>
+          <p className='text-success font-bold line-clamp-1 text-xs re1:text-base'>{placaVideo}</p>
           <div className='flex justify-between'>
             <label className='flex items-center gap-1'>
               <Image
@@ -201,7 +201,7 @@ const PcCard=({...props}:PcCard)=>{
           </div>
         </div>
         <div className='flex items-center justify-start re1:justify-center'> 
-          <hr className='hidden re1:block border-t-[#111] w-full'/>
+          <hr className='hidden re1:block border-t-base-100 w-full'/>
           {/* Trustvox */}
           {objTrust?.average ===0 ? null :
             <div className='flex justify-center items-center absolute'>
@@ -216,9 +216,9 @@ const PcCard=({...props}:PcCard)=>{
           <p className='text-xs re1:text-sm max-h-[30%] line-clamp-1 leading-3 re1:leading-4'>
             {prodName}
           </p>
-          <span className='line-through text-base-300 text-xs leading-3'>{precoDe!=='' ? precoDe : `DE: R$ ${precoDeNum}`}</span>
-          <p className='text-xs'><span className='text-green-500 text-lg font-bold'>{precoVista}</span> no pix</p>
-          <span className='text-xs text-base-300 leading-3'>{parcelas}x R$ {valorParcela} sem juros</span>
+          <span className='line-through text-base-content text-xs leading-3'>{precoDe!=='' ? precoDe : `DE: R$ ${precoDeNum}`}</span>
+          <p className='text-xs'><span className='text-success text-lg font-bold'>{precoVista}</span> no pix</p>
+          <span className='text-xs text-base-content leading-3'>{parcelas}x R$ {valorParcela} sem juros</span>
         </div>
       </div>
     </a>
@@ -241,7 +241,7 @@ const ProductRecommendedProds = ({ page }: Props) => {
   const [openMenu,setOpenMenu]=useState(false)
 
   useEffect(()=>{
-    setHtmlContent([<div className='loading loading-spinner text-[#dd1f26] loading-lg'/>])
+    setHtmlContent([<div className='loading loading-spinner text-primary loading-lg'/>])
   },[])
 
   const handleDropdown=()=>{
@@ -274,7 +274,7 @@ const ProductRecommendedProds = ({ page }: Props) => {
   }
 
   return (
-    <div className='w-full re1:px-[10%] border-b border-b-[#3d3d3d]'>
+    <div className='w-full re1:px-[10%] border-b border-b-neutral'>
       <label className='text-base re1:text-xl px-[10%] re1:px-0 py-[20px] font-bold flex justify-between items-center' onClick={handleDropdown}>
         <p className='w-[90%] re1:w-auto'>Produtos Recomendados</p>
         <Image src='https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png' width={15} height={15} 

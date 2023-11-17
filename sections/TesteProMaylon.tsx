@@ -38,7 +38,7 @@ const replaceClasses=(desc:string)=>{
 
   string=string.replaceAll('<h3>','<h3 class="font-medium text-2xl leading-loose flex m-0">')
 
-  string=string.replaceAll('<a','<a class="text-primary hover:text-white"')
+  string=string.replaceAll('<a','<a class="text-primary hover:text-secondary"')
 
   return string
 }
@@ -369,7 +369,7 @@ const testeProMaylon=({bannerUrl, descText, idsDeCategoria, seoText, titleCatego
   },[products])
 
   return(
-    <div className='w-full text-white appearance-none'>
+    <div className='w-full text-secondary appearance-none'>
       <div className='absolute top-0 z-[-1] '>
         <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
           fetchPriority='high' preload 
@@ -437,24 +437,24 @@ const testeProMaylon=({bannerUrl, descText, idsDeCategoria, seoText, titleCatego
               const nameDecoded=decodeURIComponent(filter.value)
               const numbers=nameDecoded.split(' TO ').map((item)=>parseFloat(item.replace(/\D/g, '')).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}))
               return (
-                <div className='flex gap-1 p-1 border border-white rounded-lg justify-between max-h-[80px]'
+                <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
                   onClick={()=>setSelectedFilters(prevFilters=>
                     prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
                   )}
                 >
                   <p className='whitespace-nowrap text-xs'>{numbers.join(' - ')}</p>
-                  <span className='text-[#dd1f26] text-xs my-auto font-bold'>✕</span>
+                  <span className='text-primary text-xs my-auto font-bold'>✕</span>
                 </div>
               )
             }else{
               return (
-                <div className='flex gap-1 p-1 border border-white rounded-lg justify-between max-h-[80px]'
+                <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
                   onClick={()=>setSelectedFilters(prevFilters=>
                     prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
                   )}
                 >
                   <p className='whitespace-nowrap text-xs'>{decodeURIComponent(filter.value).replaceAll('@dot@','.')}</p>
-                  <span className='text-[#dd1f26] text-xs my-auto font-bold'>✕</span>
+                  <span className='text-primary text-xs my-auto font-bold'>✕</span>
                 </div>
               )
             }
@@ -468,7 +468,7 @@ const testeProMaylon=({bannerUrl, descText, idsDeCategoria, seoText, titleCatego
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por</span>
-            <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
               }}
@@ -517,14 +517,14 @@ const testeProMaylon=({bannerUrl, descText, idsDeCategoria, seoText, titleCatego
           </div>)
         }
       </div>
-      <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-[#111]`}>
+      <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
           <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
             <span className='font-bold'>Filtros</span>
             <FiltroMob filters={filters} id='divFlut'/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por:</span>
-            <select id='order' className='text-white !outline-none select bg-transparent border border-white focus:bg-[#1e1e1e] w-full max-w-xs'
+            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
               onInput={event=>{
                 setOrder((event.target as HTMLSelectElement).value)
                 isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})

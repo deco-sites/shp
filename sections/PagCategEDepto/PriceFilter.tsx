@@ -31,7 +31,7 @@ const PriceFilter=({filtro}:Props)=>{
   const max=useRef<HTMLInputElement>(null)
 
   return(
-    <div className='w-full flex flex-col bg-[#111] re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>
+    <div className='w-full flex flex-col bg-base-100 re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>
       <h5 className='px-3 py-5 flex justify-between cursor-pointer'
         onClick={()=>setOpen(!open)}
       >
@@ -61,7 +61,7 @@ const PriceFilter=({filtro}:Props)=>{
 
           <li className='py-1 px-2'>
             <label className='flex justify-center re1:justify-start gap-2 cursor-pointer items-center'>
-              <input ref={min} type='text' placeholder='min' name='min' className='rounded-lg border-2 border-[#3d3d3d] placeholder:text-[#3d3d3d] bg-[#111] focus:border-primary outline-none w-[35%] text-sm px-2 py-1'
+              <input ref={min} type='text' placeholder='min' name='min' className='rounded-lg border-2 border-neutral placeholder:text-neutral bg-base-100 focus:border-primary outline-none w-[35%] text-sm px-2 py-1'
                 onInput={(event)=>{
                   const Input=event.target as HTMLInputElement
                   Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>{
@@ -79,7 +79,7 @@ const PriceFilter=({filtro}:Props)=>{
                 }}
               />
               <p>-</p>
-              <input ref={max} type='text' placeholder='max' name='max' className='rounded-lg border-2 border-[#3d3d3d] placeholder:text-[#3d3d3d] bg-[#111] focus:border-primary outline-none w-[35%] text-sm px-2 py-1'
+              <input ref={max} type='text' placeholder='max' name='max' className='rounded-lg border-2 border-neutral placeholder:text-neutral bg-base-100 focus:border-primary outline-none w-[35%] text-sm px-2 py-1'
                 onInput={(event)=>{
                   const Input=event.target as HTMLInputElement
                   Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>{
@@ -96,7 +96,7 @@ const PriceFilter=({filtro}:Props)=>{
                   }
                 }}
               />
-              <button className={`hidden btn re1:flex ${red ? 'bg-primary hover:bg-primary' : 'bg-[#3d3d3d] hover:bg-[#3d3d3d]'} btn-circle !min-h-[30px] !h-[30px] !min-w-[30px] !w-[30px]`} id='priceRange'>
+              <button className={`hidden btn re1:flex ${red ? 'bg-primary hover:bg-primary' : 'bg-neutral hover:bg-neutral'} btn-circle !min-h-[30px] !h-[30px] !min-w-[30px] !w-[30px]`} id='priceRange'>
                 <Icon 
                   id='ChevronRight'
                   size={12}

@@ -48,7 +48,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
         </div>
         <div className='hidden re1:flex gap-1 ml-auto'>
           <button
-            className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-[#dd1f26] hover:border-[#dd1f26]'
+            className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-primary hover:border-primary'
             onClick={() =>
               prev.current &&
               prev.current.firstChild instanceof HTMLButtonElement &&
@@ -56,14 +56,14 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
             }
           >
             <Icon
-              class='text-[#dd1f26]'
+              class='text-primary'
               size={20}
               id='ChevronLeft'
               strokeWidth={3}
             />
           </button>
           <button
-            className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-[#dd1f26] hover:border-[#dd1f26]'
+            className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-primary hover:border-primary'
             onClick={() =>
               next.current &&
               next.current.firstChild instanceof HTMLButtonElement &&
@@ -71,7 +71,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
             }
           >
             <Icon
-              class='text-[#dd1f26]'
+              class='text-primary'
               size={20}
               id='ChevronRight'
               strokeWidth={3}

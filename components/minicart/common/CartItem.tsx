@@ -66,16 +66,16 @@ function CartItem({item, index, locale, currency, onUpdateQuantity, itemToAnalyt
         class="object-cover object-center m-auto"
       />
       <div class="flex-grow">
-        <span className='text-white line-clamp-2 text-sm re1:text-base'>{name}</span>
+        <span className='text-secondary line-clamp-2 text-sm re1:text-base'>{name}</span>
         <div class="flex flex-col items-baseline">
-          <span class="line-through text-[#828282] text-xs re1:text-sm">
+          <span class="line-through text-neutral-content text-xs re1:text-sm">
             {formatPrice(list, currency, locale)}
           </span>
-          <span class="text-xs re1:text-sm text-white">
+          <span class="text-xs re1:text-sm text-secondary">
             {isGift
               ? "Grátis"
               : (<p>
-                  <span className='text-[#dd1f26] font-bold'>{formatPrice(sale, currency, locale)}</span> ou <span className='text-[#dd1f26] font-bold'>{DescontoPIX(sale, 12).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</span> no pix
+                  <span className='text-primary font-bold'>{formatPrice(sale, currency, locale)}</span> ou <span className='text-primary font-bold'>{DescontoPIX(sale, 12).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</span> no pix
                 </p>)}
           </span>
         </div>

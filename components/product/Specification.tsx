@@ -49,19 +49,19 @@ const SpecPeca=({ ...props }:PecaProps)=>{
     <>
       <div onClick={openModal}
         className='cursor-pointer flex flex-col items-center justify-center w-auto re1:w-[212px] 
-        h-48 re1:h-[175px] border border-[#1e1e1e] re1:rounded-lg hover:border-[#dd1f26] hover:bg-[#dd1f1624]' 
+        h-48 re1:h-[175px] border border-[#1e1e1e] re1:rounded-lg hover:border-primary hover:bg-[#dd1f1624]' 
       >
         <Image src={props.linkIcon} loading='lazy' decoding='sync' fetchPriority='low' width={props.IconW} height={props.IconH}/>
-        <p className='text-xs re1:text-sm text-[#3d3d3d] my-4'>{props.pecaCateg}</p>
-        <p className='text-sm re1:text-base text-white max-w-[160px] text-center'>{props.pecaName}</p>
+        <p className='text-xs re1:text-sm text-neutral my-4'>{props.pecaCateg}</p>
+        <p className='text-sm re1:text-base text-secondary max-w-[160px] text-center'>{props.pecaName}</p>
       </div>
-      <dialog id={props.modalId.toString()} ref={modal} className='bg-[#111]/40 min-h-full min-w-[100vw] fixed p-0 top-0'>
+      <dialog id={props.modalId.toString()} ref={modal} className='bg-base-100/40 min-h-full min-w-[100vw] fixed p-0 top-0'>
         <form method='dialog' className='p-10 re1:p-12 h-screen re1:h-[70vh] w-4/5 re1:w-2/5 bg-[#303030] ml-auto re1:m-auto re1:mt-[15vh] rounded-lg overflow-y-scroll'>
           <button
             onClick={()=>modal.current?.close()}
-            className='absolute top-0 re1:top-[15.5vh] left-[20%] re1:left-[30.25%] m-3 border-[#dd1f26] rounded-full border text-[#dd1f26] w-5 h-5 flex items-center justify-center text-xs'
+            className='absolute top-0 re1:top-[15.5vh] left-[20%] re1:left-[30.25%] m-3 border-primary rounded-full border text-primary w-5 h-5 flex items-center justify-center text-xs'
           >✕</button>
-          <div className='flex flex-col gap-5 text-white [overflow-wrap:break-word]'>
+          <div className='flex flex-col gap-5 text-secondary [overflow-wrap:break-word]'>
             <div className="p-5 bg-[#0a0a0a]">
             {data[0] ? (
               <Image className='m-auto' src={data[0]} width={300} height={300}/>
@@ -166,7 +166,7 @@ const Specification=({page}:Props)=>{
           tr.classList.add('bg-[#151515]','re1:bg-transparent')
         }
         tr.innerHTML = `
-          <th class="w-[35%] text-[#828282] pl-4 text-normal">${key}</th><td class="w-[65%] pl-4 text-normal">${value}</td>
+          <th class="w-[35%] text-neutral-content pl-4 text-normal">${key}</th><td class="w-[65%] pl-4 text-normal">${value}</td>
         `
         tr.classList.add('re1:even:bg-[#151515]','text-sm','h-[40px]')
         if (isOdd) {
@@ -201,7 +201,7 @@ const Specification=({page}:Props)=>{
 
 
   return (
-    <div className='w-full re1:px-[10%] border-b border-b-[#3d3d3d]'>
+    <div className='w-full re1:px-[10%] border-b border-b-neutral'>
       <label className='text-base px-[10%] re1:px-0 re1:text-xl py-[20px] font-bold flex justify-between items-center' onClick={handleDropdown}>
         <p className='w-[90%] re1:w-auto'>Especificações Técnicas</p>
         <Image src='https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png' width={15} height={15} 
@@ -291,8 +291,8 @@ const Specification=({page}:Props)=>{
                 <tbody>
                   {specs.map(item=>(
                     <tr className='even:bg-[#151515] text-left'>
-                      <th className='text-[#828282] font-normal w-[40%] p-2'>{item?.name}</th>
-                      <td className='text-white w-[60%] p-2'>{item?.value}</td>
+                      <th className='text-neutral-content font-normal w-[40%] p-2'>{item?.name}</th>
+                      <td className='text-secondary w-[60%] p-2'>{item?.value}</td>
                     </tr>
                   ))}
                 </tbody>
