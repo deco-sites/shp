@@ -51,12 +51,10 @@ function Cart({
       {isEmtpy
         ? (
           <div class="flex flex-col gap-6">
-            <span class="font-medium text-2xl">Sua sacola está vazia</span>
+            <span class="font-medium text-2xl text-white">Sua sacola está vazia</span>
             <Button
-              class="btn-outline"
-              onClick={() => {
-                displayCart.value = false;
-              }}
+              class="btn-outline btn-primary"
+              onClick={() => {(document.querySelector('#close-minicart') as HTMLElement).click()}}
             >
               Escolher produtos
             </Button>

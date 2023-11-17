@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'preact/hooks'
+import { useCart } from "apps/vtex/hooks/useCart.ts"
 import MenuItem from './MenuItem.tsx'
 import MenuItemDesk from './MenuItemDesktop.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
@@ -110,6 +111,10 @@ const HeaderSHP = () => {
 
   const [openMinicart, setOpenMinicart]=useState(false)
 
+  const {cart}=useCart()
+  const {items}=cart.value ?? { items: [] }
+  const totalItems=items.length
+
   return (
     <>
       <div id='minicartWrapper' className={`${openMinicart ? 'flex' : 'hidden'} flex-col z-30 fixed w-full items-end bg-[#000]/80`}
@@ -213,7 +218,12 @@ const HeaderSHP = () => {
             </a>
 
             <a className='flex items-center gap-1 cursor-pointer' onClick={()=>{setOpenMinicart(true)}}>
-              <div className='hidden w-fit h-fit border-[#dd1f26] border-2 p-2 rounded-lg ml-0 re1:block'>
+              <div className='hidden w-fit h-fit border-[#dd1f26] border-2 p-2 rounded-lg ml-0 re1:block indicator'>
+                <span
+                  class={`indicator-item badge badge-primary badge-sm font-bold ${totalItems === 0 ? "hidden" : ""}`}
+                >
+                  {totalItems > 9 ? "9+" : totalItems}
+                </span>
                 <Image
                   src='https://shopinfo.vteximg.com.br/arquivos/header__cart.png'
                   alt='carrinho' width={24} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
@@ -230,7 +240,12 @@ const HeaderSHP = () => {
             />
           </div>
 
-          <div className='w-fit h-fit border-[#dd1f26] border-2 p-2 rounded-lg ml-auto re1:hidden'>
+          <div className='w-fit h-fit border-[#dd1f26] border-2 p-2 rounded-lg ml-auto re1:hidden indicator'>
+            <span
+              class={`indicator-item badge badge-primary badge-sm font-bold ${totalItems === 0 ? "hidden" : ""}`}
+            >
+              {totalItems > 9 ? "9+" : totalItems}
+            </span>
             <Image
               src='https://shopinfo.vteximg.com.br/arquivos/header__cart.png'
               alt='carrinho' width={24} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
