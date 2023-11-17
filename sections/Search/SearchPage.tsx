@@ -3,6 +3,7 @@ import type { SectionProps } from '$live/mod.ts'
 import Search from 'deco-sites/shp/components/ComponentsSHP/searchSHP/Search.tsx'
 import SearchSub from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchSub.tsx'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
+import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 
 export interface Props {
   iconesNavegacionais:Array<{
@@ -84,7 +85,7 @@ const SearchPage=({data, q, iconesNavegacionais, fqName, fqVal}:SectionProps<typ
       </div>)
   }
 
-  return (fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais}/>
+  return <CompareContextProvider>{(fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais}/>}</CompareContextProvider>
 }
 
 export default SearchPage
