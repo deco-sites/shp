@@ -15,11 +15,11 @@ const Atendimento = ({ link, iconUrl, text, title, Anchor }: Props) => {
         src={iconUrl} width={36} height={36} loading='lazy' decoding='sync' fetchPriority='low'
       />
       <div className='flex flex-col font-bold'>
-        <p className='text-[#dd1f26] leading-4'>{title}</p>
+        <p className='text-primary leading-4'>{title}</p>
         {Anchor ?
-          (<a className='text-sm text-white' href={link}>{text}</a>)
+          (<a className='text-sm text-secondary' href={link}>{text}</a>)
         :
-          (<p className='text-sm text-white'>{text}</p>)
+          (<p className='text-sm text-secondary'>{text}</p>)
         }
       </div>
     </div>

@@ -39,10 +39,10 @@ function Cart() {
   // Empty State
   if (isCartEmpty) {
     return (
-      <div class="flex flex-col justify-center items-center h-full gap-6 text-white">
+      <div class="flex flex-col justify-center items-center h-full gap-6 text-secondary">
         <span class="font-medium text-2xl">Sua sacola está vazia</span>
         <Button
-          class="bg-[#dd1f26] hover:bg-[#dd1f26] text-white"
+          class="bg-primary hover:bg-primary text-secondary"
           onClick={() => {
             displayCart.value = false;
             (document.querySelector('#close-minicart') as HTMLElement)?.click()
@@ -69,7 +69,7 @@ function Cart() {
       </ul>
 
       {/* Cart Footer */}
-      <footer class='text-white'>
+      <footer class='text-secondary'>
         {/* Subtotal */}
         <div class="border-t border-[#292929] py-4 flex flex-col gap-4">
           {discounts?.value && (
@@ -97,7 +97,7 @@ function Cart() {
                 {formatPrice(total.value / 100, currencyCode!, locale)}
               </span>
             </div>
-            <span class="text-sm text-[#828282]">
+            <span class="text-sm text-neutral-content">
               Taxas e fretes serão calculados no checkout
             </span>
           </div>
@@ -109,7 +109,7 @@ function Cart() {
           >
             <Button
               data-deco="buy-button"
-              class="w-full bg-[#dd1f26] hover:bg-[#dd1f26] text-white"
+              class="w-full bg-primary hover:bg-primary text-secondary"
               disabled={loading.value || cart.value.items.length === 0}
               onClick={() => {
                 sendEvent({

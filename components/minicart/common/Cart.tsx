@@ -51,12 +51,10 @@ function Cart({
       {isEmtpy
         ? (
           <div class="flex flex-col gap-6">
-            <span class="font-medium text-2xl">Sua sacola está vazia</span>
+            <span class="font-medium text-2xl text-secondary">Sua sacola está vazia</span>
             <Button
-              class="btn-outline"
-              onClick={() => {
-                displayCart.value = false;
-              }}
+              class="btn-outline btn-primary"
+              onClick={() => {(document.querySelector('#close-minicart') as HTMLElement).click()}}
             >
               Escolher produtos
             </Button>
@@ -107,7 +105,7 @@ function Cart({
               </div>
 
               {/* Total */}
-              <div class="border-t border-base-200 pt-4 flex flex-col justify-end items-end gap-2 mx-4 text-white">
+              <div class="border-t border-base-200 pt-4 flex flex-col justify-end items-end gap-2 mx-4 text-secondary">
                 <div class="flex justify-between items-center w-full">
                   <span>Total</span>
                   <span class="font-medium text-xl">
@@ -125,7 +123,7 @@ function Cart({
                     {totalPix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
                   </span>
                 </div>
-                <span class="text-sm text-[#828282]">
+                <span class="text-sm text-neutral-content">
                   Taxas e fretes serão calculados no checkout
                 </span>
               </div>
@@ -134,7 +132,7 @@ function Cart({
                 <a class="inline-block w-full" href={checkoutHref}>
                   <Button
                     data-deco="buy-button"
-                    class="w-full bg-[#dd1f26] hover:bg-[#dd1f26] text-white border-none outline-none"
+                    class="w-full bg-primary hover:bg-primary text-secondary border-none outline-none"
                     disabled={loading || isEmtpy}
                     onClick={() => {
                       sendEvent({

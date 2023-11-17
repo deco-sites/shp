@@ -64,7 +64,7 @@ function ShippingContent({ simulation }: {
           </span>
         </li>
       ))}
-      <span className="text-base-300">
+      <span className="text-base-content">
         Os prazos de entrega começam a contar a partir da confirmação do
         pagamento e podem variar de acordo com a quantidade de produtos na
         sacola.
@@ -127,7 +127,7 @@ function ShippingSimulation({ items }: Props) {
                 postalCode.value = e.currentTarget.value;
               }}
             />
-            <Button type="submit" loading={loading.value} class='bg-[#dd1f26] border-[#dd1f26] hover:border-[#dd1f26] hover:bg-[#dd1f26]'>
+            <Button type="submit" loading={loading.value} class='bg-primary border-primary hover:border-primary hover:bg-primary'>
               <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-arrow-right.png'
                 width={16} height={12} loading='eager' decoding='auto' fetchPriority='high'
               />

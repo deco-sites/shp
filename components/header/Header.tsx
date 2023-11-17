@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'preact/hooks'
+import { useCart } from "apps/vtex/hooks/useCart.ts"
 import MenuItem from './MenuItem.tsx'
 import MenuItemDesk from './MenuItemDesktop.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
@@ -73,7 +74,7 @@ const HeaderSHP = () => {
 
   const gamerHover = () => {
     openGamer === 'hidden' && hideAll()
-    setOpenGamer('flex'), setBorderGamer('border-b-2 border-[#dd1f26]')
+    setOpenGamer('flex'), setBorderGamer('border-b-2 border-primary')
   }
 
   const [openOffice, setOpenOffice] = useState('hidden')
@@ -81,7 +82,7 @@ const HeaderSHP = () => {
 
   const officeHover = () => {
     openOffice === 'hidden' && hideAll()
-    setOpenOffice('flex'), setBorderOffice('border-b-2 border-[#dd1f26]')
+    setOpenOffice('flex'), setBorderOffice('border-b-2 border-primary')
   }
 
   const [openWork, setOpenWork] = useState('hidden')
@@ -89,7 +90,7 @@ const HeaderSHP = () => {
 
   const workHover = () => {
     openWork === 'hidden' && hideAll()
-    setOpenWork('flex'), setBorderWork('border-b-2 border-[#dd1f26]')
+    setOpenWork('flex'), setBorderWork('border-b-2 border-primary')
   }
 
   const [openPeri, setOpenPeri] = useState('hidden')
@@ -97,7 +98,7 @@ const HeaderSHP = () => {
 
   const periHover = () => {
     openPeri === 'hidden' && hideAll()
-    setOpenPeri('flex'), setBorderPeri('border-b-2 border-[#dd1f26]')
+    setOpenPeri('flex'), setBorderPeri('border-b-2 border-primary')
   }
 
   const [openHard, setOpenHard] = useState('hidden')
@@ -105,10 +106,14 @@ const HeaderSHP = () => {
 
   const hardHover = () => {
     openHard === 'hidden' && hideAll()
-    setOpenHard('flex'), setBorderHard('border-b-2 border-[#dd1f26]')
+    setOpenHard('flex'), setBorderHard('border-b-2 border-primary')
   }
 
   const [openMinicart, setOpenMinicart]=useState(false)
+
+  const {cart}=useCart()
+  const {items}=cart.value ?? { items: [] }
+  const totalItems=items.length
 
   return (
     <>
@@ -119,8 +124,8 @@ const HeaderSHP = () => {
           }
         }}
       >
-        <div id='minicartContent' className='bg-[#111] w-screen re1:w-[400px] h-screen'>
-          <div className='flex justify-between h-[10vh] items-center px-4 text-xl font-bold text-white'>
+        <div id='minicartContent' className='bg-base-100 w-screen re1:w-[400px] h-screen'>
+          <div className='flex justify-between h-[10vh] items-center px-4 text-xl font-bold text-secondary'>
             <label className='flex gap-2'>
               <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png' width={22} height={20} decoding='sync' loading='lazy' class='max-h-[22px] m-auto'/>
               <p>Carrinho</p>
@@ -155,31 +160,31 @@ const HeaderSHP = () => {
           {!isMobile && (
             <div className='hidden re1:flex gap-4'>
               <div onMouseOver={gamerHover} className={borderGamer}>
-                <a href='/computadores-gamer/' className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/computadores-gamer/' className='font-bold text-secondary text-sm cursor-pointer'>
                   PC Gamer
                 </a>
               </div>
 
               <div onMouseOver={officeHover} className={borderOffice}>
-                <a href='/solucoes' className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/solucoes' className='font-bold text-secondary text-sm cursor-pointer'>
                   Home Office
                 </a>
               </div>
 
               <div onMouseOver={workHover} className={borderWork}>
-                <a href='/workstation' className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/workstation' className='font-bold text-secondary text-sm cursor-pointer'>
                   Workstation
                 </a>
               </div>
 
               <div onMouseOver={periHover} className={borderPeri}>
-                <a href='/acessorios-gamer' className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/acessorios-gamer' className='font-bold text-secondary text-sm cursor-pointer'>
                   Periféricos
                 </a>
               </div>
 
               <div onMouseOver={hardHover} className={borderHard}>
-                <a href='/hardware' className='font-bold text-white text-sm cursor-pointer'>
+                <a href='/hardware' className='font-bold text-secondary text-sm cursor-pointer'>
                   Hardware
                 </a>
               </div>
@@ -189,7 +194,7 @@ const HeaderSHP = () => {
 
           <SearchMenuBar />
 
-          <div className='hidden re1:block w-[2px] h-2/4 bg-neutral-600'></div>
+          <div className='hidden re1:block w-[2px] h-2/4 bg-neutral'></div>
 
           <div className='hidden re1:flex gap-2 items-center'>
             <a href='/teste' className='flex items-center gap-1'>
@@ -197,7 +202,7 @@ const HeaderSHP = () => {
                 src='https://shopinfo.vteximg.com.br/arquivos/frete-icon.png'
                 alt='caminhão' width={26} height={18} preload fetchPriority='high' loading='eager' decoding='sync'
               />
-              <div className='hover:text-white text-neutral-500 font-bold text-sm'>
+              <div className='hover:text-secondary text-neutral-content font-bold text-sm'>
                 Rastreio
               </div>
             </a>
@@ -207,19 +212,24 @@ const HeaderSHP = () => {
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-user.png'
                 alt='conta' width={21} height={25} preload fetchPriority='high' loading='eager' decoding='sync'
               />
-              <div className='hover:text-white text-neutral-500 font-bold text-sm'>
+              <div className='hover:text-secondary text-neutral-content font-bold text-sm'>
                 Minha Conta
               </div>
             </a>
 
             <a className='flex items-center gap-1 cursor-pointer' onClick={()=>{setOpenMinicart(true)}}>
-              <div className='hidden w-fit h-fit border-[#dd1f26] border-2 p-2 rounded-lg ml-0 re1:block'>
+              <div className='hidden w-fit h-fit border-primary border-2 p-2 rounded-lg ml-0 re1:block indicator'>
+                <span
+                  class={`indicator-item badge badge-primary badge-sm font-bold ${totalItems === 0 ? "hidden" : ""}`}
+                >
+                  {totalItems > 9 ? "9+" : totalItems}
+                </span>
                 <Image
                   src='https://shopinfo.vteximg.com.br/arquivos/header__cart.png'
                   alt='carrinho' width={24} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
                 />
               </div>
-              <div className='hover:text-white text-neutral-500 font-bold text-sm'>
+              <div className='hover:text-secondary text-neutral-content font-bold text-sm'>
                 Carrinho
               </div>
             </a>
@@ -230,7 +240,12 @@ const HeaderSHP = () => {
             />
           </div>
 
-          <div className='w-fit h-fit border-[#dd1f26] border-2 p-2 rounded-lg ml-auto re1:hidden'>
+          <div className='w-fit h-fit border-primary border-2 p-2 rounded-lg ml-auto re1:hidden indicator'>
+            <span
+              class={`indicator-item badge badge-primary badge-sm font-bold ${totalItems === 0 ? "hidden" : ""}`}
+            >
+              {totalItems > 9 ? "9+" : totalItems}
+            </span>
             <Image
               src='https://shopinfo.vteximg.com.br/arquivos/header__cart.png'
               alt='carrinho' width={24} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
@@ -467,14 +482,14 @@ const HeaderSHP = () => {
         ) : (
           <>
             <div className={menuMobileClass}>
-              <div className='bg-[#dd1f26] flex flex-col h-32 justify-between'>
+              <div className='bg-primary flex flex-col h-32 justify-between'>
                 <div className='w-full justify-between flex p-2'>
-                  <p className='font-bold text-xl text-white'>
+                  <p className='font-bold text-xl text-secondary'>
                     Entre ou Cadastre-se
                   </p>
                   <span
                     ref={close}
-                    className='text-white font-extrabold cursor-pointer'
+                    className='text-secondary font-extrabold cursor-pointer'
                   >
                     X
                   </span>
@@ -487,7 +502,7 @@ const HeaderSHP = () => {
                       src='https://shopinfo.vteximg.com.br/arquivos/icone-mobile-rastreio2.png'
                       alt='carrinho'
                     />
-                    <p className='text-white'>Rastreio</p>
+                    <p className='text-secondary'>Rastreio</p>
                   </div>
 
                   <div className='flex gap-2'>
@@ -498,14 +513,14 @@ const HeaderSHP = () => {
                       />
                     </a>
 
-                    <p className='text-white'>Atendimento</p>
+                    <p className='text-secondary'>Atendimento</p>
                   </div>
                 </div>
               </div>
 
               <div className='flex flex-col w-full h-screen overflow-y-auto scrollbar scrollbar-thin'>
                 <a
-                  className='flex w-[95%] bg-[#333] rounded-lg border-2 border-transparent h-12 text-white font-bold justify-between p-5 my-[2px] mx-auto items-center'
+                  className='flex w-[95%] bg-[#333] rounded-lg border-2 border-transparent h-12 text-secondary font-bold justify-between p-5 my-[2px] mx-auto items-center'
                   href='/teste'
                 >
                   <div className='flex gap-2'>

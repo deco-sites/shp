@@ -43,7 +43,7 @@ const Filtro=({title, values}:Props)=>{
   }
 
   return(
-    <div className='w-full flex flex-col bg-[#111] re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>
+    <div className='w-full flex flex-col bg-base-100 re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>
       <h5 className='px-3 py-5 flex justify-between cursor-pointer'
         onClick={()=>setOpen(!open)}
       >
@@ -57,7 +57,7 @@ const Filtro=({title, values}:Props)=>{
       <div className={`${open ? 'max-h-[340px]' : 'max-h-0'} trasition-[max-height] overflow-hidden duration-500 ease-in-out`}>
         <label className={`${values.length>2 ? 'flex' : 'hidden'} justify-around items-center py-1`}>
           <input ref={search} type='text' name='search' placeholder='Procure por nome ou descrição' className='rounded-lg placeholder:line-clamp-1 
-            border-2 border-[#3d3d3d] placeholder:text-[#3d3d3d] bg-[#111] focus:border-primary outline-none w-[80%] text-sm px-2 py-1'
+            border-2 border-neutral placeholder:text-neutral bg-base-100 focus:border-primary outline-none w-[80%] text-sm px-2 py-1'
             onInput={handleInput} onKeyUp={cleanInput}
           />
           <Image src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png' width={15} height={15}

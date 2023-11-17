@@ -25,7 +25,7 @@ const loaderBuyTogether=async(skuId:string):Promise<objBuyTogether[]>=> await in
 
 const CompreJunto=({page}:Props)=>{
   const {product}=page
-  const [htmlContent, setHtmlContent]=useState<JSX.Element[]>([<div className='loading loading-spinner loading-lg text-[#dd1f26]'/>])
+  const [htmlContent, setHtmlContent]=useState<JSX.Element[]>([<div className='loading loading-spinner loading-lg text-primary'/>])
   const [data, setData]=useState<objBuyTogether[]>([])
   const [vazio, setVazio]=useState('')
   const handleData=async()=>{
@@ -82,17 +82,17 @@ const CompreJunto=({page}:Props)=>{
                 <a href={link} className='text-xs re1:text-[16px] max-h-[66px] line-clamp-2 re1:line-clamp-3 text-left re1:leading-[22px]'>{name}</a>
                 <div>
                   <div>
-                    <p className='text-sm font-bold text-[#dd1f26]'>por mais</p>
-                    <span className='text-lg font-bold flex items-baseline'>{finalPrice.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}<p className='text-[#dd1f26] text-xs ml-1'>no pix</p></span>
+                    <p className='text-sm font-bold text-primary'>por mais</p>
+                    <span className='text-lg font-bold flex items-baseline'>{finalPrice.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}<p className='text-primary text-xs ml-1'>no pix</p></span>
                   </div>
                   <button data-skus={`['${product.sku}', '${skuProdB}']`} 
-                    class="btn no-animation w-full hidden re1:flex gap-3 bg-[#dd1f26] border-[#dd1f26] hover:border-[#dd1f26] hover:bg-[#dd1f26]"
+                    class="btn no-animation w-full hidden re1:flex gap-3 bg-primary border-primary hover:border-primary hover:bg-primary"
                     onClick={(event)=>console.log((event.target as HTMLButtonElement).getAttribute('data-skus') || ((event.target as HTMLElement).parentElement as HTMLButtonElement).getAttribute('data-skus'))}
                   >
                     <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png'
                       width={22} height={20} decoding='auto' fetchPriority='high' loading='eager' className='w-[10%]'
                     />
-                    <p className='font-bold text-white capitalize'>Comprar junto</p>
+                    <p className='font-bold text-secondary capitalize'>Comprar junto</p>
                 </button>
                 </div>
 
@@ -112,7 +112,7 @@ const CompreJunto=({page}:Props)=>{
             <div className={`${itemsPromises.length>1 ? 'flex' : 'hidden'} re1:mr-[10px] justify-center items-center prev`}>
               <Slider.PrevButton class='relative  btn min-w-[10px] min-h-[10px] px-0 rounded-full disabled:grayscale !bg-transparent !hover:bg-transparent border-none hover:border-none'>
                 <Icon
-                  class='text-[#dd1f26]'
+                  class='text-primary'
                   size={15}
                   id='ChevronLeft'
                   strokeWidth={3}
@@ -127,7 +127,7 @@ const CompreJunto=({page}:Props)=>{
             <div class={`${itemsPromises.length>1 ? 'flex' : 'hidden'} re1:ml-[10px] items-center justify-center next`}>
               <Slider.NextButton class='relative btn min-w-[10px] min-h-[10px] px-0 rounded-full disabled:grayscale !bg-transparent !hover:bg-transparent border-none hover:border-none'>
                 <Icon
-                  class='text-[#dd1f26]'
+                  class='text-primary'
                   size={15}
                   id='ChevronRight'
                   strokeWidth={3}
@@ -147,7 +147,7 @@ const CompreJunto=({page}:Props)=>{
           </div>
         </div>,
         <button 
-          class='mt-[20px] btn no-animation w-[90vw] re1:hidden h-[40px] gap-3 bg-[#dd1f26] border-[#dd1f26] hover:border-[#dd1f26] hover:bg-[#dd1f26]'
+          class='mt-[20px] btn no-animation w-[90vw] re1:hidden h-[40px] gap-3 bg-primary border-primary hover:border-primary hover:bg-primary'
           onClick={()=>{
             let slideIndex = ''
             if (dotsWrapper.current) {
@@ -163,7 +163,7 @@ const CompreJunto=({page}:Props)=>{
           <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png'
             width={22} height={20} decoding='auto' fetchPriority='high' loading='eager'
           />
-          <p className='font-bold text-white capitalize'>Comprar junto</p>
+          <p className='font-bold text-secondary capitalize'>Comprar junto</p>
         </button>])
       }
   

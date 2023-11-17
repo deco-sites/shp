@@ -165,21 +165,21 @@ const SearchMenuBar=()=>{
             type='text'
             name='search'
             placeholder='O que você procura...'
-            className='hidden re1:block w-48 text-white bg-[#111] placeholder:text-[#3d3d3d] mr-[3%]
-            p-2 border-[#3d3d3d] border-[2px] outline-none top-[26px] rounded-lg focus:shadow-[0_0_5px_2px] focus:shadow-[#dd1f26]/30 
-          focus:border-[#dd1f26] absolute focus:w-2/5 transition-all duration-700'
+            className='hidden re1:block w-48 text-secondary bg-base-100 placeholder:text-neutral mr-[3%]
+            p-2 border-neutral border-[2px] outline-none top-[26px] rounded-lg focus:shadow-[0_0_5px_2px] focus:shadow-primary/30 
+          focus:border-primary absolute focus:w-2/5 transition-all duration-700'
             onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
             onBlur={()=>(setTimeout(()=>setOpenSuggestions(false),500),currentController.current && currentController.current.abort())}
             onKeyUp={(event:KeyboardEvent)=>event.key==='Enter' && redirectSearchPage()}
           />
 
-          <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : ''} hidden flex-col w-2/5 mr-[3%] absolute border border-[#3d3d3d] border-t-transparent bg-[#111] top-3/4 rounded-b-lg rounded-br-lg`}>
+          <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : ''} hidden flex-col w-2/5 mr-[3%] absolute border border-neutral border-t-transparent bg-base-100 top-3/4 rounded-b-lg rounded-br-lg`}>
             {autoComplete.map((suggestion:any)=>{
               if(suggestion.thumbUrl){
                 return(
                   <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727]'>
                     <Image src={suggestion.thumbUrl.replace('25-25/1','32-32/1')} width={32} height={32} loading='eager' decoding='async' fetchPriority='high'/>
-                    <p className='line-clamp-1 text-sm text-white ml-1'>{suggestion.name}</p>
+                    <p className='line-clamp-1 text-sm text-secondary ml-1'>{suggestion.name}</p>
                   </a>
                 )
               }else{
@@ -187,7 +187,7 @@ const SearchMenuBar=()=>{
                 const href=`/s?q=${finalInputValue.current}&fqName=${fqName}`
 
                 return(
-                <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-white ml-1'>
+                <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-secondary ml-1'>
                   {suggestion.name}
                 </a>
                 )
@@ -206,14 +206,14 @@ const SearchMenuBar=()=>{
 
       <div
           ref={divInputSearchMobile}
-          className={`${openSearch ? 'flex' : 'hidden'} w-full h-16 p-4 items-center justify-between absolute top-0 bg-[#111] z-[1] re1:hidden`}
+          className={`${openSearch ? 'flex' : 'hidden'} w-full h-16 p-4 items-center justify-between absolute top-0 bg-base-100 z-[1] re1:hidden`}
         >
           <input
             ref={inputMob}
             type='text'
             name='search'
             placeholder='O que você procura...'
-            className='placeholder:text-[#3d3d3d] w-4/5 bg-transparent outline-none p-4 text-white'
+            className='placeholder:text-neutral w-4/5 bg-transparent outline-none p-4 text-secondary'
             onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
             onClick={(event)=>setInputValue((event.target as HTMLInputElement).value)}
             onKeyUp={(event:KeyboardEvent)=>event.key==='Enter' && redirectSearchPage()}
@@ -225,13 +225,13 @@ const SearchMenuBar=()=>{
           />
         </div>
 
-        <div ref={suggestionsMob} className={`${openSuggestions ? 'flex' : 'hidden'} re1:hidden flex-col w-full re1:w-2/5 absolute border border-[#3d3d3d] top-16 re1:top-24 bg-[#111] rounded-b-lg rounded-br-lg`}>
+        <div ref={suggestionsMob} className={`${openSuggestions ? 'flex' : 'hidden'} re1:hidden flex-col w-full re1:w-2/5 absolute border border-neutral top-16 re1:top-24 bg-base-100 rounded-b-lg rounded-br-lg`}>
           {autoComplete.map((suggestion:any)=>{
             if(suggestion.thumbUrl){
               return(
                 <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727]'>
                   <Image src={suggestion.thumbUrl.replace('25-25/1','32-32/1')} width={32} height={32} loading='eager' decoding='async' fetchPriority='high'/>
-                  <p className='line-clamp-1 text-sm text-white ml-1'>{suggestion.name}</p>
+                  <p className='line-clamp-1 text-sm text-secondary ml-1'>{suggestion.name}</p>
                 </a>
               )
             }else{
@@ -239,7 +239,7 @@ const SearchMenuBar=()=>{
               const href=`/s?q=${finalInputValue.current}&fqName=${fqName}`
 
               return(
-              <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-white ml-1'>
+              <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-secondary ml-1'>
                 {suggestion.name}
               </a>
               )

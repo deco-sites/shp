@@ -15,7 +15,7 @@ const Acessorio = ({ imgUrl, href, w, h }: AcessorioProps) => {
   return (
     <a
       href={href}
-      className={`block border w-[${w}px] h-[${h}px] border-transparent hover:re1:border-[#dd1f26] hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-[#dd1f26]`}
+      className={`block border w-[${w}px] h-[${h}px] border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary`}
     >
       <Image
         src={imgUrl}
@@ -49,8 +49,8 @@ const Acessorios = () => {
   }, [])
 
   return (
-    <div className='bg-[#111] py-8'>
-      <p className='font-bold re1:font-black text-left re1:text-center re1:text-[27px] mx-[10%] re1:mx-[32%] text-white'>
+    <div className='bg-base-100 py-8'>
+      <p className='font-bold re1:font-black text-left re1:text-center re1:text-[27px] mx-[10%] re1:mx-[32%] text-secondary'>
         De um Upgrade no seu PC Gamer com os acessórios Shopinfo
       </p>
       {isMobile ? (
@@ -124,19 +124,19 @@ const Acessorios = () => {
             <ul className='carousel justify-center gap-4 z-[5]'>
               <li>
                 <Slider.Dot index={0}>
-                  <div className='bg-[#2d2d2d] group-disabled:bg-[#dd1f26] rounded-full h-[12px] w-[12px]' />
+                  <div className='bg-[#2d2d2d] group-disabled:bg-primary rounded-full h-[12px] w-[12px]' />
                 </Slider.Dot>
               </li>
 
               <li>
                 <Slider.Dot index={1}>
-                  <div className='bg-[#2d2d2d] group-disabled:bg-[#dd1f26] rounded-full h-[12px] w-[12px]' />
+                  <div className='bg-[#2d2d2d] group-disabled:bg-primary rounded-full h-[12px] w-[12px]' />
                 </Slider.Dot>
               </li>
 
               <li>
                 <Slider.Dot index={2}>
-                  <div className='bg-[#2d2d2d] group-disabled:bg-[#dd1f26] rounded-full h-[12px] w-[12px]' />
+                  <div className='bg-[#2d2d2d] group-disabled:bg-primary rounded-full h-[12px] w-[12px]' />
                 </Slider.Dot>
               </li>
             </ul>

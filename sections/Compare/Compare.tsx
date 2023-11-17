@@ -30,7 +30,7 @@ const PCCard=({PC}:{PC:PcContextProps})=>{
         <rect x="6" y="11" width="13" height="3" fill="white"></rect>
       </svg>
       <Image className='my-auto' width={59} height={59} src={PC.imgUrl} fetchPriority='high' decoding='sync' loading='eager'/>
-      <p className='text-sm line-clamp-3 h-[90%] my-auto text-white'>{PC.name}</p>
+      <p className='text-sm line-clamp-3 h-[90%] my-auto text-secondary'>{PC.name}</p>
     </div>
   )
 }

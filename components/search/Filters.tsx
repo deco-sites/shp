@@ -22,7 +22,7 @@ function ValueItem(
     <a href={url} class="flex items-center gap-2">
       <div aria-checked={selected} class="checkbox" />
       <span class="text-sm">{label}</span>
-      {quantity > 0 && <span class="text-sm text-base-300">({quantity})</span>}
+      {quantity > 0 && <span class="text-sm text-base-content">({quantity})</span>}
     </a>
   );
 }

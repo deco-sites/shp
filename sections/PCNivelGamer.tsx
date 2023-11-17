@@ -35,7 +35,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
   }, [])
 
   return (
-    <div className='my-5 text-white font-bold'>
+    <div className='my-5 text-secondary font-bold'>
       {isMobile ? (
         //bg-[url('https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background-mobile.jpg')] bg-no-repeat bg-center bg-cover
         <div className='relative py-16'>
@@ -48,13 +48,13 @@ const PCNivelGamer = ({ items = [] }: Props) => {
             <div className='flex flex-col justify-center items-center'>
               <h1 className='text-2xl '>ESCOLHA SEU PC GAMER</h1>
               <p className='text-lg'>de acordo com seu nível de jogo</p>
-              <div className='w-[100px] bg-[#dd1f26] h-1 mt-4' />
+              <div className='w-[100px] bg-primary h-1 mt-4' />
             </div>
             <div id={id} className='flex justify-center items-center my-4'>
               <div className='flex justify-center items-center prev'>
                 <Slider.PrevButton class='btn bg-transparent hover:bg-transparent border-none relative bottom-8'>
                   <Icon
-                    class='text-[#dd1f26]'
+                    class='text-primary'
                     size={25}
                     id='ChevronLeft'
                     strokeWidth={3}
@@ -75,7 +75,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
                       />
                       <h2 className='text-xl'>{item.title}</h2>
                       <p className='text-center text-base'>{item.subTitle}</p>
-                      <a className='text-[#dd1f26]' href={item.href}>
+                      <a className='text-primary' href={item.href}>
                         Ver soluções&gt;
                       </a>
                     </div>
@@ -86,7 +86,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
               <div class='flex items-center justify-center next'>
                 <Slider.NextButton class='btn bg-transparent hover:bg-transparent border-none relative bottom-8'>
                   <Icon
-                    class='text-[#dd1f26]'
+                    class='text-primary'
                     size={25}
                     id='ChevronRight'
                     strokeWidth={3}
@@ -109,14 +109,14 @@ const PCNivelGamer = ({ items = [] }: Props) => {
             <div className='flex flex-col justify-center items-center'>
               <h1 className='text-2xl '>ESCOLHA SEU PC GAMER</h1>
               <p className='text-lg'>de acordo com seu nível de jogo</p>
-              <div className='w-[100px] bg-[#dd1f26] h-1 mt-4' />
+              <div className='w-[100px] bg-primary h-1 mt-4' />
             </div>
 
             <div className='flex gap-5 justify-center items-start mt-5'>
               {items.map((item) => (
                 <div
-                className='flex flex-col gap-6 justify-center items-center border-transparent border-2 hover:border-[#dd1f26] hover:shadow-[0_0_5px_2px]
-                hover:shadow-[#dd1f26]/30 rounded-lg p-5'
+                className='flex flex-col gap-6 justify-center items-center border-transparent border-2 hover:border-primary hover:shadow-[0_0_5px_2px]
+                hover:shadow-primary/30 rounded-lg p-5'
                 >
                   <Image
                     src={item.imgUrl} width={265}
@@ -124,7 +124,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
                   />
                   <h2 className='text-xl'>{item.title}</h2>
                   <p className='text-center text-base w-64'>{item.subTitle}</p>
-                  <a className='text-[#dd1f26]' href={item.href}>
+                  <a className='text-primary' href={item.href}>
                     Ver soluções&gt;
                   </a>
                 </div>

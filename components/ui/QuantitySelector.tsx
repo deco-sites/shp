@@ -41,7 +41,7 @@ function QuantitySelector({ onChange, quantity, disabled, loading }: Props) {
           -
         </Button>
         <input
-          class="input input-xs !outline-none border-[#cccccc] border-x-0 text-center text-white font-bold bg-[#000] disabled:bg-[#000]"
+          class="input input-xs !outline-none border-[#cccccc] border-x-0 text-center text-secondary font-bold bg-[#000] disabled:bg-[#000]"
           type="number"
           inputMode="numeric"
           pattern="[0-9]*"

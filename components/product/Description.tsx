@@ -15,7 +15,7 @@ const Description=({page}:Props)=>{
   const descriptionFromBD=description==='&nbsp;'
   const [alreadyOpened,setAlreadyOpened]=useState(false)
   const [vazio,setVazio]=useState(false)
-  const [loading,setLoading]=useState('loading loading-spinner text-[#dd1f26] loading-lg mb-[20px]')
+  const [loading,setLoading]=useState('loading loading-spinner text-primary loading-lg mb-[20px]')
 
   const handleDropdown=(event:MouseEvent)=>{
     let batata=''
@@ -166,7 +166,7 @@ const Description=({page}:Props)=>{
   
 
   return (
-    <div className={`w-full re1:px-[10%] border-y border-y-[#3d3d3d] ${vazio ? 'hidden' : ''}`}>
+    <div className={`w-full re1:px-[10%] border-y border-y-neutral ${vazio ? 'hidden' : ''}`}>
       <label className='text-base re1:text-xl px-[10%] re1:px-0 py-[20px] font-bold flex justify-between items-center' onClick={handleDropdown}>
         <p className='w-[90%] re1:w-auto'>Descrição</p>
         <Image src='https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png' width={15} height={15} 

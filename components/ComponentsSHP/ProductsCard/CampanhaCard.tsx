@@ -48,7 +48,7 @@ const CardProd=(props:CardProps)=>{
 
   return (
     <a href={props.linkProd} className='flex flex-col re1:flex-row w-full h-[215px] re1:h-[245px] bg-[#171717] hover:shadow-[0_10px_25px_0] hover:shadow-[rgba(0,0,0,.85)]
-    hover:transition-shadow hover:duration-75 hover:ease-in text-white p-[10px] re1:p-0 justify-between'
+    hover:transition-shadow hover:duration-75 hover:ease-in text-secondary p-[10px] re1:p-0 justify-between'
     >
       {/* Mobile */}
       <div className='flex re1:hidden h-[40px] gap-1'>
@@ -101,7 +101,7 @@ const CardProd=(props:CardProps)=>{
 
           <div>
             <p className='line-through text-sm'>de: {props.precoDe.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
-            <p className='text-[#00a74c] text-xl font-bold'>{salePricePix.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}<span className='text-xs text-white'> No Pix</span></p>
+            <p className='text-[#00a74c] text-xl font-bold'>{salePricePix.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}<span className='text-xs text-secondary'> No Pix</span></p>
             <p className='text-sm'>ou em {props.parcelas}x de {props.valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
           </div>
 
@@ -189,7 +189,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
 
   return (
   <a href={props.linkProd} className='flex flex-col re1:flex-row w-full h-[215px] re1:h-[245px] bg-[#171717] hover:shadow-[0_10px_25px_0] hover:shadow-[rgba(0,0,0,.85)]
-    hover:transition-shadow hover:duration-75 hover:ease-in text-white p-[10px] re1:p-0 justify-between'
+    hover:transition-shadow hover:duration-75 hover:ease-in text-secondary p-[10px] re1:p-0 justify-between'
   >
     {/* Mobile */}
     <div className='flex re1:hidden h-[40px] gap-1'>
@@ -199,7 +199,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
         <span >UN</span>
       </div>
       <div className='flex rounded-lg border border-[#00a74c] w-[27.5%] justify-around items-center'>
-        <Image src='https://shopinfo.vteximg.com.br/arquivos/icon-frete-white.png' width={23} height={15} className='max-h-[15px]'/>
+        <Image src='https://shopinfo.vteximg.com.br/arquivos/icon-frete-secondary.png' width={23} height={15} className='max-h-[15px]'/>
         <p className='text-left font-bold text-sm leading-4'>FRETE<br/>GRÁTIS</p>
       </div>
       <div className={`rounded-lg ${props.timeRemaining && 'bg-primary'} flex w-[42.5%] justify-around items-center p-1`}>
@@ -280,7 +280,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
 
         <div>
           <p className='line-through text-sm'>de: {props.precoDe.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
-          <p className='text-[#00a74c] text-xl font-bold'>{salePricePix.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}<span className='text-xs text-white'> No Pix</span></p>
+          <p className='text-[#00a74c] text-xl font-bold'>{salePricePix.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}<span className='text-xs text-secondary'> No Pix</span></p>
           <p className='text-sm'>ou em {props.parcelas}x de {props.valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
         </div>
 
@@ -347,7 +347,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
       <div className='flex h-[60px] w-full'>
         <div className='flex h-full'>
           <div className='bg-[#1e1e1e] p-[10px] flex items-center justify-around gap-2'>
-            <Image src='https://shopinfo.vteximg.com.br/arquivos/icon-frete-white.png' width={46} height={30}/>
+            <Image src='https://shopinfo.vteximg.com.br/arquivos/icon-frete-secondary.png' width={46} height={30}/>
             {props.frete ? (<p className='text-center font-bold re1:text-sm re5:text-base leading-5' dangerouslySetInnerHTML={{__html:props.frete}}/>) : (<p className='text-center font-bold re1:text-sm re5:text-base leading-5'>Frete Grátis</p>)}
           </div>
           <div className='flex items-center justify-around bg-primary p-[10px] gap-2'>

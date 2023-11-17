@@ -10,7 +10,7 @@ export interface Props {
 const ProductTrustvox=({ page, storeId }: Props)=>{
 
   return (
-    <div class='bg-[#111] text-white'>
+    <div class='bg-base-100 text-secondary'>
       {page ? <Trustvox storeId={storeId} page={page}/> : null}
     </div>
   )

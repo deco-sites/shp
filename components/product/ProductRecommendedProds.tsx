@@ -8,7 +8,7 @@ export interface Props {
 
 const ProductRecommendedProds=({ page }: Props)=>{
   return (
-    <div class='bg-[#111] text-white'>
+    <div class='bg-base-100 text-secondary'>
       {page ? <RecommendedProds page={page}/> : null}
     </div>
   )

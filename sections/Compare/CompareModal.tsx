@@ -23,7 +23,7 @@ const PCCard=({PC}:{PC:PcContextProps})=>{
       <a href={PC.linkProd} className='line-clamp-3 text-sm text-center'>{PC.name}</a>
       <span className='text-[#25d366] text-lg font-bold'>{PC.parcelas}x {PC.valorParcela.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}</span>
       <span className='text-xs text-[#b4b4b4]'>ou por {PC.precoVista.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</span>
-      <button className='bg-primary text-white font-bold py-[10px] px-[15px] rounded-lg w-[80%]'>Comprar</button>
+      <button className='bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'>Comprar</button>
       <a className='text-xs text-[#b4b4b4] underline cursor-pointer'>Adicionar aos favoritos</a>
     </div>
   )
@@ -33,7 +33,7 @@ const Especificacoes=({PCs}:Props)=>{
   const [isOpen, setIsOpen]=useState(true)
   
   return(
-    <div className='w-full text-white border border-[#1b1b1b] bg-[#141414] min-w-max re1:min-w-[unset]'>
+    <div className='w-full text-secondary border border-[#1b1b1b] bg-[#141414] min-w-max re1:min-w-[unset]'>
       <div className='flex w-full justify-start items-center gap-1'
         onClick={()=>setIsOpen(prevState=>!prevState)}
       >
@@ -77,7 +77,7 @@ const Especificacoes=({PCs}:Props)=>{
           <div className='w-[180px]'/>
           {PCs.map(__=>
             <div className='w-[180px] flex items-center justify-center mx-auto'>
-              <button className='text-base bg-primary text-white font-bold py-[10px] px-[15px] rounded-lg w-[80%]'>Comprar</button>
+              <button className='text-base bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'>Comprar</button>
             </div>)
           }
         </div>
@@ -110,7 +110,7 @@ const Games=({PCs}:Props)=>{
   },[fps])
 
   return(
-    <div className={`${hide ? 'hidden' : ''} w-full text-white border border-[#1b1b1b] bg-[#141414] min-w-max re1:min-w-[unset]`}>
+    <div className={`${hide ? 'hidden' : ''} w-full text-secondary border border-[#1b1b1b] bg-[#141414] min-w-max re1:min-w-[unset]`}>
       <div className='flex w-full justify-start items-center gap-1'
         onClick={()=>setIsOpen(prevState=>!prevState)}
       >
@@ -142,7 +142,7 @@ const Games=({PCs}:Props)=>{
           <div className='w-[180px]'/>
           {PCs.map(__=>
             <div className='w-[180px] flex items-center justify-center mx-auto'>
-              <button className='text-base bg-primary text-white font-bold py-[10px] px-[15px] rounded-lg w-[80%]'>Comprar</button>
+              <button className='text-base bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'>Comprar</button>
             </div>)
           }
         </div>
@@ -167,18 +167,18 @@ const CompareModal = ({PCs}:Props) => {
   return (
     <>
       <button
-        className='bg-primary text-white font-bold px-2 py-1 re1:p-[18px] my-auto rounded-lg w-full re1:w-auto'
+        className='bg-primary text-secondary font-bold px-2 py-1 re1:p-[18px] my-auto rounded-lg w-full re1:w-auto'
         onClick={()=>{PCs.length<2 ? alert('Você deve selecionar pelo menos 2 items para comparar!') : openModal()}}
       >Comparar</button>
 
       {isOpen && (
-        <div className='fixed inset-0 flex items-center justify-center z-40 text-white'>
+        <div className='fixed inset-0 flex items-center justify-center z-40 text-secondary'>
           <div className='absolute w-full h-full bg-black/50' onClick={closeModal}></div>
       
-          <div className='absolute flex flex-col gap-10 p-6 re1:p-12 h-[90vh] re1:h-[70vh] w-[90%] re1:w-4/5 bg-[#111] ml-auto re1:m-auto rounded-lg z-[41]'>
+          <div className='absolute flex flex-col gap-10 p-6 re1:p-12 h-[90vh] re1:h-[70vh] w-[90%] re1:w-4/5 bg-base-100 ml-auto re1:m-auto rounded-lg z-[41]'>
             <div className='flex justify-center items-center pb-3 relative re1:w-full'>
               <p className='text-xl re1:text-3xl font-bold text-center'>Comparação dos<br/>Produtos</p>
-              <button className='absolute -right-[5%] re1:right-0 -top-[5%] re1:top-0 cursor-poiter btn btn-sm btn-circle bg-[#3d3d3d] border-transparent' onClick={closeModal}>✕</button>
+              <button className='absolute -right-[5%] re1:right-0 -top-[5%] re1:top-0 cursor-poiter btn btn-sm btn-circle bg-neutral border-transparent' onClick={closeModal}>✕</button>
             </div>
             <div className='flex flex-col gap-10 relative re1:static overflow-y-auto overflow-x-auto w-full re1:scrollbar-shp'>
               <div className='grid grid-cols-5 gap-7 min-w-max re1:min-w-[unset]'><div className='w-[180px]'/>{PCs.map((PC)=><PCCard PC={PC}/>)}</div>

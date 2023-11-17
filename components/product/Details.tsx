@@ -259,8 +259,8 @@ function ProductInfo({ page, pix }: Props) {
         <div className='flex flex-col gap-3'>
           <div>
             <ul className='flex gap-[10px] overflow-x-scroll re1:overflow-x-auto whitespace-nowrap scrollbar-none'>
-              <li className='flex items-center justify-center bg-[#3d3d3d] border border-[#828282] hover:border-[#dd1f26] py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>12% no Pix</li>
-              {Flags.map(flag=><li className='flex items-center justify-center bg-[#3d3d3d] border border-[#828282] hover:border-[#dd1f26] py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>{flag}</li>)}
+              <li className='flex items-center justify-center bg-neutral border border-neutral-content hover:border-primary py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>12% no Pix</li>
+              {Flags.map(flag=><li className='flex items-center justify-center bg-neutral border border-neutral-content hover:border-primary py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>{flag}</li>)}
             </ul>
           </div>
           <div className='flex gap-2'>
@@ -276,7 +276,7 @@ function ProductInfo({ page, pix }: Props) {
                 </>
               }
             </div>
-            <p className='text-green-500 text-lg'>{brand?.name}</p>
+            <p className='text-success text-lg'>{brand?.name}</p>
           </div>
         </div>
         {/* Code and name */}
@@ -285,7 +285,7 @@ function ProductInfo({ page, pix }: Props) {
             <span class='font-medium text-xl'>{name}</span>
           </h1>
           <div>
-            <span class='text-base-300'>CÓD. {isVariantOf?.model}</span>
+            <span class='text-base-content'>CÓD. {isVariantOf?.model}</span>
           </div>
         </div>
         {isAvailable ? (
@@ -294,11 +294,11 @@ function ProductInfo({ page, pix }: Props) {
             <div class='mt-4 re1:mt-6'>
               <div className='flex gap-3 justify-between'>
                 <div class='flex flex-col items-start'>
-                  <span class='line-through text-base-300 text-xs'>
+                  <span class='line-through text-xs text-base-content'>
                     De: {formatPrice(listPrice, offers!.priceCurrency!)}
                   </span>
                   <p class='font-medium text-xl re1:text-sm re4:text-lg flex gap-1'>
-                    <span className='text-[#dd1f26] text-3xl re1:text-2xl re4:text-3xl font-bold'>
+                    <span className='text-primary text-3xl re1:text-2xl re4:text-3xl font-bold'>
                       {formatPrice(((pix !== 1 && price !== undefined && pix) ? (price-(price*(pix/100))) : price ), offers!.priceCurrency!)}
                     </span>
                     <span>no PIX</span>
@@ -325,7 +325,7 @@ function ProductInfo({ page, pix }: Props) {
                       width={25} height={25} decoding='auto' loading='eager' fetchPriority='high'
                     />
                   </div>
-                  <p className='font-bold text-sm'>No PIX - <span className='text-green-500'>Economia de {formatPrice(pix && (price!*(pix/100)),offers!.priceCurrency!)}</span>
+                  <p className='font-bold text-sm'>No PIX - <span className='text-success'>Economia de {formatPrice(pix && (price!*(pix/100)),offers!.priceCurrency!)}</span>
                   </p>
                 </div>
                 <div className='flex gap-2 text-sm items-center'>
@@ -391,22 +391,22 @@ function ProductInfo({ page, pix }: Props) {
             /> */}
           </>
         ):(<div className='w-full h-auto'>
-            <span className='block w-full bg-[#dd1f26] text-center font-bold my-5'>Produto Temporariamente Indisponível</span>
+            <span className='block w-full bg-primary text-center font-bold my-5'>Produto Temporariamente Indisponível</span>
             <form className='flex flex-col gap-5 items-center re1:items-start justify-center'>
               <label className='text-lg font-bold'>Avise-me se este produto chegar</label>
               {cadastrado ? <p className='text-center'>Cadastrado com sucesso, assim que o produto for disponibilizado você receberá um email avisando.</p> : 
               <>
-                <input type='text' ref={inputNome} placeholder='Digite seu nome' name='notifymeClientName' id='notifymeClientName' className='rounded-lg border-2 border-[#3d3d3d]
-                  placeholder:text-[#3d3d3d] bg-[#111] focus:border-[#dd1f26] outline-none w-full text-base px-3 py-2 re1:w-[20vw]'
+                <input type='text' ref={inputNome} placeholder='Digite seu nome' name='notifymeClientName' id='notifymeClientName' className='rounded-lg border-2 border-neutral
+                  placeholder:text-neutral bg-base-100 focus:border-primary outline-none w-full text-base px-3 py-2 re1:w-[20vw]'
                 />
                 <div className='flex gap-4 w-full'>
-                  <input type='text' ref={inputEmail} placeholder='Digite seu e-mail' name='notifymeClientEmail' id='notifymeClientEmail' className='rounded-lg border-2 border-[#3d3d3d]
-                    placeholder:text-[#3d3d3d] bg-[#111] focus:border-[#dd1f26] outline-none w-full text-base px-3 py-2 re1:w-[20vw]'
+                  <input type='text' ref={inputEmail} placeholder='Digite seu e-mail' name='notifymeClientEmail' id='notifymeClientEmail' className='rounded-lg border-2 border-neutral
+                    placeholder:text-neutral bg-base-100 focus:border-primary outline-none w-full text-base px-3 py-2 re1:w-[20vw]'
                   />
-                  <button className='bg-[#dd1f26] px-5 rounded-lg text-lg hidden re1:block h-auto' onClick={handleCadastro}>Enviar</button>
+                  <button className='bg-primary px-5 rounded-lg text-lg hidden re1:block h-auto' onClick={handleCadastro}>Enviar</button>
                 </div>
                 <input type='hidden' ref={inputSku} name='notifymeIdSku' id='notifymeIdSku' value={productID}/>
-                <button className='bg-[#dd1f26] w-full rounded-lg text-lg h-10 re1:hidden' onClick={handleCadastro}>Enviar</button>
+                <button className='bg-primary w-full rounded-lg text-lg h-10 re1:hidden' onClick={handleCadastro}>Enviar</button>
               </>}
             </form>
         </div>)}
@@ -633,15 +633,15 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
    */
   return (
     <>
-      <dialog ref={modal} className='bg-[#111] min-h-full min-w-[100vw] overflow-hidden'>
+      <dialog ref={modal} className='bg-base-100 min-h-full min-w-[100vw] overflow-hidden'>
         <form method="dialog" className='flex flex-col h-[95vh] justify-end'>
-          <button className="btn btn-sm btn-circle absolute right-2 top-2 z-40 bg-[#3d3d3d] text-white border-transparent"
+          <button className="btn btn-sm btn-circle absolute right-2 top-2 z-40 bg-neutral text-secondary border-transparent"
             onClick={()=>modal.current && (
               modal.current.close()
             )}
           >✕</button>
 
-          <div className='btn btn-sm btn-circle absolute top-2 left-2 z-40 bg-[#3d3d3d] text-white border-transparent'
+          <div className='btn btn-sm btn-circle absolute top-2 left-2 z-40 bg-neutral text-secondary border-transparent'
             onTouchEnd={()=>setHideModalTemp(false)}
           >
             ?
@@ -664,17 +664,17 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
                 }}
               />
             }
-            <div className={`bg-[#272727] text-white rounded-lg w-[85%] absolute top-[50%] left-[7.5%] p-4 ${hideModalTemp ? 'hidden' : 'block'}`}>
+            <div className={`bg-[#272727] text-secondary rounded-lg w-[85%] absolute top-[50%] left-[7.5%] p-4 ${hideModalTemp ? 'hidden' : 'block'}`}>
               <p>Dê dois toques na imagem para dar Zoom</p>
               <p>E também para sair do Zoom</p>
             </div>
           </div>
 
-          <ul ref={dotsModal} class='flex gap-2 justify-center absolute bottom-0 left-0 p-4 w-screen  z-40 bg-[#111]'>
+          <ul ref={dotsModal} class='flex gap-2 justify-center absolute bottom-0 left-0 p-4 w-screen  z-40 bg-base-100'>
             {images.map((img, index) => (
               <li class='min-w-[60px]'>
                 <div data-dot={index}>
-                  <div className='data-[disabled="true"]:border-b-[#dd1f26] w-[70px] border-b-[#3d3d3d] border-b'>
+                  <div className='data-[disabled="true"]:border-b-primary w-[70px] border-b-neutral border-b'>
                     <Image
                       style={{ aspectRatio: aspectRatio }}
                       width={70}
@@ -709,7 +709,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
         <div class='relative re1:col-start-2 re1:col-span-1 re1:row-start-1'>
           <div className='flex re1:h-14 justify-between items-center px-[10%]'>
             <div className='flex gap-1'>
-              <div className='flex items-center justify-center bg-green-500 text-white text-lg p-1 font-bold h-[30px] rounded-lg'>
+              <div className='flex items-center justify-center bg-success text-secondary text-lg p-1 font-bold h-[30px] rounded-lg'>
                 <p className='before:content-["-"]'>
                   {(price && listPrice) && tagDiscount(price, listPrice, pix)}%
                 </p>
@@ -790,14 +790,14 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
             class='absolute left-2 re1:top-[40%] top-1/2 bg-transparent border-none disabled:grayscale active:hue-rotate-[350deg]'
             disabled
           >
-            <Icon size={20} id='ChevronLeft' strokeWidth={3} class='text-[#dd1f26]'/>
+            <Icon size={20} id='ChevronLeft' strokeWidth={3} class='text-primary'/>
           </Slider.PrevButton>
 
           <Slider.NextButton
             class='absolute right-2 re1:top-[40%] top-1/2 bg-transparent border-none disabled:grayscale active:hue-rotate-[350deg]'
             disabled={images.length < 2}
           >
-            <Icon size={20} id='ChevronRight' strokeWidth={3} class='text-[#dd1f26]'/>
+            <Icon size={20} id='ChevronRight' strokeWidth={3} class='text-primary'/>
           </Slider.NextButton>
 
           {/* <div class="absolute top-2 right-2 bg-base-100 rounded-full">
@@ -814,7 +814,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
           {images.map((img, index) => (
             <li class='min-w-[60px] re1:min-w-[70px]' ref={liVideo}>
               <Slider.Dot index={index}>
-                <div className='group-disabled:border-b-[#dd1f26] w-[60px] re1:w-[70px] border border-b-[#3d3d3d] re1:border-b-transparent border-transparent group-disabled:shadow-[0_2px_2px_0] group-disabled:shadow-[#dd1f26]/30'>
+                <div className='group-disabled:border-b-primary w-[60px] re1:w-[70px] border border-b-neutral re1:border-b-transparent border-transparent group-disabled:shadow-[0_2px_2px_0] group-disabled:shadow-primary/30'>
                   <Image
                     style={{ aspectRatio: aspectRatio }}
                     width={70}
@@ -830,10 +830,10 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
           {(urlReview && urlReview.split('v=').length>1) && (
             <li class='min-w-[70px]'>
               <Slider.Dot index={images.length}>
-                <div className='flex re1:flex-col gap-1 items-center py-1 px-2 re1:p-0 bg-[#3d3d3d] re1:bg-transparent justify-center rounded-lg  
-                  re1:static group-disabled:border-[#dd1f26] re1:group-disabled:border-b-[#dd1f26] re1:group-disabled:border-l-transparent 
+                <div className='flex re1:flex-col gap-1 items-center py-1 px-2 re1:p-0 bg-neutral re1:bg-transparent justify-center rounded-lg  
+                  re1:static group-disabled:border-primary re1:group-disabled:border-b-primary re1:group-disabled:border-l-transparent 
                   re1:group-disabled:border-r-transparent re1:group-disabled:border-t-transparent w-[70px] border re1:border-b-transparent border-transparent 
-                  group-disabled:shadow-[0_2px_2px_0] group-disabled:shadow-[#dd1f26]/30 mt-1 re1:mt-0'
+                  group-disabled:shadow-[0_2px_2px_0] group-disabled:shadow-primary/30 mt-1 re1:mt-0'
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width={isMobile ? 15 : 30} height={isMobile ? 15 : 30} viewBox="0 0 50 50" fill="none">
                     <path d="M35 25L20 33.6603V16.3397L35 25Z" fill="#C2C2C2"></path>

@@ -42,10 +42,10 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
   return (
     <>
       <SignNewsletter />
-      <footer className='bg-[#111] px-[10%] re1:px-[5%] re4:px-[10%] overflow-x-hidden'>
-        <div className='hidden re1:flex divider w-screen h-0 before:bg-[#dd1f26] after:bg-[#dd1f26] -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%]'/>
+      <footer className='bg-base-100 px-[10%] re1:px-[5%] re4:px-[10%] overflow-x-hidden'>
+        <div className='hidden re1:flex divider w-screen h-0 before:bg-primary after:bg-primary -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%]'/>
         <div className='flex flex-col re1:flex-row re1:gap-4 re1:pt-4'>
-          <div className='text-white re1:text-sm my-5 re1:my-0'>
+          <div className='text-secondary re1:text-sm my-5 re1:my-0'>
             <h1 className='text-xl font-bold'>Atendimento</h1>
             <p>Segunda a sexta das 9h às 17h30</p>
             <p>Sábado das 8h às 13h</p>
@@ -63,14 +63,14 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
             ))}
           </div>
         </div>
-        <div className='hidden re1:flex divider w-screen -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%] before:bg-[#3d3d3d] after:bg-[#3d3d3d]'/>
+        <div className='hidden re1:flex divider w-screen -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%] before:bg-neutral after:bg-neutral'/>
         <div className='flex flex-col mt-5 re1:flex-row py-3 re1:py-0'>
           <div className='flex flex-col gap-4 re1:gap-1 re1:flex-row re1:w-1/2 re1:pr-7 re1:justify-between'>
             <ListSomething title='Institucional' list={Institucional}/>
             <ListSomething title='Ajuda e Suporte' list={AjudaESuporte}/>
             <ListSomething title='Página do Cliente' list={PaginaDoCliente}/>
           </div>
-          <div className='flex flex-col re1:flex-row mt-5 re1:mt-0 items-center gap-5 re1:w-1/2 re1:border-l-2 re1:border-l-[#3d3d3d] re1:items-center re1:justify-center'>
+          <div className='flex flex-col re1:flex-row mt-5 re1:mt-0 items-center gap-5 re1:w-1/2 re1:border-l-2 re1:border-l-neutral re1:items-center re1:justify-center'>
             <div>
               <Image className='mx-auto' src='https://shopinfo.vteximg.com.br/arquivos/logoshopinfo-branco-188px.png' 
                 width={150} height={44} fetchPriority='low' decoding='sync' loading='lazy'
@@ -80,7 +80,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
               />
             </div>
             <div>
-              <p className='hidden re1:block text-center text-lg text-white font-bold'>Compre com segurança</p>
+              <p className='hidden re1:block text-center text-lg text-secondary font-bold'>Compre com segurança</p>
               <div className='flex flex-col items-center gap-5'>
                 <div className='flex gap-8 items-center'>
                   <a href='https://certificados.trustvox.com.br/shopinfo'>
@@ -115,25 +115,25 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
             </div>
           </div>
         </div>
-        <div className='hidden re1:flex divider w-screen -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%] before:bg-[#3d3d3d] after:bg-[#3d3d3d]'/>
+        <div className='hidden re1:flex divider w-screen -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%] before:bg-neutral after:bg-neutral'/>
         <div className='flex flex-col re1:flex-row-reverse mt-10 items-center justify-center gap-5 re1:justify-between re4:px-16'>
           <a href='https://www.google.com/maps/place/Shopinfo/@-22.9015759,-47.0589666,15z/data=!4m6!3m5!1s0x94c8c8b2da3b18f5:0x9619346fc41db902!8m2!3d-22.9015759!4d-47.0589666!16s%2Fg%2F1ptxvm9d0?entry=ttu' 
-            className='bg-[#dd1f26] rounded-lg px-5 py-2 flex flex-col re1:flex-row gap-2 items-center justify-center'>
+            className='bg-primary rounded-lg px-5 py-2 flex flex-col re1:flex-row gap-2 items-center justify-center'>
             <div className='flex gap-2 items-center'>
-              <div className='bg-white h-12 w-12 rounded-full'>
+              <div className='bg-secondary h-12 w-12 rounded-full'>
                 <Image className='mx-auto mt-2' src='https://shopinfo.vteximg.com.br/arquivos/icone-home-lojafisica.png'  
                   width={30} height={35} fetchPriority='low' decoding='sync' loading='lazy'
                 />
               </div>
-              <p className='font-bold text-white text-xl'>LOJA FÍSICA</p>
+              <p className='font-bold text-secondary text-xl'>LOJA FÍSICA</p>
             </div>
-            <div className='text-xs re1:text-sm text-white'>
+            <div className='text-xs re1:text-sm text-secondary'>
               <p>Rua Luzitana, 1407 - Centro - Campinas/SP</p>
               <p>Seg a Sex das 9h às 17h30 - Sáb das 8h às 13h</p>
             </div>
           </a>
           <div className='flex flex-col re1:flex-row items-center justify-center py-3 re1:py-0 gap-3 re1:gap-5 bg-black w-screen re1:w-auto re1:bg-transparent'>
-            <h1 className='font-bold text-3xl text-white'>Siga a <span className='text-[#dd1f26]'>Shopinfo</span></h1>
+            <h1 className='font-bold text-3xl text-secondary'>Siga a <span className='text-primary'>Shopinfo</span></h1>
             <div className='flex gap-5 re1:gap-10'>
               <a href='https://www.youtube.com/shopinfooficial'>
                   <Image
@@ -175,7 +175,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
             </div>
           </div>
           <div className='flex flex-col re1:flex-row items-center gap-5 justify-center re1:bg-[#1e1e1e] my-5 re1:w-screen re1:-ml-[12.5%]'>
-            <h1 className='text-white text-2xl re1:text-lg re4:text-2xl font-bold'>Formas de pagamento</h1>
+            <h1 className='text-secondary text-2xl re1:text-lg re4:text-2xl font-bold'>Formas de pagamento</h1>
             <ul className='grid grid-cols-3 re1:flex re1:justify-evenly re1:items-center gap-10 re1:gap-5 re1:py-5'>
               {FormasPagamento.map(element=>(
                 <li>

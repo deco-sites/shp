@@ -16,10 +16,10 @@ export interface PCProps {
 const PC = ({ ...props }: PCProps) => {
   if (props) {
     return (
-      <a href={props.productUrl} className='flex flex-col min-w-[160px] max-w-[160px] min-h-[350px] max-h-[350px] bg-white rounded-lg p-2 re1:min-h-[326px] re1:max-h-[326px] re1:min-w-[200px] re1:max-w-[200px]'>
+      <a href={props.productUrl} className='flex flex-col min-w-[160px] max-w-[160px] min-h-[350px] max-h-[350px] bg-secondary rounded-lg p-2 re1:min-h-[326px] re1:max-h-[326px] re1:min-w-[200px] re1:max-w-[200px]'>
         <div className='flex flex-col items-center -mb-5'>
           <label className='w-11/12 flex justify-between bottom-0 z-[5]'>
-            <div className='flex items-center justify-center bg-green-500 text-white text-[12px] font-bold rounded-lg p-1'>
+            <div className='flex items-center justify-center bg-success text-secondary text-[12px] font-bold rounded-lg p-1'>
               {props.discountFlag}%
             </div>
             <div className='flex justify-center items-center gap-1'>
@@ -93,7 +93,7 @@ const PC = ({ ...props }: PCProps) => {
         </div>
 
         <div className='flex flex-col'>
-          <span className='text-lg text-[#dd1f26] font-bold'>
+          <span className='text-lg text-primary font-bold'>
             10x {props.preco10.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
           </span>
           <p className='text-xs'>ou por {parseFloat(props.precoPIX.toString()).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
