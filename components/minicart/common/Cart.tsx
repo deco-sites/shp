@@ -101,7 +101,7 @@ function Cart({
                     {formatPrice(subtotal, currency, locale)}
                   </span>
                 </div>
-                <Coupon onAddCoupon={onAddCoupon} coupon={coupon} />
+                {/* <Coupon onAddCoupon={onAddCoupon} coupon={coupon} /> */}
               </div>
 
               {/* Total */}
