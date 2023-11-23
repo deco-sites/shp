@@ -384,10 +384,10 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
         />
       </div>
       <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
-        <div className='my-5 re1:my-[60px] px-4 re1:px-0'>
-          <p>{path.map((path,index,self)=>{
+        <div className='my-5 re1:my-[60px] px-4 re1:px-0 breadcrumbs'>
+          <ul>{path.map((path,index,self)=>{
             if(index===0){
-              return <><a className='underline' href='/'>Home</a> &gt;</>
+              return <li><a className='underline' href='/'>Home</a></li>
             }else if(index!== self.length-1){
               const pathName=path.split('/')[1]
               let nameCategPai=''
@@ -416,11 +416,11 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
                   break;
               }
 
-              return <><a className='underline' href={'/'+pathName}>{nameCategPai}</a> &gt;</>
+              return <li><a className='underline' href={'/'+pathName}>{nameCategPai}</a></li>
             }else{
-              return <a className='font-bold' href={path}>{titleCategoria}</a>
+              return <li><a className='font-bold' href={path}>{titleCategoria}</a></li>
             }
-          })}</p>
+          })}</ul>
         </div>
         <div className='bg-transparent px-4 re1:px-0'>
           <h4 className='text-3xl font-bold'>{titleCategoria}</h4>

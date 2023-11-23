@@ -1,6 +1,7 @@
-Precisa arrumar encontreSelectGames
+Precisa arrumar:
 
 Bugs pra arrumar: 
 
 Possiveis melhoras: 
--Breadcrumb nas pag de categ
+- Adicionar div flut pra comprar no PDP
+- Botão de Ajuda

@@ -19,10 +19,11 @@ export const loader: (
   const q = REQ.url.split('?q=')[1].split(',')
   const fqs = q.map((fq: string) => `fq=${fqType.fqType}:${fq}`)
 
-  const data = await ctx.invoke(
+  const data = (await ctx.invoke(
     'deco-sites/shp/loaders/getProductsSearchAPIProdType.ts',
-    { queryString:fqs.join(',')+'&_from=0&_to=49' }
-  ) || []
+    { queryString:fqs.join('&')+'&_from=0&_to=49' }
+  ) || [])
+  // .filter((item:Product)=>item.category?.includes('Computadores gamer'))
 
   return { data }
 }
