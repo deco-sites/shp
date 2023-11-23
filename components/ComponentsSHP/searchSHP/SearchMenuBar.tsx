@@ -206,7 +206,7 @@ const SearchMenuBar=()=>{
 
       <div
           ref={divInputSearchMobile}
-          className={`${openSearch ? 'flex' : 'hidden'} w-full h-16 p-4 items-center justify-between absolute top-0 bg-base-100 z-[1] re1:hidden`}
+          className={`${openSearch ? 'flex' : 'hidden'} w-full h-16 p-4 items-center justify-between absolute top-0 bg-base-100 z-[2] re1:hidden`}
         >
           <input
             ref={inputMob}
