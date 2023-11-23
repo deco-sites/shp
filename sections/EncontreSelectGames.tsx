@@ -3,7 +3,7 @@ import Game, {gameProps} from 'deco-sites/shp/components/ComponentsSHP/SelectGam
 import GameContextProvider, {useGameContext, GameContextType}  from 'deco-sites/shp/contexts/Games/GameContext.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
-import { useId, useState, useEffect, useCallback } from 'preact/hooks'
+import { useId, useState, useEffect, useCallback, useRef } from 'preact/hooks'
 import { signal } from '@preact/signals'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import DataJson from 'deco-sites/shp/static/fpsData_test.json' assert { type: "json" } 
@@ -23,7 +23,7 @@ const minPrice=signal<string>('2000')
 const block144=signal(false)
 const block60=signal(false)
 const RangeVal=signal('')
-const loadingPromises=signal(true)
+const loadingPromises=signal(false)
 
 const BTNFinal= () => {
   const { games }: GameContextType = useGameContext()
@@ -32,24 +32,17 @@ const BTNFinal= () => {
   const [systems60,setSys60]=useState<typeof DataJson.fps>([])
   const [systems144,setSys144]=useState<typeof DataJson.fps>([])
 
+  const [disableButton, setDisableButton]=useState(false)
+
+  const BTN=useRef<HTMLButtonElement>(null)
+
   const fetchPrice=useCallback(async ()=>{
     const data= await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString: 'fq=C:/10/&O=OrderByPriceASC&_from=0&_to=1'}) || []
-
-    // key:'deco-sites/std/loaders/vtex/legacy/productList.ts',
-    //   props:{
-    //     fq:['C:/10/'],
-    //     sort:'OrderByPriceASC',
-    //     count:1
-    //   }
 
     return data[0].offers ? data[0].offers.highPrice.toString().split('.')[0] : '2000'
   },[])
 
-  const fetchData=useCallback(async (queryString:string)=>{
-    const data = await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString:encodeURI(queryString)}) || []
-
-    return data
-  },[])
+  const fetchData=useCallback(async (queryString:string)=>await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString:encodeURI(queryString)}) || [],[])
 
   const callPromises=async(system:typeof DataJson.fps)=>{
     const term:string[]=[]
@@ -57,12 +50,7 @@ const BTNFinal= () => {
     const arrayRespPromisses=term.map(req=>fetchData(req))
     const arrayResp=await Promise.all(arrayRespPromisses)
     const sku:string[]=[]
-    arrayResp.forEach(items=>items.forEach((item:Product)=>{
-      if(item.category?.includes('Computadores gamer')){
-        console.log(item.category)
-        sku.push(item.sku)
-      }
-    }))
+    arrayResp.forEach(items=>items.forEach((item:Product)=>sku.push(item.sku)))
     //verifica se há duplicatas, caso o pc esteja presente em mais de um request
     const verifiedSku=[...new Set(sku)]
     return verifiedSku
@@ -89,12 +77,9 @@ const BTNFinal= () => {
           if(Object.keys(systems144).length===0){
             (async()=>{
               block144.value=true
-              console.log('callingPromises')
               loadingPromises.value=true
-              // console.log(systems60)
               const Ids=await callPromises(systems60)
               loadingPromises.value=false
-              // console.log('endingPromises')
               if(Ids.length<1){
                 block60.value=true
               }else{
@@ -105,13 +90,9 @@ const BTNFinal= () => {
             
           }else{
             (async()=>{
-              console.log('callingPromises')
               loadingPromises.value=true
-              // console.log(systems60)
-              // console.log(systems144)
               const Ids60=await callPromises(systems60)
               const Ids144= await callPromises(systems144)
-              // console.log('endingPromises')
               loadingPromises.value=false
               Ids60.length<1 ? block60.value=true : block60.value=false
               Ids144.length<1 ? block144.value=true : block144.value=false
@@ -122,10 +103,10 @@ const BTNFinal= () => {
         }
         break;
       case 3:
-        if(checkboxChecked.value === '' && !block144.value && !block60.value){alert('Você precisa selecionar uma das opções!')
+        if(checkboxChecked.value === '' && !block144.value && !block60.value){
+          alert('Você precisa selecionar uma das opções!')
         }else{
           (async()=>{
-
             const Skus=await callPromises((checkboxChecked.value!=='' && checkboxChecked.value==='60+') ? systems60 : systems144)
             console.log({
               prices:[minPrice.value, RangeVal.value],
@@ -155,6 +136,18 @@ const BTNFinal= () => {
     setJogos(checkedGames)
   },[games])
 
+  useEffect(()=>{
+    loadingPromises.value ? setDisableButton(true) :setDisableButton(false)
+  },[loadingPromises.value])
+
+  useEffect(()=>{
+    disableButton ? BTN.current?.setAttribute('disabled', 'true') : BTN.current?.removeAttribute('disabled')
+  },[disableButton])
+
+  useEffect(()=>{
+    if(!block60.value && !block144.value && count.value===3) setDisableButton(true)
+  },[block60.value, block144.value])
+
   return (
     <div className='flex gap-2'>
       {count.value>=2 && (
@@ -170,7 +163,8 @@ const BTNFinal= () => {
         </button>
       )}
       <button
-        className='bg-primary rounded-lg px-5 py-2 text-secondary font-bold flex gap-2 items-center justify-center'
+        ref={BTN}
+        className={`${disableButton ? 'btn btn-disabled' : ''} bg-primary rounded-lg px-5 py-2 text-secondary font-bold flex gap-2 items-center justify-center`}
         onClick={handleButtonClick}
         >
         {count.value<3 ? (
@@ -397,7 +391,7 @@ const selectGames=({Games=[]}:Props)=>{
                   <p className='w-80 text-center text-lg'>FPS(frames per second) Quanto mais FPS, mais rápida será a imagem</p>
                 </div>
               ) : (
-                <p className='text-center text-lg text-secondary'>Buscando produtos com essa configuração para os jogos e a faixa de preço selecionados!<span className="loading loading-dots loading-sm"/></p>
+                <p className='text-center text-lg text-secondary'>Buscando produtos com essa configuração para os jogos e a faixa de preço selecionados!<span className="loading loading-dots loading-sm relative top-[5px] left-[5px]"/></p>
               )}
             </div>
           )}  
