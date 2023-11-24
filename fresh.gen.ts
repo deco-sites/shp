@@ -21,22 +21,23 @@ import * as $$13 from "./islands/InstitucionalIsland.tsx";
 import * as $$14 from "./islands/OfertasFogoIsland.tsx";
 import * as $$15 from "./islands/PCNivelGamer.tsx";
 import * as $$16 from "./islands/PagDepartamentoIsland.tsx";
-import * as $$17 from "./islands/ProductImageZoom.tsx";
-import * as $$18 from "./islands/RecommendedProds.tsx";
-import * as $$19 from "./islands/SearchControls.tsx";
-import * as $$20 from "./islands/SearchIsland.tsx";
-import * as $$21 from "./islands/SearchMenuBarIsland.tsx";
-import * as $$22 from "./islands/SearchSubIsland.tsx";
-import * as $$23 from "./islands/SelectGamesIsland.tsx";
-import * as $$24 from "./islands/ShelfIsland.tsx";
-import * as $$25 from "./islands/ShippingSimulation.tsx";
-import * as $$26 from "./islands/SliderJS.tsx";
-import * as $$27 from "./islands/SpecificationIsland.tsx";
-import * as $$28 from "./islands/TesteIsland.tsx";
-import * as $$29 from "./islands/TesteMaylonIsland.tsx";
-import * as $$30 from "./islands/TrustvoxIsland.tsx";
-import * as $$31 from "./islands/VitrineIsland.tsx";
-import * as $$32 from "./islands/WishlistButton.tsx";
+import * as $$17 from "./islands/Pop-ups/HelperButtonsIsland.tsx";
+import * as $$18 from "./islands/ProductImageZoom.tsx";
+import * as $$19 from "./islands/RecommendedProds.tsx";
+import * as $$20 from "./islands/SearchControls.tsx";
+import * as $$21 from "./islands/SearchIsland.tsx";
+import * as $$22 from "./islands/SearchMenuBarIsland.tsx";
+import * as $$23 from "./islands/SearchSubIsland.tsx";
+import * as $$24 from "./islands/SelectGamesIsland.tsx";
+import * as $$25 from "./islands/ShelfIsland.tsx";
+import * as $$26 from "./islands/ShippingSimulation.tsx";
+import * as $$27 from "./islands/SliderJS.tsx";
+import * as $$28 from "./islands/SpecificationIsland.tsx";
+import * as $$29 from "./islands/TesteIsland.tsx";
+import * as $$30 from "./islands/TesteMaylonIsland.tsx";
+import * as $$31 from "./islands/TrustvoxIsland.tsx";
+import * as $$32 from "./islands/VitrineIsland.tsx";
+import * as $$33 from "./islands/WishlistButton.tsx";
 
 const manifest = {
   routes: {
@@ -61,22 +62,23 @@ const manifest = {
     "./islands/OfertasFogoIsland.tsx": $$14,
     "./islands/PCNivelGamer.tsx": $$15,
     "./islands/PagDepartamentoIsland.tsx": $$16,
-    "./islands/ProductImageZoom.tsx": $$17,
-    "./islands/RecommendedProds.tsx": $$18,
-    "./islands/SearchControls.tsx": $$19,
-    "./islands/SearchIsland.tsx": $$20,
-    "./islands/SearchMenuBarIsland.tsx": $$21,
-    "./islands/SearchSubIsland.tsx": $$22,
-    "./islands/SelectGamesIsland.tsx": $$23,
-    "./islands/ShelfIsland.tsx": $$24,
-    "./islands/ShippingSimulation.tsx": $$25,
-    "./islands/SliderJS.tsx": $$26,
-    "./islands/SpecificationIsland.tsx": $$27,
-    "./islands/TesteIsland.tsx": $$28,
-    "./islands/TesteMaylonIsland.tsx": $$29,
-    "./islands/TrustvoxIsland.tsx": $$30,
-    "./islands/VitrineIsland.tsx": $$31,
-    "./islands/WishlistButton.tsx": $$32,
+    "./islands/Pop-ups/HelperButtonsIsland.tsx": $$17,
+    "./islands/ProductImageZoom.tsx": $$18,
+    "./islands/RecommendedProds.tsx": $$19,
+    "./islands/SearchControls.tsx": $$20,
+    "./islands/SearchIsland.tsx": $$21,
+    "./islands/SearchMenuBarIsland.tsx": $$22,
+    "./islands/SearchSubIsland.tsx": $$23,
+    "./islands/SelectGamesIsland.tsx": $$24,
+    "./islands/ShelfIsland.tsx": $$25,
+    "./islands/ShippingSimulation.tsx": $$26,
+    "./islands/SliderJS.tsx": $$27,
+    "./islands/SpecificationIsland.tsx": $$28,
+    "./islands/TesteIsland.tsx": $$29,
+    "./islands/TesteMaylonIsland.tsx": $$30,
+    "./islands/TrustvoxIsland.tsx": $$31,
+    "./islands/VitrineIsland.tsx": $$32,
+    "./islands/WishlistButton.tsx": $$33,
   },
   baseUrl: import.meta.url,
 };

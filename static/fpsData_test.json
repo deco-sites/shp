@@ -697,7 +697,7 @@
           }
       },
       {
-          "placa": "GeForce RTX 3060ti",
+          "placa": "GeForce RTX 3060TI",
           "processador": "i3-10100F",
           "games": {
               "cyberpunk": 205,
@@ -2060,7 +2060,7 @@
           }
       },
       {
-          "placa": "radeon vega 3 Integrado",
+          "placa": "Radeon Vega 3 Integrado",
           "processador": "AMD 3000G",
           "games": {
               "cyberpunk": 40,
@@ -2119,7 +2119,7 @@
       },
       {
           "placa": "GeForce GT 1030",
-          "processador": "i7-9700k",
+          "processador": "i7-9700K",
           "games": {
               "cyberpunk": 20,
               "wow": 90,
@@ -2148,7 +2148,7 @@
       },
       {
           "placa": "RX 550",
-          "processador": "i7-9700k",
+          "processador": "i7-9700K",
           "games": {
               "cyberpunk": 20,
               "wow": 90,
@@ -2177,7 +2177,7 @@
       },
       {
           "placa": "GeForce GTX 1050 TI",
-          "processador": "i7-9700k",
+          "processador": "i7-9700K",
           "games": {
               "cyberpunk": 35,
               "wow": 115,
@@ -2206,7 +2206,7 @@
       },
       {
           "placa": "GeForce GTX 1650",
-          "processador": "i7-9700k",
+          "processador": "i7-9700K",
           "games": {
               "cyberpunk": 35,
               "wow": 125,
@@ -2235,7 +2235,7 @@
       },
       {
           "placa": "GeForce GTX 1660",
-          "processador": "i7-9700k",
+          "processador": "i7-9700K",
           "games": {
               "cyberpunk": 50,
               "wow": 145,
@@ -2264,7 +2264,7 @@
       },
       {
           "placa": "GeForce GTX 1660 Super",
-          "processador": "i7-9700k",
+          "processador": "i7-9700K",
           "games": {
               "cyberpunk": 0,
               "wow": 145,
@@ -2293,7 +2293,7 @@
       },
       {
           "placa": "GeForce RTX 2060",
-          "processador": "i7-9700k",
+          "processador": "i7-9700K",
           "games": {
               "cyberpunk": 110,
               "wow": 145,
@@ -2322,7 +2322,7 @@
       },
       {
           "placa": "GeForce RTX 2060 Super",
-          "processador": "i7-9700k",
+          "processador": "i7-9700K",
           "games": {
               "cyberpunk": 115,
               "wow": 145,
@@ -4380,7 +4380,7 @@
           }
       },
       {
-          "placa": "radeon vega 7 Integrado",
+          "placa": "Radeon Vega 7 Integrado",
           "processador": "Ryzen 5 5600G",
           "games": {
               "cyberpunk": 0,
@@ -4554,7 +4554,7 @@
           }
       },
       {
-          "placa": "GeForce RTX 3060ti",
+          "placa": "GeForce RTX 3060TI",
           "processador": "Ryzen 5 5600G",
           "games": {
               "cyberpunk": 230,
@@ -4728,7 +4728,7 @@
           }
       },
       {
-          "placa": "radeon vega 8 Integrado",
+          "placa": "Radeon Vega 8 Integrado",
           "processador": "Ryzen 7 5700G",
           "games": {
               "cyberpunk": 0,
@@ -4786,7 +4786,7 @@
           }
       },
       {
-          "placa": "GeForce RTX 3060ti",
+          "placa": "GeForce RTX 3060TI",
           "processador": "Ryzen 7 5700G",
           "games": {
               "cyberpunk": 265,
@@ -4844,8 +4844,8 @@
           }
       },
       {
-          "placa": "placa integrada",
-          "processador": "g5900",
+          "placa": "Placa Integrada",
+          "processador": "G5900",
           "games": {
               "cyberpunk": 0,
               "wow": 0,
@@ -4874,7 +4874,7 @@
       },
       {
           "placa": "GeForce GT 1030 2GB",
-          "processador": "g5900",
+          "processador": "G5900",
           "games": {
               "cyberpunk": 0,
               "wow": 0,
@@ -4903,7 +4903,7 @@
       },
       {
           "placa": "GeForce GTX 1050 TI",
-          "processador": "g5900",
+          "processador": "G5900",
           "games": {
               "cyberpunk": 0,
               "wow": 0,
@@ -4932,7 +4932,7 @@
       },
       {
           "placa": "GeForce GTX 1650",
-          "processador": "g5900",
+          "processador": "G5900",
           "games": {
               "cyberpunk": 40,
               "wow": 0,
@@ -5018,7 +5018,7 @@
           }
       },
       {
-          "placa": "radeon vega 3 Integrado",
+          "placa": "Radeon Vega 3 Integrado",
           "processador": "AMD 3000G",
           "games": {
               "cyberpunk": 0,
@@ -5192,7 +5192,7 @@
           }
       },
       {
-          "placa": "AMD radeon RX 560 4GB",
+          "placa": "AMD Radeon RX 560 4GB",
           "processador": "AMD 3000G",
           "games": {
               "cyberpunk": 0,
@@ -5221,7 +5221,7 @@
           }
       },
       {
-          "placa": "radeon vega 3 Integrado",
+          "placa": "Radeon Vega 3 Integrado",
           "processador": "AMD 320ge",
           "games": {
               "cyberpunk": 0,
@@ -5250,8 +5250,8 @@
           }
       },
       {
-          "placa": "radeon r7",
-          "processador": "a10 9700",
+          "placa": "Radeon R7",
+          "processador": "A10 9700",
           "games": {
               "cyberpunk": 50,
               "wow": 100,
@@ -5279,8 +5279,8 @@
           }
       },
       {
-          "placa": "radeon r7",
-          "processador": "a8 9600",
+          "placa": "Radeon R7",
+          "processador": "A8 9600",
           "games": {
               "cyberpunk": 0,
               "wow": 0,
@@ -5511,7 +5511,7 @@
           }
       },
       {
-          "placa": "randeon vega 8 Integrado",
+          "placa": "randeon Vega 8 Integrado",
           "processador": "Ryzen 7 5700G",
           "games": {
               "cyberpunk": 0,
@@ -5569,7 +5569,7 @@
           }
       },
       {
-          "placa": "vega 7",
+          "placa": "Vega 7",
           "processador": "Ryzen 5 4650G",
           "games": {
               "cyberpunk": 10,
@@ -5714,7 +5714,7 @@
           }
       },
       {
-          "placa": "GeForce GTX 1050ti 4GB",
+          "placa": "GeForce GTX 1050Ti 4GB",
           "processador": "Ryzen 5 4650G",
           "games": {
               "cyberpunk": 0,
@@ -5888,7 +5888,7 @@
           }
       },
       {
-          "placa": "GeForce RTX 3060ti",
+          "placa": "GeForce RTX 3060TI",
           "processador": "Ryzen 5 5600G",
           "games": {
               "cyberpunk": 0,
@@ -5917,7 +5917,7 @@
           }
       },
       {
-          "placa": "AMD radeon RX 560 4GB",
+          "placa": "AMD Radeon RX 560 4GB",
           "processador": "Ryzen 5 5600G",
           "games": {
               "cyberpunk": 0,
@@ -6033,7 +6033,7 @@
           }
       },
       {
-          "placa": "GeForce GTX 1050ti 4GB",
+          "placa": "GeForce GTX 1050Ti 4GB",
           "processador": "Ryzen 7 5700G",
           "games": {
               "cyberpunk": 0,
@@ -6120,7 +6120,7 @@
           }
       },
       {
-          "placa": "GeForce RTX 3060ti",
+          "placa": "GeForce RTX 3060TI",
           "processador": "Ryzen 7 5700G",
           "games": {
               "cyberpunk": 0,
@@ -6178,7 +6178,7 @@
           }
       },
       {
-          "placa": "AMD radeon RX 560 4GB",
+          "placa": "AMD Radeon RX 560 4GB",
           "processador": "Ryzen 7 5700G",
           "games": {
               "cyberpunk": 0,
@@ -6439,7 +6439,7 @@
           }
       },
       {
-          "placa": "GeForce RTX 3060ti",
+          "placa": "GeForce RTX 3060TI",
           "processador": "i3-10100F",
           "games": {
               "cyberpunk": 0,
@@ -6642,7 +6642,7 @@
           }
       },
       {
-          "placa": "radeon vega 8 Integrado",
+          "placa": "Radeon Vega 8 Integrado",
           "processador": "Ryzen 3 3200G ",
           "games": {
               "cyberpunk": 40,
@@ -7396,7 +7396,7 @@
           }
       },
       {
-          "placa": "GeForce RTX 3060ti",
+          "placa": "GeForce RTX 3060TI",
           "processador": "i5-10400",
           "games": {
               "cyberpunk": 190,
@@ -7686,7 +7686,7 @@
           }
       },
       {
-          "placa": "GeForce GTX  1050ti 4GB",
+          "placa": "GeForce GTX  1050Ti 4GB",
           "processador": "i5-10400F",
           "games": {
               "cyberpunk": 90,
@@ -8034,7 +8034,7 @@
           }
       },
       {
-          "placa": "GeForce GTX 1050ti 4GB",
+          "placa": "GeForce GTX 1050Ti 4GB",
           "processador": "G6400",
           "games": {
               "cyberpunk": 50,
@@ -8266,7 +8266,7 @@
           }
       },
       {
-          "placa": "GeForce GTX 1050ti 4GB",
+          "placa": "GeForce GTX 1050Ti 4GB",
           "processador": "Ryzen 5 3600",
           "games": {
               "cyberpunk": 60,
@@ -8614,7 +8614,7 @@
           }
       },
       {
-          "placa": "radeon vega 6 Integrado",
+          "placa": "Radeon Vega 6 Integrado",
           "processador": "Ryzen 3 4350G",
           "games": {
               "cyberpunk": 0,
@@ -9165,7 +9165,7 @@
           }
       },
       {
-          "placa": "radeon vega 8 Integrado",
+          "placa": "Radeon Vega 8 Integrado",
           "processador": "Ryzen 7 PRO 4750GE",
           "games": {
               "cyberpunk": 45,
@@ -9310,7 +9310,7 @@
           }
       },
       {
-          "placa": "GeForce GTX 1050ti 4GB",
+          "placa": "GeForce GTX 1050Ti 4GB",
           "processador": "Ryzen 5 4500",
           "games": {
               "cyberpunk": 0,
@@ -9484,7 +9484,7 @@
           }
       },
       {
-          "placa": "GeForce GTX 1050ti 4GB",
+          "placa": "GeForce GTX 1050Ti 4GB",
           "processador": "Ryzen 5 4500G",
           "games": {
               "cyberpunk": 0,
@@ -9600,7 +9600,7 @@
           }
       },
       {
-          "placa": "radeon vega 7 Integrado",
+          "placa": "Radeon Vega 7 Integrado",
           "processador": "Ryzen 5 4500G",
           "games": {
               "cyberpunk": 0,
