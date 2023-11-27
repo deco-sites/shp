@@ -16,9 +16,9 @@ const Help = ({links}:Props) =>{
       <div className={`${openLinks ? 'max-h-[400px] visible' : 'max-h-0 invisible'} overflow-hidden transition-[max-height] duration-300 ease-linear bg-white p-4 rounded-2xl`}>
         {links.map(link=>{
           return link.icon.type==='svg' ? (
-            <a href={link.href} className='flex gap-[10px] py-1 items-center justify-start border-y border-y-base-content first:border-t-transparent last:border-b-transparent' dangerouslySetInnerHTML={{__html:`${link.icon.code}<p>${link.text}</p>`}} />
+            <a href={link.href} className='text-black grid grid-cols-[24px_1fr] gap-[10px] py-1 items-center border-y border-y-base-content first:border-t-transparent last:border-b-transparent' dangerouslySetInnerHTML={{__html:`${link.icon.code}<p>${link.text}</p>`}} />
           ) : (
-            <a href={link.href} className='flex gap-[10px] py-1 items-center justify-start border-y border-y-base-content first:border-t-transparent last:border-b-transparent'>
+            <a href={link.href} className='text-black grid grid-cols-[24px_1fr] gap-[10px] py-1 items-center border-y border-y-base-content first:border-t-transparent last:border-b-transparent'>
               <img src={link.icon.src}/>
               <p>{link.text}</p>
             </a>
