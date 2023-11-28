@@ -68,7 +68,7 @@ export default function AddToCartButton(props: Props) {
       <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png'
         width={22} height={20} decoding='auto' fetchPriority='high' loading='eager' 
       />
-      <p className='font-bold text-xl text-secondary capitalize'>Comprar</p>
+      <p className='font-bold text-base re1:text-xl text-secondary capitalize'>Comprar</p>
     </Button>
   );
 }

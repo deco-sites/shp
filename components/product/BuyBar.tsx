@@ -7,6 +7,8 @@ import AddToCartButton from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import { useOffer } from 'deco-sites/fashion/sdk/useOffer.ts'
 import { ObjTrust } from 'deco-sites/shp/types/types.ts'
+import {DescontoPIX} from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
+import WishlistButton from "deco-sites/shp/components/wishlist/WishlistButton.tsx";
 
 export interface Props {
   page: ProductDetailsPage
@@ -16,24 +18,53 @@ const BuyBar=({page}:Props)=>{
   const {product}=page
   const { description, productID, offers, name, isVariantOf, brand, additionalProperty } = product
   const { price, listPrice, seller, installments } = useOffer(offers)
+  const isPC=product.category?.includes('Computadores gamer')
+
+  const pricePix=DescontoPIX(price! , 12)
 
   const handleScroll=()=>{
-    setShow(window.scrollY > window.innerHeight-200)
-  } 
+    const footer=document.querySelector("section[data-manifest-key*='Footer.tsx'] footer")
+    
+    const footerPosition=footer!.getBoundingClientRect().top + window.scrollY
+    
+    const scrollPosition=window.scrollY + window.innerHeight
+    
+    setShow(window.scrollY > window.innerHeight-200 &&  !(scrollPosition >= footerPosition))
+  }
+
+  const offer=offers!.offers![0]!
+
+  const maxInstallments=(()=>{
+    let maxInstallments=0
+
+    offer.priceSpecification.forEach((item)=>{
+      if (item.priceComponentType === "https://schema.org/Installment") {
+        const { billingDuration } = item
+        if(billingDuration! > maxInstallments){maxInstallments = billingDuration!}
+      }
+    })
+
+    return maxInstallments
+  })()
+
+  const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)!.billingIncrement!
 
   const [show, setShow]= useState(false)
 
+  const [objTrust, setObjTrust]=useState<ObjTrust>({'product_code':productID, 'average':0, 'count':0, 'product_name':name??''})
+  const [trustPercent, setTrustPercent]=useState(0)
+  
   useEffect(()=>{
     if(typeof window !== 'undefined'){
       window.addEventListener('scroll' ,handleScroll)
-      console.log(product)
+      console.log(maxInstallments, valorParcela)
     }
 
     const handleTrust=async()=>{
-      const data=await invoke["deco-sites/shp"].loaders.getTrustvox({productId:productID, storeId:'79497'})
+      const data=await invoke["deco-sites/shp"].loaders.getTrustvox({productId:product.inProductGroupWithID, storeId:'79497'})
       const {products_rates}:{products_rates:ObjTrust[]}=data
       const obj:ObjTrust=products_rates[0]
-      obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({product_code:productID, average:0, count:0, product_name:name??''})
+      obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({product_code:product.inProductGroupWithID ?? productID, average:0, count:0, product_name:name??''})
     }
     handleTrust()
 
@@ -42,15 +73,8 @@ const BuyBar=({page}:Props)=>{
     }
   },[])
 
-  const [objTrust, setObjTrust]=useState<ObjTrust>({'product_code':productID, 'average':0, 'count':0, 'product_name':name??''})
-  const [trustPercent, setTrustPercent]=useState(0)
-    
-  useEffect(()=>{
-    
-  },[])
-
   return(
-    <div className={show ? 'fixed bottom-0 flex justify-evenly bg-[#000] w-screen max-h-[111px] pt-[20px] pb-[12px]' : 'hidden'}>
+    <div className={show ? 'fixed bottom-0 flex justify-evenly bg-[#000] w-screen max-h-[125px] re1:max-h-[111px] pt-[20px] pb-[12px] z-[10]' : 'hidden'}>
       <div className='hidden re1:flex justify-center'>
         <div className='flex flex-col w-[30%]'>
           <p className='flex gap-2'>
@@ -65,39 +89,63 @@ const BuyBar=({page}:Props)=>{
             </div>
           </p>
 
-          <p>{product.name}</p>
+          <p className='text-lg line-clamp-2'>{product.name}</p>
         </div>
 
-        <div className='divider divider-horizontal divider-neutral-content'/>
+        <div className='divider before:bg-neutral-content after:bg-neutral-content divider-horizontal'/>
         
-        <div className='flex items-center'>
+        <div className='flex items-center gap-2'>
           <Icon id='Pix' size={30} strokeWidth={2}/>
           <div className='text-sm text-neutral-content'>
-            <p className='line-through'>De:XXXX</p>
-            <p className='text-primary text-2xl font-bold'>R$ XXXXX</p>
-            <p>No Pix <span className='success'>Economize XXX</span></p>
+            <p className='line-through'>De: {listPrice!.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}</p>
+            <p className='text-primary text-2xl font-bold'>{pricePix.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}</p>
+            <p>No Pix <span className='text-success'>Economize {Math.abs(pricePix-(price!)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span></p>
           </div>
         </div>
 
-        <div className='divider divider-horizontal divider-neutral-content'/>
+        <div className='divider before:bg-neutral-content after:bg-neutral-content divider-horizontal'/>
 
         <div className='flex flex-col text-sm'>
           <p className='flex gap-2 items-center'>
             <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
-            <p>parcelado no cartão <br/> em 10x de <span className='text-primary'>R$ XXX</span></p>
+            <p>parcelado no cartão <br/> em {maxInstallments}x de <span className='text-primary'>{valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span></p>
           </p>
 
           <p className='flex gap-2 items-center'>
             <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
-            <p>à vista no cartão <br/> por <span className='text-primary'>R$ XXX</span></p>
+            <p>à vista no cartão <br/> por <span className='text-primary'>{price!.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span></p>
           </p>
         </div>
 
-        <div className='divider divider-horizontal divider-neutral-content'/>
+        <div className='divider before:bg-neutral-content after:bg-neutral-content divider-horizontal'/>
 
         <div className='flex gap-3 items-center'>
-          <Image src="https://shopinfo.vteximg.com.br/arquivos/pdp-pc-frete-gratis-flutuante.gif" width={100} height={41}/>
-          <AddToCartButton
+          {isPC && <Image src="https://shopinfo.vteximg.com.br/arquivos/pdp-pc-frete-gratis-flutuante.gif" width={100} height={41}/>}
+          <div className='flex flex-col items-center'>
+            <AddToCartButton
+              url={product?.url ?? ''}
+              productID={productID}
+              seller={seller ?? ''}
+              price={price ?? 0}
+              discount={price && listPrice ? listPrice - price : 0}
+              name={product.name ?? ''}
+              productGroupID={product.isVariantOf?.productGroupID ?? ''}
+            />
+            <div class="compra-segura"><a href="/a-shopinfo-e-confiavel" target="_blank">🔒 Compra 100% Segura</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div className='flex justify-between re1:hidden px-[3%]'>
+        <div className='flex flex-col w-[45%]'>
+          <div className='flex gap-2'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
+            <p className='flex flex-col '>
+              <span className='text-success text-xs'>{maxInstallments}X {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+              <span className='text-xs'>Sem juros no Cartão de Crédito</span>
+            </p>
+          </div>
+          <AddToCartButton 
             url={product?.url ?? ''}
             productID={productID}
             seller={seller ?? ''}
@@ -107,10 +155,20 @@ const BuyBar=({page}:Props)=>{
             productGroupID={product.isVariantOf?.productGroupID ?? ''}
           />
         </div>
-      </div>
-
-      <div className='flex re1:hidden'>
-
+        
+        <div className='flex flex-col w-[45%]'>
+          <div className='flex gap-2'>
+            <Icon id='Pix' size={30} strokeWidth={2}/>
+            <p className='flex flex-col'>
+              <span className='text-xs'>{pricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+              <span className='text-xs'>No Pix <b className='font-bold'>12% de Desconto</b></span>
+            </p>
+          </div>
+          <div className='flex bg-neutral-content rounded-lg items-center'>
+            <WishlistButton productID={productID}/>
+            <span className='text-base re1:text-xl font-bold'>Favoritar</span>
+          </div>
+        </div>
       </div>
     </div>
   )
