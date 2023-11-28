@@ -43,7 +43,7 @@ function Cart() {
 
         return item && itemToAnalyticsItem({ ...item, coupon }, index);
       }}
-      checkoutHref="https://shopinfo.vtexcommercestable.com.br/checkout"
+      checkoutHref="/checkout"
     />
   );
 }
