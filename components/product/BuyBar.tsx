@@ -53,7 +53,9 @@ const BuyBar=({page}:Props)=>{
 
   const [objTrust, setObjTrust]=useState<ObjTrust>({'product_code':productID, 'average':0, 'count':0, 'product_name':name??''})
   const [trustPercent, setTrustPercent]=useState(0)
-  
+
+  const divWishBtn=useRef<HTMLDivElement>(null)
+
   useEffect(()=>{
     if(typeof window !== 'undefined'){
       window.addEventListener('scroll' ,handleScroll)
@@ -164,7 +166,7 @@ const BuyBar=({page}:Props)=>{
               <span className='text-xs'>No Pix <b className='font-bold'>12% de Desconto</b></span>
             </p>
           </div>
-          <div className='flex bg-neutral-content rounded-lg items-center'>
+          <div className='flex bg-neutral-content rounded-lg items-center' ref={divWishBtn} onClick={()=>{divWishBtn.current?.querySelector('button')?.click()}}>
             <WishlistButton productID={productID}/>
             <span className='text-base re1:text-xl font-bold'>Favoritar</span>
           </div>
