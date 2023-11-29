@@ -3,7 +3,6 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import * as $0 from "./routes/_app.tsx";
-import * as $1 from "./routes/api/[...catchall].tsx";
 import * as $$0 from "./islands/AcessoriosIsland.tsx";
 import * as $$1 from "./islands/AddToCartButton.tsx";
 import * as $$2 from "./islands/AddToCartButton/vtex.tsx";
@@ -43,7 +42,6 @@ import * as $$34 from "./islands/WishlistButton.tsx";
 const manifest = {
   routes: {
     "./routes/_app.tsx": $0,
-    "./routes/api/[...catchall].tsx": $1,
   },
   islands: {
     "./islands/AcessoriosIsland.tsx": $$0,
