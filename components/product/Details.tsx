@@ -218,8 +218,24 @@ function ProductInfo({ page, pix }: Props) {
       item.hasOwnProperty('description') && (item.description==='highlight' && item)
     ).filter(item=>(item!==false && !item.value?.includes('Coleção'))).map(item=>item!==false && item.value) || []
 
-
     const PCGamer = categoriesId?.some((item) => item === '10')
+
+    const offer=offers!.offers![0]!
+
+    const maxInstallments=(()=>{
+      let maxInstallments=0
+  
+      offer.priceSpecification.forEach((item)=>{
+        if (item.priceComponentType === "https://schema.org/Installment") {
+          const { billingDuration } = item
+          if(billingDuration! > maxInstallments){maxInstallments = billingDuration!}
+        }
+      })
+  
+      return maxInstallments
+    })()
+  
+    const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)!.billingIncrement!
   
     const [objTrust,setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
     const [trustPercent, setTrustPercent]=useState(0)
@@ -335,7 +351,7 @@ function ProductInfo({ page, pix }: Props) {
                 <div className='flex gap-2 text-sm items-center'>
                   <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
                   <p>
-                    Em 1x no cartão com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)} <br/> ou parcelado em <span class='text-sm font-bold'>{installments}</span>
+                    Em 1x no cartão com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)} <br/> ou parcelado em <span class='text-sm font-bold'>{maxInstallments}x de {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
                   </p>
                 </div>
               </div>
@@ -421,8 +437,6 @@ function ProductInfo({ page, pix }: Props) {
 
 function Details({ page, pix, aspectRatio, height, width }: Props) {
   const [isMobile, setIsMobile] = useState(false)
-
-  
 
   const handleResize = useCallback(() => {
     setIsMobile(window.innerWidth <= 768)
