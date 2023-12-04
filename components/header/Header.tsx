@@ -194,7 +194,7 @@ const HeaderSHP = () => {
           <div className='hidden re1:block w-[2px] h-2/4 bg-neutral'></div>
 
           <div className='hidden re1:flex gap-2 items-center'>
-            <a href='/teste' className='flex items-center gap-1'>
+            <a href='https://api.shopinfo.com.br/rastreio/' className='flex items-center gap-1'>
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/frete-icon.png'
                 alt='caminhão' width={26} height={18} preload fetchPriority='high' loading='eager' decoding='sync'
@@ -204,7 +204,7 @@ const HeaderSHP = () => {
               </div>
             </a>
 
-            <a href='/teste' className='flex items-center gap-1'>
+            <a href='/account' className='flex items-center gap-1'>
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-user.png'
                 alt='conta' width={21} height={25} preload fetchPriority='high' loading='eager' decoding='sync'
