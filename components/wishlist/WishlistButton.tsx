@@ -18,7 +18,13 @@ function WishlistButton({
   const { user } = useUser();
   const item = { sku: productID, productId: productGroupID };
   const { loading, addItem, removeItem, getItem } = useWishlist();
-  const listItem = useComputed(() => getItem(item));
+  const listItem = useComputed(() => {
+    try{
+      return getItem(item)
+    }catch (err){
+      console.error(err)
+    }
+  });
   const fetching = useSignal(false);
 
   const isUserLoggedIn = Boolean(user.value?.email);
