@@ -15,6 +15,6 @@
     "std/": "https://deno.land/std@0.190.0/",
     "partytown/": "https://denopkg.com/deco-cx/partytown@0.4.8/",
     "daisyui": "npm:daisyui@3.5.0",
-    "apps/": "https://denopkg.com/deco-cx/apps@0.23.13/"
+    "apps/": "https://denopkg.com/deco-cx/apps@0.23.14/"
   }
 }

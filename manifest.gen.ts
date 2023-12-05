@@ -61,6 +61,7 @@ import * as $$$$$$48 from "./sections/TitleAndText.tsx";
 import * as $$$$$$49 from "./sections/Vitrine.tsx";
 import * as $$$$$$50 from "./sections/WhatsApp.tsx";
 import * as $$$$$$51 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$52 from "./sections/WishlistTeste.tsx";
 import * as $$$$$$$$$$$0 from "./apps/decohub.ts";
 import * as $$$$$$$$$$$1 from "./apps/site.ts";
 
@@ -127,6 +128,7 @@ const manifest = {
     "deco-sites/shp/sections/Vitrine.tsx": $$$$$$49,
     "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$50,
     "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$51,
+    "deco-sites/shp/sections/WishlistTeste.tsx": $$$$$$52,
   },
   "apps": {
     "deco-sites/shp/apps/decohub.ts": $$$$$$$$$$$0,
