@@ -4,6 +4,9 @@ import { useGameContext, GameContextType}  from 'deco-sites/shp/contexts/Games/G
 
 export interface gameProps{
   gameName:string
+  /**@description Coloque o id das coleções*/ 
+  collection60?:string
+  collection144?:string
   imgUrl:string
 }
 
