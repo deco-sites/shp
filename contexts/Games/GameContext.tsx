@@ -1,9 +1,9 @@
 import {  useState, useContext, useCallback } from 'preact/hooks'
 import { createContext, FunctionalComponent } from 'preact'
 
-export interface GameContextType{
-  games: Map<string, boolean>
-  setGameChecked: (gameName:string,checked:boolean) => void
+export interface GameContextType {
+  games: Map<string, { checked: boolean, collection60?: string, collection144?: string }>
+  setGameChecked: (gameName: string, checked: boolean, collection60?: string, collection144?: string) => void
 }
 
 const GameContext=createContext<GameContextType | undefined>(undefined)
@@ -17,14 +17,14 @@ export const useGameContext=():GameContextType=>{
 }
 
 const GameContextProvider: FunctionalComponent=({children})=>{
-  const [games,setGames]=useState<Map<string,boolean>>(new Map())
+  const [games,setGames]=useState<GameContextType["games"]>(new Map())
 
-  const setGameChecked = useCallback((gameName: string, checked: boolean) => {
+  const setGameChecked = useCallback((gameName: string, checked: boolean, collection60?: string, collection144?: string) => {
     setGames((prevGames) => {
       const newGames = new Map(prevGames)
-      newGames.set(gameName, checked)
+      newGames.set(gameName, { checked, collection60, collection144 })
       return newGames
-    });
+    })
   }, [])
 
   const value:GameContextType={

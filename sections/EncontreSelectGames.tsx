@@ -27,10 +27,13 @@ const loadingPromises=signal(false)
 
 const BTNFinal= () => {
   const { games }: GameContextType = useGameContext()
+
+  useEffect(()=>console.log(games),[games])
+
   const [jogos, setJogos]=useState<string[]>([])
 
-  const [systems60,setSys60]=useState<typeof DataJson.fps>([])
-  const [systems144,setSys144]=useState<typeof DataJson.fps>([])
+  const [systems60, setSys60]=useState<string[]>([])
+  const [systems144, setSys144]=useState<string[]>([])
 
   const [disableButton, setDisableButton]=useState(false)
 
@@ -44,9 +47,9 @@ const BTNFinal= () => {
 
   const fetchData=useCallback(async (queryString:string)=>await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString:encodeURI(queryString)}) || [],[])
 
-  const callPromises=async(system:typeof DataJson.fps)=>{
+  const callPromises=async(system:string[])=>{
     const term:string[]=[]
-    system.forEach(obj=>term.push(`fq=C:/10/&fq=specificationFilter_20:${obj.placa},specificationFilter_19:${obj.processador}&fq=P:[${parseFloat(minPrice.value)} TO ${parseFloat(RangeVal.value)}]`)) 
+    system.forEach(col=>term.push(`fq=C:/10/&fq=productClusterIds:${col}&fq=P:[${parseFloat(minPrice.value)} TO ${parseFloat(RangeVal.value)}]`)) 
     const arrayRespPromisses=term.map(req=>fetchData(req))
     const arrayResp=await Promise.all(arrayRespPromisses)
     const sku:string[]=[]
@@ -63,8 +66,8 @@ const BTNFinal= () => {
           (async()=>{
             count.value===1 && (gamesChecked.value=jogos)
             minPrice.value=await fetchPrice()
-            setSys60(DataJson.fps.filter(system => gamesChecked.value.some(game => system.games[game as keyof typeof system.games] > 60)))
-            setSys144(DataJson.fps.filter(system => gamesChecked.value.some(game => system.games[game as keyof typeof system.games] > 144)))
+            setSys60(jogos.map(game=>games.get(game)!.collection60 ?? '').filter(str=>str.length))
+            setSys144(jogos.map(game=>games.get(game)!.collection144 ?? '').filter(str=>str.length))
             count.value++
           })()
         }else{
@@ -130,7 +133,7 @@ const BTNFinal= () => {
 
   useEffect(()=>{
     const checkedGames:string[]=[]
-    for(const [game,checked] of games){
+    for(const [game,{checked}] of games){
       checked && checkedGames.push(game)
     }
     setJogos(checkedGames)
@@ -296,7 +299,7 @@ const selectGames=({Games=[]}:Props)=>{
               <Slider className={`carousel carousel-center scrollbar-none gap-2 ${isMobile && 'col-span-full row-start-2 row-end-5'}`}>
                 {Games.map((game,index)=>(
                   <Slider.Item index={index} className={`carousel-item first:pl-6 last:pr-6 `}>
-                    <Game gameName={game.gameName} imgUrl={game.imgUrl}/>
+                    <Game gameName={game.gameName} imgUrl={game.imgUrl} collection144={game.collection144} collection60={game.collection60}/>
                   </Slider.Item>
                 ))}
               </Slider>
