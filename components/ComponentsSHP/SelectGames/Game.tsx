@@ -1,22 +1,35 @@
 import Image from 'deco-sites/std/components/Image.tsx'
-import { useCallback, useState } from 'preact/hooks'
+import { useCallback, useState, useEffect } from 'preact/hooks'
 import { useGameContext, GameContextType}  from 'deco-sites/shp/contexts/Games/GameContext.tsx'
 
 export interface gameProps{
   gameName:string
+  /**@description Coloque o id das coleções*/ 
+  collection60?:string
+  collection144?:string
   imgUrl:string
 }
 
-const Game=({gameName, imgUrl}:gameProps)=>{
-  const { games, setGameChecked }:GameContextType=useGameContext()
+const Game=({gameName, collection60, collection144, imgUrl}:gameProps)=>{
+  const { games, setGameChecked }: GameContextType = useGameContext()
 
-  const [checked, setChecked] = useState(()=> games.get(gameName) || false)
+  const [checked, setChecked] = useState(false)
 
-  const handleClick=useCallback(()=>{
-    setChecked(!checked)
-    setGameChecked(gameName,!checked)
-  },[gameName, checked, setGameChecked, games])
+  // Sincroniza o estado local com o contexto
+  useEffect(() => {
+    const gameInfo = games.get(gameName)
+    if (gameInfo) {
+      setChecked(gameInfo.checked)
+    }
+  }, [games, gameName])
 
+  const handleClick = useCallback(() => {
+    setChecked((prevChecked) => {
+      const newChecked = !prevChecked
+      setGameChecked(gameName, newChecked, collection60, collection144)
+      return newChecked
+    })
+  }, [gameName, setGameChecked, collection60, collection144])
   
 
   return (

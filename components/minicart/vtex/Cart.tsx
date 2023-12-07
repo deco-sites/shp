@@ -11,10 +11,6 @@ function Cart() {
   const currency = cart.value?.storePreferencesData.currencyCode ?? "BRL";
   const coupon = cart.value?.marketingData?.coupon ?? undefined;
 
-  useEffect(()=>{
-    console.log(cart.value)
-  },[coupon])
-
   return (
     <BaseCart
       items={items.map((item) => ({

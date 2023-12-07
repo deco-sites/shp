@@ -381,7 +381,7 @@ function ProductInfo({ page, pix }: Props) {
               <ShippingSimulation
                 items={[
                   {
-                    id: Number(product.sku),
+                    id: Number(productID),
                     quantity: 1,
                     seller: seller ?? '1',
                   },
