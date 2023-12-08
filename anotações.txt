@@ -3,6 +3,3 @@ Precisa arrumar:
 Bugs pra arrumar: 
 
 Possiveis melhoras: 
-- Adicionar div flut pra comprar no PDP
-- Botão de Ajuda
-- testando ambiente de teste
