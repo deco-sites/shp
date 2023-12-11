@@ -284,7 +284,7 @@ const HeaderSHP = () => {
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-vai-jogar-o-que.png',
-                    linkTo: '/teste',
+                    linkTo: '/vai-jogar-o-que',
                   },
                 ]}
               />
