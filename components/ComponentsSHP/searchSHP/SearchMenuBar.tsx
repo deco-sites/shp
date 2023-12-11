@@ -165,9 +165,9 @@ const SearchMenuBar=()=>{
             type='text'
             name='search'
             placeholder='O que você procura...'
-            className='hidden re1:block w-48 text-secondary bg-base-100 placeholder:text-neutral mr-[3%]
+            className='hidden re1:block text-secondary bg-base-100 placeholder:text-neutral mr-[3%]
             p-2 border-neutral border-[2px] outline-none top-[26px] rounded-lg focus:shadow-[0_0_5px_2px] focus:shadow-primary/30 
-          focus:border-primary absolute focus:w-2/5 transition-all duration-700'
+            focus:border-primary absolute w-1/4 transition-all duration-700'
             onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
             onBlur={()=>(setTimeout(()=>setOpenSuggestions(false),500),currentController.current && currentController.current.abort())}
             onKeyUp={(event:KeyboardEvent)=>event.key==='Enter' && redirectSearchPage()}

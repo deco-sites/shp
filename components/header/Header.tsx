@@ -134,7 +134,7 @@ const HeaderSHP = () => {
       </div>
       
       <div className='z-10 fixed top-0 w-full'>
-        <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-[#000] items-center justify-center re1:py-4 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-24 re1:justify-around'>
+        <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-[#000] items-center justify-center re1:pt-4 re1:pb-10 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-28 re1:justify-around'>
           {isMobile && (
             <button /* menuBar */
               className='w-fit h-fit mr-auto re1:hidden'
@@ -155,7 +155,7 @@ const HeaderSHP = () => {
           </a>
 
           {!isMobile && (
-            <div className='hidden re1:flex gap-4'>
+            <div className='hidden re1:flex gap-4 absolute top-[70%]'>
               <div onMouseOver={gamerHover} className={borderGamer}>
                 <a href='/computadores-gamer/' className='font-bold text-secondary text-sm cursor-pointer'>
                   PC Gamer
@@ -186,8 +186,7 @@ const HeaderSHP = () => {
                 </a>
               </div>
             </div>
-          )
-          }
+          )}
 
           <SearchMenuBar />
 
@@ -738,7 +737,7 @@ const HeaderSHP = () => {
           </>
         )}
       </div>
-      <div className='h-16 re1:h-24'/>
+      <div className='h-16 re1:h-28'/>
     </>
   )
 }
