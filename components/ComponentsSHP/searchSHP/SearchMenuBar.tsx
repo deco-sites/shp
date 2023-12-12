@@ -158,22 +158,22 @@ const SearchMenuBar=()=>{
 
   return(
     <>
-      <div className='flex-row gap-2 re1:ml-60'>
-        <div className='hidden re1:flex flex-row-reverse'>
+      <div className='hidden re1:flex flex-row gap-2 re1:ml-40 items-center w-[650px]'>
+        <div className='flex flex-col w-3/5 relative top-[160px]'>
           <input
             ref={inputDesk}
             type='text'
             name='search'
             placeholder='O que você procura...'
             className='hidden re1:block text-secondary bg-base-100 placeholder:text-neutral mr-[3%]
-            p-2 border-neutral border-[2px] outline-none top-[26px] rounded-lg focus:shadow-[0_0_5px_2px] focus:shadow-primary/30 
-            focus:border-primary absolute w-1/4 transition-all duration-700'
+            p-2 border-neutral border-[2px] outline-none rounded-lg focus:shadow-[0_0_5px_2px] focus:shadow-primary/30 
+            focus:border-primary relative transition-all duration-700 w-full'
             onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
             onBlur={()=>(setTimeout(()=>setOpenSuggestions(false),500),currentController.current && currentController.current.abort())}
             onKeyUp={(event:KeyboardEvent)=>event.key==='Enter' && redirectSearchPage()}
           />
 
-          <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : ''} hidden flex-col w-2/5 mr-[3%] absolute border border-neutral border-t-transparent bg-base-100 top-3/4 rounded-b-lg rounded-br-lg`}>
+          <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : ''} hidden relative flex-col w-full border border-neutral border-t-transparent bg-base-100 rounded-b-lg rounded-br-lg`}>
             {autoComplete.map((suggestion:any)=>{
               if(suggestion.thumbUrl){
                 return(
@@ -206,23 +206,25 @@ const SearchMenuBar=()=>{
 
       <div
           ref={divInputSearchMobile}
-          className={`${openSearch ? 'flex' : 'hidden'} w-full h-16 p-4 items-center justify-between absolute top-0 bg-base-100 z-[2] re1:hidden`}
+          className='flex w-full h-12 items-center justify-between absolute top-16 bg-base-100 re1:hidden'
         >
-          <input
-            ref={inputMob}
-            type='text'
-            name='search'
-            placeholder='O que você procura...'
-            className='placeholder:text-neutral w-4/5 bg-transparent outline-none p-4 text-secondary'
-            onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
-            onClick={(event)=>setInputValue((event.target as HTMLInputElement).value)}
-            onKeyUp={(event:KeyboardEvent)=>event.key==='Enter' && redirectSearchPage()}
-          />
-          <Image
-            src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png'
-            alt='lupinha' width={23} height={22} preload fetchPriority='high' loading='eager' decoding='sync'
-            onClick={redirectSearchPage}
-          />
+          <label className='flex justify-between items-center w-[90%] m-auto bg-black rounded-md px-4 py-2'>
+            <input
+              ref={inputMob}
+              type='text'
+              name='search'
+              placeholder='O que você procura...'
+              className='placeholder:text-neutral w-4/5 bg-transparent outline-none text-secondary'
+              onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
+              onClick={(event)=>setInputValue((event.target as HTMLInputElement).value)}
+              onKeyUp={(event:KeyboardEvent)=>event.key==='Enter' && redirectSearchPage()}
+            />
+            <Image
+              src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png'
+              alt='lupinha' width={23} height={22} preload fetchPriority='high' loading='eager' decoding='sync'
+              onClick={redirectSearchPage} className='h-fit'
+            />
+          </label>
         </div>
 
         <div ref={suggestionsMob} className={`${openSuggestions ? 'flex' : 'hidden'} re1:hidden flex-col w-full re1:w-2/5 absolute border border-neutral top-16 re1:top-24 bg-base-100 rounded-b-lg rounded-br-lg`}>
