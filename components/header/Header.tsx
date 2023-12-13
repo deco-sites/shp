@@ -133,7 +133,7 @@ const HeaderSHP = () => {
         </div>
       </div>
       
-      <div className='z-10 fixed top-0 w-full'>
+      <div className='z-10 absolute re1:fixed top-0 w-full'>
         <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-[#000] items-center justify-center re1:pt-4 re1:pb-10 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-28 re1:justify-around'>
           {isMobile && (
             <button /* menuBar */
@@ -155,7 +155,7 @@ const HeaderSHP = () => {
           </a>
 
           {!isMobile && (
-            <div className='hidden re1:flex gap-4 absolute top-[70%]'>
+            <div className='hidden re1:flex gap-6 absolute top-[70%] re5:left-[30%]'>
               <div onMouseOver={gamerHover} className={borderGamer}>
                 <a href='/computadores-gamer/' className='font-bold text-secondary text-sm cursor-pointer'>
                   PC Gamer
@@ -183,6 +183,12 @@ const HeaderSHP = () => {
               <div onMouseOver={hardHover} className={borderHard}>
                 <a href='/hardware' className='font-bold text-secondary text-sm cursor-pointer'>
                   Hardware
+                </a>
+              </div>
+
+              <div className='hover:border-b-2 hover:border-primary' onMouseEnter={()=>{hideAll()}}>
+                <a href='/para-sua-empresa' className='font-bold text-secondary text-sm cursor-pointer'>
+                  Para sua Empresa
                 </a>
               </div>
             </div>
@@ -737,7 +743,7 @@ const HeaderSHP = () => {
           </>
         )}
       </div>
-      <div className='h-16 re1:h-28'/>
+      <div className='h-28'/>
     </>
   )
 }
