@@ -158,22 +158,22 @@ const SearchMenuBar=()=>{
 
   return(
     <>
-      <div className='hidden re1:flex flex-row gap-2 re1:ml-40 items-center w-[650px]'>
-        <div className='flex flex-col w-3/5 relative top-[160px]'>
+      <div className='hidden re1:flex gap-2 re1:ml-40 items-center w-[650px] relative'>
+        <div className='w-full relative'>
           <input
             ref={inputDesk}
             type='text'
             name='search'
             placeholder='O que você procura...'
-            className='hidden re1:block text-secondary bg-base-100 placeholder:text-neutral mr-[3%]
+            className='hidden re1:block text-secondary bg-base-100 placeholder:text-neutral
             p-2 border-neutral border-[2px] outline-none rounded-lg focus:shadow-[0_0_5px_2px] focus:shadow-primary/30 
-            focus:border-primary relative transition-all duration-700 w-full'
+            focus:border-primary transition-all duration-700 w-full'
             onInput={(event)=>setInputValue((event.target as HTMLInputElement).value)}
             onBlur={()=>(setTimeout(()=>setOpenSuggestions(false),500),currentController.current && currentController.current.abort())}
             onKeyUp={(event:KeyboardEvent)=>event.key==='Enter' && redirectSearchPage()}
           />
 
-          <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : ''} hidden relative flex-col w-full border border-neutral border-t-transparent bg-base-100 rounded-b-lg rounded-br-lg`}>
+          <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : 'hidden'} flex-col w-full absolute top-full border border-neutral border-t-transparent bg-base-100 rounded-b-lg`}>
             {autoComplete.map((suggestion:any)=>{
               if(suggestion.thumbUrl){
                 return(
@@ -198,9 +198,9 @@ const SearchMenuBar=()=>{
 
         <button className='w-fit h-fit' onClick={handleClickLupaDesk}>
           <Image
-            src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png'
-            alt='lupinha' width={23} height={22} preload fetchPriority='high' loading='eager' decoding='sync'
-          />
+              src='https://shopinfo.vteximg.com.br/arquivos/icon-search.png'
+              alt='lupinha' width={23} height={22} preload fetchPriority='high' loading='eager' decoding='sync'
+            />
         </button>
       </div>
 
@@ -227,7 +227,7 @@ const SearchMenuBar=()=>{
           </label>
         </div>
 
-        <div ref={suggestionsMob} className={`${openSuggestions ? 'flex' : 'hidden'} re1:hidden flex-col w-full re1:w-2/5 absolute border border-neutral top-16 re1:top-24 bg-base-100 rounded-b-lg rounded-br-lg`}>
+        <div ref={suggestionsMob} className={`${openSuggestions ? 'flex' : 'hidden'} re1:hidden flex-col w-full absolute border-b border-b-neutral top-28 bg-base-100 rounded-b-lg rounded-br-lg`}>
           {autoComplete.map((suggestion:any)=>{
             if(suggestion.thumbUrl){
               return(
