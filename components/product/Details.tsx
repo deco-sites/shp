@@ -286,7 +286,7 @@ function ProductInfo({ page, pix }: Props) {
                 <>
                   <span className='text-yellow-300'>{objTrust?.average} de 5</span>
                   <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
-                    <div style={{width:`${trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
+                    <div style={{width:`${trustPercent}%`}} className='text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
                   </div>
                   <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
                 </>
