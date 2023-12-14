@@ -111,7 +111,7 @@ function Dots({ images, interval = 0 }: Props) {
             <Slider.Dot index={index}>
               <div class='py-5'>
                 <div
-                  class='w-10 md:w-16 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-base-100 from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]'
+                  class='w-10 md:w-16 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-white from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]'
                   style={{ animationDuration: `${interval}s` }}
                   key={animationKey}
                 />
@@ -134,7 +134,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
         <div class='hidden re1:flex items-center justify-center z-[2] absolute left-[150px]'>
           <Slider.PrevButton class='btn btn-circle glass'>
             <Icon
-              class='text-base-100'
+              class='text-[rgba(255,255,255,0.7)]'
               size={20}
               id='ChevronLeft'
               strokeWidth={3}
@@ -153,7 +153,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
         <div class='hidden re1:flex items-center justify-center absolute z-[2] right-[150px]'>
           <Slider.NextButton class='btn btn-circle glass'>
             <Icon
-              class='text-base-100'
+              class='text-[rgba(255,255,255,0.7)]'
               size={20}
               id='ChevronRight'
               strokeWidth={3}

@@ -4,6 +4,7 @@ import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNaveg
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
+import LimparFiltros from 'deco-sites/shp/sections/PagCategEDepto/LimparFiltros.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
@@ -290,6 +291,8 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
     })
 
     PCs.length && removeAll()
+
+    console.log(selectedFilters)
   },[selectedFilters])
 
   useEffect(()=>{
@@ -304,247 +307,248 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
     PCs.length && removeAll()
   },[order])
 
-  useEffect(()=>{
-    // filtragem de filtros no desktop
-    if(products.length){
-      const keys=filters.map(filter=>filter.label)
-      const productsFields:FiltroObj[]=[]
-      products.forEach((product:any)=>{
-        const fields=[]
-        for(const key in product){
-          if(keys.includes(key)){
-            fields.push({label: key, value: product[key][0]})
-          }else if(key==='brand'){
-            fields.push({label: 'Marcas', value: product[key]})
-          }
-        }
-        productsFields.push(...fields)
-      })
+  // useEffect(()=>{
+  //   // filtragem de filtros no desktop
+  //   if(products.length){
+  //     const keys=filters.map(filter=>filter.label)
+  //     const productsFields:FiltroObj[]=[]
+  //     products.forEach((product:any)=>{
+  //       const fields=[]
+  //       for(const key in product){
+  //         if(keys.includes(key)){
+  //           fields.push({label: key, value: product[key][0]})
+  //         }else if(key==='brand'){
+  //           fields.push({label: 'Marcas', value: product[key]})
+  //         }
+  //       }
+  //       productsFields.push(...fields)
+  //     })
 
-      const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
-      const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
-        const {label,value}=obj
-        if(!acc[label]) acc[label]=[]
-        acc[label].push(value)
-        return acc
-      },{} as Record<string, string[]>)
+  //     const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
+  //     const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
+  //       const {label,value}=obj
+  //       if(!acc[label]) acc[label]=[]
+  //       acc[label].push(value)
+  //       return acc
+  //     },{} as Record<string, string[]>)
 
-      if(listFiltersDesk.current && selectedFilters.length){
-        const keys=Object.keys(filtrosByLabel)
-        const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
-        const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
-        h5S.forEach(h5=>{
-          const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-          Input.value=''
+  //     if(listFiltersDesk.current && selectedFilters.length){
+  //       const keys=Object.keys(filtrosByLabel)
+  //       const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
+  //       const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
+  //       h5S.forEach(h5=>{
+  //         const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
+  //         Input.value=''
 
-          const key=h5.innerText
-          Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-            const Li=li as HTMLLIElement
-            if(filtrosByLabel[key].includes(Li.innerText)){
-              Li.removeAttribute('data-filtered')
-            }else{
-              Li.setAttribute('data-filtered','filtrado')
-            }
-          })
+  //         const key=h5.innerText
+  //         Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
+  //           const Li=li as HTMLLIElement
+  //           if(filtrosByLabel[key].includes(Li.innerText)){
+  //             Li.removeAttribute('data-filtered')
+  //           }else{
+  //             Li.setAttribute('data-filtered','filtrado')
+  //           }
+  //         })
           
-        })
+  //       })
 
-        h5NaoDisp.forEach(h5=>{
-          const divPai=h5.parentElement! as HTMLDivElement
-          divPai.classList.replace('flex','hidden')
-        })
-      }else if(listFiltersDesk.current){
-        const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
-        h5S.forEach(h5=>{
-          const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-          Input.value=''
+  //       h5NaoDisp.forEach(h5=>{
+  //         const divPai=h5.parentElement! as HTMLDivElement
+  //         divPai.classList.replace('flex','hidden')
+  //       })
+  //     }else if(listFiltersDesk.current){
+  //       const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
+  //       h5S.forEach(h5=>{
+  //         const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
+  //         Input.value=''
 
-          Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-            const Li=li as HTMLLIElement
-            Li.removeAttribute('data-filtered')
-          })
-        })
+  //         Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
+  //           const Li=li as HTMLLIElement
+  //           Li.removeAttribute('data-filtered')
+  //         })
+  //       })
 
-        const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
-        h5NaoDisp.forEach(h5=>{
-          const divPai=h5.parentElement! as HTMLDivElement
-          divPai.classList.replace('hidden','flex')
-        })
-      }
-    }
-  },[products])
+  //       const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
+  //       h5NaoDisp.forEach(h5=>{
+  //         const divPai=h5.parentElement! as HTMLDivElement
+  //         divPai.classList.replace('hidden','flex')
+  //       })
+  //     }
+  //   }
+  // },[products])
 
   return(
     <>
-    <div className='w-full text-secondary appearance-none'>
-      <div className='absolute top-0 z-[-1] '>
-        <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
-          fetchPriority='high' preload 
-        />
-      </div>
-      <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
-        <div className='my-5 re1:my-[60px] px-4 re1:px-0 breadcrumbs'>
-          <ul>{path.map((path,index,self)=>{
-            if(index===0){
-              return <li><a className='underline' href='/'>Home</a></li>
-            }else if(index!== self.length-1){
-              const pathName=path.split('/')[1]
-              let nameCategPai=''
-              switch (pathName) {
-                case 'computadores-gamer':
-                  nameCategPai='Computadores Gamer'
-                  break;
+      <div className='w-full text-secondary appearance-none'>
+        <div className='absolute top-28 z-[-1] '>
+          <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
+            fetchPriority='high' preload 
+          />
+        </div>
+        <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
+          <div className='my-5 re1:my-[60px] px-4 re1:px-0 breadcrumbs'>
+            <ul>{path.map((path,index,self)=>{
+              if(index===0){
+                return <li><a className='underline' href='/'>Home</a></li>
+              }else if(index!== self.length-1){
+                const pathName=path.split('/')[1]
+                let nameCategPai=''
+                switch (pathName) {
+                  case 'computadores-gamer':
+                    nameCategPai='Computadores Gamer'
+                    break;
 
-                case 'solucoes':
-                  nameCategPai='Solucões'
-                  break;
-                
-                case 'workstation':
-                  nameCategPai='Workstation'
-                  break;
+                  case 'solucoes':
+                    nameCategPai='Solucões'
+                    break;
+                  
+                  case 'workstation':
+                    nameCategPai='Workstation'
+                    break;
 
-                case 'acessorios-gamer':
-                  nameCategPai='Acessórios Gamer'
-                  break;
+                  case 'acessorios-gamer':
+                    nameCategPai='Acessórios Gamer'
+                    break;
 
-                case 'hardware':
-                  nameCategPai='Hardware'
-                  break;
-  
-                default:
-                  break;
+                  case 'hardware':
+                    nameCategPai='Hardware'
+                    break;
+    
+                  default:
+                    break;
+                }
+
+                return <li><a className='underline' href={'/'+pathName}>{nameCategPai}</a></li>
+              }else{
+                return <li><a className='font-bold' href={path}>{titleCategoria}</a></li>
               }
-
-              return <li><a className='underline' href={'/'+pathName}>{nameCategPai}</a></li>
-            }else{
-              return <li><a className='font-bold' href={path}>{titleCategoria}</a></li>
-            }
-          })}</ul>
-        </div>
-        <div className='bg-transparent px-4 re1:px-0'>
-          <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
-          <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText || ''}} />
-        </div>
-
-        <div className='mb-8 re1:mb-0'>
-          <div className='text-xl re1:text-2xl flex justify-between items-center w-full mb-4 px-4 re1:px-0'>
-            <p>Principais categorias</p>
-            <hr className='border-[#262626] w-[40%] re1:w-[80%]'/>
+            })}</ul>
           </div>
-          <ul className='flex re1:items-center justify-start re1:justify-around gap-4 re1:gap-0 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
-            {iconesNavegacionais.map((icon)=>(
-              <IconeNavegacional href={icon.href} imgUrl={icon.imgUrl} categoryName={icon.categoryName} />
-            ))}
-          </ul>
-        </div>
+          <div className='bg-transparent px-4 re1:px-0'>
+            <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
+            <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText || ''}} />
+          </div>
 
-        <ul className='flex re1:hidden justify-start items-center gap-4 w-full mb-4 px-4 overflow-x-auto'>
-          {selectedFilters.map((filter)=>{
-            if(filter.fq==='P'){
-              const nameDecoded=decodeURIComponent(filter.value)
-              const numbers=nameDecoded.split(' TO ').map((item)=>parseFloat(item.replace(/\D/g, '')).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}))
-              return (
-                <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
-                  onClick={()=>setSelectedFilters(prevFilters=>
-                    prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
-                  )}
-                >
-                  <p className='whitespace-nowrap text-xs'>{numbers.join(' - ')}</p>
-                  <span className='text-primary text-xs my-auto font-bold'>✕</span>
-                </div>
-              )
-            }else{
-              return (
-                <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
-                  onClick={()=>setSelectedFilters(prevFilters=>
-                    prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
-                  )}
-                >
-                  <p className='whitespace-nowrap text-xs'>{decodeURIComponent(filter.value).replaceAll('@dot@','.')}</p>
-                  <span className='text-primary text-xs my-auto font-bold'>✕</span>
-                </div>
-              )
-            }
-          })}
-        </ul>
-        
-        <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
-          <label className='w-[45%]' ref={filterLabel}>
-            <span className='font-bold'>Filtros</span>
-            <FiltroMob filters={filters} id='menu'/>
-          </label>
-          <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-            <span className='font-bold'>Ordenar Por</span>
-            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
-              onInput={(event)=>{
-                setOrder((event.target as HTMLSelectElement).value)
-              }}
-            >
-              <option disabled selected value='selecione'>Selecione</option>
-              {orderFilters.map(filter=>(
-                <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+          <div className='mb-8 re1:mb-0'>
+            <div className='text-xl re1:text-2xl flex justify-between items-center w-full mb-4 px-4 re1:px-0'>
+              <p>Principais categorias</p>
+              <hr className='border-[#262626] w-[40%] re1:w-[80%]'/>
+            </div>
+            <ul className='flex re1:items-center justify-start re1:justify-around gap-4 re1:gap-0 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
+              {iconesNavegacionais.map((icon)=>(
+                <IconeNavegacional href={icon.href} imgUrl={icon.imgUrl} categoryName={icon.categoryName} />
               ))}
-            </select>
-          </label>
-        </div>
+            </ul>
+          </div>
 
-        <div className='flex w-full justify-between'>
-          <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
-            {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
-            <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/>
-          </ul>
-
-          <div className='flex flex-col items-center w-full re1:w-[70%] px-4 re1:px-0'>
-            {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
-              <>
-                {products.length > 0 ? (
-                  <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                    {products.map((product:any)=><Card product={product} />)}
+          <ul className='flex re1:hidden justify-start items-center gap-4 w-full mb-4 px-4 overflow-x-auto'>
+            {selectedFilters.map((filter)=>{
+              if(filter.fq==='P'){
+                const nameDecoded=decodeURIComponent(filter.value)
+                const numbers=nameDecoded.split(' TO ').map((item)=>parseFloat(item.replace(/\D/g, '')).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}))
+                return (
+                  <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
+                    onClick={()=>setSelectedFilters(prevFilters=>
+                      prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                    )}
+                  >
+                    <p className='whitespace-nowrap text-xs'>{numbers.join(' - ')}</p>
+                    <span className='text-primary text-xs my-auto font-bold'>✕</span>
                   </div>
-                ) : (
-                  <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
-                )}
-                {fetchLength===20 && 
-                <button className='font-bold w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto my-6 re1:my-20' onClick={()=>{
-                  if(fetchLength===20){
-                    const {from,to}=fromTo
-                    setShowMore(true)
-                    setFromTo({from:from+20, to:to+20})
-                  }
-                }}>{showMore ? <div className='loading loading-spinner'/> : 'Carregar mais Produtos'}</button>}
-              </>
-            )}
+                )
+              }else{
+                return (
+                  <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
+                    onClick={()=>setSelectedFilters(prevFilters=>
+                      prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                    )}
+                  >
+                    <p className='whitespace-nowrap text-xs'>{decodeURIComponent(filter.value).replaceAll('@dot@','.')}</p>
+                    <span className='text-primary text-xs my-auto font-bold'>✕</span>
+                  </div>
+                )
+              }
+            })}
+          </ul>
+          
+          <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
+            <label className='w-[45%]' ref={filterLabel}>
+              <span className='font-bold'>Filtros</span>
+              <FiltroMob filters={filters} id='menu'/>
+            </label>
+            <label className='focus-within:text-primary w-[45%] re1:w-auto'>
+              <span className='font-bold'>Ordenar Por</span>
+              <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
+                onInput={(event)=>{
+                  setOrder((event.target as HTMLSelectElement).value)
+                }}
+              >
+                <option disabled selected value='selecione'>Selecione</option>
+                {orderFilters.map(filter=>(
+                  <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+                ))}
+              </select>
+            </label>
           </div>
+
+          <div className='flex w-full justify-between'>
+            <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
+              {/* <LimparFiltros /> */}
+              {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
+              <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/>
+            </ul>
+
+            <div className='flex flex-col items-center w-full re1:w-[75%] px-4 re1:px-0'>
+              {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
+                <>
+                  {products.length > 0 ? (
+                    <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
+                      {products.map((product:any)=><Card product={product} />)}
+                    </div>
+                  ) : (
+                    <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
+                  )}
+                  {fetchLength===20 && 
+                  <button className='font-bold w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto my-6 re1:my-20' onClick={()=>{
+                    if(fetchLength===20){
+                      const {from,to}=fromTo
+                      setShowMore(true)
+                      setFromTo({from:from+20, to:to+20})
+                    }
+                  }}>{showMore ? <div className='loading loading-spinner'/> : 'Carregar mais Produtos'}</button>}
+                </>
+              )}
+            </div>
+          </div>
+          
+          {seoText && (
+            <div className='my-10 re1:my-8 px-4 re1:px-0'>
+              <button className={`font-bold mb-2 border-b border-b-primary ${hideDescSeo && 'relative top-32 re1:top-28'}`} onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
+              <div className={hideDescSeo ? 'line-clamp-4 max-h-24 re1:max-h-20' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || ''}} />
+            </div>)
+          }
         </div>
-        
-        {seoText && (
-          <div className='my-10 re1:my-8 px-4 re1:px-0'>
-            <button className={`font-bold mb-2 border-b border-b-primary ${hideDescSeo && 'relative top-32 re1:top-28'}`} onClick={()=>setHideDescSeo(!hideDescSeo)}>{hideDescSeo ? 'Ver mais' : 'Fechar'}</button>
-            <div className={hideDescSeo ? 'line-clamp-4 max-h-24 re1:max-h-20' : ''} dangerouslySetInnerHTML={{__html: replaceClasses(seoText || '') || ''}} />
-          </div>)
-        }
+        <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
+            <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
+              <span className='font-bold'>Filtros</span>
+              <FiltroMob filters={filters} id='divFlut'/>
+            </label>
+            <label className='focus-within:text-primary w-[45%] re1:w-auto'>
+              <span className='font-bold'>Ordenar Por:</span>
+              <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
+                onInput={event=>{
+                  setOrder((event.target as HTMLSelectElement).value)
+                  isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+                }}
+              >
+                <option disabled selected value='selecione'>Selecione</option>
+                {orderFilters.map(filter=>(
+                  <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+                ))}
+              </select>
+            </label>
+          </div>
       </div>
-      <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
-          <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
-            <span className='font-bold'>Filtros</span>
-            <FiltroMob filters={filters} id='divFlut'/>
-          </label>
-          <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-            <span className='font-bold'>Ordenar Por:</span>
-            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
-              onInput={event=>{
-                setOrder((event.target as HTMLSelectElement).value)
-                isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
-              }}
-            >
-              <option disabled selected value='selecione'>Selecione</option>
-              {orderFilters.map(filter=>(
-                <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-    </div>
     </>
   )
 }

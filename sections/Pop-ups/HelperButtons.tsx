@@ -33,7 +33,7 @@ const HelperButtons=({links}:Props)=>{
   },[])
 
   return (
-    <div className={`z-[10] fixed right-[20px] flex flex-col gap-3 items-end ${isPDP ? 'bottom-40' : 'bottom-28'}`}>
+    <div className={`z-[10] fixed right-[20px] flex flex-col gap-3 items-end ${isPDP ? 'bottom-40' : 'bottom-32'}`}>
       <Help links={links}/>
       <div className={showToTop ? '' : 'hidden'}>
         <ScrollToTop />
