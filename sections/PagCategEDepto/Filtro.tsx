@@ -65,9 +65,9 @@ const Filtro=({title, values}:Props)=>{
         </label>
         <ul ref={valuesList} className={`flex flex-col gap-2 bg-[#141414] overflow-y-auto max-h-[300px] re1:scrollbar-shp`}>
           {values.map(filter=>(
-            <li className='py-1 px-2 data-[filtered]:!hidden'>
+            <li className='py-1 px-2'>
               <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                <input id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-sm' data-fq={filter.Map}/>
+                <input id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={filter.Map}/>
                 <span className='line-clamp-1 text-sm'>{filter.Name}</span>
               </label>
             </li>

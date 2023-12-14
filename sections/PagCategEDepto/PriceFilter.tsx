@@ -53,7 +53,7 @@ const PriceFilter=({filtro}:Props)=>{
                     Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
                     Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
                   }
-                }} id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-sm' data-fq={filter.Map}/>
+                }} id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={filter.Map}/>
                 <span className='line-clamp-1 text-sm'>{filter.Name}</span>
               </label>
             </li>

@@ -1,5 +1,6 @@
 Precisa arrumar:
-
+  - Ajuste de filtros (multi seleção)
+  - Calculo de CEP na PDP
 Bugs pra arrumar: 
 
 Possiveis melhoras: 
