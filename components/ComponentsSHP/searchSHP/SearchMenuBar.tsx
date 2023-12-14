@@ -158,7 +158,7 @@ const SearchMenuBar=()=>{
 
   return(
     <>
-      <div className='hidden re1:flex gap-2 re1:ml-40 items-center w-[650px] relative'>
+      <div className='hidden re1:flex gap-2 re1:ml-20 items-center w-[35%] relative'>
         <div className='w-full relative'>
           <input
             ref={inputDesk}

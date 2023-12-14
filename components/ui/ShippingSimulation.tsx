@@ -8,19 +8,19 @@ import type {
   SimulationOrderForm,
   SKU,
   Sla,
-} from "deco-sites/std/packs/vtex/types.ts";
+} from "deco-sites/std/packs/vtex/types.ts"
 
 export interface Props {
-  items: Array<SKU>;
+  items: Array<SKU>
 }
 
 const formatShippingEstimate = (estimate: string) => {
-  const [, time, type] = estimate.split(/(\d+)/);
+  const [, time, type] = estimate.split(/(\d+)/)
 
-  if (type === "bd") return `${time} dias úteis`;
-  if (type === "d") return `${time} dias`;
-  if (type === "h") return `${time} horas`;
-};
+  if (type === "bd") return `${time} dias úteis`
+  if (type === "d") return `${time} dias`
+  if (type === "h") return `${time} horas`
+}
 
 function ShippingContent({ simulation }: {
   simulation: Signal<SimulationOrderForm | null>;
@@ -30,13 +30,13 @@ function ShippingContent({ simulation }: {
   const methods = simulation.value?.logisticsInfo?.reduce(
     (initial, { slas }) => [...initial, ...slas],
     [] as Sla[],
-  ) ?? [];
+  ) ?? []
 
   const locale = cart.value?.clientPreferencesData?.locale || "pt-BR"
-  const currencyCode = cart.value?.storePreferencesData?.currencyCode || "BRL"
+  const currencyCode = "BRL"
 
   if (simulation.value == null) {
-    return null;
+    return null
   }
 
   if (methods.length === 0) {
@@ -44,7 +44,7 @@ function ShippingContent({ simulation }: {
       <div class="p-2">
         <span>CEP inválido</span>
       </div>
-    );
+    )
   }
 
   return (
@@ -70,31 +70,31 @@ function ShippingContent({ simulation }: {
         sacola.
       </span>
     </ul>
-  );
+  )
 }
 
 function ShippingSimulation({ items }: Props) {
-  const postalCode = useSignal("");
-  const loading = useSignal(false);
-  const simulateResult = useSignal<SimulationOrderForm | null>(null);
-  const { simulate, cart } = useCart();
+  const postalCode = useSignal("")
+  const loading = useSignal(false)
+  const simulateResult = useSignal<SimulationOrderForm | null>(null)
+  const { simulate, cart } = useCart()
 
   const handleSimulation = useCallback(async () => {
     if (postalCode.value.length !== 8) {
-      return;
+      return
     }
 
     try {
-      loading.value = true;
+      loading.value = true
       simulateResult.value = await simulate({
         items: items,
         postalCode: postalCode.value,
         country: cart.value?.storePreferencesData.countryCode || "BRA",
-      });
+      })
     } finally {
-      loading.value = false;
+      loading.value = false
     }
-  }, []);
+  }, [])
 
   return (
     <div class="flex flex-col gap-2">
@@ -112,8 +112,8 @@ function ShippingSimulation({ items }: Props) {
         <form
           class="flex justify-between re1:w-80"
           onSubmit={(e) => {
-            e.preventDefault();
-            handleSimulation();
+            e.preventDefault()
+            handleSimulation()
           }}
         >
             <input
@@ -124,7 +124,7 @@ function ShippingSimulation({ items }: Props) {
               value={postalCode.value}
               maxLength={8}
               onChange={(e: { currentTarget: { value: string } }) => {
-                postalCode.value = e.currentTarget.value;
+                postalCode.value = e.currentTarget.value
               }}
             />
             <Button type="submit" loading={loading.value} class='bg-primary border-primary hover:border-primary hover:bg-primary'>
@@ -140,7 +140,7 @@ function ShippingSimulation({ items }: Props) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default ShippingSimulation;
