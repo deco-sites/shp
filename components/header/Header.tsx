@@ -134,7 +134,7 @@ const HeaderSHP = () => {
       </div>
       
       <div className='z-10 absolute re1:fixed top-0 w-full'>
-        <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-[#000] items-center justify-center re1:pt-4 re1:pb-10 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-28 re1:justify-around'>
+        <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-[#000] items-center justify-center re1:pt-4 re1:pb-10 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-28'>
           {isMobile && (
             <button /* menuBar */
               className='w-fit h-fit mr-auto re1:hidden'
@@ -150,7 +150,7 @@ const HeaderSHP = () => {
           <a href='/' className='w-[160px] h-auto mx-auto re1:mx-0'>
             <Image
               src='https://shopinfo.vteximg.com.br/arquivos/logoshopinfo-branco-188px.png'
-              alt='logo' width={160} height={47} preload fetchPriority='high' loading='eager' decoding='sync'
+              alt='logo' width={188} height={55} preload fetchPriority='high' loading='eager' decoding='sync'
             />
           </a>
 
@@ -196,7 +196,7 @@ const HeaderSHP = () => {
 
           <SearchMenuBar />
 
-          <div className='hidden re1:block w-[2px] h-2/4 bg-neutral'></div>
+          <div className='hidden re1:block w-[2px] h-2/4 bg-neutral mx-4'></div>
 
           <div className='hidden re1:flex gap-2 items-center'>
             <a href='https://api.shopinfo.com.br/rastreio/' className='flex items-center gap-1'>

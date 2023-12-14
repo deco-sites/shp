@@ -104,7 +104,7 @@ const PC = ({ ...props }: PCProps) => {
             type='checkbox'
             name='compare'
             id='COMPARE-PC'
-            className='checked:rounded-full checked:bg-red-500'
+            className='checked:rounded-full checked:bg-[#dd1f26]'
           />
           <p>Compare</p>
         </label>
