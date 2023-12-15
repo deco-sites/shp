@@ -2,7 +2,7 @@ import { Signal, useSignal } from '@preact/signals'
 import { useCallback } from 'preact/hooks'
 import Button from '$store/components/ui/Button.tsx'
 import { formatPrice } from '$store/sdk/format.ts'
-import { useCart } from 'deco-sites/std/packs/vtex/hooks/useCart.ts'
+import { useCart } from 'apps/vtex/hooks/useCart.ts'
 import Image from 'deco-sites/std/components/Image.tsx'
 import type {
   SimulationOrderForm,
@@ -11,7 +11,7 @@ import type {
 } from "deco-sites/std/packs/vtex/types.ts"
 
 export interface Props {
-  items: Array<SKU>
+  items: SKU[]
 }
 
 const formatShippingEstimate = (estimate: string) => {
@@ -33,7 +33,7 @@ function ShippingContent({ simulation }: {
   ) ?? []
 
   const locale = cart.value?.clientPreferencesData?.locale || "pt-BR"
-  const currencyCode = "BRL"
+  const currencyCode = cart.value?.storePreferencesData.currencyCode || "BRL"
 
   if (simulation.value == null) {
     return null
@@ -50,7 +50,7 @@ function ShippingContent({ simulation }: {
   return (
     <ul className="flex flex-col gap-4 p-4 bg-[#272727] rounded-[4px]">
       {methods.map((method) => (
-        <li className="flex justify-between items-center border-base-200 not-first-child:border-t">
+        <li className="flex gap-4 re1:justify-between re1:gap-0 items-center border-base-200 not-first-child:border-t">
           <span className="text-button text-center">
             Entrega {method.name}
           </span>
@@ -89,7 +89,7 @@ function ShippingSimulation({ items }: Props) {
       simulateResult.value = await simulate({
         items: items,
         postalCode: postalCode.value,
-        country: "BRA",
+        country: cart.value?.storePreferencesData.countryCode || "BRA",
       })
     } finally {
       loading.value = false
