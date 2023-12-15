@@ -4,11 +4,12 @@ import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNaveg
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
-import LimparFiltros from 'deco-sites/shp/sections/PagCategEDepto/LimparFiltros.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
+import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import { signal } from '@preact/signals'
 
 export interface Props{
   titleCategoria?:string
@@ -60,9 +61,65 @@ interface SpecObj{
   Slug?:string
 }
 
-interface FiltroObj{
-  label:string
-  value:string
+const selectedFiltersSignal=signal<Array<{fq:string, value:string}>>([])
+
+const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
+  const [open,setOpen]=useState(true)
+  const [selectedFilters, setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
+
+  useEffect(()=>{
+    setSelectedFilters(filters)
+  },[filters])
+
+  if(!filters.length) return null
+
+  return(
+    <div className='w-full flex flex-col bg-base-100 re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>
+      <div className='flex flex-col gap-2 px-3 py-5'>
+        <h5 className='flex justify-between cursor-pointer'
+          onClick={()=>setOpen(!open)}
+        >
+          Filtrado por:
+          <Icon 
+            id={open ? 'ChevronUp' : 'ChevronDown'}
+            size={12}
+            strokeWidth={2}
+          />
+        </h5>
+        <p className='underline text-sm ml-auto cursor-pointer hover:text-primary' onClick={()=>{selectedFiltersSignal.value=[]}}>Limpar filtros</p>
+      </div>
+      <div className={`${open ? 'max-h-[340px]' : 'max-h-0'} trasition-[max-height] overflow-hidden duration-500 ease-in-out`}>
+        <ul className={`flex flex-col gap-2 bg-[#141414] overflow-y-auto max-h-[300px] re1:scrollbar-shp`}>
+          {filters.map(filter=>{
+            let name=''
+
+            if(filter.fq==='P'){
+              const decoded=decodeURI(filter.value).split('')
+              decoded.pop()
+              decoded.shift()
+
+              const [min,max]=decoded.join('').split(' TO ')
+
+              name=`${parseFloat(min).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} - ${parseFloat(max).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}`
+            }else{name=decodeURI(filter.value)}
+
+            return (
+              <li className='py-1 px-2'>
+                <label className='flex justify-start gap-2 cursor-pointer items-center'>
+                  <input id='filter' type='checkbox' value={filter.value} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={filter.fq}
+                    onInput={(event:Event)=>{
+                      !(event.target as HTMLInputElement).checked && (selectedFiltersSignal.value=selectedFilters.filter(obj=>!(obj.fq===filter.fq && obj.value===filter.value)))
+                    }}
+                  />
+                  <span className='text-sm'>{name}</span>
+                </label>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    </div>
+  )
 }
 
 export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria='', iconesNavegacionais}:Props)=>{
@@ -280,6 +337,8 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
     setShowMore(false)
   }
 
+  useEffect(()=>{setSelectedFilters(selectedFiltersSignal.value)},[selectedFiltersSignal.value])
+
   useEffect(()=>{
     typeof window!=='undefined' && setFromTo({from:0, to:19})
     const filterValues=selectedFilters.map(filter=>filter.value)
@@ -292,7 +351,6 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
 
     PCs.length && removeAll()
 
-    console.log(selectedFilters)
   },[selectedFilters])
 
   useEffect(()=>{
@@ -493,7 +551,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
 
           <div className='flex w-full justify-between'>
             <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
-              {/* <LimparFiltros /> */}
+              <LimparFiltros filters={selectedFilters}/>
               {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
               <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/>
             </ul>
