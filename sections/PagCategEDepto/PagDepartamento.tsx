@@ -135,6 +135,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   const [divFlut, setDivFlut]=useState(false)
   const [showMore, setShowMore]=useState(false)
   const [path,setPath]=useState<string[]>([titleCategoria])
+  const [prodsResources, setProdsResources]=useState('')
 
   const {PCs, removeAll}=useCompareContext()
 
@@ -331,10 +332,13 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
     const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
     const data= await fetchProducts(queryString.join('&'))
-    setFetchLength(data.length)
-    fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
-    setLoading(false)
-    setShowMore(false)
+    if(data){
+      setFetchLength(data.products.length)
+      fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data.products]) : setProducts(data.products)
+      setProdsResources(data.productsResources?.split('/').pop() ?? '')
+      setLoading(false)
+      setShowMore(false)
+    }
   }
 
   useEffect(()=>{setSelectedFilters(selectedFiltersSignal.value)},[selectedFiltersSignal.value])
@@ -531,19 +535,21 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
           
           <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
             <label className='w-[45%]' ref={filterLabel}>
-              <span className='font-bold'>Filtros</span>
+              <span className='font-bold hidden re1:block'>Filtros</span>
               <FiltroMob filters={filters} id='menu'/>
             </label>
-            <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-              <span className='font-bold'>Ordenar Por</span>
-              <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
+            <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+              after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
+            >
+              <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
+              <select id='order' className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
                 onInput={(event)=>{
                   setOrder((event.target as HTMLSelectElement).value)
                 }}
               >
                 <option disabled selected value='selecione'>Selecione</option>
                 {orderFilters.map(filter=>(
-                  <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+                  <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
                 ))}
               </select>
             </label>
@@ -560,14 +566,24 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
               {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
                 <>
                   {products.length > 0 ? (
-                    <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                      {products.map((product:any)=><Card product={product} />)}
-                    </div>
+                    <>
+                      <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
+                        {products.map((product:any)=><Card product={product} />)}
+                      </div>
+
+                      <div className='text-sm re1:text-base text-center mt-10'>
+                        <p>Mostrando <b className='font-bold'>{products.length} de {prodsResources}</b></p>
+                        <div className='bg-white w-[220px] re1:w-[360px] h-[8px] rounded-[4px] overflow-hidden'>
+                          <div className='h-full bg-primary rounded-[4px] transition-[width] w-0 duration-500 ease-in-out' 
+                          style={{width:(100*products.length/parseInt(prodsResources)) + '%'}}/>
+                        </div>
+                      </div>
+                    </>
                   ) : (
                     <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
                   )}
                   {fetchLength===20 && 
-                  <button className='font-bold w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto my-6 re1:my-20' onClick={()=>{
+                  <button className='font-bold w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto my-6 re1:mb-20 re1:mt-8' onClick={()=>{
                     if(fetchLength===20){
                       const {from,to}=fromTo
                       setShowMore(true)
@@ -588,20 +604,20 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
         </div>
         <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
             <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
-              <span className='font-bold'>Filtros</span>
               <FiltroMob filters={filters} id='divFlut'/>
             </label>
-            <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-              <span className='font-bold'>Ordenar Por:</span>
-              <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
-                onInput={event=>{
+            <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+              after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
+            >
+              <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
+              <select id='order'  className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
+                onInput={(event)=>{
                   setOrder((event.target as HTMLSelectElement).value)
-                  isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
                 }}
               >
                 <option disabled selected value='selecione'>Selecione</option>
                 {orderFilters.map(filter=>(
-                  <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+                  <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
                 ))}
               </select>
             </label>

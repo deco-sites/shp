@@ -13,7 +13,11 @@ const loader=async ({queryString}:Props)=>{
     }else if(text.split('')[0]==='<'){
       return
     }else{
-      return resp.json()
+      const products= await resp.json()
+      const productsResources= resp.headers.get('resources')
+
+      const finalObj={products, productsResources}
+      return finalObj
     }
   }).catch(err=>console.error('Error: ',err))
 }

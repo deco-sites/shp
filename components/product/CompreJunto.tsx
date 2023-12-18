@@ -59,54 +59,49 @@ const CompreJunto=({page}:Props)=>{
       const fetchItems = async () => {
         const itemsPromises:JSX.Element[] =[]
         data.forEach(async (obj, index) => {
-          let fetch
           try {
-            fetch = await loaderSearchAPI(obj.sku)
+            const fetch = await loaderSearchAPI(obj.sku)
+            if(fetch && fetch.products.length) {
+              const image = fetch.products[0]!.items[0].images[0].imageUrl
+              const name = fetch.products[0]!.productName
+              const price= fetch.products[0]!.items[0].sellers[0].commertialOffer.Installments[0].Value
+              const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),15)
+              // const finalPriceArr=priceComPromoEPix
+              // finalPriceArr[finalPriceArr.lastIndexOf('.')]=','
+              // const finalPrice=finalPriceArr.join('')
+              const link='/'+fetch.products[0]!.linkText+'/p'
+
+              const skuProdB=obj.sku.includes(product.sku) ? obj.sku.replace(product.sku, '').replace(',','') : obj.sku
+    
+              itemsPromises.push(
+                <Slider.Item index={index} className='carousel-item flex flex-col re1:flex-row gap-2 w-full items-center'>
+                  <Image className='max-w-[85%] re1:max-w-[35%]' src={image} width={180} height={180} decoding='sync' fetchPriority='auto' loading='lazy' />
+                  <div className='flex-col'>
+                    <a href={link} className='text-xs re1:text-[16px] max-h-[66px] line-clamp-2 re1:line-clamp-3 text-left re1:leading-[22px]'>{name}</a>
+                    <div>
+                      <div>
+                        <p className='text-sm font-bold text-primary'>por mais</p>
+                        <span className='text-lg font-bold flex items-baseline'>{finalPrice.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}<p className='text-primary text-xs ml-1'>no pix</p></span>
+                      </div>
+                      <button data-skus={`['${product.sku}', '${skuProdB}']`} 
+                        class="btn no-animation w-full hidden re1:flex gap-3 bg-primary border-primary hover:border-primary hover:bg-primary"
+                        onClick={(event)=>console.log((event.target as HTMLButtonElement).getAttribute('data-skus') || ((event.target as HTMLElement).parentElement as HTMLButtonElement).getAttribute('data-skus'))}
+                      >
+                        <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png'
+                          width={22} height={20} decoding='auto' fetchPriority='high' loading='eager' className='w-[10%]'
+                        />
+                        <p className='font-bold text-secondary capitalize'>Comprar junto</p>
+                      </button>
+                    </div>
+                  </div>
+                </Slider.Item>
+              )
+            }
           } catch (error) {
             console.error(error)
           }
-
-          if(fetch[0]) {
-            const image = fetch[0].items[0].images[0].imageUrl
-            const name = fetch[0].productName
-            const price= fetch[0].items[0].sellers[0].commertialOffer.Installments[0].Value
-            const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),15)
-            // const finalPriceArr=priceComPromoEPix
-            // finalPriceArr[finalPriceArr.lastIndexOf('.')]=','
-            // const finalPrice=finalPriceArr.join('')
-            const link='/'+fetch[0].linkText+'/p'
-
-            const skuProdB=obj.sku.includes(product.sku) ? obj.sku.replace(product.sku, '').replace(',','') : obj.sku
-      
-            itemsPromises.push(
-              <Slider.Item index={index} className='carousel-item flex flex-col re1:flex-row gap-2 w-full items-center'>
-                <Image className='max-w-[85%] re1:max-w-[35%]' src={image} width={180} height={180} decoding='sync' fetchPriority='auto' loading='lazy' />
-                <div className='flex-col'>
-                  <a href={link} className='text-xs re1:text-[16px] max-h-[66px] line-clamp-2 re1:line-clamp-3 text-left re1:leading-[22px]'>{name}</a>
-                  <div>
-                    <div>
-                      <p className='text-sm font-bold text-primary'>por mais</p>
-                      <span className='text-lg font-bold flex items-baseline'>{finalPrice.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}<p className='text-primary text-xs ml-1'>no pix</p></span>
-                    </div>
-                    <button data-skus={`['${product.sku}', '${skuProdB}']`} 
-                      class="btn no-animation w-full hidden re1:flex gap-3 bg-primary border-primary hover:border-primary hover:bg-primary"
-                      onClick={(event)=>console.log((event.target as HTMLButtonElement).getAttribute('data-skus') || ((event.target as HTMLElement).parentElement as HTMLButtonElement).getAttribute('data-skus'))}
-                    >
-                      <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png'
-                        width={22} height={20} decoding='auto' fetchPriority='high' loading='eager' className='w-[10%]'
-                      />
-                      <p className='font-bold text-secondary capitalize'>Comprar junto</p>
-                  </button>
-                  </div>
-
-                </div>
-              </Slider.Item>
-            )
-          }
-
-          
         })
-    
+
         const resolvedItems = await Promise.all(itemsPromises)
         if(resolvedItems.length){
           setHtmlContent([

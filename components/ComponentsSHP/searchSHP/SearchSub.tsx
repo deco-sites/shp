@@ -292,10 +292,12 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
     const queryString=[`fq=C:/${fqValue}/`,...fqsFilter,`ft=${termo}`,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
     const data= await fetchProducts(queryString.join('&'))
-    setFetchLength(data.length)
-    fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data]) : setProducts(data)
-    setLoading(false)
-    setShowMore(false)
+    if(data){
+      setFetchLength(data.products.length)
+      fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data.products]) : setProducts(data.products)
+      setLoading(false)
+      setShowMore(false)
+    }
   }
 
   useEffect(()=>{

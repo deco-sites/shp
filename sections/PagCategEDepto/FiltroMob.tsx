@@ -44,8 +44,9 @@ const FiltroMob=({ filters, id }:Props)=>{
 
   return(
     <div className='re1:hidden' >
-      <button className='bg-transparent border border-secondary w-full h-12 px-10 rounded-lg' onClick={openModal}>
-        <Image className='mx-auto' src='https://shopinfo.vteximg.com.br/arquivos/filterIcon.png' width={35} height={30}/>
+      <button className='flex bg-transparent border border-secondary w-full h-12 px-10 items-center justify-center gap-2' onClick={openModal}>
+        <Image className='mx-auto' src='https://shopinfo.vteximg.com.br/arquivos/filterIcon.png' width={15} height={15}/>
+        <p>Filtros</p>
       </button>
 
       <dialog id={id} ref={modal} className='bg-base-100 min-h-full min-w-[100vw] overflow-x-hidden overflow-y-auto'>
