@@ -1,17 +1,31 @@
+// deno-lint-ignore-file no-explicit-any
 import Image from 'deco-sites/std/components/Image.tsx'
+import {invoke} from 'deco-sites/shp/runtime.ts'
+import {useEffect, useState} from 'preact/hooks'
 
 export interface Props {
   peca: Array<{
     iconUrl: string
     name: string
-    options: Array<{
-      placeholder: string
-      value: string
-    }>
   }>
 }
 
+const fetchFilters=async (idCateg:string)=>await invoke['deco-sites/shp'].loaders.getFacetsByCategId({categoryId:idCateg})
+
 const PCGamerIdeal = ({ peca = [] }: Props) => {
+  const [filters, setFilters]=useState<any>()
+  
+  useEffect(()=>{
+    (async()=>{
+      const data=await fetchFilters('10')
+      setFilters(data)
+    })()
+  },[])
+
+  useEffect(()=>{
+    console.log(filters)
+  },[filters])
+
   return (
     <div className='my-5'>
       <p className='text-center text-2xl font-bold text-neutral'>
@@ -36,9 +50,9 @@ const PCGamerIdeal = ({ peca = [] }: Props) => {
                 className='bg-transparent rounded-lg text-sm re1:text-base p-2 py-1 border-neutral-400 border-[2px] appearance-none outline-none pr-6'
               >
                 <option value='Todos os valores'>Todas as Opções</option>
-                {peca.options?.map((option) => (
+                {/* {peca.options?.map((option) => (
                   <option value={option.value}>{option.placeholder}</option>
-                ))}
+                ))} */}
               </select>
             </div>
           </div>
