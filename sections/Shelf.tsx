@@ -36,7 +36,7 @@ const Shelf=({data}:SectionProps<typeof loader>)=>{
   })
 
   return(
-    <Vitrine PcGamer produtos={products}/>
+    <Vitrine produtos={products}/>
   )
 }
 
