@@ -16,7 +16,7 @@ const ProdFogo = ({...props}: Props) => {
   const {days, hours, minutes, seconds} = props.timeRemaining || {days:'00', hours:'00', minutes:'00', seconds:'00'};
 
   return (
-    <a href={props.productUrl} className="flex flex-col w-72 justify-between rounded-lg bg-secondary p-2 h-44">
+    <a href={props.productUrl} className="bg-[#262626] flex flex-col w-72 justify-between rounded-lg p-2 h-44">
       <label className="flex h-8 justify-between z-[5]">
         <div className="bg-primary rounded-lg flex justify-around p-1 items-center w-40">
           <Image width={16} height={20} src="https://shopinfo.vteximg.com.br/arquivos/icon-esquenta-black.png"
@@ -39,14 +39,14 @@ const ProdFogo = ({...props}: Props) => {
         />
 
         <div className="flex flex-col max-w-[200px] overflow-hidden">
-          <span className="text-xs text-black font-bold line-clamp-3">
+          <span className="text-xs text-secondary font-bold line-clamp-3">
             {props.nome}
           </span>
 
           <span className="text-lg text-primary font-bold">
             10x {props.preco10.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
           </span>
-          <p className="text-xs font-semibold">ou por {parseFloat(props.precoPIX.toString()).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
+          <p className="text-xs font-semibold text-[rgba(255,255,255,.7)]">ou por {parseFloat(props.precoPIX.toString()).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </div>
       </div>
     </a>
