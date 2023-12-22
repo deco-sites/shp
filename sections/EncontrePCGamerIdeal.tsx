@@ -37,7 +37,7 @@ const PCGamerIdeal = () => {
   const armsSelect=useRef<HTMLSelectElement>(null)
 
   const handleSearch=async()=>{
-    const queryStringArr:string[]=[]
+    const queryStringArr:string[]=['fq:C/10/']
     if(placasSelect.current?.value && placasSelect.current?.value!=='all'){queryStringArr.push(`fq=${placasSelect.current?.value}`)}
     if(processadoresSelect.current?.value && processadoresSelect.current?.value!=='all'){queryStringArr.push(`fq=${processadoresSelect.current?.value}`)}
     if(memoriasSelect.current?.value && memoriasSelect.current?.value!=='all'){queryStringArr.push(`fq=${memoriasSelect.current?.value}`)}
@@ -124,111 +124,111 @@ const PCGamerIdeal = () => {
 
   return (
     <div className='my-5 flex flex-col justify-center items-center'>
-      <p className='text-center text-2xl font-bold text-neutral'>
+      <p className='text-center text-2xl font-bold text-secondary'>
         Encontre seu Pc Gamer Ideal
       </p>
-      {loading && <div className='loading loading-spinner loading-lg text-primary m-auto'/> }
+      {loading && <div className='loading loading-spinner loading-lg text-primary mx-auto my-4'/> }
       <div className={`${loading ? '!hidden' : ''} grid grid-cols-2 mx-2 my-4 rounded-lg text-white gap-4 re1:flex re1:justify-center`}>
-        <div className='flex flex-col justify-center items-center w-full re1:w-[17.5%]'>
-            <label className='flex gap-1 items-center h-[25px]'>
+        <div className='flex flex-col justify-center items-start w-full re1:w-[17.5%]'>
+            <label className='flex gap-1 items-center h-[25px] mb-1'>
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-placadevideo.svg' width={25} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
               />
               <p className='text-sm re1:text-lg font-bold'>Placa de Vídeo</p>
             </label>
             <div
-              className='w-full after:ml-auto after:mr-1.5 after:mt-[-20px] after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png)] after:bg-no-repeat 
+              className='w-full h-[35px] re1:h-[50px] after:ml-auto after:mr-1.5 after:mt-[-20px] after:re1:mt-[-28px] after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png)] after:bg-no-repeat 
               after:bg-right after:flex after:w-[15px] after:h-[15px] after:rotate-90'
             >
               <select
                 onChange={handleSelect}
                 ref={placasSelect}
                 name='select placaVideo'
-                className='max-w-full text-sm re1:text-base rounded-lg border-neutral-400 border-[2px] appearance-none !outline-none pl-1 pr-6 py-1'
+                className='w-full max-w-full h-full text-sm bg-[#272727] border-[#3A3838] border-[2px] appearance-none !outline-none pl-[5px] pr-6 py-1'
               >
                 <option value='all'>Todas as Opções</option>
                 {placas.map(filter => (
-                  <option className='data-[filtered]:hidden text-xs re1:text-sm line-clamp-1 w-full overflow-x-hidden' title={filter.Name} value={`${filter.Map}:${filter.Value}`}>{filter.Name}</option>
+                  <option className='data-[filtered]:hidden text-xs line-clamp-1 w-full overflow-x-hidden' title={filter.Name} value={`${filter.Map}:${filter.Value}`}>{filter.Name}</option>
                 ))}
               </select>
             </div>
           </div>
 
-          <div className='flex flex-col justify-center items-center w-full re1:w-[17.5%]'>
-            <label className='flex gap-1 items-center h-[25px]'>
+          <div className='flex flex-col justify-center items-start w-full re1:w-[17.5%]'>
+            <label className='flex gap-1 items-center h-[25px] mb-1'>
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-processador.svg' width={25} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
               />
               <p className='text-sm re1:text-lg font-bold'>Processador</p>
             </label>
             <div
-              className='w-full after:ml-auto after:mr-1.5 after:mt-[-20px] after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png)] after:bg-no-repeat 
+              className='w-full h-[35px] re1:h-[50px] after:ml-auto after:mr-1.5 after:mt-[-20px] after:re1:mt-[-28px] after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png)] after:bg-no-repeat 
               after:bg-right after:flex after:w-[15px] after:h-[15px] after:rotate-90'
             >
               <select
                 onChange={handleSelect}
                 ref={processadoresSelect}
                 name='select processador'
-                className='max-w-full text-sm re1:text-base rounded-lg border-neutral-400 border-[2px] appearance-none !outline-none pl-1 pr-6 py-1'
+                className='w-full max-w-full h-full text-sm bg-[#272727] border-[#3A3838] border-[2px] appearance-none !outline-none pl-[5px] pr-6 py-1'
               >
                 <option value='all'>Todas as Opções</option>
                 {processadores.map(filter => (
-                  <option className='data-[filtered]:hidden text-xs re1:text-sm line-clamp-1 w-full overflow-x-hidden' title={filter.Name} value={`${filter.Map}:${filter.Value}`}>{filter.Name}</option>
+                  <option className='data-[filtered]:hidden text-xs line-clamp-1 w-full overflow-x-hidden' title={filter.Name} value={`${filter.Map}:${filter.Value}`}>{filter.Name}</option>
                 ))}
               </select>
             </div>
           </div>
 
-          <div className='flex flex-col justify-center items-center w-full re1:w-[17.5%]'>
-            <label className='flex gap-1 items-center h-[25px]'>
+          <div className='flex flex-col justify-center items-start w-full re1:w-[17.5%]'>
+            <label className='flex gap-1 items-center h-[25px] mb-1'>
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg' width={25} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
               />
               <p className='text-sm re1:text-lg font-bold'>Memória</p>
             </label>
             <div
-              className='w-full after:ml-auto after:mr-1.5 after:mt-[-20px] after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png)] after:bg-no-repeat 
+              className='w-full h-[35px] re1:h-[50px] after:ml-auto after:mr-1.5 after:mt-[-20px] after:re1:mt-[-28px] after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png)] after:bg-no-repeat 
               after:bg-right after:flex after:w-[15px] after:h-[15px] after:rotate-90'
             >
               <select
                 onChange={handleSelect}
                 ref={memoriasSelect}
                 name='select memoria'
-                className='max-w-full text-sm re1:text-base rounded-lg border-neutral-400 border-[2px] appearance-none !outline-none pl-1 pr-6 py-1'
+                className='w-full max-w-full h-full text-sm bg-[#272727] border-[#3A3838] border-[2px] appearance-none !outline-none pl-[5px] pr-6 py-1'
               >
                 <option value='all'>Todas as Opções</option>
                 {memorias.map(filter => (
-                  <option className='data-[filtered]:hidden text-xs re1:text-sm line-clamp-1 w-full overflow-x-hidden' title={filter.Name} value={`${filter.Map}:${filter.Value}`}>{filter.Name}</option>
+                  <option className='data-[filtered]:hidden text-xs line-clamp-1 w-full overflow-x-hidden' title={filter.Name} value={`${filter.Map}:${filter.Value}`}>{filter.Name}</option>
                 ))}
               </select>
             </div>
           </div>
 
-          <div className='flex flex-col justify-center items-center w-full re1:w-[17.5%]'>
-            <label className='flex gap-1 items-center h-[25px]'>
+          <div className='flex flex-col justify-center items-start w-full re1:w-[17.5%]'>
+            <label className='flex gap-1 items-center h-[25px] mb-1'>
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg' width={25} height={20} preload fetchPriority='high' loading='eager' decoding='sync'
               />
               <p className='text-sm re1:text-lg font-bold'>HD/SSD</p>
             </label>
             <div
-              className='w-full after:ml-auto after:mr-1.5 after:mt-[-20px] after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png)] after:bg-no-repeat 
+              className='w-full h-[35px] re1:h-[50px] after:ml-auto after:mr-1.5 after:mt-[-20px] after:re1:mt-[-28px] after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png)] after:bg-no-repeat 
               after:bg-right after:flex after:w-[15px] after:h-[15px] after:rotate-90'
             >
               <select
                 onChange={handleSelect}
                 ref={armsSelect}
                 name='select HdSsd'
-                className='max-w-full text-sm re1:text-base rounded-lg border-neutral-400 border-[2px] appearance-none !outline-none pl-1 pr-6 py-1'
+                className='w-full max-w-full h-full text-sm bg-[#272727] border-[#3A3838] border-[2px] appearance-none !outline-none pl-[5px] pr-6 py-1'
               >
                 <option value='all'>Todas as Opções</option>
                 {arms.map(filter => (
-                  <option className='data-[filtered]:hidden text-xs re1:text-sm line-clamp-1 w-full overflow-x-hidden' title={filter.Name} value={`${filter.Map}:${filter.Value}`}>{filter.Name}</option>
+                  <option className='data-[filtered]:hidden text-xs line-clamp-1 w-full overflow-x-hidden' title={filter.Name} value={`${filter.Map}:${filter.Value}`}>{filter.Name}</option>
                 ))}
               </select>
             </div>
           </div>
-        <button className='bg-primary text-lg w-[200px] re1:flex rounded-lg text-secondary pl-[45px] py-[6px] h-[31px] items-center justify-center hidden self-end' onClick={handleSearch}>
+        <button className='bg-primary text-lg w-[200px] re1:flex rounded-lg text-secondary pl-[45px] h-[50px] items-center justify-center hidden self-end' onClick={handleSearch}>
           <b>Buscar</b>
           <svg
             xmlns='http://www.w3.org/2000/svg'

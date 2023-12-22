@@ -29,8 +29,6 @@ const loadingPromises=signal(false)
 const BTNFinal= () => {
   const { games }: GameContextType = useGameContext()
 
-  useEffect(()=>console.log(games),[games])
-
   const [jogos, setJogos]=useState<string[]>([])
 
   const [systems60, setSys60]=useState<string[]>([])
@@ -267,7 +265,7 @@ const selectGames=({ Games=[], bannerUrl }:Props)=>{
 
 
       <div className='flex flex-col items-center w-[90vw] re1:w-[70vw] mx-auto gap-8'>
-        { (bannerUrl!==undefined && window.location.pathname!=='/') && (
+        { (bannerUrl!==undefined && window.location.pathname!=='/') ? (
           <>
             <div className='absolute top-0 z-[-1] '>
               <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
@@ -277,7 +275,7 @@ const selectGames=({ Games=[], bannerUrl }:Props)=>{
 
             <h1 className='font-bold text-secondary re1:text-6xl text-3xl mb-4 text-center'>E aí? Vai jogar o que?</h1>
           </>
-        )}
+        ):null}
         <div className='flex flex-col items-center justify-center w-4/6'>
           <h1 className='font-bold text-secondary re1:text-3xl text-xl mb-4 text-center'>Encontre o PC Gamer Completo para seus Jogos</h1>
           <div className='flex items-center justify-center gap-5 re1:text-base text-sm'>
