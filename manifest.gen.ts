@@ -4,11 +4,12 @@
 
 import * as $$$0 from "./loaders/getBuyTogetherValuesBySku.ts";
 import * as $$$1 from "./loaders/getFacetsByCategId.ts";
-import * as $$$2 from "./loaders/getParamFps.ts";
-import * as $$$3 from "./loaders/getProductsSearchAPI.ts";
-import * as $$$4 from "./loaders/getProductsSearchAPIProdType.ts";
-import * as $$$5 from "./loaders/getSubCategories.ts";
-import * as $$$6 from "./loaders/getTrustvox.ts";
+import * as $$$2 from "./loaders/getFacetsQueryString.ts";
+import * as $$$3 from "./loaders/getParamFps.ts";
+import * as $$$4 from "./loaders/getProductsSearchAPI.ts";
+import * as $$$5 from "./loaders/getProductsSearchAPIProdType.ts";
+import * as $$$6 from "./loaders/getSubCategories.ts";
+import * as $$$7 from "./loaders/getTrustvox.ts";
 import * as $$$$$$0 from "./sections/Acessorios.tsx";
 import * as $$$$$$1 from "./sections/BannerGrid.tsx";
 import * as $$$$$$2 from "./sections/BannerPLP.tsx";
@@ -69,11 +70,12 @@ const manifest = {
   "loaders": {
     "deco-sites/shp/loaders/getBuyTogetherValuesBySku.ts": $$$0,
     "deco-sites/shp/loaders/getFacetsByCategId.ts": $$$1,
-    "deco-sites/shp/loaders/getParamFps.ts": $$$2,
-    "deco-sites/shp/loaders/getProductsSearchAPI.ts": $$$3,
-    "deco-sites/shp/loaders/getProductsSearchAPIProdType.ts": $$$4,
-    "deco-sites/shp/loaders/getSubCategories.ts": $$$5,
-    "deco-sites/shp/loaders/getTrustvox.ts": $$$6,
+    "deco-sites/shp/loaders/getFacetsQueryString.ts": $$$2,
+    "deco-sites/shp/loaders/getParamFps.ts": $$$3,
+    "deco-sites/shp/loaders/getProductsSearchAPI.ts": $$$4,
+    "deco-sites/shp/loaders/getProductsSearchAPIProdType.ts": $$$5,
+    "deco-sites/shp/loaders/getSubCategories.ts": $$$6,
+    "deco-sites/shp/loaders/getTrustvox.ts": $$$7,
   },
   "sections": {
     "deco-sites/shp/sections/Acessorios.tsx": $$$$$$0,
