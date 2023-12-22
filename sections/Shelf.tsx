@@ -1,9 +1,10 @@
 import { useState, useCallback, useEffect } from 'preact/hooks'
-import Vitrine from 'deco-sites/shp/sections/Vitrine.tsx'
 import type { SectionProps } from '$live/mod.ts'
 import type { Product } from 'apps/commerce/types.ts'
 import { LoaderContext } from '$live/mod.ts'
 import type {Manifest}  from 'deco-sites/shp/manifest.gen.ts'
+import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
 
 export interface Props {
   fqType: string
@@ -29,14 +30,22 @@ export const loader: (
 }
 
 const Shelf=({data}:SectionProps<typeof loader>)=>{
-  const [products,setProducts]=useState<Product[]>([])
+  const [produtos,setProdutos]=useState<Product[]>([])
 
   useEffect(()=>{
-    setProducts(data)
+    setProdutos(data)
   })
 
   return(
-    <Vitrine produtos={products}/>
+    <CompareContextProvider>
+      <div className='my-5'>
+        <div
+          className={`grid grid-cols-2 gap-x-2 gap-y-2 w-[90vw] re1:grid-cols-4 re1:w-[50vw] re1:gap-x-3 re1:gap-y-3 mx-auto`}
+        >
+          {produtos.map(element=><Card product={element} pix={'12'}/>)}
+        </div>
+      </div>
+    </CompareContextProvider>
   )
 }
 
