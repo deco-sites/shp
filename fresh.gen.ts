@@ -13,6 +13,7 @@ import * as $CompareIsland from "./islands/CompareIsland.tsx";
 import * as $CompreJuntoIsland from "./islands/CompreJuntoIsland.tsx";
 import * as $DescriptionIsland from "./islands/DescriptionIsland.tsx";
 import * as $DetailsIsland from "./islands/DetailsIsland.tsx";
+import * as $EncontrePCGamerIdealIsland from "./islands/EncontrePCGamerIdealIsland.tsx";
 import * as $GameContextIsland from "./islands/GameContextIsland.tsx";
 import * as $GamesIsland from "./islands/GamesIsland.tsx";
 import * as $HeaderIsland from "./islands/HeaderIsland.tsx";
@@ -55,6 +56,7 @@ const manifest = {
     "./islands/CompreJuntoIsland.tsx": $CompreJuntoIsland,
     "./islands/DescriptionIsland.tsx": $DescriptionIsland,
     "./islands/DetailsIsland.tsx": $DetailsIsland,
+    "./islands/EncontrePCGamerIdealIsland.tsx": $EncontrePCGamerIdealIsland,
     "./islands/GameContextIsland.tsx": $GameContextIsland,
     "./islands/GamesIsland.tsx": $GamesIsland,
     "./islands/HeaderIsland.tsx": $HeaderIsland,

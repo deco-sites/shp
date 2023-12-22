@@ -51,7 +51,7 @@ const ProdCard=({...props}:CardProps)=>{
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
       </div>
       <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-4'>
-        <p className='text-sm line-clamp-2 px-3'>
+        <p className='text-sm line-clamp-2 px-3 text-secondary'>
           {prodName}
         </p>
         <div className='flex items-center justify-center my-[20px]'> 
@@ -137,7 +137,7 @@ const PcCard=({...props}:CardPCProps)=>{
               loading='lazy'
               fetchPriority='low' decoding='sync'
             />
-            <p className='text-[12px] line-clamp-1'>{memoria}</p>
+            <p className='text-[12px] line-clamp-1 text-secondary'>{memoria}</p>
           </label>
           <label className='flex items-center gap-1 w-[80px]' title={(arm.includes('HD') || arm.includes('SSD')) ? armazenamento: `${tipoArm} ${arm}`}>
             <Image
@@ -147,7 +147,7 @@ const PcCard=({...props}:CardPCProps)=>{
               loading='lazy'
               fetchPriority='low' decoding='sync'
             />
-            <p className='text-[12px] line-clamp-1'>{(arm.includes('HD') || arm.includes('SSD')) ? 
+            <p className='text-[12px] line-clamp-1 text-secondary'>{(arm.includes('HD') || arm.includes('SSD')) ? 
               armazenamento: `${tipoArm} ${arm}`}
             </p>
           </label>

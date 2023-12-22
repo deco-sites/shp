@@ -199,7 +199,7 @@ const selectGames=({ Games=[], bannerUrl }:Props)=>{
 
   useEffect(() => {
     // gambiarra pra trocar a cor do body pq só a home é branca
-    window.location.pathname==='/' ? (document.body.style.backgroundColor='#EFEFEF') : ()=>{
+    if(window.location.pathname!=='/'){
       const header=document.querySelector('body div.z-10.fixed')
       header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.8)')
     }

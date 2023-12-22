@@ -42,7 +42,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
             fetchPriority='low'
             loading='lazy'
           />
-          <span className='font-bold re1:text-2xl text-lg'>
+          <span className='font-bold re1:text-2xl text-lg text-secondary'>
             Suba de Nível no Arraiá Black da Shopinfo
           </span>
         </div>

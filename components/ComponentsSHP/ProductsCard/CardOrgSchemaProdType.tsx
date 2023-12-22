@@ -48,7 +48,7 @@ const ProdCard=({...props}:ProdCard)=>{
   
   useEffect(()=>{
     const handleTrust=async()=>{
-      const { products_rates }=await invoke['deco-sites/shp'].loaders.getTrustvox({prodId:prodId, storeId:'79497'})
+      const { products_rates }=await invoke['deco-sites/shp'].loaders.getTrustvox({productId:prodId, storeId:'79497'})
 
       const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
       obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({'product_code':prodId, 'average':0, 'count':0, 'product_name':prodName})
@@ -141,11 +141,11 @@ const PcCard=({...props}:PcCard)=>{
         </div>
       </div>
       <div className='flex flex-col px-3 justify-between my-auto h-[40%]'>
-        <p className='text-sm line-clamp-2 leading-4'>
+        <p className='text-sm line-clamp-2 leading-4 text-secondary'>
           {prodName}
         </p>
         <div className='flex justify-between re1:justify-start re1:gap-2'>
-          <label className='flex items-center gap-1'>
+          <label className='flex items-center gap-1' title={memoria}>
             <Image
               src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
               width={15}
@@ -153,9 +153,9 @@ const PcCard=({...props}:PcCard)=>{
               loading='lazy'
               fetchPriority='low' decoding='sync'
             />
-            <p className='text-[10px] line-clamp-1'>{memoria}</p>
+            <p className='text-[12px] line-clamp-1'>{memoria}</p>
           </label>
-          <label className='flex items-center gap-1 w-[80px]'>
+          <label className='flex items-center gap-1 w-[80px]' title={(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}>
             <Image
               src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
               width={15}
@@ -163,7 +163,7 @@ const PcCard=({...props}:PcCard)=>{
               loading='lazy'
               fetchPriority='low' decoding='sync'
             />
-            <p className='text-[10px] line-clamp-1'>{(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}
+            <p className='text-[12px] line-clamp-1'>{(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}
             </p>
           </label>
         </div>
@@ -172,7 +172,7 @@ const PcCard=({...props}:PcCard)=>{
           <span className='text-lg font-bold text-success leading-3 mt-4'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
           <p className='text-[11px] text-[#b4b4b4]'>ou por {salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
         </>) : (<p className='text-xl text-primary font-bold'>Produto Esgotado</p>)}
-        <label className='flex gap-2 text-sm items-center'>
+        <label className='flex gap-2 text-sm items-center text-secondary'>
           <input ref={compareInput} type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' onChange={(event)=>{
             const Target=event.target as HTMLInputElement
             Target.checked ? (PCs.length<4 ? addPC(pcObj) : (Target.checked=false, alert('Só é possível comparar 4 items por vez!'))) : removePC(pcObj.name, pcObj.id)
