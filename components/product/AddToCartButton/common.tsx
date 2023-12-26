@@ -54,6 +54,7 @@ const useAddToCart = ({
       displayCart.value = true;
     } finally {
       setLoading(false);
+      window.location.href='/checkout'
     }
   };
 

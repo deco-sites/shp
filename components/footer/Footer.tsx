@@ -51,7 +51,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
             <p>Sábado das 8h às 13h</p>
           </div>
           {/* section infos */}
-          <div className='flex flex-col gap-3 re1:flex-row re1:gap-10 re1:justify-between re1:w-auto re1:items-center re1:mx-auto'>
+          <div className='flex flex-col gap-3 re1:flex-row re1:gap-8 re5:gap-10 re1:justify-between re1:w-auto re1:items-center re1:mx-auto'>
             {atendimento.map((element: AtendimentoProps) => (
               <Atendimento
                 link={element.link}
