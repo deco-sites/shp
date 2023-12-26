@@ -1,7 +1,3 @@
 Precisa arrumar:
-  - Home
-  - Shelf do vai jogar o que
-  - card de prod home
 Bugs pra arrumar: 
-
 Possiveis melhoras: 

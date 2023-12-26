@@ -280,18 +280,16 @@ function ProductInfo({ page, pix }: Props) {
             </ul>
           </div>
           <div className='flex gap-2'>
-            <div className='flex items-center gap-3'>
-              {/* Trustvox */}
-              {objTrust?.average ===0 ? null :
-                <>
-                  <span className='text-yellow-300'>{objTrust?.average} de 5</span>
-                  <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
-                    <div style={{width:`${trustPercent}%`}} className='text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
-                  </div>
-                  <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
-                </>
-              }
-            </div>
+            {/* Trustvox */}
+            {objTrust?.average ===0 ? null :
+              <div className='flex items-center gap-3'>
+                <span className='text-yellow-300'>{objTrust?.average} de 5</span>
+                <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
+                  <div style={{width:`${trustPercent}%`}} className='text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
+                </div>
+                <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
+              </div>
+            }
             <p className='text-success text-lg'>{brand?.name}</p>
           </div>
         </div>
