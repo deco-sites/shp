@@ -9,7 +9,7 @@ export interface Props {
   }>
 
   subCategsNoImg?: Array<{
-    iconUrl: string
+    iconSvg: string
     name: string
     linkTo: string
   }>
@@ -40,9 +40,10 @@ const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
           <div className='grid grid-cols-3 gap-4'>
             {subCategsNoImg.map((el)=>(
               <a href={el.linkTo} className='flex items-center content-center gap-2 hover:brightness-200'>
-                <Image src={el.iconUrl} alt='icon' width={28} height={22}             
+                {/* <Image src={el.iconUrl} alt='icon' width={28} height={22}             
                   preload fetchPriority='high' decoding='auto' loading='lazy'
-                />
+                /> */}
+                <div dangerouslySetInnerHTML={{__html:el.iconSvg}}/>
                 <span className='text-neutral-content font-bold'>{el.name}</span>
               </a>
             ))}
