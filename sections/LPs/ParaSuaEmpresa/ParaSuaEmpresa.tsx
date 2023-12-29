@@ -1,17 +1,41 @@
 import { useState, useEffect } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
-import Form from 'deco-sites/shp/sections/LPs/ParaSuaEmpresa.tsx'
+import Form from './FormularioRd.tsx'
+import ProdSlider from './ProdSlider.tsx'
+import type { Product } from 'apps/commerce/types.ts'
+import type { LoaderReturnType } from '$live/types.ts'
 
-const LpB2B=()=>{
+interface Slider{
+  title:string
+  products:LoaderReturnType<Product[] | null>
+  /** @description formato AAAA-MM-DD*/
+  finalDaOferta: string
+  interval: number
+}
+
+export interface Props{
+  slider1:Slider
+  slider2:Slider
+}
+
+const LpB2B=({slider1, slider2}:Props)=>{
   return (
     <>
       <section className='flex justify-end items-center h-[90vh] bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-1.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-1.jpg)]'>
-        <div className='flex flex-col gap-2 items-center'>
+        <div className='flex flex-col gap-6 items-center'>
           <p className='text-white text-xl text-center font-bold'>Sua empresa equipada<br/>com os melhores produtos<br/>de informática do mercado!</p>
-          {/* <Form /> */}
+          <Form />
         </div>
       </section>
+
+      <section className='flex justify-end items-center h-[90vh] bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-2.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-2.jpg)]'>
+        <div className='flex flex-col gap-10 items-center justify-around'>
+          <ProdSlider title={slider1.title} products={slider1.products} finalDaOferta={slider1.finalDaOferta} interval={slider1.interval}/>
+          <ProdSlider title={slider2.title} products={slider2.products} finalDaOferta={slider2.finalDaOferta} interval={slider2.interval}/>
+        </div>
+      </section>
+      
 
       <section className='text-white text-lg flex flex-col justify-end py-32 items-center h-max bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-3.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-3.jpg)]'>
         <div className='flex flex-col gap-20 w-[35%]'>
