@@ -22,23 +22,28 @@ export interface Props{
 const LpB2B=({slider1, slider2}:Props)=>{
   return (
     <>
-      {/* <section className='flex justify-end items-center h-[90vh] bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-1.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-1.jpg)]'>
-        <div className='flex flex-col gap-6 items-center mr-10'>
-          <p className='text-white text-xl text-center font-bold'>Sua empresa equipada<br/>com os melhores produtos<br/>de informática do mercado!</p>
+      <section className='flex justify-end items-center h-max re1:h-[90vh] bg-right re1:bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-1.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-1.jpg)]'>
+        <div className='flex flex-col re1:hidden absolute left-[20px] mb-[22rem] text-white items-center'>
+          <p className='text-xl font-bold'>CONHEÇA A LINHA<br/>CORPORATIVA DE</p>
+          <span>COMPUTADORES</span>
+          <Image width={170} height={30} src="https://shopinfo.vteximg.com.br/arquivos/curvas-logo-neologic-gamer-registrado-fundo-transparente-black.png"/>
+        </div>
+        <div className='px-[10%] re1:px-0 flex flex-col gap-6 items-center re1:mr-10 mt-[42rem] re1:mt-0 mb-4 re1:mb-0'>
+          <p className='ml-[20%] re1:ml-0 text-white text-xl text-center font-bold'>Sua empresa equipada<br/>com os melhores produtos<br/>de informática do mercado!</p>
           <Form />
         </div>
-      </section> */}
+      </section>
 
-      {/* <section className='flex justify-end items-center h-[90vh] bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-2.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-2.jpg)]'>
-        <div className='flex flex-col gap-10 items-center justify-around'>
+      <section className='flex justify-end items-center h-max re1:h-[90vh] bg-top re1:bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-2.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-2.jpg)]'>
+        <div className='flex flex-col gap-10 items-center justify-around my-4'>
           <ProdSlider title={slider1.title} products={slider1.products} finalDaOferta={slider1.finalDaOferta} interval={slider1.interval}/>
           <ProdSlider title={slider2.title} products={slider2.products} finalDaOferta={slider2.finalDaOferta} interval={slider2.interval}/>
         </div>
-      </section> */}
+      </section>
       
 
       <section className='text-white text-lg flex flex-col justify-end re1:py-32 items-center h-max bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-3.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-3.jpg)]'>
-        <div className='flex flex-col re1:gap-20 w-[90%] re1:px-0 re1:w-[35%]'>
+        <div className='flex flex-col  re1:mt-0 gap-8 re1:gap-20 w-[90%] re1:px-0 re1:w-[35%]'>
           <div className='flex flex-col gap-2 w-full items-center'>
             <h1 className='text-xl re1:text-3xl text-center mb-4'>Quem é<br/><b className='font-bold'>Shopinfo?</b></h1>
             <p className='text-sm re1:text-base'>A Shopinfo nasceu de um desejo imenso de entregar produtos e serviços de qualidade a um preço justo com um ótimo atendimento e é isso o que temos feito desde 1999!</p>
@@ -53,30 +58,28 @@ const LpB2B=({slider1, slider2}:Props)=>{
                 Referência no Mercado Vendendo informatica desde 1999, a SHOPINFO encontra-se no mercado atendendo empresas de pequeno, médio e grande porte das mais variadas áreas de atuação, levando a sério seu compromisso com a qualidade e profissionalismo.
               </span>
               <Icon id='ChevronRight' size={20} strokeWidth={4} className='text-primary'/>
-              <Image className='w-[70px] h-[70px] re1:w-auto re1:h-auto' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-1999.png' width={130} height={130}/>
+              <Image className='w-[70px] h-[70px] re1:w-[130px] re1:h-[130px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-1999.png' width={130} height={130}/>
             </p>
             <p className='text-sm re1:text-base flex items-center justify-between gap-2'>
-              <Image className='w-[70px] h-[70px] re1:w-auto re1:h-auto' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-iso.png' width={130} height={130}/>
+              <Image className='w-[70px] h-[70px] re1:w-[130px] re1:h-[130px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-iso.png' width={130} height={130}/>
               <Icon id='ChevronLeft' size={20} strokeWidth={4} className='text-primary'/>
-              <span className='w-[70%]'>
-                Possuímos selo de qualidade ISO 9001 e seguimos rigorosamente o sistema de Gestão implantado.
-              </span>
+              <span className='w-[70%]'>Possuímos selo de qualidade ISO 9001 e seguimos rigorosamente o sistema de Gestão implantado.</span>
             </p>
           </div>
         </div>
         
-        <div className='flex w-[80%] items-center justify-around mt-32'>
-          <Image className='w-[50px] h-[50px] re1:w-auto re1:h-auto' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Garantia.png' width={150} height={153}/>
-          <Image className='w-[50px] h-[50px] re1:w-auto re1:h-auto' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Frete-Gr%C3%A1tis.png' width={140} height={153}/>
-          <Image className='w-[50px] h-[50px] re1:w-auto re1:h-auto' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b--suporte.png' width={196} height={153}/>
-          <Image className='w-[50px] h-[50px] re1:w-auto re1:h-auto' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Pedido-Personalizado.png' width={175} height={153}/>
+        <div className='flex w-[80%] items-center justify-around my-8 re1:mt-32 re1:mb-0'>
+          <Image className='w-[50px] h-[50px] re1:w-[150px] re1:h-[143px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Garantia.png' width={150} height={153}/>
+          <Image className='w-[50px] h-[50px] re1:w-[140px] re1:h-[153px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Frete-Gr%C3%A1tis.png' width={140} height={153}/>
+          <Image className='w-[69px] h-[53px] re1:w-[196px] re1:h-[153px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b--suporte.png' width={196} height={153}/>
+          <Image className='w-[61px] h-[54px] re1:w-[175px] re1:h-[153px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Pedido-Personalizado.png' width={175} height={153}/>
         </div>
       </section>
 
       <section className='h-max re1:h-screen bg-cover re1:bg-center re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-4.jpg) bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg4.jpg)]'>
         <div className='flex flex-col justify-center gap-4 re1:gap-8 h-[70%] text-neutral'>
           <h1 className='mx-auto text-lg re1:text-2xl text-center'>Compre e<br/><b className='font-bold text-3xl re1:text-4xl'>Confie</b></h1>
-          <div className='flex flex-col re1:flex-row w-full px-[10px] re1:pr-0 re1:pl-12 re1:w-[70%]'>
+          <div className='flex flex-col re1:gap-2 re1:flex-row w-full px-[10px] re1:pr-0 re1:pl-12 re1:w-[70%]'>
             <div className='flex flex-col items-start justify-center w-full re1:w-[50%]'>
               <label className='flex gap-2 justify-center items-center h-fit re1:h-[100px] my-4'>
                 <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-lp-b2b-facilidadenacompra.png' className='w-[60px] h-[60px]' width={70} height={70}/>
