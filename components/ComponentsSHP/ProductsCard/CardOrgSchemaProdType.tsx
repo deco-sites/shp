@@ -204,7 +204,9 @@ const Card=({product}:Props)=>{
   })()
 
   const linkProd=product.isVariantOf!.url!
-  const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))!.effects.parameters[0].value!
+
+  
+  const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))?.effects.parameters[0].value ?? '12' 
   const prodName=product.name!
 
   //na vdd RefId pra passar no trustvox
