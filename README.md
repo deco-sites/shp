@@ -1,5 +1,5 @@
 ## Shopinfo
-<p>Link:<a href="https://deco-sites-shp.deno.dev/">https://deco-sites-shp.deno.dev/</a></p>
+<p>Link: <a href="https://shp.deco.site/">https://shp.deco.site/</a></p>
 
 # Fashion starter by deco.cx
 
