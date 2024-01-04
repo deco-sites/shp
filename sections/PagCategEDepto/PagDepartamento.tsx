@@ -603,25 +603,25 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
           }
         </div>
         <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
-            <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
-              <FiltroMob filters={filters} id='divFlut'/>
-            </label>
-            <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
-              after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
+          <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
+            <FiltroMob filters={filters} id='divFlut'/>
+          </label>
+          <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+            after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
+          >
+            <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
+            <select id='order'  className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
+              onInput={(event)=>{
+                setOrder((event.target as HTMLSelectElement).value)
+              }}
             >
-              <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
-              <select id='order'  className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
-                onInput={(event)=>{
-                  setOrder((event.target as HTMLSelectElement).value)
-                }}
-              >
-                <option disabled selected value='selecione'>Selecione</option>
-                {orderFilters.map(filter=>(
-                  <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
-                ))}
-              </select>
-            </label>
-          </div>
+              <option disabled selected value='selecione'>Selecione</option>
+              {orderFilters.map(filter=>(
+                <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+              ))}
+            </select>
+          </label>
+        </div>
       </div>
     </>
   )
