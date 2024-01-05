@@ -264,6 +264,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
       setFilters(arrFilterObj)
     }).catch(err=>console.error('Error: ',err))
+    
     setFirst(false)
 
     const handleResize=()=>setIsMobile(window.innerWidth<=768)
@@ -293,9 +294,19 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
 
   useEffect(()=>{
-    setCategories(makeCategories(products))
+    (category.value==='' || category.value==='inicio') && setCategories(makeCategories(products))
     setLoading(false)
   },[products])
+
+  useEffect(()=>{
+    if(!first){
+      if(typeof window!=='undefined'){
+        setFromTo({from:0, to:19, first:0})
+      } 
+    }
+
+    PCs.length && removeAll()
+  },[category])
 
   useEffect(()=>{
     if(order!=='selecione'){

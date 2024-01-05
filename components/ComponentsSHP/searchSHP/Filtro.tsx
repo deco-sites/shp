@@ -73,7 +73,7 @@ const Filtro=({title, values}:Props)=>{
             return 'value' in filter ? 
             (
               <li className='py-1 px-2'>
-                <label className='flex justify-start gap-2 cursor-pointer items-center' onClick={()=>{window.location.href=filter.name}}>
+                <label className='flex justify-start gap-2 cursor-pointer items-center'>
                   <span className='text-sm'>{filter.name}</span>
                 </label>
               </li>
