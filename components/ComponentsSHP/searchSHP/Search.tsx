@@ -5,7 +5,11 @@ import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexP
 import CategoriaModal from 'deco-sites/shp/components/ComponentsSHP/searchSHP/CategoriaModal.tsx'
 import { useCompareContext } from "deco-sites/shp/contexts/Compare/CompareContext.tsx"
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
-import { signal } from "@preact/signals";
+import { signal } from '@preact/signals'
+import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
+import {invoke} from 'deco-sites/shp/runtime.ts'
+import Filtro from './Filtro.tsx'
+import FiltroModal from './FiltroModal.tsx'
 
 export interface Props{
   produtos:any
@@ -19,6 +23,11 @@ export interface Props{
 
 interface Category{
   name:string,
+  value:string
+}
+
+interface FiltroObj{
+  label:string
   value:string
 }
 
@@ -38,9 +47,11 @@ interface SpecObj{
   Slug?:string
 }
 
+const fetchFilters=async (queryString:string)=> await invoke['deco-sites/shp'].loaders.getFacetsQueryString({queryString})
+
 const fetchProducts=async (queryString:string, signal:AbortSignal)=>{
   // não vou poder usar o loader por conta do abort
-  const url=`https://shopinfo.vtexcommercestable.com.br/api/catalog_system/pub/products/search?${queryString}`
+  const url=`https://api.shopinfo.com.br/Deco/getProductsList.php?${queryString}`
     return await fetch(url,{signal}).then(async (r)=>{
       const resp=r.clone()
       const text=await r.text()
@@ -139,6 +150,8 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
   const [showMore, setShowMore]=useState(false)
   const [categories,setCategories]=useState<Category[]>([])
   const [category, setCategory]=useState<Category>({name:'selecione', value:'inicio'})
+  const [filters,setFilters]=useState<FilterObj[]>([])
+  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
   const [first,setFirst]=useState(true)
 
   const {PCs, removeAll}=useCompareContext()
@@ -153,9 +166,6 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
     {'Data de Lançamento':'OrderByReleaseDateDESC'},
     {'Melhor Desconto':'OrderByBestDiscountDESC'}
   ]
-  
-  const categoryLabel=useRef<HTMLLabelElement>(null)
-
   const divFlutLabel=useRef<HTMLLabelElement>(null)
 
   const contentWrapper=useRef<HTMLDivElement>(null)
@@ -167,9 +177,9 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
   const currentController=useRef<AbortController | null>(null)
 
   const getProductsStartY=()=>{
-    if(categoryLabel.current){
-      const categoryLabelRect=categoryLabel.current.getBoundingClientRect()
-      const posY=categoryLabelRect.top + window.scrollY
+    if(filterLabel.current){
+      const filterLabelRect=filterLabel.current.getBoundingClientRect()
+      const posY=filterLabelRect.top + window.scrollY
       return posY
     }else{
       return 700
@@ -180,7 +190,6 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
     !showMore && setLoading(true)
     const queryString=[`ft=${termo}`,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
-    if(category.value!=='' && category.value!=='inicio') (!first && queryString.unshift(`fq=C:${category.value}`))
     currentController.current = new AbortController()
     try {
       const data= await fetchProducts(queryString.join('&'), currentController.current.signal)
@@ -202,6 +211,61 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
   }
 
   useEffect(()=>{
+    fetchFilters(`ft=${termo}`).then(pageData=>{
+      const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
+        const slugSplittado=obj.Slug!.split('-')
+        const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
+        obj.Value=finalValue
+        obj.Map='P'
+        return obj
+      })
+
+      const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands,...pageData!.SpecificationFilters, 'Faixa de Preço': priceFilters}
+
+      const arrAllCategFiltersObj:FilterObj[]=[]
+
+      const arrFilterObj:FilterObj[]=[]
+
+      for(const key in dataFilters){
+        arrAllCategFiltersObj.push({label:key , values:dataFilters[key]})
+      }
+
+      const keys=arrAllCategFiltersObj.map(filter=>filter.label)
+      const productsFields:FiltroObj[]=[]
+      products.forEach((product:any)=>{
+        const fields=[]
+        for(const key in product){
+          if(keys.includes(key)){
+            fields.push({label: key, value: product[key][0]})
+          }else if(key==='brand'){
+            fields.push({label: 'Marcas', value: product[key]})
+          }
+        }
+        productsFields.push(...fields)
+      })
+
+      const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
+      const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
+        const {label,value}=obj
+        if(!acc[label]) acc[label]=[]
+        acc[label].push(value)
+        return acc
+      },{} as Record<string, string[]>)
+
+      for(const key in dataFilters){
+        if(filtrosByLabel[key]){
+          const values=dataFilters[key].filter(specObj=>filtrosByLabel[key].includes(specObj.Name))
+          arrFilterObj.push({label:key , values})
+        }else{
+          arrFilterObj.push({label:key , values:dataFilters[key]})
+        }
+        
+      }
+
+      setFilters(arrFilterObj)
+    }).catch(err=>console.error('Error: ',err))
+    setFirst(false)
+
     const handleResize=()=>setIsMobile(window.innerWidth<=768)
 
     const handleScroll=()=>{
@@ -229,19 +293,9 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
 
   useEffect(()=>{
-    (category.value==='' || category.value==='inicio') && setCategories(makeCategories(products))
+    setCategories(makeCategories(products))
     setLoading(false)
   },[products])
-
-  useEffect(()=>{
-    if(!first){
-      if(typeof window!=='undefined'){
-        setFromTo({from:0, to:19, first:0})
-      } 
-    }
-
-    PCs.length && removeAll()
-  },[category])
 
   useEffect(()=>{
     if(order!=='selecione'){
@@ -257,9 +311,8 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
     }
   },[fromTo])
 
-  useEffect(()=>{
-    setFirst(false)
-  },[])
+
+  useEffect(()=>{filters.length && console.log(filters)},[filters])
 
   return (
     <div className='w-full text-secondary appearance-none'>
@@ -283,7 +336,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
         <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
           <label className='w-[45%]' ref={filterLabel}>
             <span className='font-bold'>Filtros</span>
-            {/* <FiltroMob filters={filters} id='menu'/> */}
+            <FiltroModal filters={filters} id='divFlut' categories={categories}/>
           </label>
           <label className='focus-within:text-primary w-[45%] re1:w-auto'>
             <span className='font-bold'>Ordenar Por</span>
@@ -302,8 +355,9 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
         <div className='flex w-full justify-between'>
           <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
-            {/* {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
-            <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/> */}
+            {categories && <Filtro title='Categorias' values={categories}/>}
+            {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
+            <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/>
           </ul>
 
           <div className='flex flex-col items-center w-full re1:w-[70%] px-4 re1:px-0'>
@@ -332,20 +386,22 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
       <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
         <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
           <span className='font-bold'>Filtros</span>
-          {/* <FiltroMob filters={filters} id='divFlut'/> */}
+          <FiltroModal filters={filters} id='divFlut' categories={categories}/>
         </label>
-        <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-          <span className='font-bold'>Ordenar Por:</span>
+        <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+          after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
+        >
+          <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
           <select id='order'  className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
-              onInput={(event)=>{
-                setOrder((event.target as HTMLSelectElement).value)
-              }}
-            >
-              <option disabled selected value='selecione'>Selecione</option>
-              {orderFilters.map(filter=>(
-                <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
-              ))}
-            </select>
+            onInput={(event)=>{
+              setOrder((event.target as HTMLSelectElement).value)
+            }}
+          >
+            <option disabled selected value='selecione'>Selecione</option>
+            {orderFilters.map(filter=>(
+              <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+            ))}
+          </select>
         </label>
       </div>
     </div>
