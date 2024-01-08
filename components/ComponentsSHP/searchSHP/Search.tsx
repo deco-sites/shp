@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'preact/hooks'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
-import CategoriaModal from 'deco-sites/shp/components/ComponentsSHP/searchSHP/CategoriaModal.tsx'
 import { useCompareContext } from "deco-sites/shp/contexts/Compare/CompareContext.tsx"
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import { signal } from '@preact/signals'
@@ -37,6 +36,8 @@ interface FilterObj{
 }
 
 interface SpecObj{
+  Children?:SpecObj[]
+  Id?:string
   Link:string
   LinkEncoded:string
   Map:string
@@ -46,6 +47,14 @@ interface SpecObj{
   Value:string
   Slug?:string
 }
+
+interface SelectedFilter{
+  fq:string
+  value:string
+  name?:string
+}
+
+const fetchAllCategs=async()=>await invoke['deco-sites/shp'].loaders.getSubCategories()
 
 const fetchFilters=async (queryString:string)=> await invoke['deco-sites/shp'].loaders.getFacetsQueryString({queryString})
 
@@ -63,25 +72,11 @@ const fetchProducts=async (queryString:string, signal:AbortSignal)=>{
     }).catch(err=>console.error('Error: ',err))
 }
 
-const makeCategories=(prods:any)=>{
-  const categories:Category[]=[]
-  prods.forEach((prod:any)=>{
-    const categsName:string[]=prod.categories
-    const categsValues:string[]=prod.categoriesIds
+const selectedFiltersSignal=signal<SelectedFilter[]>([])
 
-    for(let i=0;i<categsName.length-1;i++){
-      categories.push({name:categsName[i], value:categsValues[i]})
-    }
-  })
-
-  return categories.filter((obj,index,self)=>index===self.findIndex(item=>(item.name === obj.name && item.value === obj.value)))
-}
-
-const selectedFiltersSignal=signal<Array<{fq:string, value:string}>>([])
-
-const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
+const LimparFiltros=({filters}:{filters:SelectedFilter[]})=>{
   const [open,setOpen]=useState(true)
-  const [selectedFilters, setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
+  const [selectedFilters, setSelectedFilters]=useState<SelectedFilter[]>([])
 
   useEffect(()=>{
     setSelectedFilters(filters)
@@ -117,6 +112,8 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
               const [min,max]=decoded.join('').split(' TO ')
 
               name=`${parseFloat(min).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} - ${parseFloat(max).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}`
+            }else if(filter.fq==='C'){
+              name=decodeURI(filter.name!)
             }else{name=decodeURI(filter.value)}
 
             return (
@@ -124,7 +121,7 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
                 <label className='flex justify-start gap-2 cursor-pointer items-center'>
                   <input id='filter' type='checkbox' value={filter.value} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={filter.fq}
                     onInput={(event:Event)=>{
-                      !(event.target as HTMLInputElement).checked && (selectedFiltersSignal.value=selectedFilters.filter(obj=>!(obj.fq===filter.fq && obj.value===filter.value)))
+                      !(event.target as HTMLInputElement).checked && (selectedFiltersSignal.value=selectedFilters.filter((obj:SelectedFilter)=>!(obj.fq===filter.fq && obj.value===filter.value)))
                     }}
                   />
                   <span className='text-sm'>{name}</span>
@@ -149,10 +146,8 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
   const [fetchLength, setFetchLength]=useState(produtos.length)
   const [showMore, setShowMore]=useState(false)
   const [categories,setCategories]=useState<Category[]>([])
-  const [category, setCategory]=useState<Category>({name:'selecione', value:'inicio'})
   const [filters,setFilters]=useState<FilterObj[]>([])
-  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
-  const [first,setFirst]=useState(true)
+  const [selectedFilters,setSelectedFilters]=useState<SelectedFilter[]>([])
 
   const {PCs, removeAll}=useCompareContext()
 
@@ -188,8 +183,10 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
   const handleMoreProducts=async()=>{
     !showMore && setLoading(true)
-    const queryString=[`ft=${termo}`,`_from=${fromTo.from}&_to=${fromTo.to}`]
+    const fqsFilter=selectedFilters.map((obj:SelectedFilter)=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
+    const queryString=[`ft=${termo}`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
+
     currentController.current = new AbortController()
     try {
       const data= await fetchProducts(queryString.join('&'), currentController.current.signal)
@@ -210,8 +207,95 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
     }
   }
 
+  const addFilterListeners=()=>{
+    const ulDesk=listFiltersDesk.current!
+
+    Array.from(ulDesk.querySelectorAll('input[type="checkbox"]')).forEach((checkbox)=>{
+      (checkbox as HTMLInputElement).addEventListener('input',(event)=>{
+        const target=(event.target as HTMLInputElement)
+        setSelectedFilters((prevSelectedFilters:SelectedFilter[]) =>{
+          const fq=target.getAttribute('data-fq') as string
+
+          if(fq==='P'){
+            return (target.checked) ? 
+              [...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq, value:target.value, name:target.name}] 
+            : 
+              [...prevSelectedFilters.filter(obj => obj.value !== target.value).filter(filter=>filter.fq!=='P')]
+          }
+
+          return (target.checked) ? [...prevSelectedFilters, {fq,value:target.value, name:target.name}] : [...prevSelectedFilters.filter(obj => obj.value !== target.value)]
+        })
+        window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      })
+    })
+
+    const ulMob=filterLabel.current && filterLabel.current.querySelector('dialog ul')
+    const ulDivFlut=divFlutLabel.current && divFlutLabel.current.querySelector('dialog ul')
+    const btnFilter=filterLabel.current && filterLabel.current.querySelector('dialog button#filtrar')
+    const btnDivFlut=divFlutLabel.current && divFlutLabel.current.querySelector('dialog button#filtrar')
+
+    btnFilter && (btnFilter as HTMLButtonElement).addEventListener('click',()=>{
+      const inputsChecked:HTMLInputElement[]=Array.from(ulMob!.querySelectorAll('input:checked'))
+      const filtersSelected:SelectedFilter[]=[]
+      inputsChecked.forEach(input=>{
+        filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
+      })
+
+      const minInput=ulMob!.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulMob!.querySelector('input[name="max"]') as HTMLInputElement
+
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
+        const fq='P'
+        filtersSelected.push({fq , value})
+      }
+
+      setSelectedFilters(filtersSelected)     
+      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+    })
+
+    btnDivFlut && (btnDivFlut as HTMLButtonElement).addEventListener('click',()=>{
+      const inputsChecked:HTMLInputElement[]=Array.from(ulDivFlut!.querySelectorAll('input:checked'))
+      const filtersSelected:SelectedFilter[]=[]
+      inputsChecked.forEach(input=>{
+        filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value, name:input.name})
+      })
+
+      const minInput=ulDivFlut!.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulDivFlut!.querySelector('input[name="max"]') as HTMLInputElement
+
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
+        const fq='P'
+        filtersSelected.push({fq , value})
+      }
+
+      setSelectedFilters(filtersSelected)
+      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+    })
+
+    const btnPriceRange=ulDesk.querySelector('button#priceRange')!
+    btnPriceRange.addEventListener('click',()=>{
+      const minInput=ulDesk.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulDesk.querySelector('input[name="max"]') as HTMLInputElement
+
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
+        const fq='P'
+        setSelectedFilters(prevSelectedFilters=>[...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq,value}])
+      }else{
+        alert('Você precisa preencher os dois campos de preço!')
+      }
+
+      window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+    })
+  }
+
   useEffect(()=>{
-    fetchFilters(`ft=${termo}`).then(pageData=>{
+    fetchFilters(`ft=${termo}`).then(async (pageData)=>{
+
+      console.log(pageData)
+      
       const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
         const slugSplittado=obj.Slug!.split('-')
         const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
@@ -220,7 +304,35 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
         return obj
       })
 
-      const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands,...pageData!.SpecificationFilters, 'Faixa de Preço': priceFilters}
+      const ALLCATEGS=await fetchAllCategs()
+
+      console.log(ALLCATEGS)
+
+      const categoriesFilters:SpecObj[]=[]
+
+      // n tá dando certo, tem dep passando
+      if(pageData!.CategoriesTrees.length){
+        pageData!.Departments?.forEach((dep:SpecObj)=>{
+          pageData!.CategoriesTrees.forEach((categ:SpecObj)=>{
+            categ.Children?.forEach((childDep:SpecObj)=>{
+              if(dep.Name===childDep.Name){
+                const childId=childDep.Id
+                childDep.Value=`/${categ.Id}/${childId}/`
+                childDep.Id=`/${categ.Id}/${childId}/`
+                childDep.Map='C'
+                childDep.Name=`${categ.Name} ${childDep.Name}`
+                categoriesFilters.push(childDep)
+              }
+            }) 
+          })
+        })
+
+        console.log(categoriesFilters)
+
+        pageData!.CategoriesTrees.forEach((categ:SpecObj)=>{categoriesFilters.unshift(categ)})
+      }
+
+      const dataFilters:Record<string,SpecObj[]> ={'Categorias': categoriesFilters,'Marcas': pageData!.Brands,...pageData!.SpecificationFilters, 'Faixa de Preço': priceFilters}
 
       const arrAllCategFiltersObj:FilterObj[]=[]
 
@@ -259,13 +371,10 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
         }else{
           arrFilterObj.push({label:key , values:dataFilters[key]})
         }
-        
       }
 
       setFilters(arrFilterObj)
     }).catch(err=>console.error('Error: ',err))
-    
-    setFirst(false)
 
     const handleResize=()=>setIsMobile(window.innerWidth<=768)
 
@@ -292,21 +401,27 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
     }
   },[])
 
-
   useEffect(()=>{
-    (category.value==='' || category.value==='inicio') && setCategories(makeCategories(products))
     setLoading(false)
   },[products])
 
+  useEffect(()=>{setSelectedFilters(selectedFiltersSignal.value)},[selectedFiltersSignal.value])
+
   useEffect(()=>{
-    if(!first){
-      if(typeof window!=='undefined'){
-        setFromTo({from:0, to:19, first:0})
-      } 
-    }
+    typeof window!=='undefined' && setFromTo({from:0, to:19})
+    const filterValues=selectedFilters.map(filter=>filter.value)
+    const filterFqs=selectedFilters.map(filter=>filter.fq)
+    
+    Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
+      const Input=input as HTMLInputElement
+      (filterValues.includes(Input.value) && filterFqs.includes(Input.getAttribute('data-fq')!))? (Input.checked=true) : (Input.checked=false)
+    })
 
     PCs.length && removeAll()
-  },[category])
+
+  },[selectedFilters])
+
+  useEffect(()=>{filters.length && addFilterListeners()},[filters])
 
   useEffect(()=>{
     if(order!=='selecione'){
@@ -321,9 +436,6 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
       typeof window!=='undefined' && ((currentController.current && (currentController.current.abort(), currentController.current=null)),handleMoreProducts())
     }
   },[fromTo])
-
-
-  useEffect(()=>{filters.length && console.log(filters)},[filters])
 
   return (
     <div className='w-full text-secondary appearance-none'>
@@ -344,21 +456,64 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
           </ul>
         </div>
 
+        <ul className='flex re1:hidden justify-start items-center gap-4 w-full mb-4 px-4 overflow-x-auto'>
+          {selectedFilters.map((filter)=>{
+            if(filter.fq==='P'){
+              const nameDecoded=decodeURIComponent(filter.value)
+              const numbers=nameDecoded.split(' TO ').map((item)=>parseFloat(item.replace(/\D/g, '')).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}))
+              return (
+                <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
+                  onClick={()=>setSelectedFilters(prevFilters=>
+                    prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                  )}
+                >
+                  <p className='whitespace-nowrap text-xs'>{numbers.join(' - ')}</p>
+                  <span className='text-primary text-xs my-auto font-bold'>✕</span>
+                </div>
+              )
+            }else if(filter.fq==='C'){
+              return (
+                <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
+                  onClick={()=>setSelectedFilters(prevFilters=>
+                    prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                  )}
+                >
+                  <p className='whitespace-nowrap text-xs'>{decodeURIComponent(filter.name!)}</p>
+                  <span className='text-primary text-xs my-auto font-bold'>✕</span>
+                </div>
+              )
+            }else{
+              return (
+                <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
+                  onClick={()=>setSelectedFilters(prevFilters=>
+                    prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                  )}
+                >
+                  <p className='whitespace-nowrap text-xs'>{decodeURIComponent(filter.value).replaceAll('@dot@','.')}</p>
+                  <span className='text-primary text-xs my-auto font-bold'>✕</span>
+                </div>
+              )
+            }
+          })}
+        </ul>
+
         <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
           <label className='w-[45%]' ref={filterLabel}>
             <span className='font-bold'>Filtros</span>
             <FiltroModal filters={filters} id='divFlut' categories={categories}/>
           </label>
-          <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-            <span className='font-bold'>Ordenar Por</span>
-            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
+          <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+            after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
+          >
+            <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
+            <select id='order'  className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
               }}
             >
               <option disabled selected value='selecione'>Selecione</option>
               {orderFilters.map(filter=>(
-                <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+                <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
               ))}
             </select>
           </label>
@@ -366,7 +521,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
         <div className='flex w-full justify-between'>
           <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
-            {categories && <Filtro title='Categorias' values={categories}/>}
+            <LimparFiltros filters={selectedFilters}/>
             {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
             <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/>
           </ul>

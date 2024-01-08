@@ -74,6 +74,7 @@ const Filtro=({title, values}:Props)=>{
             (
               <li className='py-1 px-2'>
                 <label className='flex justify-start gap-2 cursor-pointer items-center'>
+                  <input id='filter' type='checkbox' name={filter.name} value={filter.value} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={'C'} />
                   <span className='text-sm'>{filter.name}</span>
                 </label>
               </li>
