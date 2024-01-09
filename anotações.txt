@@ -5,7 +5,7 @@ Precisa arrumar:
 
 Bugs pra arrumar: 
 -corrigir 2a imagem na seção "De um Upgrade..." na PDP de PC Gamer
--ordenar por só funciona clicando em "Selecione"
 
 Possiveis melhoras: 
 -criar LP Afiliados
+-arrumar o sistema de filtro por marca pra parar de  usar como termo

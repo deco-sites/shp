@@ -293,9 +293,6 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
   useEffect(()=>{
     fetchFilters(`ft=${termo}`).then(async (pageData)=>{
-
-      console.log(pageData)
-      
       const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
         const slugSplittado=obj.Slug!.split('-')
         const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
@@ -527,20 +524,32 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
             <span className='font-bold'>Filtros</span>
             <FiltroModal filters={filters} id='divFlut' categories={categories}/>
           </label>
-          <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
-            after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
+          <label id='orderBy-top' className='text-sm h-12 re1:h-auto re1:text-base bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+            after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45'
+            onClick={()=>{
+              const label= document.querySelector('#orderBy-top') as HTMLLabelElement
+              const dropdown = label.querySelector('ul')
+              if(dropdown && dropdown.classList.contains('hidden')){
+                (label as HTMLLabelElement).classList.add('text-primary','after:rotate-[225deg]','after:border-r-primary','after:border-b-primary')
+                dropdown?.classList.remove('hidden')
+              }else{
+                (label as HTMLLabelElement).classList.remove('text-primary','after:rotate-[225deg]','after:border-r-primary','after:border-b-primary')
+                dropdown?.classList.add('hidden')
+              }
+            }}
           >
             <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
-            <select id='order'  className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
-              onInput={(event)=>{
-                setOrder((event.target as HTMLSelectElement).value)
-              }}
-            >
-              <option disabled selected value='selecione'>Selecione</option>
-              {orderFilters.map(filter=>(
-                <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+            <span className='text-xs line-clamp-1 w-full px-[10px] re1:px-[20px]'>{Object.keys(orderFilters.find(obj=>order===Object.values(obj)[0]) ?? {'Selecione':''})[0]}</span>
+            <ul className='hidden z-10 absolute w-full bg-[#111] top-12 re1:top-[unset]'>
+              {orderFilters.map(filter => (
+                <li 
+                  className='p-[10px] bg-[#111] text-white cursor-pointer hover:bg-[#d1d1d1] hover:text-black'
+                  onClick={() => setOrder(Object.values(filter)[0])}
+                >
+                  {Object.keys(filter)[0]}
+                </li>
               ))}
-            </select>
+            </ul>
           </label>
         </div>
 
@@ -574,25 +583,36 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
           </div>
         </div>   
       </div>
-      <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
+      <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden w-full justify-between items-end px-4 py-5 bg-base-100`}>
         <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
-          <span className='font-bold'>Filtros</span>
           <FiltroModal filters={filters} id='divFlut' categories={categories}/>
         </label>
-        <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
-          after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
-        >
-          <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
-          <select id='order'  className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
-            onInput={(event)=>{
-              setOrder((event.target as HTMLSelectElement).value)
+        <label id='orderBy-bot' className='text-sm h-12 re1:h-auto re1:text-base bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+            after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45'
+            onClick={()=>{
+              const label= document.querySelector('#orderBy-bot') as HTMLLabelElement
+              const dropdown = label.querySelector('ul')
+              if(dropdown && dropdown.classList.contains('hidden')){
+                (label as HTMLLabelElement).classList.add('text-primary','after:rotate-[225deg]','after:border-r-primary','after:border-b-primary')
+                dropdown?.classList.remove('hidden')
+              }else{
+                (label as HTMLLabelElement).classList.remove('text-primary','after:rotate-[225deg]','after:border-r-primary','after:border-b-primary')
+                dropdown?.classList.add('hidden')
+              }
             }}
           >
-            <option disabled selected value='selecione'>Selecione</option>
-            {orderFilters.map(filter=>(
-              <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+          <ul className='hidden z-10 absolute w-full bg-[#111] bottom-12'>
+            {orderFilters.map(filter => (
+              <li 
+                className='p-[10px] bg-[#111] text-white cursor-pointer hover:bg-[#d1d1d1] hover:text-black'
+                onClick={() => setOrder(Object.values(filter)[0])}
+              >
+                {Object.keys(filter)[0]}
+              </li>
             ))}
-          </select>
+          </ul>
+          <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
+          <span className='text-xs line-clamp-1 w-full px-[10px] re1:px-[20px]'>{Object.keys(orderFilters.find(obj=>order===Object.values(obj)[0]) ?? {'Selecione':''})[0]}</span>
         </label>
       </div>
     </div>
