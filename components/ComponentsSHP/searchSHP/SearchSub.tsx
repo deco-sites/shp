@@ -321,81 +321,6 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
     Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
   },[order])
 
-  const filterFilters=()=>{
-    console.log('Filtrando Filtros')
-    if(products.length){
-      const keys=filters.map(filter=>filter.label)
-      const productsFields:FiltroObj[]=[]
-      products.forEach((product:any)=>{
-        const fields=[]
-        for(const key in product){
-          if(keys.includes(key)){
-            fields.push({label: key, value: product[key][0]})
-          }else if(key==='brand'){
-            fields.push({label: 'Marcas', value: product[key]})
-          }
-        }
-        productsFields.push(...fields)
-      })
-
-      const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
-      const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
-        const {label,value}=obj
-        if(!acc[label]) acc[label]=[]
-        acc[label].push(value)
-        return acc
-      },{} as Record<string, string[]>)
-
-      if(listFiltersDesk.current && selectedFilters.length){
-        const keys=Object.keys(filtrosByLabel)
-        const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
-        const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
-        h5S.forEach(h5=>{
-          const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-          Input.value=''
-
-          const key=h5.innerText
-          Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-            const Li=li as HTMLLIElement
-            if(filtrosByLabel[key].includes(Li.innerText)){
-              Li.removeAttribute('data-filtered')
-            }else{
-              Li.setAttribute('data-filtered','filtrado')
-            }
-          })
-          
-        })
-
-        h5NaoDisp.forEach(h5=>{
-          const divPai=h5.parentElement! as HTMLDivElement
-          divPai.classList.replace('flex','hidden')
-        })
-      }else if(listFiltersDesk.current){
-        const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
-        h5S.forEach(h5=>{
-          const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-          Input.value=''
-
-          Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-            const Li=li as HTMLLIElement
-            Li.removeAttribute('data-filtered')
-          })
-        })
-
-        const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
-        h5NaoDisp.forEach(h5=>{
-          const divPai=h5.parentElement! as HTMLDivElement
-          divPai.classList.replace('hidden','flex')
-        })
-      }
-    }
-  }
-
-  useEffect(()=>{
-    // filtragem de filtros no desktop
-    filterFilters()
-  },[products])
-
   return(
     <div className='w-full text-secondary appearance-none'>
       <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
@@ -420,18 +345,32 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
             <span className='font-bold'>Filtros</span>
             <FiltroMob filters={filters} id='menu'/>
           </label>
-          <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-            <span className='font-bold'>Ordenar Por</span>
-            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
-              onInput={(event)=>{
-                setOrder((event.target as HTMLSelectElement).value)
-              }}
-            >
-              <option disabled selected value='selecione'>Selecione</option>
-              {orderFilters.map(filter=>(
-                <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+          <label id='orderBy-top' className='text-sm h-12 re1:h-auto re1:text-base bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+            after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45'
+            onClick={()=>{
+              const label= document.querySelector('#orderBy-top') as HTMLLabelElement
+              const dropdown = label.querySelector('ul')
+              if(dropdown && dropdown.classList.contains('hidden')){
+                (label as HTMLLabelElement).classList.add('text-primary','after:rotate-[225deg]','after:border-r-primary','after:border-b-primary')
+                dropdown?.classList.remove('hidden')
+              }else{
+                (label as HTMLLabelElement).classList.remove('text-primary','after:rotate-[225deg]','after:border-r-primary','after:border-b-primary')
+                dropdown?.classList.add('hidden')
+              }
+            }}
+          >
+            <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
+            <span className='text-xs line-clamp-1 w-full px-[10px] re1:px-[20px]'>{Object.keys(orderFilters.find(obj=>order===Object.values(obj)[0]) ?? {'Selecione':''})[0]}</span>
+            <ul className='hidden z-10 absolute w-full bg-[#111] top-12 re1:top-[unset]'>
+              {orderFilters.map(filter => (
+                <li 
+                  className='p-[10px] bg-[#111] text-white cursor-pointer hover:bg-[#d1d1d1] hover:text-black'
+                  onClick={() => setOrder(Object.values(filter)[0])}
+                >
+                  {Object.keys(filter)[0]}
+                </li>
               ))}
-            </select>
+            </ul>
           </label>
         </div>
 
@@ -465,25 +404,38 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
         </div>   
       </div>
       <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
-          <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
-            <span className='font-bold'>Filtros</span>
-            <FiltroMob filters={filters} id='divFlut'/>
-          </label>
-          <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-            <span className='font-bold'>Ordenar Por:</span>
-            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
-              onInput={event=>{
-                setOrder((event.target as HTMLSelectElement).value)
-                isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
-              }}
-            >
-              <option disabled selected value='selecione'>Selecione</option>
-              {orderFilters.map(filter=>(
-                <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
-              ))}
-            </select>
-          </label>
-        </div>
+        <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
+          <span className='font-bold'>Filtros</span>
+          <FiltroMob filters={filters} id='divFlut'/>
+        </label>
+        <label id='orderBy-bot' className='text-sm h-12 re1:h-auto re1:text-base bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+            after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45'
+            onClick={()=>{
+              const label= document.querySelector('#orderBy-bot') as HTMLLabelElement
+              const dropdown = label.querySelector('ul')
+              if(dropdown && dropdown.classList.contains('hidden')){
+                (label as HTMLLabelElement).classList.add('text-primary','after:rotate-[225deg]','after:border-r-primary','after:border-b-primary')
+                dropdown?.classList.remove('hidden')
+              }else{
+                (label as HTMLLabelElement).classList.remove('text-primary','after:rotate-[225deg]','after:border-r-primary','after:border-b-primary')
+                dropdown?.classList.add('hidden')
+              }
+            }}
+          >
+          <ul className='hidden z-10 absolute w-full bg-[#111] bottom-12'>
+            {orderFilters.map(filter => (
+              <li 
+                className='p-[10px] bg-[#111] text-white cursor-pointer hover:bg-[#d1d1d1] hover:text-black'
+                onClick={() => setOrder(Object.values(filter)[0])}
+              >
+                {Object.keys(filter)[0]}
+              </li>
+            ))}
+          </ul>
+          <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
+          <span className='text-xs line-clamp-1 w-full px-[10px] re1:px-[20px]'>{Object.keys(orderFilters.find(obj=>order===Object.values(obj)[0]) ?? {'Selecione':''})[0]}</span>
+        </label>
+      </div>
     </div>
   )
 }

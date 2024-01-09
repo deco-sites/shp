@@ -109,6 +109,8 @@ const PcCard=({...props}:PcCard)=>{
     name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
   }
 
+  if(fonte===''){console.log(pcObj)}
+
   useEffect(()=>{
     if(!PCs.some((pc)=>pc.id===pcObj.id && pc.name===pcObj.name)){
       compareInput.current && (compareInput.current.checked=false)
@@ -223,13 +225,13 @@ const Card=({product}:Props)=>{
     const armaz=(additionalProp.find(propVal=>propVal.name==='SSD') || additionalProp.find(propVal=>propVal.name==='HD'))!
 
     return <PcCard 
-      placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')?.value || ''}
-      processador={additionalProp.find(item=>item.name==='Processador')!.value!}
+      placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')?.value ?? ''}
+      processador={additionalProp.find(item=>item.name==='Processador')?.value ?? ''}
       armazenamento={armaz!.value!}
       tipoArm={armaz!.name!}
-      memoria={additionalProp.find(item=>item.name==='Memória')!.value!}
+      memoria={additionalProp.find(item=>item.name==='Memória')?.value ?? ''}
       parcelas={maxInstallments}
-      fonte={additionalProp.find(item=>item.name==='Fonte')!.value!}
+      fonte={additionalProp.find(item=>item.name==='Fonte')?.value ?? ''}
       imgUrl={imgUrl}
       pix={pix}
       linkProd={linkProd}
