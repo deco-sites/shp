@@ -345,16 +345,18 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
             <span className='font-bold'>Filtros</span>
             <FiltroMob filters={filters} id='menu'/>
           </label>
-          <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-            <span className='font-bold'>Ordenar Por</span>
-            <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
+          <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+            after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
+          >
+            <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
+            <select id='order'  className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
               onInput={(event)=>{
                 setOrder((event.target as HTMLSelectElement).value)
               }}
             >
               <option disabled selected value='selecione'>Selecione</option>
               {orderFilters.map(filter=>(
-                <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+                <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
               ))}
             </select>
           </label>
@@ -394,17 +396,18 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
           <span className='font-bold'>Filtros</span>
           <FiltroMob filters={filters} id='divFlut'/>
         </label>
-        <label className='focus-within:text-primary w-[45%] re1:w-auto'>
-          <span className='font-bold'>Ordenar Por:</span>
-          <select id='order' className='text-secondary !outline-none select bg-transparent border border-secondary focus:bg-[#1e1e1e] w-full max-w-xs'
-            onInput={event=>{
+        <label className='text-sm h-12 re1:h-auto re1:text-base focus-within:text-primary bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-[15%] border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+          after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 focus-within:after:rotate-[225deg] focus-within:after:border-r-primary focus-within:after:border-b-primary'
+        >
+          <span className='font-bold px-[10px] re1:px-[20px]'>Ordenar Por:</span>
+          <select id='order'  className='text-secondary cursor-pointer !outline-none appearance-none bg-[#111] w-full px-[10px] re1:px-[20px]'
+            onInput={(event)=>{
               setOrder((event.target as HTMLSelectElement).value)
-              isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
             }}
           >
             <option disabled selected value='selecione'>Selecione</option>
             {orderFilters.map(filter=>(
-              <option className='hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
+              <option className='!hover:bg-[#d1d1d1]' value={Object.values(filter)[0]}>{Object.keys(filter)[0]}</option>
             ))}
           </select>
         </label>

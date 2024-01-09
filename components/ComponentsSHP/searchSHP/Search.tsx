@@ -308,29 +308,54 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
       console.log(ALLCATEGS)
 
-      const categoriesFilters:SpecObj[]=[]
+      const categFilters:SpecObj[]=[]
 
-      // n tá dando certo, tem dep passando
-      if(pageData!.CategoriesTrees.length){
-        pageData!.Departments?.forEach((dep:SpecObj)=>{
-          pageData!.CategoriesTrees.forEach((categ:SpecObj)=>{
-            categ.Children?.forEach((childDep:SpecObj)=>{
-              if(dep.Name===childDep.Name){
-                const childId=childDep.Id
-                childDep.Value=`/${categ.Id}/${childId}/`
-                childDep.Id=`/${categ.Id}/${childId}/`
-                childDep.Map='C'
-                childDep.Name=`${categ.Name} ${childDep.Name}`
-                categoriesFilters.push(childDep)
-              }
-            }) 
-          })
+      pageData!.Departments?.forEach((dep:SpecObj)=>{
+        const depName=dep.Name
+
+        ALLCATEGS.forEach((categ:any)=>{
+          if(categ.name!=='Monte seu pc'){
+            if(categ.name===depName){
+              dep.Id=`/${categ.id}/`
+              dep.Map='C'
+              dep.Value=dep.Id
+              categFilters.push(dep)
+            }else if(categ.hasChildren){
+              categ.children.forEach((child1:any)=>{
+                if(child1.name===depName){
+                  dep.Id=`/${categ.id}/${child1.id}/`
+                  dep.Map='C'
+                  dep.Value=dep.Id
+                  categFilters.push(dep)
+                }else if(child1.hasChildren){
+                  child1.children.forEach((child2:any)=>{
+                    if(child2.name===depName){
+                      dep.Id=`/${categ.id}/${child1.id}/${child2.id}/`
+                      dep.Map='C'
+                      dep.Value=dep.Id
+                      categFilters.push(dep)
+                    }
+                  })
+                }
+              })
+            }
+          }
         })
+      })
 
-        console.log(categoriesFilters)
+      pageData!.CategoriesTrees.forEach((categ:SpecObj)=>{
+        categ.Map='C'
+        categ.Value='/'+categ.Id+'/'
+        categ.Id='/'+categ.Id+'/'
+        categFilters.unshift(categ)
+      })
 
-        pageData!.CategoriesTrees.forEach((categ:SpecObj)=>{categoriesFilters.unshift(categ)})
-      }
+      const categoriesFilters:SpecObj[]=categFilters.reduce((acc:SpecObj[],current:SpecObj)=>{
+        if(!acc.some(obj=>obj.Name===current.Name)){
+          acc.push(current)
+        }
+        return acc
+      },[])
 
       const dataFilters:Record<string,SpecObj[]> ={'Categorias': categoriesFilters,'Marcas': pageData!.Brands,...pageData!.SpecificationFilters, 'Faixa de Preço': priceFilters}
 
