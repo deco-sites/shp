@@ -302,7 +302,17 @@ function ProductInfo({ page, pix, flags }: Props) {
           <div className='flex gap-2'>
             {/* Trustvox */}
             {objTrust?.average ===0 ? null :
-              <div className='flex items-center gap-3'>
+              <div className='flex items-center gap-3 cursor-pointer'
+                onClick={()=>{
+                  const reviewSec=document.querySelector('#REVIEW')
+                  if(reviewSec){
+                    const reviewSecRect=reviewSec.getBoundingClientRect()
+                    const posY=reviewSecRect.top+window.scrollY
+
+                    window.scrollTo({top:posY-150, behavior:'smooth'})
+                  }
+                }}
+              >
                 <span className='text-yellow-300'>{objTrust?.average} de 5</span>
                 <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
                   <div style={{width:`${trustPercent}%`}} className='text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
