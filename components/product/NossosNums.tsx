@@ -248,7 +248,7 @@ const NossosNums = () => {
   }
 
   return (
-    <div className='text-secondary bg-base-100 py-[20px]'>
+    <div id='REVIEW' className='text-secondary bg-base-100 py-[20px]'>
       <h4 className='px-[10%] text-center text-2xl font-bold mb-5 re1:hidden'>Nossos Números</h4>
       <div className='flex flex-col re1:flex-row w-full re1:justify-between re1:px-[10%]'>
         <div className='flex flex-col re1:w-[40%] items-center justify-center'>
