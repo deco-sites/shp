@@ -58,7 +58,8 @@ const CompreJunto=({page}:Props)=>{
     if(data.length>=1){
       const fetchItems = async () => {
         const itemsPromises:JSX.Element[] =[]
-        data.forEach(async (obj, index) => {
+        for(let index=0; index < data.length; index++){
+          const obj=data[index]
           try {
             const fetch = await loaderSearchAPI(obj.sku)
             if(fetch && fetch.products.length) {
@@ -66,9 +67,6 @@ const CompreJunto=({page}:Props)=>{
               const name = fetch.products[0]!.productName
               const price= fetch.products[0]!.items[0].sellers[0].commertialOffer.Installments[0].Value
               const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),15)
-              // const finalPriceArr=priceComPromoEPix
-              // finalPriceArr[finalPriceArr.lastIndexOf('.')]=','
-              // const finalPrice=finalPriceArr.join('')
               const link='/'+fetch.products[0]!.linkText+'/p'
 
               const skuProdB=obj.sku.includes(product.sku) ? obj.sku.replace(product.sku, '').replace(',','') : obj.sku
@@ -100,13 +98,12 @@ const CompreJunto=({page}:Props)=>{
           } catch (error) {
             console.error(error)
           }
-        })
+        }
 
-        const resolvedItems = await Promise.all(itemsPromises)
-        if(resolvedItems.length){
+        if(itemsPromises.length){
           setHtmlContent([
             <div className='w-full flex justify-center items-center'>
-              <ProductA temSlide={resolvedItems.length>1}/>
+              <ProductA temSlide={itemsPromises.length>1}/>
               <div
                 id={id}
                 className={`flex w-[40%] ${itemsPromises.length>1 ? 'mr-[4%] re1:mr-0 w-[50%] re1:ml-[20px]' : 'w-[40%]'}`}
@@ -123,7 +120,7 @@ const CompreJunto=({page}:Props)=>{
                 </div>
 
                 <Slider className='carousel carousel-center gap-6 scrollbar-none' ref={slider}>
-                  {resolvedItems.map(element=>element)}
+                  {itemsPromises.map(element=>element)}
                 </Slider>
 
                 <div class={`${itemsPromises.length>1 ? 'flex' : 'hidden'} re1:ml-[10px] items-center justify-center next`}>
@@ -138,7 +135,7 @@ const CompreJunto=({page}:Props)=>{
                 </div>
 
                 <ul className='hidden' ref={dotsWrapper}>
-                  {resolvedItems.map((__, index) => (
+                  {itemsPromises.map((__, index) => (
                     <Slider.Dot index={index}>
                       batata
                     </Slider.Dot>
