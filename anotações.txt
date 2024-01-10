@@ -1,10 +1,12 @@
 Precisa arrumar:
 -tentar utilizar preconnect pra ver se melhora a velocidade dos requests
 -verificar o motivo de a primeira vez q entra e faz algo "novo", demorar muito pra carregar (no discord da deco)
--colorir tags na PDP de PC Gamer
+-Linkar estrelas na parte superior da PDP para abrir a seção de review
+-remover wishlist da PDP
+-produtos recomendados redirecionando para "link externo"
+-carrinho quando muda a quantidade de produtos pelo carrinho (clicando no +) ele nao atualiza o "total no pix"
 
 Bugs pra arrumar: 
--corrigir 2a imagem na seção "De um Upgrade..." na PDP de PC Gamer
 
 Possiveis melhoras: 
 -criar LP Afiliados
