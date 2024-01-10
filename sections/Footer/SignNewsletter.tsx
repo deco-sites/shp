@@ -1,25 +1,3 @@
-const SignNewsletter=()=>{
-  return(
-    <div className='my-5 w-full text-secondary bg-neutral px-[10%] py-6'>
-      <label className='text-center font-bold flex flex-col gap-2 my-4 re1:my-6'>
-        <h1 className='text-2xl re1:text-3xl'>Assine a Newsletter Shopinfo</h1>
-        <p className='text-base re1:text-lg'>Tenha acesso às promoções e novidades antes de todo mundo.</p>
-      </label>
-      <div className='flex flex-col re1:flex-row re1:justify-center re1:items-center gap-5'>
-        <input className='border border-[#979797] rounded-lg placeholder:text-[#979797] h-[40px] px-3 py-1 
-          appearance-none bg-transparent text-sm outline-none re1:w-[350px]' 
-          type='text' name='nome' placeholder='Digite seu nome'
-        />
-        <input className='border border-[#979797] rounded-lg  placeholder:text-[#979797] h-[40px] px-3 py-1 
-          appearance-none bg-transparent text-sm outline-none re1:w-[350px]' 
-          type='text' name='email' placeholder='Digite seu email'
-        />
-        <input className='border border-primary bg-primary font-bold text-lg rounded-lg placeholder
-          px-3 py-1 cursor-pointer re1:w-[150px]' type='submit' value='Assinar' 
-        />
-      </div>
-    </div>
-  )
-}
+const SignNewsletter=()=><div className='re1:px-[30%]' dangerouslySetInnerHTML={{__html:`<div role="main" id="footer-057c7ba33caa73ecd1d1"></div><script type="text/javascript" src="https://d335luupugsy2.cloudfront.net/js/rdstation-forms/stable/rdstation-forms.min.js"></script><script type="text/javascript"> new RDStationForms('footer-057c7ba33caa73ecd1d1', 'null').createForm();</script>`}}/>
 
 export default SignNewsletter

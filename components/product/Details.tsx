@@ -8,7 +8,6 @@ import Slider from 'deco-sites/fashion/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/fashion/components/ui/SliderJS.tsx'
 import Share from './ShareButton.tsx'
 import Icon from 'deco-sites/fashion/components/ui/Icon.tsx'
-import WishlistButton from '../wishlist/WishlistButton.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import { useOffer } from 'deco-sites/fashion/sdk/useOffer.ts'
 import { formatPrice } from 'deco-sites/fashion/sdk/format.ts'
@@ -27,6 +26,15 @@ export interface Props {
   aspectRatio?:string
   height?:number
   width?:number
+  /**@description As flags já vem de maneira automática, aqui serve pra estilizar elas */
+  flags?:Flag[]
+}
+
+interface Flag{
+  value:string
+  /**@description Coloque em hexdecimal a cor da tag */
+  bgColor:string
+  textColor:'black'|'white'
 }
 
 /**
@@ -207,16 +215,28 @@ export interface Props {
     )
   }
 
-function ProductInfo({ page, pix }: Props) {
-    const {  product } = page
+function ProductInfo({ page, pix, flags }: Props) {
+    const { product } = page
     const { description, productID, offers, name, isVariantOf, brand, additionalProperty } = product
     const { price, listPrice, seller, installments } = useOffer(offers)
     const categoriesId = additionalProperty?.map((item) =>
       item.name === 'category' ? item.propertyID : undefined
     )
-    const Flags =additionalProperty?.map((item) =>
+    const Flags:Flag[]=[]
+    additionalProperty?.map((item) =>
       item.hasOwnProperty('description') && (item.description==='highlight' && item)
-    ).filter(item=>(item!==false && !item.value?.includes('Coleção'))).map(item=>item!==false && item.value) || []
+    ).filter(item=>(item!==false && !item.value?.includes('Coleção'))).forEach(item=>{
+      if(item!==false){
+        const flagColor=flags?.find(flag=>item.value===flag.value)?.bgColor
+        const color= flagColor ? flagColor : '#3D3D3D'
+        const text=flags?.find(flag=>item.value===flag.value)?.textColor ?? 'white'
+        Flags.push({
+          value:item.value!,
+          bgColor:color,
+          textColor:text
+        })
+      } 
+    })
 
     const PCGamer = categoriesId?.some((item) => item === '10')
 
@@ -275,8 +295,8 @@ function ProductInfo({ page, pix }: Props) {
         <div className='flex flex-col gap-3'>
           <div>
             <ul className='flex gap-[10px] overflow-x-scroll re1:overflow-x-auto whitespace-nowrap scrollbar-none'>
-              <li className='flex items-center justify-center bg-neutral border border-neutral-content hover:border-primary py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>12% no Pix</li>
-              {Flags.map(flag=><li className='flex items-center justify-center bg-neutral border border-neutral-content hover:border-primary py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>{flag}</li>)}
+              <li className='cursor-default flex items-center justify-center bg-[#DEDA35] text-black py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>12% NO PIX</li>
+              {Flags.map((flag:Flag)=><li style={{backgroundColor:flag.bgColor}} className={`cursor-default flex items-center justify-center text-${flag.textColor} py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg`}>{flag.value}</li>)}
             </ul>
           </div>
           <div className='flex gap-2'>
@@ -433,7 +453,7 @@ function ProductInfo({ page, pix }: Props) {
     y:number
   }
 
-function Details({ page, pix, aspectRatio, height, width }: Props) {
+function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
   const [isMobile, setIsMobile] = useState(false)
 
   const handleResize = useCallback(() => {
@@ -735,11 +755,6 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
             </div>
             <div className='flex'>
               <Share />
-              <WishlistButton
-                variant='icon'
-                productGroupID={isVariantOf?.productGroupID}
-                productID={productID}
-              />
             </div>
           </div>
           <Slider class='carousel gap-6 w-full'>
@@ -860,7 +875,7 @@ function Details({ page, pix, aspectRatio, height, width }: Props) {
 
         {/* Product Info */}
         <div class='px-4 re1:pr-0 re1:pl-6 re1:col-start-3 re1:col-span-1 re1:row-start-1'>
-          <ProductInfo page={page} pix={pix}/>
+          <ProductInfo page={page} pix={pix} flags={flags}/>
         </div>
       </div>
       <SliderJS rootId={id}></SliderJS>

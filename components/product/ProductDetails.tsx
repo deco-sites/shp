@@ -13,6 +13,15 @@ export interface Props {
   page: LoaderReturnType<ProductDetailsPage | null>
   /**@description Desconto pix, caso não haja coloque 1 */
   pix: number
+  /**@description As flags já vem de maneira automática, aqui serve pra estilizar elas */
+  flags?:Flag[]
+}
+
+interface Flag{
+  value:string
+  /**@description Coloque em hexdecimal a cor da tag */
+  bgColor:string
+  textColor:'black'|'white'
 }
 
 const WIDTH = 400
@@ -34,7 +43,7 @@ function NotFound() {
   )
 }
 
-function ProductDetails({ page, pix }: Props) {
+function ProductDetails({ page, pix, flags }: Props) {
   /**
    * Showcase the different product views we have on this template. In case there are less
    * than two images, render a front-back, otherwhise render a slider
@@ -43,7 +52,7 @@ function ProductDetails({ page, pix }: Props) {
 
   return (
     <div class='py-10 re1:p-10 bg-base-100 text-secondary'>
-      {page ? <Details page={page} pix={pix}/> : <NotFound />}
+      {page ? <Details page={page} pix={pix} flags={flags}/> : <NotFound />}
     </div>
   )
 }

@@ -2,7 +2,6 @@
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { useState, useEffect, useRef} from 'preact/hooks'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
-import WishlistButton from "deco-sites/shp/islands/WishlistButton.tsx";
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import { ObjTrust } from "deco-sites/shp/types/types.ts";
 import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
@@ -117,7 +116,6 @@ const PcCard=({...props}:CardPCProps)=>{
           </div>
           <span className={`absolute h-[30px] w-[35px] ${props.objTrust?.average !==0 && 'mt-[8%] re1:mt-[6%]'} flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg`}>-{diffPercent}%</span>
         </div>
-        <div className='absolute ml-[65%] re1:ml-[73%] mt-[-18%] re1:mt-[-6.5%]'><WishlistButton productID={prodId} variant='icon'/></div>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
         <div className='text-success flex flex-col gap-1 w-[85px] absolute mt-[45%] re1:mt-[50%]'>
           <p className='text-secondary font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90 px-1'>{processador}</p>
