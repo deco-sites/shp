@@ -32,6 +32,14 @@ function GlobalTags() {
 
       {/* Web Manifest */}
       <link rel="manifest" href={asset("/site.webmanifest")} />
+
+
+      {/* Preconnects dos requests */}
+      <link rel='preconnect' href='https://shopinfo.vteximg.com.br'/>
+
+      <link rel='preconnect' href='https://shopinfo.vtexcommercerstable.com.br'/>
+
+      <link rel='preconnect' href='https://api.shopinfo.com.br'/>
     </Head>
   );
 }
