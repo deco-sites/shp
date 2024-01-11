@@ -41,7 +41,7 @@ function Cart({
 }: Props) {
   const { displayCart } = useUI();
   const isEmtpy = items.length === 0;
-  const productsPricePix:number[]|undefined=items.map(item=>DescontoPIX(item.price.sale, 12))
+  const productsPricePix:number[]|undefined=items.map(item=>item.quantity>1 ? (item.quantity*DescontoPIX(item.price.sale, 12)) : DescontoPIX(item.price.sale,12))
   const totalPix=productsPricePix?.reduce((acc, item)=>acc+item,0)
 
   return (
