@@ -302,13 +302,15 @@ function ProductInfo({ page, pix, flags }: Props) {
           <div className='flex gap-2'>
             {/* Trustvox */}
             {objTrust?.average ===0 ? null :
-              <div className='flex items-center gap-3 cursor-pointer'
+              <div className='flex items-center gap-3 cursor-pointer' title='Pergunte e veja opiniões de quem já comprou'
                 onClick={()=>{
                   const reviewSec=document.querySelector('#REVIEW')
                   if(reviewSec){
+                    const divReview=reviewSec.querySelector('#_trustvox_widget')
                     const reviewSecRect=reviewSec.getBoundingClientRect()
                     const posY=reviewSecRect.top+window.scrollY
 
+                    divReview?.classList.contains('!hidden') && reviewSec.querySelector('label')?.click()
                     window.scrollTo({top:posY-150, behavior:'smooth'})
                   }
                 }}
