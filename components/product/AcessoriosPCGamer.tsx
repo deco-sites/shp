@@ -11,6 +11,11 @@ interface AcessorioProps {
   h: number
 }
 
+export interface Props{
+  /** @description  Coloque 9 acessorios*/
+  acessorios:Array<AcessorioProps>
+}
+
 const Acessorio = ({ imgUrl, href, w, h }: AcessorioProps) => {
   return (
     <a
@@ -29,7 +34,7 @@ const Acessorio = ({ imgUrl, href, w, h }: AcessorioProps) => {
   )
 }
 
-const Acessorios = () => {
+const Acessorios = ({acessorios}:Props) => {
   const id = 'acessorios-' + useId()
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
@@ -67,7 +72,7 @@ const Acessorios = () => {
                   h={100}
                 />
                 <Acessorio
-                  imgUrl='	https://shopinfo.vteximg.com.br/arquivos/carrossel-categoria7.jpg'
+                  imgUrl='https://shopinfo.vteximg.com.br/arquivos/carrossel-categoria7.jpg'
                   href='/' w={100}
                   h={100}
                 />
