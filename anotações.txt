@@ -1,11 +1,8 @@
 Precisa arrumar:
 -verificar o motivo de a primeira vez q entra e faz algo "novo", demorar muito pra carregar (no discord da deco)
--remover wishlist da PDP
--produtos recomendados redirecionando para "link externo"
--carrinho quando muda a quantidade de produtos pelo carrinho (clicando no +) ele nao atualiza o "total no pix"
+-criar LP Afiliados
 
 Bugs pra arrumar: 
 
 Possiveis melhoras: 
--criar LP Afiliados
 -arrumar o sistema de filtro por marca pra parar de  usar como termo
