@@ -34,6 +34,8 @@ interface CardPCProps extends CardProps{
   tipoArm:string
   fonte:string
   frete?:string
+  groupId:string
+  seller:string
 }
 
 const ProdCard=({...props}:CardProps)=>{
@@ -88,7 +90,7 @@ const PcCard=({...props}:CardPCProps)=>{
   const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
   const pcObj:PcContextProps={
-    placaVideo, processador, memoria, armazenamento:arm, tipoArm, flagPercent:diffPercent, fonte,
+    placaVideo, processador, memoria, armazenamento:arm, tipoArm, flagPercent:diffPercent, fonte, seller:props.seller, groupId:props.groupId,
     name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
   }
 
@@ -171,7 +173,8 @@ const PcCard=({...props}:CardPCProps)=>{
 const Card=({product, pix='12'}:Props)=>{
   const PCGamer=product.categoriesIds.includes('/10/')
   const image=product.items[0].images[0].imageUrl
-  const prodId=product.productId
+  const prodId=product.items[0].itemId
+  const refId=product.productId
   const name=product.productName
   const priceVista=product.items[0].sellers[0].commertialOffer.Price
   const priceDe=product.items[0].sellers[0].commertialOffer.ListPrice
@@ -197,7 +200,7 @@ const Card=({product, pix='12'}:Props)=>{
     
   useEffect(()=>{
     const handleTrust=async()=>{
-      const data=await invoke['deco-sites/shp'].loaders.getTrustvox({productId:prodId, storeId:'79497'})
+      const data=await invoke['deco-sites/shp'].loaders.getTrustvox({productId:refId, storeId:'79497'})
       
       const {products_rates}:{products_rates:ObjTrust[]}=data
       const obj:ObjTrust=products_rates[0]
@@ -208,7 +211,7 @@ const Card=({product, pix='12'}:Props)=>{
 
   if(PCGamer){
     return <PcCard  armazenamento={product.SSD || product.HD} imgUrl={image} prodName={name} memoria={product.Memória} objTrust={{'product_code':prodId, 'average':0, 'count':0, 'product_name':name}} trustPercent={0}
-    placaVideo={product['Placa de vídeo']} linkProd={linkProduto} prodId={prodId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility}
+    placaVideo={product['Placa de vídeo']} linkProd={linkProduto} prodId={prodId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility} seller={product.items[0].sellers[0].sellerId ?? '1'} groupId={refId ?? ''} 
     processador={product.Processador} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix} fonte={product.Fonte}/>
   }else{
     return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe} precoVista={priceVista} parcelas={maxInstallments} objTrust={objTrust}

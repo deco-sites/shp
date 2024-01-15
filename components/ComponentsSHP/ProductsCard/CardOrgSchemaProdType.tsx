@@ -33,6 +33,8 @@ interface PcCard extends ProdCard{
   armazenamento:string
   tipoArm:string
   fonte:string
+  seller?:string
+  groupId?:string
 }
 
 
@@ -104,7 +106,7 @@ const PcCard=({...props}:PcCard)=>{
   const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
   const pcObj:PcContextProps={
-    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent, fonte,
+    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent, fonte, groupId:props.groupId, seller:props.seller,
     name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
   }
 

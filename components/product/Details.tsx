@@ -359,7 +359,7 @@ function ProductInfo({ page, pix, flags }: Props) {
                       price={price ?? 0}
                       discount={price && listPrice ? listPrice - price : 0}
                       name={product.name ?? ''}
-                      productGroupID={product.isVariantOf?.productGroupID ?? ''}
+                      productGroupID={product.isVariantOf?.productGroupID ?? '1'}
                     />
                   )}
                 </div>
@@ -396,7 +396,7 @@ function ProductInfo({ page, pix, flags }: Props) {
               <Button
                 url={product?.url ?? ''}
                 productID={productID}
-                seller={seller}
+                seller={seller ?? '1'}
                 price={price ?? 0}
                 discount={price && listPrice ? listPrice - price : 0}
                 name={product.name ?? ''}
