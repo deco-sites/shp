@@ -82,7 +82,19 @@ const BuyBar=({page}:Props)=>{
             <span className='text-success'>Neologic</span>
             <span> - CÓD. 89239</span>
             {/* Trustvox */}
-            <div className='flex justify-center items-center'>
+            <div className='flex justify-center items-center cursor-pointer' title='Pergunte e veja opiniões de quem já comprou'
+              onClick={()=>{
+                const reviewSec=document.querySelector('#REVIEW')
+                if(reviewSec){
+                  const divReview=reviewSec.querySelector('#_trustvox_widget')
+                  const reviewSecRect=reviewSec.getBoundingClientRect()
+                  const posY=reviewSecRect.top+window.scrollY
+
+                  divReview?.classList.contains('!hidden') && reviewSec.querySelector('label')?.click()
+                  window.scrollTo({top:posY-150, behavior:'smooth'})
+                }
+              }}
+            >
               <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
                 <div style={{width:`${trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
               </div>

@@ -4,9 +4,15 @@ import Acessorios from 'deco-sites/shp/components/product/AcessoriosPCGamer.tsx'
 
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage | null>
+  acessorios:Array<{
+    imgUrl: string
+    href: string
+    w: number
+    h: number
+  }>
 }
 
-const AcessoriosSection= ({page}:Props)=>{
+const AcessoriosSection= ({page, acessorios}:Props)=>{
   if(!page){
     return null
   }
@@ -18,7 +24,7 @@ const AcessoriosSection= ({page}:Props)=>{
 
   return PCGamer ? (
     <>
-      <Acessorios />
+      <Acessorios acessorios={acessorios}/>
     </>
   ) : null
   

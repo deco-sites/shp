@@ -8,7 +8,7 @@ import type {
   SimulationOrderForm,
   SKU,
   Sla,
-} from "deco-sites/std/packs/vtex/types.ts"
+} from "apps/vtex/utils/types.ts"
 
 export interface Props {
   items: SKU[]
