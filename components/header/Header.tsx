@@ -235,11 +235,6 @@ const HeaderSHP = () => {
                 Carrinho
               </div>
             </a>
-
-            <Image
-              src='https://shopinfo.vteximg.com.br/arquivos/heartRed.png'
-              alt='favorito' height={24} width={24} preload fetchPriority='high' loading='eager' decoding='sync'
-            />
           </div>
 
           <div className='w-fit h-fit border-primary border-2 p-2 rounded-lg ml-auto re1:hidden indicator'>
@@ -650,19 +645,6 @@ const HeaderSHP = () => {
               </div>
 
               <div className='flex flex-col w-full h-screen overflow-y-auto scrollbar scrollbar-thin'>
-                <a
-                  className='flex w-[95%] bg-[#333] rounded-lg border-2 border-transparent h-12 text-secondary font-bold justify-between p-5 my-[2px] mx-auto items-center'
-                  href='/teste'
-                >
-                  <div className='flex gap-2'>
-                    <img
-                      className='h-auto my-auto invert'
-                      src='https://shopinfo.vteximg.com.br/arquivos/icone-mobile-wishlist.png'
-                      alt='iconLink'
-                    />
-                    <span>Favoritos</span>
-                  </div>
-                </a>
 
                 <MenuItem
                   rounded='rounded-t-lg'

@@ -112,8 +112,6 @@ const PcCard=({...props}:PcCard)=>{
     name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
   }
 
-  if(fonte===''){console.log(pcObj)}
-
   useEffect(()=>{
     if(!PCs.some((pc)=>pc.id===pcObj.id && pc.name===pcObj.name)){
       compareInput.current && (compareInput.current.checked=false)
@@ -121,7 +119,7 @@ const PcCard=({...props}:PcCard)=>{
   },[PCs])
 
   return(
-    <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg p-0 border relative
+    <a className='flex flex-col h-[370px] w-full max-w-[250px] bg-[#262626] rounded-lg p-0 border relative
     border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
       <div className='flex flex-col px-3 pt-8 re1:pt-3 h-auto w-auto'>
         <div>

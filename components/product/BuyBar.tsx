@@ -149,16 +149,29 @@ const BuyBar=({page}:Props)=>{
         </div>
       </div>
 
-      <div className='flex justify-between re1:hidden px-[3%]'>
-        <div className='flex flex-col w-[45%]'>
-          <div className='flex gap-2'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
-            <p className='flex flex-col '>
-              <span className='text-success text-xs font-bold'>{maxInstallments}X {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-              <span className='text-xs'>Sem juros no Cartão de Crédito</span>
-            </p>
+      <div className='flex flex-col justify-between re1:hidden px-[3%]'>
+        <div className='flex justify-between'>
+          <div className='flex flex-col w-[45%]'>
+            <div className='flex gap-2'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
+              <p className='flex flex-col '>
+                <span className='text-success text-xs font-bold'>{maxInstallments}X {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+                <span className='text-xs'>Sem juros no Cartão de Crédito</span>
+              </p>
+            </div>
           </div>
-          <AddToCartButton 
+          <div className='flex flex-col w-[45%]'>
+            <div className='flex gap-2'>
+              <Icon id='Pix' size={30} strokeWidth={2}/>
+              <p className='flex flex-col'>
+                <span className='text-xs font-bold'>{pricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+                <span className='text-xs'>No Pix <b className='font-bold'>12% de Desconto</b></span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <AddToCartButton 
             url={product?.url ?? ''}
             productID={productID}
             seller={seller ?? ''}
@@ -167,21 +180,6 @@ const BuyBar=({page}:Props)=>{
             name={product.name ?? ''}
             productGroupID={product.isVariantOf?.productGroupID ?? ''}
           />
-        </div>
-        
-        <div className='flex flex-col w-[45%]'>
-          <div className='flex gap-2'>
-            <Icon id='Pix' size={30} strokeWidth={2}/>
-            <p className='flex flex-col'>
-              <span className='text-xs font-bold'>{pricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-              <span className='text-xs'>No Pix <b className='font-bold'>12% de Desconto</b></span>
-            </p>
-          </div>
-          <div className='flex bg-neutral-content rounded-lg items-center pl-[10px]' ref={divWishBtn} onClick={()=>{divWishBtn.current?.querySelector('button')?.click()}}>
-            <WishlistButton productID={productID}/>
-            <span className='text-base re1:text-xl font-bold'>Favoritar</span>
-          </div>
-        </div>
       </div>
     </div>
   )
