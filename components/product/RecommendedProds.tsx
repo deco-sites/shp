@@ -142,84 +142,48 @@ const PcCard=({...props}:PcCard)=>{
   const vistaNum=parseFloat(precoVista.replace('.','').replace(',','.'))
   const percent=precoDe!=='' ? Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100) : 15
 
-  const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
-  const [trustPercent, setTrustPercent]=useState(0)
-
-  useEffect(()=>{
-    const handleTrust=async()=>{
-      const { products_rates }=await invoke['deco-sites/shp'].loaders.getTrustvox({productId, storeId:'79497'})
-      
-      const obj:{'product_code':string, 'average':number, 'count':number, 'product_name':string}=products_rates[0]
-      setTrustPercent(obj.average*20)
-      setObjTrust(obj)
-    }
-    handleTrust()
-  },[])
-
   return(
-    <a className='flex flex-row re1:flex-col h-36 re1:h-[370px] w-[90vw] re1:w-[18%] bg-[#262626] rounded-lg p-3 re1:p-0 border border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' 
-      href={linkProd.replace('https://www.shopinfo.com.br','')}
-    >
-      <div className='flex re1:px-3 re1:pt-3 w-[30%] h-auto re1:w-auto'>
-        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg'>-{percent}%</span>
+    <a className='flex flex-col h-[370px] w-full max-w-[250px] bg-[#262626] rounded-lg p-0 border relative
+    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd.replace('https://www.shopinfo.com.br','')}>
+      <div className='flex flex-col px-3 pt-8 re1:pt-3 h-auto w-auto'>
+        <div>
+          <span className={`absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg`}>-{percent}%</span>
+        </div>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
+        <div className='text-success flex flex-col gap-1 w-[85px] absolute mt-[45%] re1:mt-[50%]'>
+          <p className='text-secondary font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90 px-1'>{processador}</p>
+          <p className='font-bold line-clamp-2 text-xs bg-[#000000] bg-opacity-90 px-1'>{placaVideo}</p>
+        </div>
       </div>
-      <div className='flex flex-col re1:flex-col-reverse justify-between w-[65%] ml-[5%] re1:ml-0 re1:w-full re1:h-[50%] re1:pb-3'>
-        <div className='re1:px-3'>
-          <p className='text-success font-bold line-clamp-1 text-xs re1:text-base'>{placaVideo}</p>
-          <div className='flex justify-between'>
-            <label className='flex items-center gap-1'>
-              <Image
-                src='https://shopinfo.vteximg.com.br/arquivos/icon-processador.svg'
-                width={15}
-                height={15}
-                loading='lazy'
-                fetchPriority='low' decoding='sync'
-              />
-              <p className='text-xs line-clamp-1'>{processador}</p>
-            </label>
-            <label className='flex items-center gap-1'>
-              <Image
-                src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
-                width={15}
-                height={15}
-                loading='lazy'
-                fetchPriority='low' decoding='sync'
-              />
-              <p className='text-xs line-clamp-1'>{memoria}</p>
-            </label>
-            <label className='flex items-center gap-1'>
-              <Image
-                src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
-                width={15}
-                height={15}
-                loading='lazy'
-                fetchPriority='low' decoding='sync'
-              />
-              <p className='text-xs line-clamp-1'>{tipoArm} {armazenamento}</p>
-            </label>
-          </div>
+      <div className='flex flex-col px-3 justify-between my-auto h-[40%]'>
+        <p className='text-sm line-clamp-2 leading-4 text-secondary'>
+          {prodName}
+        </p>
+        <div className='flex justify-between re1:justify-start re1:gap-2'>
+          <label className='flex items-center gap-1' title={memoria}>
+            <Image
+              src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
+              width={15}
+              height={15}
+              loading='lazy'
+              fetchPriority='low' decoding='sync'
+            />
+            <p className='text-[12px] line-clamp-1'>{memoria}</p>
+          </label>
+          <label className='flex items-center gap-1 w-[100px]' title={(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}>
+            <Image
+              src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
+              width={15}
+              height={15}
+              loading='lazy'
+              fetchPriority='low' decoding='sync'
+            />
+            <p className='text-[12px] line-clamp-1'>{(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}
+            </p>
+          </label>
         </div>
-        <div className='flex items-center justify-start re1:justify-center'> 
-          <hr className='hidden re1:block border-t-base-100 w-full'/>
-          {/* Trustvox */}
-          {objTrust?.average ===0 ? null :
-            <div className='flex justify-center items-center absolute'>
-              <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
-                <div style={{width:`${trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
-              </div>
-              <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
-            </div>
-          }
-        </div>
-        <div className='flex flex-col re1:px-3'>
-          <p className='text-xs re1:text-sm max-h-[30%] line-clamp-1 leading-3 re1:leading-4'>
-            {prodName}
-          </p>
-          <span className='line-through text-base-content text-xs leading-3'>{precoDe!=='' ? precoDe : `DE: R$ ${precoDeNum}`}</span>
-          <p className='text-xs'><span className='text-success text-lg font-bold'>{precoVista}</span> no pix</p>
-          <span className='text-xs text-base-content leading-3'>{parcelas}x R$ {valorParcela} sem juros</span>
-        </div>
+        <span className='text-lg font-bold text-success leading-3 mt-4'>{parcelas}x {parseFloat(valorParcela).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
+        <p className='text-[11px] text-[#b4b4b4]'>ou por {DescontoPIX(parseFloat(precoVista), 12).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
       </div>
     </a>
   )
