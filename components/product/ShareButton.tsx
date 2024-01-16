@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 
-const Share = () => {
+const Share = ({productName}:{productName:string}) => {
   const [open, setOpen] = useState(false)
   const modalzinho=useRef<HTMLUListElement>(null)
 
@@ -27,11 +27,16 @@ const Share = () => {
       <ul
         ref={modalzinho}
         onMouseLeave={() => setOpen(false)}
-        className={`grid grid-cols-2 gap-2 p-[10px] rounded-lg -top-[4%] right-[12%] bg-[#272727]/80 absolute  ${!open && 'hidden'}`}
+        className={`grid grid-cols-2 gap-2 p-[10px] rounded-lg -top-[4%] right-[4%] bg-[#272727]/80 absolute ${!open && 'hidden'}`}
       >
         <li>
-          <a href='/' className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Twitter'>
+          <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Twitter'
+            onClick={()=>{
+              window.location.href=`https://twitter.com/intent/tweet?text=${productName}%0A%0A${window.location.hostname+window.location.pathname}`
+            }}
+          >
             <Image
+              className='hover:invert'
               loading='lazy'
               fetchPriority='high'
               decoding='auto'
@@ -42,32 +47,47 @@ const Share = () => {
           </a>
         </li>
         <li>
-          <a href='/' className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Whatsapp'>
+          <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Whatsapp'
+            onClick={()=>{
+              window.location.href=`https://api.whatsapp.com/send?text=${productName}-${window.location.hostname+window.location.pathname}`
+            }}
+          >
             <Image
+              className='hover:invert'
               loading='lazy'
               fetchPriority='high'
               decoding='auto'
               width={21}
-              height={18}
+              height={21}
               src='https://shopinfo.vteximg.com.br/arquivos/shareIcon-whatsapp.png'
             />
           </a>
         </li>
         <li>
-          <a href='/' className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Facebook'>
+          <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Facebook'
+            onClick={()=>{
+              window.location.href = `https://www.facebook.com/sharer.php?u=${window.location.hostname+window.location.pathname}`
+            }}
+          >
             <Image
+              className='hover:invert'
               loading='lazy'
               fetchPriority='high'
               decoding='auto'
               width={21}
-              height={18}
+              height={21}
               src='https://shopinfo.vteximg.com.br/arquivos/shareIcon-facebook.png'
             />
           </a>
         </li>
         <li>
-          <a href='/' className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top bg-slate-500 rounded-full' data-tip='Email'>
+          <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Email'
+            onClick={()=>{
+              window.location.href=`mailto:subject=${productName}&amp;body=${window.location.hostname+window.location.pathname}`
+            }}
+          >
             <Image
+              className='hover:invert'
               loading='lazy'
               fetchPriority='high'
               decoding='auto'

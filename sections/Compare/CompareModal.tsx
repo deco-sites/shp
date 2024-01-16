@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useState, useEffect, useRef } from 'preact/hooks'
 import {PcContextProps, useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Icon from "deco-sites/shp/components/ui/Icon.tsx";
 import {invoke} from 'deco-sites/shp/runtime.ts'
+import AddToCartButton from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
 
 interface Props{
   PCs:PcContextProps[]
@@ -10,6 +11,7 @@ interface Props{
 
 const PCCard=({PC}:{PC:PcContextProps})=>{
   const {removePC}=useCompareContext()
+  const buttonDiv=useRef<HTMLDivElement>(null)
 
   return(
     <div className='flex flex-col relative w-[180px] items-center gap-1 mx-auto'>
@@ -23,8 +25,20 @@ const PCCard=({PC}:{PC:PcContextProps})=>{
       <a href={PC.linkProd} className='line-clamp-3 text-sm text-center'>{PC.name}</a>
       <span className='text-[#25d366] text-lg font-bold'>{PC.parcelas}x {PC.valorParcela.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}</span>
       <span className='text-xs text-[#b4b4b4]'>ou por {PC.precoVista.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</span>
-      <button className='bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'>Comprar</button>
-      <a className='text-xs text-[#b4b4b4] underline cursor-pointer'>Adicionar aos favoritos</a>
+      <button className='bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'
+        onClick={()=>{(buttonDiv.current?.querySelector('button[data-deco="add-to-cart"]') as HTMLDivElement)?.click()}}
+      >Comprar</button>
+      <div className='hidden' ref={buttonDiv}>
+        <AddToCartButton
+          url={PC.linkProd}
+          productID={PC.id}
+          seller={PC.seller ?? '1'}
+          price={PC.precoVista ?? 0}
+          discount={PC.precoVista && PC.precoDe ? PC.precoDe - PC.precoVista : 0}
+          name={PC.name ?? ''}
+          productGroupID={PC.groupId ?? ''}
+        />
+      </div>
     </div>
   )
 }
@@ -75,11 +89,29 @@ const Especificacoes=({PCs}:Props)=>{
         </div>
         <div className='text-xs re1:text-base items-center p-[8px] grid grid-cols-5 gap-7 border border-[#1b1b1b]'>
           <div className='w-[180px]'/>
-          {PCs.map(__=>
-            <div className='w-[180px] flex items-center justify-center mx-auto'>
-              <button className='text-base bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'>Comprar</button>
-            </div>)
-          }
+          {PCs.map(PC=>{
+            const buttonDiv=useRef<HTMLDivElement>(null)
+            return (
+              <>
+                <div className='w-[180px] flex items-center justify-center mx-auto'>
+                  <button className='text-base bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'
+                    onClick={()=>{(buttonDiv.current?.querySelector('button[data-deco="add-to-cart"]') as HTMLDivElement)?.click()}}
+                  >Comprar</button>
+                </div>
+                <div className='hidden' ref={buttonDiv}>
+                  <AddToCartButton
+                    url={PC.linkProd}
+                    productID={PC.id}
+                    seller={PC.seller ?? '1'}
+                    price={PC.precoVista ?? 0}
+                    discount={PC.precoVista && PC.precoDe ? PC.precoDe - PC.precoVista : 0}
+                    name={PC.name ?? ''}
+                    productGroupID={PC.groupId ?? ''}
+                  />
+                </div>
+              </>
+            )
+          })}
         </div>
       </div>
     </div>
@@ -140,10 +172,30 @@ const Games=({PCs}:Props)=>{
         
         <div className='text-xs re1:text-base items-center p-[8px] grid grid-cols-5 gap-7 border border-[#1b1b1b]'>
           <div className='w-[180px]'/>
-          {PCs.map(__=>
-            <div className='w-[180px] flex items-center justify-center mx-auto'>
-              <button className='text-base bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'>Comprar</button>
-            </div>)
+          {PCs.map(PC=>{
+            const buttonDiv=useRef<HTMLDivElement>(null)
+            
+            return (
+              <>
+                <div className='w-[180px] flex items-center justify-center mx-auto'>
+                  <button className='text-base bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'
+                    onClick={()=>{(buttonDiv.current?.querySelector('button[data-deco="add-to-cart"]') as HTMLDivElement)?.click()}}
+                  >Comprar</button>
+                </div>
+                <div className='hidden' ref={buttonDiv}>
+                  <AddToCartButton
+                    url={PC.linkProd}
+                    productID={PC.id}
+                    seller={PC.seller ?? '1'}
+                    price={PC.precoVista ?? 0}
+                    discount={PC.precoVista && PC.precoDe ? PC.precoDe - PC.precoVista : 0}
+                    name={PC.name ?? ''}
+                    productGroupID={PC.groupId ?? ''}
+                  />
+                </div>
+              </>
+            )
+          })
           }
         </div>
       </div>

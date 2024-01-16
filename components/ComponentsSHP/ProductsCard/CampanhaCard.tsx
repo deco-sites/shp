@@ -6,6 +6,7 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import { useOffer } from 'deco-sites/fashion/sdk/useOffer.ts'
 
 interface CardProps{
   prodId:string
@@ -32,6 +33,8 @@ interface CardPCProps extends CardProps{
   tipoArm:string
   frete?:string
   fonte:string
+  groupId:string
+  seller:string
 }
 
 export type Props={
@@ -176,8 +179,8 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
   const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
   const pcObj:PcContextProps={
-    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent, fonte:props.fonte,
-    name:props.prodName, id:props.prodId, parcelas:props.parcelas, valorParcela:props.valorParcela,
+    placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent, fonte:props.fonte, seller:props.seller,
+    name:props.prodName, id:props.prodId, parcelas:props.parcelas, valorParcela:props.valorParcela, groupId:props.groupId,
     precoDe:props.precoDe, precoVista:props.precoVista, linkProd:props.linkProd, imgUrl:props.imgUrl, pix:props.pix
   }
 
@@ -407,6 +410,8 @@ const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
 
   if(!avaibility){return null}
 
+  const { seller } = useOffer(product.offers)
+
   const offer=product.offers!.offers![0]!
   const imgUrl=product.image![0].url!
   const maxInstallments=(()=>{
@@ -426,9 +431,8 @@ const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
   const linkProd=product.isVariantOf!.url!
   const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))!.effects.parameters[0].value!
   const prodName=product.name!
-
-  //na vdd RefId pra passar no trustvox
-  const prodId=product.inProductGroupWithID!
+  const refId=product.inProductGroupWithID!
+  const prodId=product.productID
   const precoDe=offer.priceSpecification.find(item=>item.priceType==='https://schema.org/ListPrice')!.price!
   const precoVista=offer.price!
   const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)!.billingIncrement!
@@ -438,7 +442,7 @@ const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
     
   useEffect(()=>{
     const handleTrust=async()=>{
-      const data=await invoke["deco-sites/shp"].loaders.getTrustvox({productId:prodId, storeId:'79497'})
+      const data=await invoke["deco-sites/shp"].loaders.getTrustvox({productId:refId, storeId:'79497'})
       const {products_rates}:{products_rates:ObjTrust[]}=data
       const obj:ObjTrust=products_rates[0]
       obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({product_code:prodId, average:0, count:0, product_name:prodName})
@@ -472,6 +476,8 @@ const Card=({product, frete, timeRemaining, quantidade}:Props)=>{
       linkProd={linkProd}
       prodName={prodName}
       prodId={prodId}
+      groupId={product.inProductGroupWithID ?? product.isVariantOf?.productGroupID ?? ''}
+      seller={seller ?? '1'}
       precoDe={precoDe}
       precoVista={precoVista}
       valorParcela={valorParcela}

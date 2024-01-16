@@ -5,7 +5,7 @@ import Image from 'deco-sites/std/components/Image.tsx'
 import Icon from '$store/components/ui/Icon.tsx'
 import AddToCartButton from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
-import { useOffer } from 'deco-sites/fashion/sdk/useOffer.ts'
+import { useOffer } from 'deco-sites/shp/sdk/useOffer.ts'
 import { ObjTrust } from 'deco-sites/shp/types/types.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import WishlistButton from "deco-sites/shp/components/wishlist/WishlistButton.tsx";
