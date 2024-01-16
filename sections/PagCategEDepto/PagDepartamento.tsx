@@ -312,6 +312,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
       const Path=window.location.pathname
       const segments=Path.split('/')
       const result=segments.map((__,index)=>index!==0 ? segments.slice(0,index+1).join('/') : '/')
+      console.log(result)
       setPath(result)
     }
 
@@ -354,7 +355,6 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
     })
 
     PCs.length && removeAll()
-
   },[selectedFilters])
 
   useEffect(()=>{
@@ -369,76 +369,6 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
     PCs.length && removeAll()
   },[order])
 
-  // useEffect(()=>{
-  //   // filtragem de filtros no desktop
-  //   if(products.length){
-  //     const keys=filters.map(filter=>filter.label)
-  //     const productsFields:FiltroObj[]=[]
-  //     products.forEach((product:any)=>{
-  //       const fields=[]
-  //       for(const key in product){
-  //         if(keys.includes(key)){
-  //           fields.push({label: key, value: product[key][0]})
-  //         }else if(key==='brand'){
-  //           fields.push({label: 'Marcas', value: product[key]})
-  //         }
-  //       }
-  //       productsFields.push(...fields)
-  //     })
-
-  //     const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
-  //     const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
-  //       const {label,value}=obj
-  //       if(!acc[label]) acc[label]=[]
-  //       acc[label].push(value)
-  //       return acc
-  //     },{} as Record<string, string[]>)
-
-  //     if(listFiltersDesk.current && selectedFilters.length){
-  //       const keys=Object.keys(filtrosByLabel)
-  //       const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
-  //       const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
-  //       h5S.forEach(h5=>{
-  //         const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-  //         Input.value=''
-
-  //         const key=h5.innerText
-  //         Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-  //           const Li=li as HTMLLIElement
-  //           if(filtrosByLabel[key].includes(Li.innerText)){
-  //             Li.removeAttribute('data-filtered')
-  //           }else{
-  //             Li.setAttribute('data-filtered','filtrado')
-  //           }
-  //         })
-          
-  //       })
-
-  //       h5NaoDisp.forEach(h5=>{
-  //         const divPai=h5.parentElement! as HTMLDivElement
-  //         divPai.classList.replace('flex','hidden')
-  //       })
-  //     }else if(listFiltersDesk.current){
-  //       const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
-  //       h5S.forEach(h5=>{
-  //         const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-  //         Input.value=''
-
-  //         Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-  //           const Li=li as HTMLLIElement
-  //           Li.removeAttribute('data-filtered')
-  //         })
-  //       })
-
-  //       const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
-  //       h5NaoDisp.forEach(h5=>{
-  //         const divPai=h5.parentElement! as HTMLDivElement
-  //         divPai.classList.replace('hidden','flex')
-  //       })
-  //     }
-  //   }
-  // },[products])
-
   return(
     <>
       <div className='w-full text-secondary appearance-none'>
@@ -452,37 +382,10 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
             <ul>{path.map((path,index,self)=>{
               if(index===0){
                 return <li><a className='underline' href='/'>Home</a></li>
-              }else if(index!== self.length-1){
-                const pathName=path.split('/')[1]
-                let nameCategPai=''
-                switch (pathName) {
-                  case 'computadores-gamer':
-                    nameCategPai='Computadores Gamer'
-                    break;
-
-                  case 'solucoes':
-                    nameCategPai='Solucões'
-                    break;
-                  
-                  case 'workstation':
-                    nameCategPai='Workstation'
-                    break;
-
-                  case 'acessorios-gamer':
-                    nameCategPai='Acessórios Gamer'
-                    break;
-
-                  case 'hardware':
-                    nameCategPai='Hardware'
-                    break;
-    
-                  default:
-                    break;
-                }
-
-                return <li><a className='underline' href={'/'+pathName}>{nameCategPai}</a></li>
-              }else{
+              }else if(index===self.length-1){
                 return <li><a className='font-bold' href={path}>{titleCategoria}</a></li>
+              }else{
+                return <li><a className='underline capitalize' href={path}>{path.split('/').pop()?.replaceAll('-',' ')}</a></li>
               }
             })}</ul>
           </div>
