@@ -16,7 +16,7 @@ const searchMenuBarLoader = async (term:string, signal:AbortSignal)=>{
     }else{
       return resp.json()
     }
-  }).catch(err=>console.error(err))
+  }).catch(err=>console.error('Error: '+err))
 
   const finalAutocomplete=autocomplete ? autocomplete.itemsReturned.map((item:any)=>{
     item.href=item.href.split('https://www.shopinfo.com.br')[1]
