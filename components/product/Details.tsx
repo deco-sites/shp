@@ -476,6 +476,7 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
   const id = `product-image-gallery:${useId()}`
   const images = useStableImages(product)
   const {
+    name,
     description,
     productID,
     offers,
@@ -766,7 +767,7 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
               </div>}
             </div>
             <div className='flex'>
-              <Share />
+              <Share productName={name ?? ''}/>
             </div>
           </div>
           <Slider class='carousel gap-6 w-full'>
