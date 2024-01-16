@@ -5,6 +5,7 @@ import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import { ObjTrust } from 'deco-sites/shp/types/types.ts'
 import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import { useOffer } from 'deco-sites/shp/sdk/useOffer.ts'
 
 export interface Props{
   product:Product
@@ -12,6 +13,7 @@ export interface Props{
 }
 
 interface ProdCard{
+  refId:string
   prodId:string
   prodName:string
   precoVista:number
@@ -33,8 +35,8 @@ interface PcCard extends ProdCard{
   armazenamento:string
   tipoArm:string
   fonte:string
-  seller?:string
-  groupId?:string
+  seller:string
+  groupId:string
 }
 
 
@@ -207,12 +209,12 @@ const Card=({product}:Props)=>{
 
   const linkProd=product.isVariantOf!.url!
 
-  
-  const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))?.effects.parameters[0].value ?? '12' 
+  const { seller } = useOffer(product.offers)
+  const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))?.effects.parameters[0].value ?? '12'
   const prodName=product.name!
-
-  //na vdd RefId pra passar no trustvox
-  const prodId=product.inProductGroupWithID!
+  const prodId=product.productID
+  const refId=product.inProductGroupWithID!
+  const groupId=product.inProductGroupWithID ?? product.isVariantOf?.productGroupID ?? ''
   const precoDe=offer.priceSpecification.find(item=>item.priceType==='https://schema.org/ListPrice')!.price!
   const precoVista=offer.price!
   const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)!.billingIncrement!
@@ -224,7 +226,10 @@ const Card=({product}:Props)=>{
 
     const armaz=(additionalProp.find(propVal=>propVal.name==='SSD') || additionalProp.find(propVal=>propVal.name==='HD'))!
 
-    return <PcCard 
+    return <PcCard
+      refId={refId} 
+      groupId={groupId}
+      seller={seller ?? '1'}
       placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')?.value ?? ''}
       processador={additionalProp.find(item=>item.name==='Processador')?.value ?? ''}
       armazenamento={armaz!.value!}
@@ -244,6 +249,7 @@ const Card=({product}:Props)=>{
     />
   }else{
     return <ProdCard
+      refId={refId}
       parcelas={maxInstallments}
       imgUrl={imgUrl}
       pix={pix}

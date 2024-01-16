@@ -19,8 +19,8 @@ export interface PcContextProps{
   pix:string
   flagPercent:number
   fonte:string
-  groupId?:string
-  seller?:string
+  groupId:string
+  seller:string
 }
 
 export interface CompareContextType {
