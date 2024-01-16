@@ -507,11 +507,10 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
   useEffect(() => {
     handleResize()
 
-    console.log(product)
-
     window.addEventListener('resize', handleResize)
     let observer:MutationObserver
-    if((urlReview && urlReview.split('v=').length>1) && liVideo.current){
+    if((urlReview && (urlReview.split('v=').length>1 || urlReview.includes('/embed/'))) && liVideo.current){
+      console.log(product)
       const button=liVideo.current.children[0]
   
       observer= new MutationObserver((mutations)=>{
@@ -813,12 +812,12 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
                 )
             )}
 
-          {(urlReview && urlReview.split('v=').length>1) && (
+          {(urlReview && (urlReview.split('v=').length>1 || urlReview.includes('/embed/'))) && (
             <Slider.Item
               index={images.length}
               class='carousel-item min-w-[100vw] re1:min-w-[30vw] justify-center'
             >
-              <iframe ref={iframe} key={iframeKey} width={isMobile ? 300 : 400} height={isMobile ? 300 : 400} src={ `https://www.youtube.com/embed/${urlReview.split('v=')[1].split('&')[0]}`} title="Conheça a Shopinfo | A Melhor Loja de PC Gamer do Brasil" allow="accelerometer autoplay clipboard-write encrypted-media gyroscope picture-in-picture web-share"></iframe>
+              <iframe ref={iframe} key={iframeKey} width={isMobile ? 300 : 400} height={isMobile ? 300 : 400} src={ urlReview.split('v=').length>1 ? `https://www.youtube.com/embed/${urlReview.split('v=')[1].split('&')[0]}` : urlReview} title="Conheça a Shopinfo | A Melhor Loja de PC Gamer do Brasil" allow="accelerometer autoplay clipboard-write encrypted-media gyroscope picture-in-picture web-share"></iframe>
             </Slider.Item>
             )
           }
@@ -852,7 +851,7 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
         {/* Dots */}
         <ul ref={dots} class='flex gap-2 justify-center re1:justify-start overflow-auto px-4 re1:px-0 re1:flex-col re1:col-start-1 re1:col-span-1 re1:row-start-1'>
           {images.map((img, index) => (
-            <li class='min-w-[60px] re1:min-w-[70px]' ref={liVideo}>
+            <li class='min-w-[60px] re1:min-w-[70px]'>
               <Slider.Dot index={index}>
                 <div className='group-disabled:border-b-primary w-[60px] re1:w-[70px] border border-b-neutral re1:border-b-transparent border-transparent group-disabled:shadow-[0_2px_2px_0] group-disabled:shadow-primary/30'>
                   <Image
@@ -867,8 +866,8 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
               </Slider.Dot>
             </li>
           ))}
-          {(urlReview && urlReview.split('v=').length>1) && (
-            <li class='min-w-[70px]'>
+          {(urlReview && (urlReview.split('v=').length>1 || urlReview.includes('/embed/'))) && (
+            <li class='min-w-[70px]' ref={liVideo}>
               <Slider.Dot index={images.length}>
                 <div className='flex re1:flex-col gap-1 items-center py-1 px-2 re1:p-0 bg-neutral re1:bg-transparent justify-center rounded-lg  
                   re1:static group-disabled:border-primary re1:group-disabled:border-b-primary re1:group-disabled:border-l-transparent 

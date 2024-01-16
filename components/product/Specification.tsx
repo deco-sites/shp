@@ -1,5 +1,5 @@
 import type { ProductDetailsPage, PropertyValue } from 'apps/commerce/types.ts'
-import { useEffect, useRef, useState } from 'preact/hooks'
+import {  useRef, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 
 export interface Props {
@@ -86,6 +86,7 @@ const Specification=({page}:Props)=>{
   const description:string=product.description!
   const [alreadyOpened,setAlreadyOpened]=useState(false)
   const [openMenu,setOpenMenu]=useState(false)
+  const [specVazio,setSpecVazio]=useState(false)
   const productSpec=useRef<HTMLDivElement>(null)
 
   const handleDropdown=(event:MouseEvent)=>{
@@ -182,9 +183,7 @@ const Specification=({page}:Props)=>{
       tableWrapper.append(table1)
       tableWrapper.append(table2)
       
-
-      productSpec.current && productSpec.current.append(tableWrapper)
-
+      tableWrapper.innerText !== '' ? (productSpec.current && productSpec.current.append(tableWrapper)) : setSpecVazio(true)
     }
     setAlreadyOpened(true)
   }
@@ -201,7 +200,7 @@ const Specification=({page}:Props)=>{
 
 
   return (
-    <div className='w-full re1:px-[10%] border-b border-b-neutral'>
+    <div className={`w-full re1:px-[10%] border-b border-b-neutral ${specVazio ? 'hidden' : ''}`}>
       <label className='text-base px-[10%] re1:px-0 re1:text-xl py-[20px] font-bold flex justify-between items-center' onClick={handleDropdown}>
         <p className='w-[90%] re1:w-auto'>Especificações Técnicas</p>
         <Image src='https://shopinfo.vteximg.com.br/arquivos/slick-arrow.png' width={15} height={15} 
