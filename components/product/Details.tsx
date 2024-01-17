@@ -255,7 +255,8 @@ function ProductInfo({ page, pix, flags }: Props) {
       return maxInstallments
     })()
   
-    const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)!.billingIncrement!
+    // se ele n achou o objeto q tem o billingIncrement, é pq n tem parcela, logo coloco um zero mas n vai aparecer pro usuário
+    const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)?.billingIncrement ?? 0
   
     const [objTrust,setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
     const [trustPercent, setTrustPercent]=useState(0)
@@ -278,15 +279,22 @@ function ProductInfo({ page, pix, flags }: Props) {
     const inputEmail=useRef<HTMLInputElement>(null)
     const inputSku=useRef<HTMLInputElement>(null)
 
-    const handleCadastro=()=>{
+    const handleCadastro=async (event:Event)=>{
+      event.preventDefault()
       if(inputNome.current && inputEmail.current && inputSku.current){
-        console.log({
-          skuId:inputSku.current.value,
-          nome:inputNome.current.value,
-          email:inputEmail.current.value
-        })
+        const skuId=inputSku.current.value
+        const nome=inputNome.current.value
+        const email=inputEmail.current.value
+
+        if(skuId!=='' && nome!=='' && email!==''){
+          console.log({skuId, nome, email})
+          const data= await fetch("https://www.shopinfo.com.br/no-cache/AviseMe.aspx", {
+            "body": `notifymeClientName=${nome}&notifymeClientEmail=${encodeURI(email)}&notifymeIdSku=${skuId}`,
+            "method": "POST",
+          }).then(r=>r.text()).catch(err=>console.error('Error: ',err))
+          console.log(data)
+        }
       }
-      setCadastrado(true)
     }
 
     return (
@@ -378,12 +386,14 @@ function ProductInfo({ page, pix, flags }: Props) {
                   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="21" viewBox="0 0 30 21" fill="none"><path d="M1 0H0V21H1V0Z" fill="white"></path><path d="M30 0H29.3408V21H30V0Z" fill="white"></path><path d="M28.7902 0H28.1323V21H28.7902V0Z" fill="white"></path><path d="M27.3178 0H25.4243V21H27.3178V0Z" fill="white"></path><path d="M22.746 0H22.0868V21H22.746V0Z" fill="white"></path><path d="M21.3693 0H19.064V21H21.3693V0Z" fill="white"></path><path d="M17.3623 0H16.7031V21H17.3623V0Z" fill="white"></path><path d="M16.2186 0H14.2798V21H16.2186V0Z" fill="white"></path><path d="M2.58114 0H1.59167V21H2.58114V0Z" fill="white"></path><path d="M4.06534 0H3.40613V21H4.06534V0Z" fill="white"></path><path d="M6.15305 0H5.49384V21H6.15305V0Z" fill="white"></path><path d="M12.4162 0H11.757V21H12.4162V0Z" fill="white"></path><path d="M10.8776 0H10.2184V21H10.8776V0Z" fill="white"></path><path d="M8.96335 0H6.9093V21H8.96335V0Z" fill="white"></path><path d="M25.0681 0H24.1616V21H25.0681V0Z" fill="white"></path></svg>
                   <span>No boleto a vista com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)}</span>
                 </div>
-                <div className='flex gap-2 text-sm items-center'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
-                  <p>
-                    Em 1x no cartão com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)} <br/> ou parcelado em <span class='text-sm font-bold'>{maxInstallments}x de {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
-                  </p>
-                </div>
+                {maxInstallments!==0 && 
+                  <div className='flex gap-2 text-sm items-center'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
+                    <p>
+                      Em 1x no cartão com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)} <br/> ou parcelado em <span class='text-sm font-bold'>{maxInstallments}x de {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
+                    </p>
+                  </div>
+                }
               </div>
             </div>
             {/* Sku Selector */}
@@ -438,21 +448,21 @@ function ProductInfo({ page, pix, flags }: Props) {
           </>
         ):(<div className='w-full h-auto'>
             <span className='block w-full bg-primary text-center font-bold my-5'>Produto Temporariamente Indisponível</span>
-            <form className='flex flex-col gap-5 items-center re1:items-start justify-center'>
+            <form className='flex flex-col gap-5 items-center re1:items-start justify-center' onSubmit={handleCadastro}>
               <label className='text-lg font-bold'>Avise-me se este produto chegar</label>
               {cadastrado ? <p className='text-center'>Cadastrado com sucesso, assim que o produto for disponibilizado você receberá um email avisando.</p> : 
               <>
-                <input type='text' ref={inputNome} placeholder='Digite seu nome' name='notifymeClientName' id='notifymeClientName' className='rounded-lg border-2 border-neutral
+                <input type='text' ref={inputNome} required={true} placeholder='Digite seu nome' className='rounded-lg border-2 border-neutral
                   placeholder:text-neutral bg-base-100 focus:border-primary outline-none w-full text-base px-3 py-2 re1:w-[20vw]'
                 />
                 <div className='flex gap-4 w-full'>
-                  <input type='text' ref={inputEmail} placeholder='Digite seu e-mail' name='notifymeClientEmail' id='notifymeClientEmail' className='rounded-lg border-2 border-neutral
+                  <input type='text' ref={inputEmail} required={true} placeholder='Digite seu e-mail' className='rounded-lg border-2 border-neutral
                     placeholder:text-neutral bg-base-100 focus:border-primary outline-none w-full text-base px-3 py-2 re1:w-[20vw]'
                   />
-                  <button className='bg-primary px-5 rounded-lg text-lg hidden re1:block h-auto' onClick={handleCadastro}>Enviar</button>
+                  <button type='submit' className='bg-primary px-5 rounded-lg text-lg hidden re1:block h-auto'>Enviar</button>
                 </div>
-                <input type='hidden' ref={inputSku} name='notifymeIdSku' id='notifymeIdSku' value={productID}/>
-                <button className='bg-primary w-full rounded-lg text-lg h-10 re1:hidden' onClick={handleCadastro}>Enviar</button>
+                <input type='hidden' ref={inputSku} value={productID}/>
+                <button type='submit' className='bg-primary w-full rounded-lg text-lg h-10 re1:hidden'>Enviar</button>
               </>}
             </form>
         </div>)}
@@ -506,11 +516,11 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
 
   useEffect(() => {
     handleResize()
+    console.log(product)
 
     window.addEventListener('resize', handleResize)
     let observer:MutationObserver
     if((urlReview && (urlReview.split('v=').length>1 || urlReview.includes('/embed/'))) && liVideo.current){
-      console.log(product)
       const button=liVideo.current.children[0]
   
       observer= new MutationObserver((mutations)=>{
