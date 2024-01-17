@@ -283,24 +283,17 @@ function ProductInfo({ page, pix, flags }: Props) {
       event.preventDefault()
       if(inputNome.current && inputEmail.current && inputSku.current){
         const skuId=inputSku.current.value
-        const nome=inputNome.current.value
+        const name=inputNome.current.value
         const email=inputEmail.current.value
 
-        if(skuId!=='' && nome!=='' && email!==''){
-          console.log({skuId, nome, email})
-          const data=await fetch("https://www.shopinfo.com.br/no-cache/AviseMe.aspx", {
-            "headers": {
-              "accept": "*/*",
-              "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-              "cache-control": "no-cache",
-              "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-              "pragma": "no-cache",
-              "sec-fetch-mode": "cors",
-              "x-requested-with": "XMLHttpRequest"
-            },
-            "referrer": "https://www.shopinfo.com.br/monitor-gamer-neologic-24-vortexedge-24x--full-hd-165hz-ips-1ms-hdmidisplay-port-com-cabo-display-port-fonte-bivolt---nve2401x-37921/p",
-            "referrerPolicy": "strict-origin-when-cross-origin",
-            "body": `notifymeClientName=${nome}&notifymeClientEmail=${encodeURI(email)}&notifymeIdSku=${skuId}`,
+        if(skuId!=='' && name!=='' && email!==''){
+          console.log({skuId, name, email})
+          const formData=new FormData()
+          formData.append('name',name)
+          formData.append('email',email)
+          formData.append('skuId',skuId)
+          const data=await fetch('https://api.shopinfo.com.br/Deco/notifyMe.php', {
+            "body": formData,
             "method": "POST",
             "mode": "cors",
             "credentials": "include"
