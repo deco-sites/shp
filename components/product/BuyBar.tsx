@@ -18,6 +18,11 @@ const BuyBar=({page}:Props)=>{
   const {product}=page
   const { description, productID, offers, name, isVariantOf, brand, additionalProperty } = product
   const { price, listPrice, seller, installments } = useOffer(offers)
+
+  const isAvailable=offers!.offers[0].availability!=="https://schema.org/OutOfStock"
+
+  if(!isAvailable){return null}
+
   const isPC=product.category?.includes('Computadores gamer')
 
   const pricePix=DescontoPIX(price! , 12)

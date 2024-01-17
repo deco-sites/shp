@@ -26,7 +26,7 @@ const loader = async({skuId}:Props)=>{
     }
   }).catch(err=>console.error('Error: ',err))
 
-  const teasers=dataSimulation.ratesAndBenefitsData.teaser || []
+  const teasers=dataSimulation.ratesAndBenefitsData?.teaser || []
   const arrReturn=teasers.map((promotion:any)=>{
     if(promotion.name.toLowerCase().includes('compre junto')){
       return {
