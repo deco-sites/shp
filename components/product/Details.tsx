@@ -296,9 +296,8 @@ function ProductInfo({ page, pix, flags }: Props) {
             "body": formData,
             "method": "POST",
             "mode": "cors",
-            "credentials": "include"
           }).then(r=>r.text()).catch(err=>console.error('Error: ',err))
-          console.log(data)
+          data==='true' && setCadastrado(true)
         }
       }
     }
