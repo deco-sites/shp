@@ -527,7 +527,7 @@ const HeaderSHP = () => {
                             </clipPath>
                           </defs>
                         </svg>`,
-                    linkTo: '/workstation/cooler',
+                    linkTo: '/hardware/cooler',
                   },
                   {
                     name: 'Fonte',
@@ -542,7 +542,7 @@ const HeaderSHP = () => {
                           </clipPath>
                         </defs>
                       </svg>`,
-                    linkTo: '/workstation/fonte',
+                    linkTo: '/hardware/fonte',
                   },
                   {
                     name: 'HD',
@@ -557,7 +557,7 @@ const HeaderSHP = () => {
                           </clipPath>
                         </defs>
                       </svg>`,
-                    linkTo: '/workstation/hd',
+                    linkTo: '/hardware/hd',
                   },
                   {
                     name: 'SSD',
@@ -572,13 +572,13 @@ const HeaderSHP = () => {
                           </clipPath>
                         </defs>
                       </svg>`,
-                    linkTo: '/workstation/ssd',
+                    linkTo: '/hardware/ssd',
                   },
                   // {
                   //   name: 'Placa de rede',
                   //   iconSvg:
                   //     ``,
-                  //   linkTo: '/workstation/placa-de-rede',
+                  //   linkTo: '/hardware/placa-de-rede',
                   // },
                   {
                     name: 'Placa mãe',
@@ -593,13 +593,13 @@ const HeaderSHP = () => {
                           </clipPath>
                         </defs>
                       </svg>`,
-                    linkTo: '/workstation/placa-mae',
+                    linkTo: '/hardware/placa-mae',
                   },
                   // {
                   //   name: 'Kit Upgrade',
                   //   iconSvg:
                   //     ``,
-                  //   linkTo: '/workstation/kit-upgrade',
+                  //   linkTo: '/hardware/kit-upgrade',
                   // },
                 ]}
               />
