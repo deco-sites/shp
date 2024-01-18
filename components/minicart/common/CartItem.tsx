@@ -7,6 +7,7 @@ import { AnalyticsItem } from "apps/commerce/types.ts";
 import Image from "apps/website/components/Image.tsx";
 import { useCallback, useState } from "preact/hooks";
 import { DescontoPIX } from "deco-sites/shp/FunctionsSHP/DescontoPix.ts";
+import {invoke} from 'deco-sites/shp/runtime.ts'
 
 declare global {
   interface Window {
@@ -17,6 +18,7 @@ declare global {
 }
 
 export interface Item {
+  id:string
   image: {
     src: string;
     alt: string;
@@ -39,6 +41,20 @@ export interface Props {
   onUpdateQuantity: (quantity: number, index: number) => Promise<void>;
   itemToAnalyticsItem: (index: number) => AnalyticsItem | null | undefined;
 }
+
+  const addMaximumIventoryAlert=()=>{
+    const divAlert=document.createElement('div')
+    divAlert.innerHTML=`
+      <div role='alert' class='alert bg-[#dd1f26] text-xs re1:text-base text-white max-w-[95%] re1:max-w-[400px] mx-auto flex items-center'>
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span>Erro! Não é possível adicionar mais produtos do que há no estoque.</span>
+      </div>
+        `
+    divAlert.classList.add('fixed', 'z-30', 'top-4', 'w-full')
+
+    document.querySelector('body')?.append(divAlert)
+    setTimeout(()=>{divAlert.remove()},5000)
+  }
 
 function CartItem({item, index, locale, currency, onUpdateQuantity, itemToAnalyticsItem}: Props) {
   const { image, name, price: { sale, list }, quantity } = item;
@@ -86,9 +102,18 @@ function CartItem({item, index, locale, currency, onUpdateQuantity, itemToAnalyt
             onChange={withLoading(async (quantity) => {
               const analyticsItem = itemToAnalyticsItem(index);
               const diff = quantity - item.quantity;
-  
-              await onUpdateQuantity(quantity, index);
-  
+              
+              let block=false
+
+              if(diff>0){
+                const prod= await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString:`fq=skuId:${item.id}`})
+                const inventory=prod[0].offers.offers[0].inventoryLevel.value
+
+                quantity>inventory && (block=true, addMaximumIventoryAlert())
+              }
+              
+              !block && await onUpdateQuantity(quantity, index);
+
               if (analyticsItem) {
                 analyticsItem.quantity = diff;
   
