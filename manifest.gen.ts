@@ -60,14 +60,15 @@ import * as $$$$$$46 from "./sections/ProductShelf.tsx";
 import * as $$$$$$47 from "./sections/ReturnH1.tsx";
 import * as $$$$$$48 from "./sections/Search/SearchPage.tsx";
 import * as $$$$$$49 from "./sections/SearchResult.tsx";
-import * as $$$$$$50 from "./sections/Shelf.tsx";
-import * as $$$$$$51 from "./sections/TesteProMaylon.tsx";
-import * as $$$$$$52 from "./sections/TesteSection.tsx";
-import * as $$$$$$53 from "./sections/TitleAndText.tsx";
-import * as $$$$$$54 from "./sections/Vitrine.tsx";
-import * as $$$$$$55 from "./sections/WhatsApp.tsx";
-import * as $$$$$$56 from "./sections/WishlistGallery.tsx";
-import * as $$$$$$57 from "./sections/WishlistTeste.tsx";
+import * as $$$$$$50 from "./sections/Shelf/Filtro.tsx";
+import * as $$$$$$51 from "./sections/Shelf.tsx";
+import * as $$$$$$52 from "./sections/TesteProMaylon.tsx";
+import * as $$$$$$53 from "./sections/TesteSection.tsx";
+import * as $$$$$$54 from "./sections/TitleAndText.tsx";
+import * as $$$$$$55 from "./sections/Vitrine.tsx";
+import * as $$$$$$56 from "./sections/WhatsApp.tsx";
+import * as $$$$$$57 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$58 from "./sections/WishlistTeste.tsx";
 import * as $$$$$$$$$$$0 from "./apps/decohub.ts";
 import * as $$$$$$$$$$$1 from "./apps/site.ts";
 
@@ -133,14 +134,15 @@ const manifest = {
     "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$47,
     "deco-sites/shp/sections/Search/SearchPage.tsx": $$$$$$48,
     "deco-sites/shp/sections/SearchResult.tsx": $$$$$$49,
-    "deco-sites/shp/sections/Shelf.tsx": $$$$$$50,
-    "deco-sites/shp/sections/TesteProMaylon.tsx": $$$$$$51,
-    "deco-sites/shp/sections/TesteSection.tsx": $$$$$$52,
-    "deco-sites/shp/sections/TitleAndText.tsx": $$$$$$53,
-    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$54,
-    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$55,
-    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$56,
-    "deco-sites/shp/sections/WishlistTeste.tsx": $$$$$$57,
+    "deco-sites/shp/sections/Shelf.tsx": $$$$$$51,
+    "deco-sites/shp/sections/Shelf/Filtro.tsx": $$$$$$50,
+    "deco-sites/shp/sections/TesteProMaylon.tsx": $$$$$$52,
+    "deco-sites/shp/sections/TesteSection.tsx": $$$$$$53,
+    "deco-sites/shp/sections/TitleAndText.tsx": $$$$$$54,
+    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$55,
+    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$56,
+    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$57,
+    "deco-sites/shp/sections/WishlistTeste.tsx": $$$$$$58,
   },
   "apps": {
     "deco-sites/shp/apps/decohub.ts": $$$$$$$$$$$0,
