@@ -42,12 +42,12 @@ export interface Props {
   itemToAnalyticsItem: (index: number) => AnalyticsItem | null | undefined;
 }
 
-  const addMaximumIventoryAlert=()=>{
+  const addMaximumIventoryAlert=(itemName:string)=>{
     const divAlert=document.createElement('div')
     divAlert.innerHTML=`
       <div role='alert' class='alert bg-[#dd1f26] text-xs re1:text-base text-white max-w-[95%] re1:max-w-[400px] mx-auto flex items-center'>
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>Erro! Não é possível adicionar mais produtos do que há no estoque.</span>
+        <span>A quantidade desejada para o item ${itemName} não está disponível</span>
       </div>
         `
     divAlert.classList.add('fixed', 'z-30', 'top-4', 'w-full')
@@ -109,7 +109,7 @@ function CartItem({item, index, locale, currency, onUpdateQuantity, itemToAnalyt
                 const prod= await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString:`fq=skuId:${item.id}`})
                 const inventory=prod[0].offers.offers[0].inventoryLevel.value
 
-                quantity>inventory && (block=true, addMaximumIventoryAlert())
+                quantity>inventory && (block=true, addMaximumIventoryAlert(name))
               }
               
               !block && await onUpdateQuantity(quantity, index);

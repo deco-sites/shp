@@ -390,7 +390,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
             })}</ul>
           </div>
           <div className='bg-transparent px-4 re1:px-0'>
-            <h4 className='text-3xl font-bold'>{titleCategoria}</h4>
+            <h1 className='text-3xl font-bold'>{titleCategoria}</h1>
             <div className='max-w-full re1:max-w-[40%] my-[50px] text-xl' dangerouslySetInnerHTML={{__html: descText || ''}} />
           </div>
 
