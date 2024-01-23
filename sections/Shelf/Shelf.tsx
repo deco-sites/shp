@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-window-prefix
 import { useState, useRef, useEffect } from 'preact/hooks'
 import type { SectionProps } from '$live/mod.ts'
 import type { Product } from 'apps/commerce/types.ts'
@@ -8,8 +9,8 @@ import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSc
 import Filtro from 'deco-sites/shp/sections/Shelf/Filtro.tsx'
 import Modal from 'deco-sites/shp/sections/Shelf/Modal.tsx'
 
-export interface Props {
-  fqType: string
+export interface Props{
+  fqType:string
 }
 
 interface FilterObj{
@@ -21,14 +22,14 @@ interface FilterObj{
 }
 
 export const loader: (
-  fqType: Props,
+  fqType:Props,
   _req: Request,
   ctx: LoaderContext<unknown, Manifest>
 ) => Promise<{ data: Product[], filters:FilterObj[] }> = async (fqType, _req, ctx) => {
   const REQ = _req
 
   const q = REQ.url.split('?q=')[1].split(',')
-  const fqs = q.map((fq: string) => `fq=${fqType.fqType}:${fq}`)
+  const fqs = q.map((fq: string) => `fq=skuId:${fq}`)
 
   const data:Product[] = (await ctx.invoke(
     'deco-sites/shp/loaders/getProductsSearchAPIProdType.ts',
@@ -54,8 +55,12 @@ export const loader: (
 const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
   const [produtos,setProdutos]=useState<Product[]>(data)
   const [selectedFilters, setSelectedFilters]=useState<FilterObj[]>(filters)
+  const [divFlut, setDivFlut]=useState(false)
 
   const listFiltersDesk=useRef<HTMLUListElement>(null)
+  const divModalTop=useRef<HTMLDivElement>(null)
+  const divModalBot=useRef<HTMLDivElement>(null)
+  const contentWrapper=useRef<HTMLDivElement>(null)
 
   const addFiltersFunctionability=()=>{
     if(listFiltersDesk.current){
@@ -91,16 +96,89 @@ const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
       })
     }
 
+    if(divModalTop.current){
+      const divModalTopCurrent=divModalTop.current
+      const filterBtn=divModalTopCurrent.querySelector('button#filtrar') as HTMLButtonElement
+      
+      filterBtn.addEventListener('click',()=>{
+        const inputs=Array.from(divModalTopCurrent.querySelectorAll('#filterDiv input'))
+        setSelectedFilters(currentFilters=>{
+          const newFiltro:FilterObj[]=[...currentFilters]
 
+          inputs.forEach(input=>{
+            const Input=input as HTMLInputElement
+            const filtroDoInput=newFiltro.find(filtro=>filtro.label===Input.name)?.values.find(val=>val.value===Input.value)
+            filtroDoInput && (filtroDoInput.checked=Input.checked)
+          })
+
+          return newFiltro
+        })
+      })
+    }
+
+    if(divModalBot.current){
+      const divModalBotCurrent=divModalBot.current
+      const filterBtn=divModalBotCurrent.querySelector('button#filtrar') as HTMLButtonElement
+      
+      filterBtn.addEventListener('click',()=>{
+        const inputs=Array.from(divModalBotCurrent.querySelectorAll('#filterDiv input'))
+        setSelectedFilters(currentFilters=>{
+          const newFiltro:FilterObj[]=[...currentFilters]
+
+          inputs.forEach(input=>{
+            const Input=input as HTMLInputElement
+            const filtroDoInput=newFiltro.find(filtro=>filtro.label===Input.name)?.values.find(val=>val.value===Input.value)
+            filtroDoInput && (filtroDoInput.checked=Input.checked)
+          })
+
+          return newFiltro
+        })
+      })
+    }
+  }
+
+  const getProductsStartY=()=>{
+    if(divModalTop.current){
+      const divModalTopRect=divModalTop.current.getBoundingClientRect()
+      const posY=divModalTopRect.top + window.scrollY
+      return posY
+    }else{
+      return 700
+    }
   }
 
   useEffect(()=>{
+    const handleScroll=()=>{
+      //divFlut
+      if(contentWrapper.current){
+        const contentRect=contentWrapper.current.getBoundingClientRect()
+        const endContent=contentRect.bottom + window.scrollY
+        if(window.scrollY > getProductsStartY() && window.scrollY < endContent){
+          setDivFlut(true)
+        }else{
+          divModalBot.current && ((divModalBot.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
+        }
+      }
+    }
+
+    window.addEventListener('scroll',handleScroll)
+
     addFiltersFunctionability()
+
+    return ()=>{
+      window.removeEventListener('scroll',handleScroll)
+    }
   },[])
 
   useEffect(()=>{
     const selecionado=selectedFilters.some(filters=>{
       return filters.values.some(filter=>filter.checked)
+    })
+
+    selectedFilters.forEach(filter=>{
+      filter.values.forEach(val=>{
+        Array.from(document.querySelectorAll(`input#filter[name="${filter.label}"][value="${val.value}"]`)).forEach(input=>{(input as HTMLInputElement).checked=val.checked})
+      })
     })
 
     if(selecionado){
@@ -123,7 +201,6 @@ const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
     }else{
       setProdutos(data)
     }
-
   },[selectedFilters])
 
   return(
@@ -133,17 +210,17 @@ const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
           <ul ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
             {filters.map(filter=><Filtro filtro={filter}/>)}
           </ul>
-          <div className='w-full re1:hidden'>
+          <div className='w-full re1:hidden' ref={divModalTop}>
             <Modal filters={filters} id='divFlutTop'/>
           </div>
           {produtos.length ? (
-            <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4 re1:w-[75%] w-full'>
+            <div ref={contentWrapper} className='grid auto-rows-min grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4 re1:w-[75%] w-full mt-4 mb-12 re1:my-0'>
               {produtos.map(element=><Card product={element} pix={'12'}/>)}
             </div>
           ):(
             <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
           )}
-          <div className='w-full re1:hidden'>
+          <div className={`fixed bottom-0 left-0 ${divFlut ? '' : 'hidden'} w-full max-w-screen re1:hidden py-2 px-4 bg-[#111]`} ref={divModalBot}>
             <Modal filters={filters} id='divFlutBot'/>
           </div>
         </div>

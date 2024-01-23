@@ -37,7 +37,7 @@ const Modal=({ filters, id }:Props)=>{
   return(
     <div className='re1:hidden' >
       <button className='flex bg-transparent border border-secondary w-full h-12 px-10 items-center justify-center gap-2' onClick={openModal}>
-        <Image className='mx-auto' src='https://shopinfo.vteximg.com.br/arquivos/filterIcon.png' width={15} height={15}/>
+        <Image src='https://shopinfo.vteximg.com.br/arquivos/filterIcon.png' width={15} height={15}/>
         <p>Filtros</p>
       </button>
 
@@ -48,12 +48,9 @@ const Modal=({ filters, id }:Props)=>{
               event.preventDefault()
               if(modal.current){
                 const inputs=Array.from(modal.current.querySelectorAll('input[type="checkbox"]'))
-                const priceInputs=Array.from(modal.current.querySelectorAll('input[name="min"], input[name="max"]'))
-
                 const hasChecked=inputs.some(input=>(input as HTMLInputElement).checked===true)
-                const hasPriceInputed=priceInputs.some(input=>(input as HTMLInputElement).value.length>0)
 
-                if(hasChecked || hasPriceInputed){
+                if(hasChecked){
                   alert('Existem filtros selecionados, clique em Filtrar!\n Ou deselecione os filtros')
                 }else{
                   closeModal()
