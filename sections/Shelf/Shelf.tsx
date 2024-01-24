@@ -49,7 +49,7 @@ export const loader: (
     })
   })
 
-  return { data, filters }
+  return { data, filters:filters.filter(filtro=>filtro.values.length) }
 }
 
 const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
