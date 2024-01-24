@@ -40,8 +40,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
         //bg-[url('https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background-mobile.jpg')] bg-no-repeat bg-center bg-cover
         <div className='relative py-16'>
           <Image
-            src='https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background-mobile.jpg' loading='lazy' preload
-            className='absolute top-0 left-0 w-full h-full object-cover' fetchPriority='low' width={390} height={674}
+            src='https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background-mobile.jpg' loading='lazy' className='absolute top-0 left-0 w-full h-full object-cover' fetchPriority='low' width={390} height={674}
           />
 
           <div className='z-[5] relative'>
@@ -71,7 +70,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
                     <div className='flex flex-col gap-4 justify-center items-center mx-auto'>
                       <Image
                         src={item.imgUrl} width={265}
-                        height={262} preload loading='lazy'fetchPriority='low'
+                        height={262} loading='lazy'fetchPriority='low'
                       />
                       <h2 className='text-xl'>{item.title}</h2>
                       <p className='text-center text-base'>{item.subTitle}</p>
@@ -102,7 +101,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
         //bg-[url('https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background.jpg')] bg-no-repeat bg-center bg-cover 
         <div className='py-5 hidden re1:block relative'>
           <Image
-            src='https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background.jpg' loading='lazy' preload
+            src='https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background.jpg' loading='lazy'
              className='absolute top-0 left-0 w-full h-full object-cover' fetchPriority='low' width={1864} height={642}
           />
           <div className='relative z-[5]'>
@@ -120,7 +119,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
                 >
                   <Image
                     src={item.imgUrl} width={265}
-                    height={262} preload loading='lazy'fetchPriority='low'
+                    height={262} loading='lazy'fetchPriority='low'
                   />
                   <h2 className='text-xl'>{item.title}</h2>
                   <p className='text-center text-base w-64'>{item.subTitle}</p>
