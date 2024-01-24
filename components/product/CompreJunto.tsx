@@ -88,7 +88,7 @@ const CompreJunto=({page}:Props)=>{
                         onClick={(event)=>console.log((event.target as HTMLButtonElement).getAttribute('data-skus') || ((event.target as HTMLElement).parentElement as HTMLButtonElement).getAttribute('data-skus'))}
                       >
                         <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png'
-                          width={22} height={20} decoding='auto' fetchPriority='high' loading='eager' className='w-[10%]'
+                          width={22} height={20} decoding='auto' fetchPriority='high' loading='lazy' className='w-[10%]'
                         />
                         <p className='font-bold text-secondary capitalize'>Comprar junto</p>
                       </button>
@@ -162,7 +162,7 @@ const CompreJunto=({page}:Props)=>{
             
               >
               <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png'
-                width={22} height={20} decoding='auto' fetchPriority='high' loading='eager'
+                width={22} height={20} decoding='auto' fetchPriority='high' loading='lazy'
               />
               <p className='font-bold text-secondary capitalize'>Comprar junto</p>
             </button>])

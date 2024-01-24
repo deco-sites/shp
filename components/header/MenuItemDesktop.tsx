@@ -26,7 +26,7 @@ const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
             <a href={img.linkTo}>
               <Image
                 className='rounded-lg' src={img.imgUrl} alt='FotoCateg' width={120} height={120}
-                preload fetchPriority='high' decoding='auto' loading='lazy'
+                fetchPriority='auto' decoding='auto' loading='lazy'
               />
             </a>
           </div>
@@ -41,7 +41,7 @@ const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
             {subCategsNoImg.map((el)=>(
               <a href={el.linkTo} className='flex items-center content-center gap-2 hover:brightness-200'>
                 {/* <Image src={el.iconUrl} alt='icon' width={28} height={22}             
-                  preload fetchPriority='high' decoding='auto' loading='lazy'
+                  fetchPriority='auto' decoding='auto' loading='lazy'
                 /> */}
                 <div dangerouslySetInnerHTML={{__html:el.iconSvg}}/>
                 <span className='text-neutral-content font-bold'>{el.name}</span>

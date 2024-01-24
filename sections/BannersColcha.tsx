@@ -15,7 +15,7 @@ const BannersColcha=({Banners=[]}:Props)=>{
     <div className='grid grid-rows-3 re1:flex re1:items-center re1:justify-center gap-3 re1:gap-10 my-5 mx-auto w-full py-5'>
       {Banners.map(banner=>(
         <a href={banner.link} className='w-screen re1:w-fit'>
-          <Picture preload>
+          <Picture>
             <Source
               media='(max-width:768px)'
               fetchPriority='low'

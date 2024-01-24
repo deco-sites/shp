@@ -64,7 +64,7 @@ const ProdCard=({...props}:ProdCard)=>{
     border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
       <div className='flex px-3 pt-3 h-auto w-auto'>
         <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg'>-{diffPercent}%</span>
-        <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
+        <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} />
       </div>
       <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-4'>
         <p className='text-sm line-clamp-2 px-3'>
@@ -136,7 +136,7 @@ const PcCard=({...props}:PcCard)=>{
           </div>
           <span className={`absolute h-[30px] w-[35px] ${objTrust?.average !==0 && 'mt-[8%] re1:mt-[6%]'} flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg`}>-{diffPercent}%</span>
         </div>
-        <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low'/>
+        <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} />
         <div className='text-success flex flex-col gap-1 w-[85px] absolute mt-[45%] re1:mt-[50%]'>
           <p className='text-secondary font-bold line-clamp-1 text-xs bg-[#000000] bg-opacity-90 px-1'>{processador}</p>
           <p className='font-bold line-clamp-2 text-xs bg-[#000000] bg-opacity-90 px-1'>{placaVideo}</p>
@@ -153,7 +153,7 @@ const PcCard=({...props}:PcCard)=>{
               width={15}
               height={15}
               loading='lazy'
-              fetchPriority='low' decoding='sync'
+              fetchPriority='low' decoding='sync' preload={false}
             />
             <p className='text-[12px] line-clamp-1'>{memoria}</p>
           </label>
@@ -163,7 +163,7 @@ const PcCard=({...props}:PcCard)=>{
               width={15}
               height={15}
               loading='lazy'
-              fetchPriority='low' decoding='sync'
+              fetchPriority='low' decoding='sync' preload={false}
             />
             <p className='text-[12px] line-clamp-1'>{(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}
             </p>

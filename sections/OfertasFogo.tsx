@@ -38,7 +38,6 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
             src='https://shopinfo.vteximg.com.br/arquivos/icone-ofertas-fogo.png'
             height={30}
             width={30}
-            preload
             fetchPriority='low'
             loading='lazy'
           />
