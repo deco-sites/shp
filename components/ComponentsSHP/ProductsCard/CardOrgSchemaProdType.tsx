@@ -153,7 +153,7 @@ const PcCard=({...props}:PcCard)=>{
               width={15}
               height={15}
               loading='lazy'
-              fetchPriority='low' decoding='sync'
+              fetchPriority='low' decoding='sync' preload={false}
             />
             <p className='text-[12px] line-clamp-1'>{memoria}</p>
           </label>
@@ -163,7 +163,7 @@ const PcCard=({...props}:PcCard)=>{
               width={15}
               height={15}
               loading='lazy'
-              fetchPriority='low' decoding='sync'
+              fetchPriority='low' decoding='sync' preload={false}
             />
             <p className='text-[12px] line-clamp-1'>{(armazenamento.toUpperCase().includes('HD') || armazenamento.toUpperCase().includes('SSD')) ? armazenamento : `${tipoArm} ${armazenamento}`}
             </p>
