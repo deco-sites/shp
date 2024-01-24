@@ -35,7 +35,7 @@ const ProdFogo = ({...props}: Props) => {
       </label>
       <div className="flex items-center my-auto">
         <Image src={props.imgUrl} width={85} height={85}
-          preload fetchPriority='low' loading='lazy'
+          preload fetchPriority='low' loading='lazy' preload={false}
         />
 
         <div className="flex flex-col max-w-[200px] overflow-hidden">
