@@ -22,7 +22,7 @@ const Categories = ({ Categs }: Props) => {
           flex items-center justify-center'
         >
           <a href={categ.linkTo} className='flex flex-col w-full h-full text-center'>
-            <Image className='m-auto' src={categ.categImg} alt={categ.name} width={70} height={70} fetchPriority='high' preload loading='lazy' decoding='sync'/>
+            <Image className='m-auto' src={categ.categImg} alt={categ.name} width={70} height={70} fetchPriority='high' loading='lazy' decoding='sync'/>
             <span className='text-secondary text-[11px] re1:text-xs font-bold mb-[10px]'>{categ.name}</span>
           </a> 
         </li>
