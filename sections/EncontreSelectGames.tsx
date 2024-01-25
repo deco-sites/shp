@@ -14,7 +14,6 @@ import type { Product } from 'apps/commerce/types.ts'
 
 export interface Props{
   Games:Array<gameProps>
-  bannerUrl?:string
 }
 
 const count=signal(1)
@@ -188,7 +187,7 @@ const BTNFinal= () => {
   )
 }
 
-const selectGames=({ Games=[], bannerUrl }:Props)=>{
+const selectGames=({ Games=[] }:Props)=>{
   const [isMobile, setIsMobile] = useState(window.innerWidth<=768)
 
   const handleResize = useCallback(() => {
@@ -196,7 +195,6 @@ const selectGames=({ Games=[], bannerUrl }:Props)=>{
   }, [])
 
   useEffect(() => {
-    // gambiarra pra trocar a cor do body pq só a home é branca
     if(window.location.pathname!=='/'){
       const header=document.querySelector('body div.z-10.fixed')
       header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.8)')
@@ -262,20 +260,10 @@ const selectGames=({ Games=[], bannerUrl }:Props)=>{
 
   return(
     <div className={`${window.location.pathname==='/' ? 'bg-[#272727]' : 'bg-transparent'} w-full h-fit my-5 py-3`}>
-
-
       <div className='flex flex-col items-center w-[90vw] re1:w-[70vw] mx-auto gap-8'>
-        { (bannerUrl!==undefined && window.location.pathname!=='/') ? (
-          <>
-            <div className='absolute top-0 z-[-1] '>
-              <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
-                fetchPriority='high' preload
-                />
-            </div>
-
-            <h1 className='font-bold text-secondary re1:text-6xl text-3xl mb-4 text-center'>E aí? Vai jogar o que?</h1>
-          </>
-        ):null}
+        {(window.location.pathname!=='/') && 
+          <h1 className='font-bold text-secondary re1:text-6xl text-3xl mb-4 text-center'>E aí? Vai jogar o que?</h1>
+        }
         <div className='flex flex-col items-center justify-center w-4/6'>
           <h1 className='font-bold text-secondary re1:text-3xl text-xl mb-4 text-center'>Encontre o PC Gamer Completo para seus Jogos</h1>
           <div className='flex items-center justify-center gap-5 re1:text-base text-sm'>
