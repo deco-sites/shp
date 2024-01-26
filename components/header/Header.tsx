@@ -355,7 +355,7 @@ const HeaderSHP = () => {
                   {
                     imgUrl:
                       'https://shopinfo.vteximg.com.br/arquivos/banner-menu-acessorios-headset.png',
-                    linkTo: '/acessorios-gamer/headeset-gamer',
+                    linkTo: '/acessorios-gamer/headset-gamer',
                   },
                   {
                     imgUrl:
@@ -369,7 +369,7 @@ const HeaderSHP = () => {
                   },
                   {
                     imgUrl:
-                      'https://shopinfo.vteximg.com.br/arquivos/banner-menu-acessorios-cadeira.png?v=637465887851700000',
+                      'https://shopinfo.vteximg.com.br/arquivos/banner-menu-acessorios-cadeira.png',
                     linkTo: '/acessorios-gamer/cadeiras',
                   },
                 ]}
