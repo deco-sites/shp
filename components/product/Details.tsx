@@ -121,7 +121,7 @@ interface Flag{
       <div className='flex justify-evenly items-start re1:mt-6'>
         <div className='hidden re1:flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
           <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto">
-            <Picture preload>
+            <Picture>
               <Source
                 media='(max-width:768px)'
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-placadevideo.svg'
@@ -144,7 +144,7 @@ interface Flag{
         </div>
         <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
           <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] mt-auto re1:mb-auto re1:mt-0">
-            <Picture preload>
+            <Picture>
               <Source
                 media='(max-width:768px)'
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-memoria.svg'
@@ -167,7 +167,7 @@ interface Flag{
         </div>
         <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
           <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto">
-            <Picture preload>
+            <Picture>
               <Source
                 media='(max-width:768px)'
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-processador.svg'
@@ -190,7 +190,7 @@ interface Flag{
         </div>
         <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
           <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] mt-auto re1:mb-auto re1:mt-0">
-            <Picture preload>
+            <Picture>
               <Source
                 media='(max-width:768px)'
                 src='https://shopinfo.vteximg.com.br/arquivos/icon-hd.svg'
