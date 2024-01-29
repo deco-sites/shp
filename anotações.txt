@@ -1,8 +1,5 @@
 Precisa arrumar:
--criar LP Afiliados
 
 Bugs pra arrumar: 
 
 Possiveis melhoras: 
--arrumar os h1 e h2 das paginas pra SEO
--arrumar o sistema de filtro por marca pra parar de  usar como termo

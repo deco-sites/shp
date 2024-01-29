@@ -29,6 +29,12 @@ const fetchFilters=async (idCateg:string)=>await invoke['deco-sites/shp'].loader
 
 const fetchProducts=async (queryString:string)=>await invoke['deco-sites/shp'].loaders.getProductsSearchAPI({queryString})
 
+const getBrands=async()=>{
+  const url=`https://api.shopinfo.com.br/Deco/getBrands.php`
+  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
+  return data
+}
+
 const replaceClasses=(desc:string)=>{
   let string=desc
   //removendo butão de fecha e vermais
@@ -136,9 +142,9 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   const [showMore, setShowMore]=useState(false)
   const [path,setPath]=useState<string[]>([titleCategoria])
   const [prodsResources, setProdsResources]=useState('')
+  const [brands,setBrands]=useState<any>([])
 
   const {PCs, removeAll}=useCompareContext()
-
 
   const filterLabel=useRef<HTMLLabelElement>(null)
 
@@ -303,6 +309,8 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
 
       setFilters(arrFilterObj)
     })()
+
+    getBrands().then(r=>setBrands(r)).catch(err=>console.error('Error: ',err))
     
     const handleResize=()=>{
       setIsMobile(window.innerWidth<=768)
@@ -329,7 +337,14 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
 
   const handleMoreProducts=async()=>{
     !showMore && setLoading(true)
-    const fqsFilter=selectedFilters.map(obj=>obj.fq==='b' ? `ft=${obj.value}` : `fq=${obj.fq}:${obj.value}`)
+    const fqsFilter=selectedFilters.map(obj=>{
+      if(obj.fq==='b'){
+        const brandId=brands.find((brand:any)=>brand.name===obj.value)!.id
+        return `fq=B:${brandId}`
+      }else{
+        return `fq=${obj.fq}:${obj.value}`
+      }
+    })
     const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
     order!=='selecione' && queryString.push(`O=${order}`)
     const data= await fetchProducts(queryString.join('&'))
