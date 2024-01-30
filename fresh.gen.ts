@@ -18,7 +18,7 @@ import * as $GameContextIsland from "./islands/GameContextIsland.tsx";
 import * as $GamesIsland from "./islands/GamesIsland.tsx";
 import * as $HeaderIsland from "./islands/HeaderIsland.tsx";
 import * as $InstitucionalIsland from "./islands/InstitucionalIsland.tsx";
-import * as $LPs_ParaSuaEmpresaIsland from "./islands/LPs/ParaSuaEmpresaIsland.tsx";
+import * as $LPs_ParaSuaEmpresaIslands_ProdSliderIsland from "./islands/LPs/ParaSuaEmpresaIslands/ProdSliderIsland.tsx";
 import * as $OfertasFogoIsland from "./islands/OfertasFogoIsland.tsx";
 import * as $PCNivelGamer from "./islands/PCNivelGamer.tsx";
 import * as $PagDepartamentoIsland from "./islands/PagDepartamentoIsland.tsx";
@@ -62,7 +62,8 @@ const manifest = {
     "./islands/GamesIsland.tsx": $GamesIsland,
     "./islands/HeaderIsland.tsx": $HeaderIsland,
     "./islands/InstitucionalIsland.tsx": $InstitucionalIsland,
-    "./islands/LPs/ParaSuaEmpresaIsland.tsx": $LPs_ParaSuaEmpresaIsland,
+    "./islands/LPs/ParaSuaEmpresaIslands/ProdSliderIsland.tsx":
+      $LPs_ParaSuaEmpresaIslands_ProdSliderIsland,
     "./islands/OfertasFogoIsland.tsx": $OfertasFogoIsland,
     "./islands/PCNivelGamer.tsx": $PCNivelGamer,
     "./islands/PagDepartamentoIsland.tsx": $PagDepartamentoIsland,

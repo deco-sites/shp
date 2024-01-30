@@ -101,7 +101,7 @@ const HeaderSHP = () => {
 
   const hardHover = () => {
     openHard === 'hidden' && hideAll()
-    setOpenHard('flex'), setBorderHard('border-b-2 border-primary')
+    setOpenHard('flex'), setBorderHard('border-b-2 border-primary') 
   }
 
   const [openMinicart, setOpenMinicart]=useState(false)
@@ -846,10 +846,10 @@ const HeaderSHP = () => {
                 />
 
                 <a
-                  className='flex w-[95%] bg-[#333] rounded-lg border-2 border-transparent h-12 text-[#53a752] font-bold justify-between p-5 my-[2px] mx-auto items-center'
+                  className='flex w-[95%] bg-[#333] text-white rounded-lg border-2 border-transparent h-12 font-bold justify-between p-5 my-[2px] mx-auto items-center'
                   href='/para-sua-empresa'
                 >
-                  <div className='flex gap-2'>
+                  <div className='flex gap-2 items-center'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="17" viewBox="0 0 12 17" fill="none">
                       <path fill-rule="evenodd" clip-rule="evenodd" d="M2.25 1.54545H9.75C10.1642 1.54545 10.5 1.89144 10.5 2.31818V14.6818C10.5 15.1085 10.1642 15.4545 9.75 15.4545H2.25C1.83579 15.4545 1.5 15.1085 1.5 14.6818V2.31818C1.5 1.89144 1.83579 1.54545 2.25 1.54545ZM0 2.31818C0 1.03797 1.00736 0 2.25 0H9.75C10.9927 0 12 1.03797 12 2.31818V14.6818C12 15.962 10.9927 17 9.75 17H2.25C1.00736 17 0 15.962 0 14.6818V2.31818ZM3.75 3.09091C3.33579 3.09091 3 3.4369 3 3.86364C3 4.29037 3.33579 4.63636 3.75 4.63636H8.25C8.66422 4.63636 9 4.29037 9 3.86364C9 3.4369 8.66422 3.09091 8.25 3.09091H3.75ZM3 6.95455C3 6.52781 3.33579 6.18182 3.75 6.18182H6H8.25C8.66422 6.18182 9 6.52781 9 6.95455C9 7.38128 8.66422 7.72727 8.25 7.72727H3.75C3.33579 7.72727 3 7.38128 3 6.95455ZM3.75 11.5909C3.33579 11.5909 3 11.9369 3 12.3636C3 12.7903 3.33579 13.1364 3.75 13.1364H5.25C5.66421 13.1364 6 12.7903 6 12.3636C6 11.9369 5.66421 11.5909 5.25 11.5909H3.75Z" fill="#828282"/>
                     </svg>
@@ -861,7 +861,7 @@ const HeaderSHP = () => {
                   className='flex w-[95%] bg-[#333] rounded-lg border-2 border-transparent h-12 text-[#53a752] font-bold justify-between p-5 my-[2px] mx-auto items-center'
                   href='/teste'
                 >
-                  <div className='flex gap-2'>
+                  <div className='flex gap-2 items-center'>
                     <img
                       className='h-auto my-auto'
                       src='https://shopinfo.vteximg.com.br/arquivos/icone-mobile-maisvendidos.png'

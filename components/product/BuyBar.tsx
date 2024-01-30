@@ -27,13 +27,13 @@ const BuyBar=({page}:Props)=>{
   const pricePix=DescontoPIX(price! , 12)
 
   const handleScroll=()=>{
-    const footer=document.querySelector("section[data-manifest-key*='Footer.tsx'] footer")
+    // const footer=document.querySelector("section[data-manifest-key*='Footer.tsx'] footer")
     
-    const footerPosition=footer!.getBoundingClientRect().top + globalThis.window.scrollY
+    // const footerPosition=footer!.getBoundingClientRect().top + globalThis.window.scrollY
     
     const scrollPosition=globalThis.window.scrollY + globalThis.window.innerHeight
     
-    setShow(globalThis.window.scrollY > globalThis.window.innerHeight-200 &&  !(scrollPosition >= footerPosition))
+    setShow(globalThis.window.scrollY > globalThis.window.innerHeight-200)
   }
 
   const offer=offers!.offers![0]!
