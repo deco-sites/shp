@@ -9,7 +9,7 @@ type PreQtd={
   }
 }
 
-import DataJson from 'deco-sites/shp/static/prodInitialQtd_test.json' assert { type: 'json' } 
+import DataJson from 'deco-sites/shp/static/prodInitialQtd_test.json' with { type: 'json' } 
 
 const calculoComNli=(nli:string)=>{
   const NLI=nli.split('')

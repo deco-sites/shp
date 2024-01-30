@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-window-prefix
 import {useRef, useEffect} from 'preact/hooks'
 
 interface Div{
@@ -24,29 +23,29 @@ const Institucional=({Divs}:Props)=>{
     header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.5)')
     
     const handleScroll=()=>{
-      if(window.scrollY > initialScrollY && !scrolledDown){
+      if(globalThis.window.scrollY > initialScrollY && !scrolledDown){
         header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,1)')
         scrolledDown=true
-      }else if(window.scrollY <= initialScrollY && scrolledDown){
+      }else if(globalThis.window.scrollY <= initialScrollY && scrolledDown){
         header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.5)')
         scrolledDown=false
       }
     }
     
-    if(typeof window!=='undefined'){
-      if(window.location.hash){
-        const id=window.location.hash.substring(1)
+    if(typeof globalThis.window!=='undefined'){
+      if(globalThis.window.location.hash){
+        const id=globalThis.window.location.hash.substring(1)
         const divId=accordionWrapper.current?.querySelector(`div#pai-${id}`)
         divId && ((divId.querySelector('input[type="radio"]') as HTMLInputElement).checked=true)
         divId?.querySelector(`div#${id}`)?.scrollIntoView({behavior:'smooth'})
-        window.scrollBy(0, -100)
+        globalThis.window.scrollBy(0, -100)
       }
     }
 
-    window.addEventListener('scroll',handleScroll)
+    globalThis.window.addEventListener('scroll',handleScroll)
 
     return ()=>{
-      window.removeEventListener('scroll',handleScroll)
+      globalThis.window.removeEventListener('scroll',handleScroll)
     }
   },[])
 

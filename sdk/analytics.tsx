@@ -2,7 +2,7 @@ import { IS_BROWSER } from "$fresh/runtime.ts";
 import type { AnalyticsEvent } from "apps/commerce/types.ts";
 
 export const sendEvent = <E extends AnalyticsEvent>(event: E) =>
-  window.DECO_SITES_STD.sendAnalyticsEvent(event);
+  globalThis.window.DECO_SITES_STD.sendAnalyticsEvent(event);
 
 /**
  * This function is usefull for sending events on click. Works with both Server and Islands components

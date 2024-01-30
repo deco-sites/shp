@@ -12,7 +12,7 @@ const Trustvox=({page, storeId}:Props)=>{
   const {product} = page
   const vazio=''
   const scriptText=`
-    window._trustvox=[]
+    globalThis.window._trustvox=[]
 
     _trustvox.push(['_storeId', '${storeId}'])
     _trustvox.push(['_productId',  '${product.name}'])

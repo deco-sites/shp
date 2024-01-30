@@ -74,11 +74,11 @@ const SearchMenuBar=()=>{
   
   const redirectSearchPage=()=>{
     console.log(inputValue)
-    window.location.href='/s?q='+inputValue
+    globalThis.window.location.href='/s?q='+inputValue
   }
 
   const handleClickLupaDesk = (event:MouseEvent) => {
-    if (window.innerWidth <= 768) {
+    if (globalThis.window.innerWidth <= 768) {
       setOpenSearch(true)
     } else {
       redirectSearchPage()
@@ -87,7 +87,7 @@ const SearchMenuBar=()=>{
 
   //useEffect input search
   useEffect(() => {
-    if (window.innerWidth <= 768) {
+    if (globalThis.window.innerWidth <= 768) {
       const outsideClick = (event: MouseEvent) => {
         if (divInputSearchMobile.current && event.target) {
           if (!divInputSearchMobile.current.contains(event.target as Node) && openSearch) {

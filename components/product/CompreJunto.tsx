@@ -51,7 +51,7 @@ const CompreJunto=({page}:Props)=>{
   }
 
   useEffect(()=>{
-    if(typeof window!=='undefined'){
+    if(typeof globalThis.window!=='undefined'){
       handleData()
     }
   },[])

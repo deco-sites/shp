@@ -1,4 +1,4 @@
-// deno-lint-ignore-file no-window-prefix no-explicit-any
+// deno-lint-ignore-file no-explicit-any
 import { useState, useEffect, useRef } from 'preact/hooks'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
@@ -138,7 +138,7 @@ const LimparFiltros=({filters}:{filters:SelectedFilter[]})=>{
 const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
   const [loading, setLoading]=useState(true)
-  const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
+  const [isMobile, setIsMobile]=useState(globalThis.window.innerWidth<=768)
   const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:produtos.length-1,first:1})
   const [order,setOrder]=useState('selecione')
   const [products, setProducts]=useState<any>([])
@@ -174,7 +174,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
   const getProductsStartY=()=>{
     if(filterLabel.current){
       const filterLabelRect=filterLabel.current.getBoundingClientRect()
-      const posY=filterLabelRect.top + window.scrollY
+      const posY=filterLabelRect.top + globalThis.window.scrollY
       return posY
     }else{
       return 700
@@ -225,7 +225,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
           return (target.checked) ? [...prevSelectedFilters, {fq,value:target.value, name:target.name}] : [...prevSelectedFilters.filter(obj => obj.value !== target.value)]
         })
-        window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+        globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
       })
     })
 
@@ -251,7 +251,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
       }
 
       setSelectedFilters(filtersSelected)     
-      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      isMobile && globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
     btnDivFlut && (btnDivFlut as HTMLButtonElement).addEventListener('click',()=>{
@@ -271,7 +271,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
       }
 
       setSelectedFilters(filtersSelected)
-      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      isMobile && globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
     const btnPriceRange=ulDesk.querySelector('button#priceRange')!
@@ -287,7 +287,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
         alert('Você precisa preencher os dois campos de preço!')
       }
 
-      window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
   }
 
@@ -398,13 +398,13 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
       setFilters(arrFilterObj)
     }).catch(err=>console.error('Error: ',err))
 
-    const handleResize=()=>setIsMobile(window.innerWidth<=768)
+    const handleResize=()=>setIsMobile(globalThis.window.innerWidth<=768)
 
     const handleScroll=()=>{
       if(contentWrapper.current){
         const contentRect=contentWrapper.current.getBoundingClientRect()
-        const endContent=contentRect.bottom + window.scrollY
-        if(window.scrollY > getProductsStartY() && window.scrollY < endContent){
+        const endContent=contentRect.bottom + globalThis.window.scrollY
+        if(globalThis.window.scrollY > getProductsStartY() && globalThis.window.scrollY < endContent){
           setDivFlut(true)
         }else{
           divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
@@ -412,14 +412,14 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
       }
     }
     
-    if(typeof window!=='undefined'){setProducts(produtos)}
+    if(typeof globalThis.window!=='undefined'){setProducts(produtos)}
 
-    window.addEventListener('resize',handleResize)
-    window.addEventListener('scroll',handleScroll)
+    globalThis.window.addEventListener('resize',handleResize)
+    globalThis.window.addEventListener('scroll',handleScroll)
 
     return ()=>{
-      window.removeEventListener('resize', handleResize)
-      window.removeEventListener('scroll',handleScroll)
+      globalThis.window.removeEventListener('resize', handleResize)
+      globalThis.window.removeEventListener('scroll',handleScroll)
     }
   },[])
 
@@ -430,7 +430,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
   useEffect(()=>{setSelectedFilters(selectedFiltersSignal.value)},[selectedFiltersSignal.value])
 
   useEffect(()=>{
-    typeof window!=='undefined' && setFromTo({from:0, to:19})
+    typeof globalThis.window!=='undefined' && setFromTo({from:0, to:19})
     const filterValues=selectedFilters.map(filter=>filter.value)
     const filterFqs=selectedFilters.map(filter=>filter.fq)
     
@@ -447,7 +447,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
   useEffect(()=>{
     if(order!=='selecione'){
-      typeof window!=='undefined' && setFromTo({from:0, to:19, first:0})
+      typeof globalThis.window!=='undefined' && setFromTo({from:0, to:19, first:0})
     }
 
     PCs.length && removeAll()
@@ -455,7 +455,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
 
   useEffect(()=>{
     if(fromTo.first!==1){
-      typeof window!=='undefined' && ((currentController.current && (currentController.current.abort(), currentController.current=null)),handleMoreProducts())
+      typeof globalThis.window!=='undefined' && ((currentController.current && (currentController.current.abort(), currentController.current=null)),handleMoreProducts())
     }
   },[fromTo])
 

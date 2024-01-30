@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-window-prefix
 import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
@@ -30,11 +29,11 @@ const BuyBar=({page}:Props)=>{
   const handleScroll=()=>{
     const footer=document.querySelector("section[data-manifest-key*='Footer.tsx'] footer")
     
-    const footerPosition=footer!.getBoundingClientRect().top + window.scrollY
+    const footerPosition=footer!.getBoundingClientRect().top + globalThis.window.scrollY
     
-    const scrollPosition=window.scrollY + window.innerHeight
+    const scrollPosition=globalThis.window.scrollY + globalThis.window.innerHeight
     
-    setShow(window.scrollY > window.innerHeight-200 &&  !(scrollPosition >= footerPosition))
+    setShow(globalThis.window.scrollY > globalThis.window.innerHeight-200 &&  !(scrollPosition >= footerPosition))
   }
 
   const offer=offers!.offers![0]!
@@ -62,8 +61,8 @@ const BuyBar=({page}:Props)=>{
   const divWishBtn=useRef<HTMLDivElement>(null)
 
   useEffect(()=>{
-    if(typeof window !== 'undefined'){
-      window.addEventListener('scroll' ,handleScroll)
+    if(typeof globalThis.window !== 'undefined'){
+      globalThis.window.addEventListener('scroll' ,handleScroll)
     }
 
     const handleTrust=async()=>{
@@ -75,7 +74,7 @@ const BuyBar=({page}:Props)=>{
     handleTrust()
 
     return ()=>{
-      window.removeEventListener('scroll',handleScroll)
+      globalThis.window.removeEventListener('scroll',handleScroll)
     }
   },[])
 
@@ -93,10 +92,10 @@ const BuyBar=({page}:Props)=>{
                 if(reviewSec){
                   const divReview=reviewSec.querySelector('#_trustvox_widget')
                   const reviewSecRect=reviewSec.getBoundingClientRect()
-                  const posY=reviewSecRect.top+window.scrollY
+                  const posY=reviewSecRect.top+globalThis.window.scrollY
 
                   divReview?.classList.contains('!hidden') && reviewSec.querySelector('label')?.click()
-                  window.scrollTo({top:posY-150, behavior:'smooth'})
+                  globalThis.window.scrollTo({top:posY-150, behavior:'smooth'})
                 }
               }}
             >

@@ -9,7 +9,7 @@ const Teste=()=>{
     <>
       <div id='minicartWrapper' className={`${openMinicart ? 'flex' : 'hidden'} flex-col z-30 fixed w-full items-end bg-[#000]/80`}
         onClick={(event:MouseEvent)=>{
-          if(window.innerWidth>768){
+          if(globalThis.window.innerWidth>768){
             (!document.querySelector('#minicartContent')?.contains(event.target as Node) && event.target===document.querySelector('#minicartWrapper')) && setOpenMinicart(false)
           }
         }}

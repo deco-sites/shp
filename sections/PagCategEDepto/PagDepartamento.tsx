@@ -1,4 +1,4 @@
-// deno-lint-ignore-file no-window-prefix no-explicit-any
+// deno-lint-ignore-file no-explicit-any
 import { useEffect, useState, useRef } from 'preact/hooks'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
@@ -131,7 +131,7 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
 export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria='', iconesNavegacionais}:Props)=>{
   const [hideDescSeo,setHideDescSeo]=useState(true)
   const [loading, setLoading]=useState(true)
-  const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
+  const [isMobile, setIsMobile]=useState(globalThis.window.innerWidth<=768)
   const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:19})
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
@@ -157,7 +157,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   const getProductsStartY=()=>{
     if(filterLabel.current){
       const filterLabelRect=filterLabel.current.getBoundingClientRect()
-      const posY=filterLabelRect.top + window.scrollY
+      const posY=filterLabelRect.top + globalThis.window.scrollY
       return posY
     }else{
       return 700
@@ -182,7 +182,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
 
           return (target.checked) ? [...prevSelectedFilters, {fq,value:target.value}] : [...prevSelectedFilters.filter(obj => obj.value !== target.value)]
         })
-        window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+        globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
       })
     })
 
@@ -208,7 +208,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
       }
 
       setSelectedFilters(filtersSelected)     
-      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      isMobile && globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
     btnDivFlut && (btnDivFlut as HTMLButtonElement).addEventListener('click',()=>{
@@ -228,7 +228,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
       }
 
       setSelectedFilters(filtersSelected)
-      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      isMobile && globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
     const btnPriceRange=ulDesk.querySelector('button#priceRange')!
@@ -244,7 +244,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
         alert('Você precisa preencher os dois campos de preço!')
       }
 
-      window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
   }
@@ -269,10 +269,10 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
 
     const handleScroll=()=>{
       //header opacity
-      if(window.scrollY > initialScrollY && !scrolledDown){
+      if(globalThis.window.scrollY > initialScrollY && !scrolledDown){
         header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,1)')
         scrolledDown=true
-      }else if(window.scrollY <= initialScrollY && scrolledDown){
+      }else if(globalThis.window.scrollY <= initialScrollY && scrolledDown){
         header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.8)')
         scrolledDown=false
       }
@@ -280,8 +280,8 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
       //divFlut
       if(contentWrapper.current){
         const contentRect=contentWrapper.current.getBoundingClientRect()
-        const endContent=contentRect.bottom + window.scrollY
-        if(window.scrollY > getProductsStartY() && window.scrollY < endContent){
+        const endContent=contentRect.bottom + globalThis.window.scrollY
+        if(globalThis.window.scrollY > getProductsStartY() && globalThis.window.scrollY < endContent){
           setDivFlut(true)
         }else{
           divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
@@ -313,23 +313,23 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
     getBrands().then(r=>setBrands(r)).catch(err=>console.error('Error: ',err))
     
     const handleResize=()=>{
-      setIsMobile(window.innerWidth<=768)
+      setIsMobile(globalThis.window.innerWidth<=768)
     }
 
-    if(typeof window !== 'undefined'){
-      const Path=window.location.pathname
+    if(typeof globalThis.window !== 'undefined'){
+      const Path=globalThis.window.location.pathname
       const segments=Path.split('/')
       const result=segments.map((__,index)=>index!==0 ? segments.slice(0,index+1).join('/') : '/')
       console.log(result)
       setPath(result)
     }
 
-    window.addEventListener('scroll',handleScroll)
-    window.addEventListener('resize',handleResize)
+    globalThis.window.addEventListener('scroll',handleScroll)
+    globalThis.window.addEventListener('resize',handleResize)
 
     return()=>{
-      window.removeEventListener('scroll',handleScroll)
-      window.removeEventListener('resize',handleResize)
+      globalThis.window.removeEventListener('scroll',handleScroll)
+      globalThis.window.removeEventListener('resize',handleResize)
     }
   },[])
 
@@ -360,7 +360,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   useEffect(()=>{setSelectedFilters(selectedFiltersSignal.value)},[selectedFiltersSignal.value])
 
   useEffect(()=>{
-    typeof window!=='undefined' && setFromTo({from:0, to:19})
+    typeof globalThis.window!=='undefined' && setFromTo({from:0, to:19})
     const filterValues=selectedFilters.map(filter=>filter.value)
     const filterFqs=selectedFilters.map(filter=>filter.fq)
     
@@ -373,11 +373,11 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   },[selectedFilters])
 
   useEffect(()=>{
-    typeof window!=='undefined' && handleMoreProducts()
+    typeof globalThis.window!=='undefined' && handleMoreProducts()
   },[fromTo])
 
   useEffect(()=>{
-    typeof window!=='undefined' && setFromTo({from:0, to:19})
+    typeof globalThis.window!=='undefined' && setFromTo({from:0, to:19})
 
     Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
 

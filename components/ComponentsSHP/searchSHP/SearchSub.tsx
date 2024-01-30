@@ -1,4 +1,4 @@
-// deno-lint-ignore-file no-window-prefix no-explicit-any
+// deno-lint-ignore-file no-explicit-any
 import { useEffect, useState, useRef } from 'preact/hooks'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
@@ -52,7 +52,7 @@ interface FiltroObj{
 
 const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props)=>{
   const [loading, setLoading]=useState(true)
-  const [isMobile, setIsMobile]=useState(window.innerWidth<=768)
+  const [isMobile, setIsMobile]=useState(globalThis.globalThis.window.innerWidth<=768)
   const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:19})
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
@@ -74,7 +74,7 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
   const getProductsStartY=()=>{
     if(filterLabel.current){
       const filterLabelRect=filterLabel.current.getBoundingClientRect()
-      const posY=filterLabelRect.top + window.scrollY
+      const posY=filterLabelRect.top + globalThis.globalThis.window.scrollY
       return posY
     }else{
       return 700
@@ -99,7 +99,7 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
 
           return (target.checked) ? [...prevSelectedFilters, {fq,value:target.value}] : [...prevSelectedFilters.filter(obj => obj.value !== target.value)]
         })
-        window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+        globalThis.globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
       })
     })
 
@@ -125,7 +125,7 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
       }
 
       setSelectedFilters(filtersSelected)     
-      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      isMobile && globalThis.globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
     btnDivFlut && (btnDivFlut as HTMLButtonElement).addEventListener('click',()=>{
@@ -145,7 +145,7 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
       }
 
       setSelectedFilters(filtersSelected)
-      isMobile && window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      isMobile && globalThis.globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
 
     const btnPriceRange=ulDesk.querySelector('button#priceRange')!
@@ -161,7 +161,7 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
         alert('Você precisa preencher os dois campos de preço!')
       }
 
-      window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
+      globalThis.globalThis.window.scrollTo({top:getProductsStartY()-200, behavior:'smooth'})
     })
   }
 
@@ -185,10 +185,10 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
 
     const handleScroll=()=>{
       //header opacity
-      if(window.scrollY > initialScrollY && !scrolledDown){
+      if(globalThis.globalThis.window.scrollY > initialScrollY && !scrolledDown){
         header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,1)')
         scrolledDown=true
-      }else if(window.scrollY <= initialScrollY && scrolledDown){
+      }else if(globalThis.globalThis.window.scrollY <= initialScrollY && scrolledDown){
         header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.8)')
         scrolledDown=false
       }
@@ -196,8 +196,8 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
       //divFlut
       if(contentWrapper.current){
         const contentRect=contentWrapper.current.getBoundingClientRect()
-        const endContent=contentRect.bottom + window.scrollY
-        if(window.scrollY > getProductsStartY() && window.scrollY < endContent){
+        const endContent=contentRect.bottom + globalThis.globalThis.window.scrollY
+        if(globalThis.globalThis.window.scrollY > getProductsStartY() && globalThis.globalThis.window.scrollY < endContent){
           setDivFlut(true)
         }else{
           divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
@@ -265,15 +265,15 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
     //aqui eu acabo os request sendo tratados independetementes
 
     const handleResize=()=>{
-      setIsMobile(window.innerWidth<=768)
+      setIsMobile(globalThis.globalThis.window.innerWidth<=768)
     }
 
-    window.addEventListener('scroll',handleScroll)
-    window.addEventListener('resize',handleResize)
+    globalThis.globalThis.window.addEventListener('scroll',handleScroll)
+    globalThis.globalThis.window.addEventListener('resize',handleResize)
 
     return()=>{
-      window.removeEventListener('scroll',handleScroll)
-      window.removeEventListener('resize',handleResize)
+      globalThis.globalThis.window.removeEventListener('scroll',handleScroll)
+      globalThis.globalThis.window.removeEventListener('resize',handleResize)
     }
   },[])
 
@@ -301,7 +301,7 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
   }
 
   useEffect(()=>{
-    typeof window!=='undefined' && setFromTo({from:0, to:19})
+    typeof globalThis.globalThis.window!=='undefined' && setFromTo({from:0, to:19})
     const filterValues=selectedFilters.map(filter=>filter.value)
     const filterFqs=selectedFilters.map(filter=>filter.fq)
     
@@ -312,11 +312,11 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
   },[selectedFilters])
 
   useEffect(()=>{
-    typeof window!=='undefined' && handleMoreProducts()
+    typeof globalThis.globalThis.window!=='undefined' && handleMoreProducts()
   },[fromTo])
 
   useEffect(()=>{
-    typeof window!=='undefined' && setFromTo({from:0, to:19})
+    typeof globalThis.globalThis.window!=='undefined' && setFromTo({from:0, to:19})
 
     Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
   },[order])
