@@ -102,7 +102,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   },[products])
 
   useEffect(()=>{
-    if(typeof window!=='undefined' && !(tipo===null || typeof tipo==='string')){
+    if(typeof globalThis.window!=='undefined' && !(tipo===null || typeof tipo==='string')){
       const LisMobile=Array.from(filtrosMob.current!.querySelectorAll('dialog li'))
       LisMobile.forEach((li)=>{(li as HTMLLIElement).addEventListener('click',handleClickMobFilters)})
     }

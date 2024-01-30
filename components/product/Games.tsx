@@ -165,10 +165,10 @@ const Games=({ page }:Props)=>{
   useEffect(()=>{
     const comecar=()=>{handleDropdown()}
 
-    window.addEventListener('load',comecar)
+    globalThis.window.addEventListener('load',comecar)
     
     return ()=>{
-      window.removeEventListener('load',comecar)
+      globalThis.window.removeEventListener('load',comecar)
     }
   },[])
 

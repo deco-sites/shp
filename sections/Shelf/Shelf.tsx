@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-window-prefix
 import { useState, useRef, useEffect } from 'preact/hooks'
 import type { SectionProps } from '$live/mod.ts'
 import type { Product } from 'apps/commerce/types.ts'
@@ -140,7 +139,7 @@ const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
   const getProductsStartY=()=>{
     if(divModalTop.current){
       const divModalTopRect=divModalTop.current.getBoundingClientRect()
-      const posY=divModalTopRect.top + window.scrollY
+      const posY=divModalTopRect.top + globalThis.window.scrollY
       return posY
     }else{
       return 700
@@ -152,8 +151,8 @@ const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
       //divFlut
       if(contentWrapper.current){
         const contentRect=contentWrapper.current.getBoundingClientRect()
-        const endContent=contentRect.bottom + window.scrollY
-        if(window.scrollY > getProductsStartY() && window.scrollY < endContent){
+        const endContent=contentRect.bottom + globalThis.window.scrollY
+        if(globalThis.window.scrollY > getProductsStartY() && globalThis.window.scrollY < endContent){
           setDivFlut(true)
         }else{
           divModalBot.current && ((divModalBot.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
@@ -161,12 +160,12 @@ const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
       }
     }
 
-    window.addEventListener('scroll',handleScroll)
+    globalThis.window.addEventListener('scroll',handleScroll)
 
     addFiltersFunctionability()
 
     return ()=>{
-      window.removeEventListener('scroll',handleScroll)
+      globalThis.window.removeEventListener('scroll',handleScroll)
     }
   },[])
 

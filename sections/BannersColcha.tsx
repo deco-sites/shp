@@ -9,7 +9,7 @@ export interface Props{
 }
 
 const BannersColcha=({Banners=[]}:Props)=>{
-  const isMobile=window.innerWidth<=768
+  const isMobile=globalThis.window.innerWidth<=768
 
   return(
     <div className='grid grid-rows-3 re1:flex re1:items-center re1:justify-center gap-3 re1:gap-10 my-5 mx-auto w-full py-5'>

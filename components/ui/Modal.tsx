@@ -7,7 +7,7 @@ import type { JSX } from "preact";
 import Icon from "./Icon.tsx";
 
 // Lazy load a <dialog> polyfill.
-if (IS_BROWSER && typeof window.HTMLDialogElement === "undefined") {
+if (IS_BROWSER && typeof globalThis.window.HTMLDialogElement === "undefined") {
   await import(
     "https://raw.githubusercontent.com/GoogleChrome/dialog-polyfill/5033aac1b74c44f36cde47be3d11f4756f3f8fda/dist/dialog-polyfill.esm.js"
   );

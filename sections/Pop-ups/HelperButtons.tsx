@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-window-prefix
 import { useState, useEffect } from 'preact/hooks'
 import ScrollToTop from 'deco-sites/shp/components/pop-ups/ScrollToTop.tsx'
 import Help from 'deco-sites/shp/components/pop-ups/Help.tsx'
@@ -17,18 +16,18 @@ const HelperButtons=({links}:Props)=>{
   const [isPDP, setIsPDP]=useState(false)
 
   const handleScroll=()=>{
-    setShowToTop(window.scrollY > window.innerHeight-200)
+    setShowToTop(globalThis.window.scrollY > globalThis.window.innerHeight-200)
   } 
 
   useEffect(()=>{
-    if(typeof window !== 'undefined'){
-      window.location.pathname.split('/').pop() === 'p' && setIsPDP(true)
+    if(typeof globalThis.window !== 'undefined'){
+      globalThis.window.location.pathname.split('/').pop() === 'p' && setIsPDP(true)
 
-      window.addEventListener('scroll' ,handleScroll)
+      globalThis.window.addEventListener('scroll' ,handleScroll)
     }
 
     return ()=>{
-      window.removeEventListener('scroll',handleScroll)
+      globalThis.window.removeEventListener('scroll',handleScroll)
     }
   },[])
 

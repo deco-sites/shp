@@ -32,7 +32,7 @@ const Share = ({productName}:{productName:string}) => {
         <li>
           <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Twitter'
             onClick={()=>{
-              window.location.href=`https://twitter.com/intent/tweet?text=${productName}%0A%0A${window.location.hostname+window.location.pathname}`
+              globalThis.window.location.href=`https://twitter.com/intent/tweet?text=${productName}%0A%0A${globalThis.window.location.hostname+globalThis.window.location.pathname}`
             }}
           >
             <Image
@@ -49,7 +49,7 @@ const Share = ({productName}:{productName:string}) => {
         <li>
           <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Whatsapp'
             onClick={()=>{
-              window.location.href=`https://api.whatsapp.com/send?text=${productName}-${window.location.hostname+window.location.pathname}`
+              globalThis.window.location.href=`https://api.whatsapp.com/send?text=${productName}-${globalThis.window.location.hostname+globalThis.window.location.pathname}`
             }}
           >
             <Image
@@ -66,7 +66,7 @@ const Share = ({productName}:{productName:string}) => {
         <li>
           <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Facebook'
             onClick={()=>{
-              window.location.href = `https://www.facebook.com/sharer.php?u=${window.location.hostname+window.location.pathname}`
+              globalThis.window.location.href = `https://www.facebook.com/sharer.php?u=${globalThis.window.location.hostname+globalThis.window.location.pathname}`
             }}
           >
             <Image
@@ -83,7 +83,7 @@ const Share = ({productName}:{productName:string}) => {
         <li>
           <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Email'
             onClick={()=>{
-              window.location.href=`mailto:subject=${productName}&amp;body=${window.location.hostname+window.location.pathname}`
+              globalThis.window.location.href=`mailto:subject=${productName}&amp;body=${globalThis.window.location.hostname+globalThis.window.location.pathname}`
             }}
           >
             <Image

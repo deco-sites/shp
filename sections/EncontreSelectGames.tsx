@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-window-prefix
 import Game, {gameProps} from 'deco-sites/shp/components/ComponentsSHP/SelectGames/Game.tsx'
 import GameContextProvider, {useGameContext, GameContextType}  from 'deco-sites/shp/contexts/Games/GameContext.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
@@ -115,7 +114,7 @@ const BTNFinal= () => {
             })
 
             if(Skus.length){
-              window.location.href=`shelf/?q=${Skus}`
+              globalThis.window.location.href=`shelf/?q=${Skus}`
             }else{
               alert('Nenhum PC encontrado!')
             }
@@ -188,24 +187,24 @@ const BTNFinal= () => {
 }
 
 const selectGames=({ Games=[] }:Props)=>{
-  const [isMobile, setIsMobile] = useState(window.innerWidth<=768)
+  const [isMobile, setIsMobile] = useState(globalThis.window.innerWidth<=768)
 
   const handleResize = useCallback(() => {
-    setIsMobile(window.innerWidth <= 768)
+    setIsMobile(globalThis.window.innerWidth <= 768)
   }, [])
 
   useEffect(() => {
-    if(window.location.pathname!=='/'){
+    if(globalThis.window.location.pathname!=='/'){
       const header=document.querySelector('body div.z-10.fixed')
       header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.8)')
     }
     
     handleResize()
 
-    window.addEventListener('resize', handleResize)
+    globalThis.window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize)  
+      globalThis.window.removeEventListener('resize', handleResize)  
     }
   }, [])
 
@@ -259,9 +258,9 @@ const selectGames=({ Games=[] }:Props)=>{
   Games.length<1 && null
 
   return(
-    <div className={`${window.location.pathname==='/' ? 'bg-[#272727]' : 'bg-transparent'} w-full h-fit my-5 py-3`}>
+    <div className={`${globalThis.window.location.pathname==='/' ? 'bg-[#272727]' : 'bg-transparent'} w-full h-fit my-5 py-3`}>
       <div className='flex flex-col items-center w-[90vw] re1:w-[70vw] mx-auto gap-8'>
-        {(window.location.pathname!=='/') && 
+        {(globalThis.window.location.pathname!=='/') && 
           <h1 className='font-bold text-secondary re1:text-6xl text-3xl mb-4 text-center'>E aí? Vai jogar o que?</h1>
         }
         <div className='flex flex-col items-center justify-center w-4/6'>

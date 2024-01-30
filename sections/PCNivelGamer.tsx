@@ -14,23 +14,21 @@ export interface Props {
 }
 
 const PCNivelGamer = ({ items = [] }: Props) => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [isMobile, setIsMobile] = useState(globalThis.window.innerWidth <= 768)
   const id = useId() + '-PCNivelGamer'
 
   const handleResize = useCallback(() => {
-    setIsMobile(window.innerWidth <= 768)
+    setIsMobile(globalThis.window.innerWidth <= 768)
   }, [])
 
   useEffect(() => {
 
     handleResize()
 
-    // deno-lint-ignore no-window-prefix
-    window.addEventListener('resize', handleResize)
+    globalThis.window.addEventListener('resize', handleResize)
 
     return () => {
-      // deno-lint-ignore no-window-prefix
-      window.removeEventListener('resize', handleResize)
+      globalThis.window.removeEventListener('resize', handleResize)
     }
   }, [])
 

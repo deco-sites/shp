@@ -22,7 +22,7 @@ const callback = () => {
   }
 };
 
-window.addEventListener('scroll', callback, { once: true });
+globalThis.window.addEventListener('scroll', callback, { once: true });
 `;
 
 function CookieConsent() {

@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-window-prefix
 import { useEffect, useId, useState, useCallback } from 'preact/hooks'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
@@ -16,16 +15,16 @@ const Vitrine = ({ produtos }: VitrineProps) => {
   const id = useId() + '-vitrine'
 
   const handleResize = useCallback(() => {
-    setIsMobile(window.innerWidth <= 768)
+    setIsMobile(globalThis.window.innerWidth <= 768)
   }, [])
 
   useEffect(() => {
     handleResize()
 
-    window.addEventListener('resize', handleResize)
+    globalThis.window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      globalThis.window.removeEventListener('resize', handleResize)
     }
   }, [])
 

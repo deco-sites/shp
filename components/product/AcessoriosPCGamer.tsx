@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-window-prefix
 import Image from 'deco-sites/std/components/Image.tsx'
 import { useEffect, useState, useId } from 'preact/hooks'
 import Slider from 'deco-sites/fashion/components/ui/Slider.tsx'
@@ -37,19 +36,19 @@ const Acessorio = ({ imgUrl, href, w, h }: AcessorioProps) => {
 const Acessorios = ({acessorios}:Props) => {
   const id = 'acessorios-' + useId()
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [isMobile, setIsMobile] = useState(globalThis.window.innerWidth < 768)
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(globalThis.window.innerWidth < 768)
     }
 
     handleResize()
 
-    window.addEventListener('resize', handleResize)
+    globalThis.window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      globalThis.window.removeEventListener('resize', handleResize)
     }
   }, [])
 

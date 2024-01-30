@@ -8,10 +8,10 @@ import Cart from 'deco-sites/shp/components/minicart/Cart.tsx'
 
 const HeaderSHP = () => {
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [isMobile, setIsMobile] = useState(globalThis.window.innerWidth <= 768)
 
   const handleResize = useCallback(() => {
-    setIsMobile(window.innerWidth <= 768)
+    setIsMobile(globalThis.window.innerWidth <= 768)
   }, [])
 
   const closeClickHandler = useCallback(() => {
@@ -22,13 +22,11 @@ const HeaderSHP = () => {
 
     handleResize()
     
-    if(typeof window !=='undefined'){
-      // deno-lint-ignore no-window-prefix
-      window.addEventListener('resize', handleResize)
+    if(typeof globalThis.window !=='undefined'){
+      globalThis.window.addEventListener('resize', handleResize)
       
       return () => {
-        // deno-lint-ignore no-window-prefix
-        window.removeEventListener('resize', handleResize)
+        globalThis.window.removeEventListener('resize', handleResize)
       }
     }
   }, [])
@@ -116,7 +114,7 @@ const HeaderSHP = () => {
     <>
       <div id='minicartWrapper' className={`${openMinicart ? 'flex' : 'hidden'} flex-col z-30 fixed w-full items-end bg-[#000]/80`}
         onClick={(event:MouseEvent)=>{
-          if(window.innerWidth>768){
+          if(globalThis.window.innerWidth>768){
             (!document.querySelector('#minicartContent')?.contains(event.target as Node) && event.target===document.querySelector('#minicartWrapper')) && setOpenMinicart(false)
           }
         }}

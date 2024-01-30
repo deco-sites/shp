@@ -321,10 +321,10 @@ function ProductInfo({ page, pix, flags }: Props) {
                   if(reviewSec){
                     const divReview=reviewSec.querySelector('#_trustvox_widget')
                     const reviewSecRect=reviewSec.getBoundingClientRect()
-                    const posY=reviewSecRect.top+window.scrollY
+                    const posY=reviewSecRect.top+globalThis.window.scrollY
 
                     divReview?.classList.contains('!hidden') && reviewSec.querySelector('label')?.click()
-                    window.scrollTo({top:posY-150, behavior:'smooth'})
+                    globalThis.window.scrollTo({top:posY-150, behavior:'smooth'})
                   }
                 }}
               >
@@ -484,7 +484,7 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
   const [isMobile, setIsMobile] = useState(false)
 
   const handleResize = useCallback(() => {
-    setIsMobile(window.innerWidth <= 768)
+    setIsMobile(globalThis.window.innerWidth <= 768)
   }, [])
 
   const { product, breadcrumbList } = page
@@ -523,7 +523,7 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
     handleResize()
     console.log(product)
 
-    window.addEventListener('resize', handleResize)
+    globalThis.window.addEventListener('resize', handleResize)
     let observer:MutationObserver
     if((urlReview && (urlReview.split('v=').length>1 || urlReview.includes('/embed/'))) && liVideo.current){
       const button=liVideo.current.children[0]
@@ -542,7 +542,7 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
     }
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      globalThis.window.removeEventListener('resize', handleResize)
       observer.disconnect()
     }
   }, [])
@@ -557,12 +557,12 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
     const percentX = offsetX / rect.width
     const percentY = offsetY / rect.height
   
-    window.innerWidth > 768 && (image.style.transformOrigin = `${percentX * 100}% ${percentY * 100}%`)
+    globalThis.window.innerWidth > 768 && (image.style.transformOrigin = `${percentX * 100}% ${percentY * 100}%`)
   }
   
   function resetZoom(event:MouseEvent) {
     const image = event.target as HTMLImageElement
-    window.innerWidth > 768 && (image.style.transformOrigin = 'center')
+    globalThis.window.innerWidth > 768 && (image.style.transformOrigin = 'center')
   }
 
   const modal=useRef<HTMLDialogElement>(null)

@@ -45,7 +45,7 @@ const PCGamerIdeal = () => {
     const data=await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString:queryStringArr.join('&')})
     const Skus=[...new Set(data.map((item:Product)=>item.sku))]
     if(Skus.length){
-      window.location.href=`shelf/?q=${Skus}`
+      globalThis.window.location.href=`shelf/?q=${Skus}`
     }else{
       alert('Nenhum PC encontrado!')
     }
@@ -119,7 +119,7 @@ const PCGamerIdeal = () => {
   }
 
   useEffect(()=>{
-    typeof window!=='undefined' && fetchFilters().then(()=>{setLoading(false)})
+    typeof globalThis.window!=='undefined' && fetchFilters().then(()=>{setLoading(false)})
   },[])
 
   return (
