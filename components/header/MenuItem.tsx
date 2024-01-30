@@ -21,7 +21,7 @@ const menuItem = ({ rounded ,iconSvg, itemName, links }: Props) => {
   return (
     <>
       <button onClick={handleOpen} className={`flex w-[95%] bg-[#333] ${rounded} border-2 border-transparent h-12 text-secondary font-bold justify-between p-5 my-[2px] mx-auto items-center`}>
-        <div className='flex gap-2'>
+        <div className='flex gap-2 items-center'>
           {/* <Image className='h-auto my-auto' src={iconLink} alt='iconLink' width={18} height={12}
             preload fetchPriority='low' decoding='auto' loading='lazy'
           /> */}

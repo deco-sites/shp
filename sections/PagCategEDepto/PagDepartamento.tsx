@@ -281,7 +281,8 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
       if(contentWrapper.current){
         const contentRect=contentWrapper.current.getBoundingClientRect()
         const endContent=contentRect.bottom + globalThis.window.scrollY
-        if(globalThis.window.scrollY > getProductsStartY() && globalThis.window.scrollY < endContent){
+        //if(globalThis.window.scrollY > getProductsStartY() && globalThis.window.scrollY < endContent){
+        if(globalThis.window.scrollY > getProductsStartY()){
           setDivFlut(true)
         }else{
           divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
@@ -532,7 +533,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
             </div>)
           }
         </div>
-        <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100`}>
+        <div className={`fixed bottom-0 ${divFlut ? 'flex':'hidden'} re1:hidden justify-between items-end px-4 py-5 bg-base-100 w-full`}>
           <label className='w-[45%]' id='divFlut-mob' ref={divFlutLabel}>
             <FiltroMob filters={filters} id='divFlut'/>
           </label>
