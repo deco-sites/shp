@@ -230,8 +230,8 @@ const Card=({product}:Props)=>{
       seller={seller ?? '1'}
       placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')?.value ?? ''}
       processador={additionalProp.find(item=>item.name==='Processador')?.value ?? ''}
-      armazenamento={armaz!.value!}
-      tipoArm={armaz!.name!}
+      armazenamento={armaz?.value ?? ''}
+      tipoArm={armaz?.name ?? ''}
       memoria={additionalProp.find(item=>item.name==='Memória')?.value ?? ''}
       parcelas={maxInstallments}
       fonte={additionalProp.find(item=>item.name==='Fonte')?.value ?? ''}
