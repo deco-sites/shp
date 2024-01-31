@@ -27,14 +27,14 @@ const Prod = ({ ...props }: ProdProps) => {
               </div> */}
               <Image
                 src='https://shopinfo.vteximg.com.br/arquivos/heartRed.png' alt='like' width={24} height={24}
-                loading='lazy'
+                loading='lazy' 
               />
             </div>
           </label>
 
           <Image
-            className='relative -top-5' src={props.imgUrl} alt='Pc image' width={135} height={135}
-            preload fetchPriority='low' loading='lazy'
+            className='relative -top-5' src={props.imgUrl} width={135} height={135}
+            preload={false} fetchPriority='low' loading='lazy' alt={props.nome} title={props.nome}
           />
         </div>
 
