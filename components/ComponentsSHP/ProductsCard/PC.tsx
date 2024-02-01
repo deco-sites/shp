@@ -42,10 +42,11 @@ const PC = ({ ...props }: PCProps) => {
           <Image
             className='relative -top-5'
             src={props.imgUrl}
-            alt='Pc image'
             width={130}
             height={130}
-            preload fetchPriority='low' loading='lazy'
+            fetchPriority='low' loading='lazy'
+            alt={props.nome} 
+            title={props.nome}
           />
         </div>
 

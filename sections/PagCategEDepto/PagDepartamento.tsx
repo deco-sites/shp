@@ -514,7 +514,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
                     <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
                   )}
                   {fetchLength===20 && 
-                  <button className='font-bold w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto my-6 re1:mb-20 re1:mt-8' onClick={()=>{
+                  <button className='font-bold w-full re1:w-[70%] bg-primary px-[15px] py-[20px] rounded-lg mx-auto my-6 re1:mb-20 re1:mt-8' rel='next' onClick={()=>{
                     if(fetchLength===20){
                       const {from,to}=fromTo
                       setShowMore(true)

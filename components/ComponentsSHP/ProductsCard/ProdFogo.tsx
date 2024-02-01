@@ -34,7 +34,7 @@ const ProdFogo = ({...props}: Props) => {
         </div>
       </label>
       <div className="flex items-center my-auto">
-        <Image src={props.imgUrl} width={85} height={85}
+        <Image src={props.imgUrl} width={85} height={85} alt={props.nome} title={props.nome}
           fetchPriority='low' loading='lazy' preload={false}
         />
 

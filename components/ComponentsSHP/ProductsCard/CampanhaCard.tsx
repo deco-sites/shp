@@ -83,7 +83,7 @@ const CardProd=(props:CardProps)=>{
 
       <div className='flex re1:block re1:w-[20%] h-full'>
         <div className='w-[32%] re1:w-full re1:h-full flex items-center justify-center'>
-          <Image src={props.imgUrl} width={180} height={180} loading='lazy' decoding='sync' fetchPriority='low' className='w-[78%]'/>
+          <Image src={props.imgUrl} width={180} height={180} loading='lazy' decoding='sync' fetchPriority='low' className='w-[78%]' alt={props.prodName} title={props.prodName}/>
         </div>
 
         {/* Mobile */}
@@ -226,7 +226,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
 
     <div className='flex re1:block re1:w-[20%]'>
       <div className='w-[32%] re1:w-full re1:h-full flex items-center justify-center'>
-        <Image src={props.imgUrl} width={180} height={180} loading='lazy' decoding='sync' fetchPriority='low' className='w-[78%]'/>
+        <Image src={props.imgUrl} width={180} height={180} loading='lazy' decoding='sync' fetchPriority='low' className='w-[78%]' alt={props.prodName} title={props.prodName}/>
       </div>
 
       {/* Mobile */}
