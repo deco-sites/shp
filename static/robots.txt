@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /checkout/*
-Sitemap: https://shp.deco.site/sitemap.xml
+Sitemap: https://shp.deco.site/sitemap/deco.xml
 Host: https://shp.deco.site
