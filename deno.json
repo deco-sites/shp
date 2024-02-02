@@ -14,7 +14,7 @@
     "preview": "deno run -A main.ts"
   },
   "githooks": { "pre-commit": "check" },
-  "exclude": ["node_modules", "static/", "README.md", "**/_fresh/*"],
+  "exclude": ["node_modules", "static/", "README.md", "_fresh", "**/_fresh/*"],
   "nodeModulesDir": true,
   "compilerOptions": {
     "jsx": "react-jsx",
