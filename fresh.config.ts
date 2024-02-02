@@ -11,6 +11,7 @@ import tailwind from "./tailwind.config.ts";
 
 import { defineConfig } from "$fresh/server.ts";
 export default defineConfig({
+  build: { target: ["chrome99", "firefox99", "safari12"] },
   plugins: [
     ...plugins(
       {
