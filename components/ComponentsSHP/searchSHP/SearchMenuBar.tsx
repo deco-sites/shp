@@ -177,7 +177,7 @@ const SearchMenuBar=()=>{
             {autoComplete.map((suggestion:any)=>{
               if(suggestion.thumbUrl){
                 return(
-                  <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727]'>
+                  <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727]' rel='nofollow'>
                     <Image src={suggestion.thumbUrl.replace('25-25/1','32-32/1')} width={32} height={32} loading='eager' decoding='async' fetchPriority='high'/>
                     <p className='line-clamp-1 text-sm text-secondary ml-1'>{suggestion.name}</p>
                   </a>
@@ -187,7 +187,7 @@ const SearchMenuBar=()=>{
                 const href=`/s?q=${finalInputValue.current}&fqName=${fqName}`
 
                 return(
-                <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-secondary ml-1'>
+                <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-secondary ml-1' rel='nofollow'>
                   {suggestion.name}
                 </a>
                 )

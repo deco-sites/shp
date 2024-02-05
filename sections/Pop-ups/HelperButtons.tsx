@@ -5,7 +5,7 @@ import Help from 'deco-sites/shp/components/pop-ups/Help.tsx'
 export interface Props{
   links:Array<{
     text:string
-    icon:{type:'image', src:string} | {type:'svg', code:string}
+    icon:{type:'image', src:string, w:number, h:number} | {type:'svg', code:string}
     href:string
   }>
 }

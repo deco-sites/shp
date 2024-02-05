@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'preact/hooks'
+import Image from 'deco-sites/std/components/Image.tsx'
 
 export interface Props{
   links:Array<{
     text:string
-    icon:{type:'image', src:string} | {type:'svg', code:string}
+    icon:{type:'image', src:string, w:number, h:number} | {type:'svg', code:string}
     href:string
   }>
 }
@@ -19,7 +20,7 @@ const Help = ({links}:Props) =>{
             <a href={link.href} className='text-black grid grid-cols-[24px_1fr] gap-[10px] py-1 items-center border-y border-y-base-content first:border-t-transparent last:border-b-transparent' dangerouslySetInnerHTML={{__html:`${link.icon.code}<p>${link.text}</p>`}} />
           ) : (
             <a href={link.href} className='text-black grid grid-cols-[24px_1fr] gap-[10px] py-1 items-center border-y border-y-base-content first:border-t-transparent last:border-b-transparent'>
-              <img src={link.icon.src}/>
+              <Image src={link.icon.src} width={link.icon.w} height={link.icon.h}/>
               <p>{link.text}</p>
             </a>
           )
