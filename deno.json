@@ -13,15 +13,8 @@
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts"
   },
-  "githooks": {
-    "pre-commit": "check"
-  },
-  "exclude": [
-    "node_modules",
-    "static/",
-    "README.md",
-    "**/_fresh/*"
-  ],
+  "githooks": { "pre-commit": "check" },
+  "exclude": ["node_modules", "static/", "README.md", "_fresh", "**/_fresh/*"],
   "nodeModulesDir": true,
   "compilerOptions": {
     "jsx": "react-jsx",
@@ -44,14 +37,7 @@
     "std/": "https://deno.land/std@0.190.0/",
     "partytown/": "https://denopkg.com/deco-cx/partytown@0.4.8/",
     "daisyui": "npm:daisyui@3.5.0",
-    "apps/": "https://denopkg.com/deco-cx/apps@0.32.7/"
+    "apps/": "https://denopkg.com/deco-cx/apps@0.32.13/"
   },
-  "lint": {
-    "rules": {
-      "tags": [
-        "fresh",
-        "recommended"
-      ]
-    }
-  }
+  "lint": { "rules": { "tags": ["fresh", "recommended"] } }
 }
