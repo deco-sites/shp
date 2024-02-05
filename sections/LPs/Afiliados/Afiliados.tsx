@@ -13,8 +13,8 @@ const Afiliados=()=>{
           <div className='flex flex-col items-center px-4 re1:px-0'>
             <Image className='re1:hidden mr-auto' width={188} height={55} src='https://shopinfo.vteximg.com.br/arquivos/logoshopinfo-branco-188px.png'/>
             <div className='flex flex-col gap-2'>
-              <span className='text-2xl re1:text-4xl'>Como <b className='font-bold'>Ganhar Dinheiro</b> com a Shopinfo?</span>
-              <span className='text-lg re1:text-2xl'>Conheça nosso programa de afiliados, recomende nossos produtos e seja comissionado por todas as vendas que realizar!</span>
+              <h1 className='text-2xl re1:text-4xl'>Como <b className='font-bold'>Ganhar Dinheiro</b> com a Shopinfo?</h1>
+              <h2 className='text-lg re1:text-2xl'>Conheça nosso programa de afiliados, recomende nossos produtos e seja comissionado por todas as vendas que realizar!</h2>
             </div>
           </div>
           <Image width={744} height={545} src='https://shopinfo.vteximg.com.br/arquivos/banner-topo-lp-afiliados-2pessoas.png' />
@@ -113,14 +113,14 @@ const Afiliados=()=>{
       <section className='py-8 text-white bg-gradient-to-b from-[rgb(255,159,0)] to-[rgb(255,68,0)]'>
         <div className='flex flex-col mx-auto re1:mt-0 gap-8 re1:gap-20 w-[90%] re1:px-0 re1:w-[35%]'>
           <div className='flex flex-col gap-2 w-full items-center'>
-            <h1 className='text-xl re1:text-3xl text-center mb-4'>Quem é<br/><b className='font-bold'>Shopinfo?</b></h1>
+            <h3 className='text-xl re1:text-3xl text-center mb-4'>Quem é<br/><b className='font-bold'>Shopinfo?</b></h3>
             <p className='text-sm re1:text-base'>A Shopinfo nasceu de um desejo imenso de entregar produtos e serviços de qualidade a um preço justo com um ótimo atendimento e é isso o que temos feito desde 1999!</p>
             <p className='text-sm re1:text-base'>Nossa Missão é buscar a excelência na experiência de compra e para isso temos uma equipe de Atendimento ao Cliente e Suporte Técnico sempre pronta para auxiliar da melhor forma, via telefone, whatsapp, e-mail e redes sociais.</p>
             <p className='text-sm re1:text-base'>Nossos Valores são a Ética, Comprometimento e Transparência e para isso, buscamos a construção de parcerias duradouras com nossos clientes, oferecendo soluções completas com produtos de alta qualidade e desempenho, facilidade de compra, entregas rápidas e atendimento de qualidade.</p>
           </div>
 
           <div className='flex flex-col gap-4 w-full items-center'>
-            <h1 className='text-xl re1:text-3xl text-center mb-4'>Refêrencia no<br/><b className='font-bold'>Mercado</b></h1>
+            <h3 className='text-xl re1:text-3xl text-center mb-4'>Refêrencia no<br/><b className='font-bold'>Mercado</b></h3>
             <p className='text-sm re1:text-base flex items-center justify-between gap-2'>
               <span className='w-[70%]'>
                 Referência no Mercado Vendendo informatica desde 1999, a SHOPINFO encontra-se no mercado atendendo empresas de pequeno, médio e grande porte das mais variadas áreas de atuação, levando a sério seu compromisso com a qualidade e profissionalismo.
@@ -143,21 +143,21 @@ const Afiliados=()=>{
               <label className='flex gap-2 justify-center items-center h-fit re1:h-[33%] my-4'>
                 <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-lp-b2b-facilidadenacompra.png' className='w-[60px] h-[60px]' width={70} height={70}/>
                 <div>
-                  <h1 className='text-base re1:text-xl font-bold'>FACILIDADE NA COMPRA</h1>
+                  <h3 className='text-base re1:text-xl font-bold'>FACILIDADE NA COMPRA</h3>
                   <span className='text-sm re1:text-base'>Basta navegar entre as diversas páginas de produtos (categorias, novidades, ofertas, destaques) e clicar sobre o icone Comprar.</span>
                 </div>
               </label>
               <label className='flex gap-2 justify-center items-center h-fit re1:h-[33%] my-4'>
                 <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-lp-b2b-autenticidade.png' className='w-[60px] h-[60px]' width={70} height={70}/>
                 <div>
-                  <h1 className='text-base re1:text-xl font-bold'>AUTENTICIDADE</h1>
+                  <h3 className='text-base re1:text-xl font-bold'>AUTENTICIDADE</h3>
                   <span className='text-sm re1:text-base'>Trabalhamos somente com produtos Originais e entregamos todos os nossos produtos com Nota Fiscal.</span>
                 </div>
               </label>
               <label className='flex gap-2 justify-center items-center h-fit re1:h-[33%] my-4'>
                 <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-lp-b2b-embalagem.png' className='w-[60px] h-[60px]' width={70} height={70}/>
                 <div>
-                  <h1 className='text-base re1:text-xl font-bold'>EMBALAGEM SEGURA</h1>
+                  <h3 className='text-base re1:text-xl font-bold'>EMBALAGEM SEGURA</h3>
                   <span className='text-sm re1:text-base'>Os produtos são muito bem embalados em caixas resistentes. Realizamos entrega em todo o território nacional.</span>
                 </div>
               </label>
@@ -166,21 +166,21 @@ const Afiliados=()=>{
               <label className='flex gap-2 justify-center items-center h-fit re1:h-[33%] my-4'>
                 <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-lp-b2b-melhordetudo.png' className='w-[60px] h-[60px]' width={70} height={70}/>
                 <div>
-                  <h1 className='text-base re1:text-xl font-bold'>O MELHOR DE TUDO</h1>
+                  <h3 className='text-base re1:text-xl font-bold'>O MELHOR DE TUDO</h3>
                   <span className='text-sm re1:text-base'>Os PCs Neologic são cuidadosamente selecionados com os melhores componentes do mercado e oferecemos, inúmeras opções de configuração desde o Básico até o Premium.</span>
                 </div>
               </label>
               <label className='flex gap-2 justify-center items-center h-fit re1:h-[33%] my-4'>
                 <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-lp-b2b-trabalho.png' className='w-[60px] h-[60px]' width={70} height={70}/>
                 <div>
-                  <h1 className='text-base re1:text-xl font-bold'>DESIGN INDUSTRIAL E ALTA PERFORMANCE</h1>
+                  <h3 className='text-base re1:text-xl font-bold'>DESIGN INDUSTRIAL E ALTA PERFORMANCE</h3>
                   <span className='text-sm re1:text-base'>Design discreto, desempenho máximo. Nossas workstations já vem montados #WorkReady.</span>
                 </div>
               </label>
               <label className='flex gap-2 justify-center items-center h-fit re1:h-[33%] my-4'>
                 <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-lp-b2b-seguran%C3%A7a.png' className='w-[60px] h-[60px]' width={70} height={70}/>
                 <div>
-                  <h1 className='text-base re1:text-xl font-bold'>SEGURANÇA E CONFIABILIDADE</h1>
+                  <h3 className='text-base re1:text-xl font-bold'>SEGURANÇA E CONFIABILIDADE</h3>
                   <span className='text-sm re1:text-base'>Temos o compromisso com a Privacidade e a segurança dos, clientes, por isso o nosso site conta com Certificado de Navegação Segura.</span>
                 </div>
               </label>
