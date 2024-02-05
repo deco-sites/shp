@@ -46,7 +46,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
         <div className='hidden re1:flex divider w-screen h-0 before:bg-primary after:bg-primary -ml-[12.5%] re1:-ml-[5.5%] re4:-ml-[12.5%]'/>
         <div className='flex flex-col re1:flex-row re1:gap-4 re1:pt-4'>
           <div className='text-secondary re1:text-sm my-5 re1:my-0'>
-            <h1 className='text-xl font-bold'>Atendimento</h1>
+            <h4 className='text-xl font-bold'>Atendimento</h4>
             <p>Segunda a sexta das 9h às 17h30</p>
             <p>Sábado das 8h às 13h</p>
           </div>
@@ -133,7 +133,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
             </div>
           </a>
           <div className='flex flex-col re1:flex-row items-center justify-center py-3 re1:py-0 gap-3 re1:gap-5 bg-black w-screen re1:w-auto re1:bg-transparent'>
-            <h1 className='font-bold text-3xl text-secondary'>Siga a <span className='text-primary'>Shopinfo</span></h1>
+            <h4 className='font-bold text-3xl text-secondary'>Siga a <span className='text-primary'>Shopinfo</span></h4>
             <div className='flex gap-5 re1:gap-10'>
               <a href='https://www.youtube.com/shopinfooficial'>
                   <Image
@@ -175,7 +175,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
             </div>
           </div>
           <div className='flex flex-col re1:flex-row items-center gap-5 justify-center re1:bg-[#1e1e1e] my-5 re1:w-screen re1:-ml-[12.5%]'>
-            <h1 className='text-secondary text-2xl re1:text-lg re4:text-2xl font-bold'>Formas de pagamento</h1>
+            <h4 className='text-secondary text-2xl re1:text-lg re4:text-2xl font-bold'>Formas de pagamento</h4>
             <ul className='grid grid-cols-3 re1:flex re1:justify-evenly re1:items-center gap-10 re1:gap-5 re1:py-5'>
               {FormasPagamento.map(element=>(
                 <li>

@@ -49,7 +49,7 @@ const Filtro=({title, values}:Props)=>{
 
   return(
     <div className='w-full flex flex-col bg-base-100 re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>
-      <h5 className='px-3 py-5 flex justify-between cursor-pointer'
+      <h3 className='px-3 py-5 flex justify-between cursor-pointer'
         onClick={()=>setOpen(!open)}
       >
         {title}
@@ -58,7 +58,7 @@ const Filtro=({title, values}:Props)=>{
           size={12}
           strokeWidth={2}
         />
-      </h5>
+      </h3>
       <div className={`${open ? 'max-h-[340px]' : 'max-h-0'} trasition-[max-height] overflow-hidden duration-500 ease-in-out`}>
         <label className={`${values.length>2 ? 'flex' : 'hidden'} justify-around items-center py-1`}>
           <input ref={search} type='text' name='search' placeholder='Procure por nome ou descrição' className='rounded-lg placeholder:line-clamp-1 

@@ -463,7 +463,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
     <div className='w-full text-secondary appearance-none'>
       <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
         <div className='bg-transparent px-4 re1:px-0 mt-10 re1:mt-14 mb-3 re1:mb-6'>
-          <h4 className='text-xl re1:text-3xl'>Sua busca por "<span className='font-bold'>{decodeURI(termo)}</span>"</h4>
+          <h1 className='text-xl re1:text-3xl'>Sua busca por "<span className='font-bold'>{decodeURI(termo)}</span>"</h1>
         </div>
 
         <div className='mb-8 re1:mb-0'>
