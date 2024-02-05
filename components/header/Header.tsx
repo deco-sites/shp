@@ -608,9 +608,9 @@ const HeaderSHP = () => {
             <div className={menuMobileClass}>
               <div className='bg-primary flex flex-col h-32 justify-between'>
                 <div className='w-full justify-between flex p-2'>
-                  <p className='font-bold text-xl text-secondary'>
+                  <a href='/login' className='font-bold text-xl text-secondary'>
                     Entre ou Cadastre-se
-                  </p>
+                  </a>
                   <span
                     ref={close}
                     className='text-secondary font-extrabold cursor-pointer'
@@ -620,25 +620,26 @@ const HeaderSHP = () => {
                 </div>
 
                 <div className='w-full justify-between flex p-2'>
-                  <div className='flex gap-2'>
-                    <img
-                      className='h-5'
-                      src='https://shopinfo.vteximg.com.br/arquivos/icone-mobile-rastreio2.png'
-                      alt='carrinho'
-                    />
+                  <a className='flex gap-2' href='https://api.shopinfo.com.br/rastreio/'>
+                  <Image
+                    src='https://shopinfo.vteximg.com.br/arquivos/frete-icon.png'
+                    alt='caminhão' width={26} height={18} preload fetchPriority='high' loading='eager' decoding='sync'
+                  />
                     <p className='text-secondary'>Rastreio</p>
-                  </div>
+                  </a>
 
-                  <div className='flex gap-2'>
-                    <a href='https://api.whatsapp.com/send?phone=5519982013576'>
-                      <img
+                  <a className='flex gap-2' href='https://api.whatsapp.com/send?phone=5519982013576'>
+                      <Image
                         src='https://shopinfo.vteximg.com.br/arquivos/icone-mobile-whatsappp.png'
                         alt='carrinho'
+                        width={20}
+                        height={20}
+                        className='h-[20px]'
+                        preload fetchPriority='high' loading='eager' decoding='sync'
                       />
-                    </a>
 
                     <p className='text-secondary'>Atendimento</p>
-                  </div>
+                  </a>
                 </div>
               </div>
 
@@ -862,7 +863,7 @@ const HeaderSHP = () => {
                   href='/teste'
                 >
                   <div className='flex gap-2 items-center'>
-                    <img
+                    <Image
                       className='h-auto my-auto'
                       src='https://shopinfo.vteximg.com.br/arquivos/icone-mobile-maisvendidos.png'
                       alt='iconLink'
