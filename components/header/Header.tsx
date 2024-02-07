@@ -48,7 +48,7 @@ const HeaderSHP = () => {
   const [menuMobileClass, setMenuMobileClass] = useState('hidden')
 
   const handleClick = useCallback(() => {
-    setMenuMobileClass('flex flex-col w-[80%] h-screen absolute top-0 bg-[#1e1e1e]')
+    setMenuMobileClass('flex flex-col w-[80%] h-screen fixed top-0 bg-[#1e1e1e]')
   }, [])
 
   const hideAll = () => {
