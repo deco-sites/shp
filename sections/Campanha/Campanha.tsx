@@ -110,7 +110,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         return acc
       },[])
       
-      const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
+      const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
 
       console.log(objGifts)
     }
