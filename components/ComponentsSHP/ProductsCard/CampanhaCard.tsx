@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import { Offer, Product, PropertyValue } from 'apps/commerce/types.ts'
 import { useState, useEffect, useRef } from 'preact/hooks'
 import { invoke } from 'deco-sites/shp/runtime.ts'
@@ -22,6 +23,10 @@ interface CardProps{
   trustPercent:number
   timeRemaining?: TimeRemaining
   quantidade:number
+  brinde?:{
+    imageUrl:string
+    productName:string
+  }
 } 
 
 interface CardPCProps extends CardProps{
@@ -42,6 +47,7 @@ export type Props={
   frete?:string
   timeRemaining?: TimeRemaining
   quantidade:number
+  brindes:any
 }
 
 const CardProd=(props:CardProps)=>{
