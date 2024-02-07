@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import { LoaderReturnType } from 'deco/mod.ts'
 import { TipoDeFiltro, Filtros } from 'deco-sites/shp/types/CampanhaTypes.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
@@ -62,6 +63,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   const [products, setProducts]=useState<Product[]>(produtos || [])
   const [order, setOrder]=useState('inicio')
   const [loading,setLoading]=useState(true)
+  const [gifts,setGifts]=useState<any>(null)
 
   const ulFilters=useRef<HTMLUListElement>(null)
   const filtrosMob=useRef<HTMLDivElement>(null)
@@ -98,7 +100,22 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   },[order])
 
   useEffect(()=>{
-    setLoading(false)
+    const checkCompreGanhe=async()=>{
+      const giftsSkus=products.reduce((acc:string[],obj)=>{
+        const giftSkus=obj.offers?.offers[0].giftSkuIds
+
+        if(giftSkus){
+          giftSkus.forEach(sku=>!acc.includes(sku) && acc.push(sku))
+        }
+        return acc
+      },[])
+      
+      const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
+
+      console.log(objGifts)
+    }
+
+    checkCompreGanhe().then(()=>setLoading(false))
   },[products])
 
   useEffect(()=>{
@@ -210,7 +227,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
       {loading ? <div className='loading loading-spinner w-32 mx-auto my-5 text-primary'/> : 
         (products.map((product)=>{
           const quantidade=prodQntd(product, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02'))
-          return <Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade}/>
+          return <Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade} brindes={gifts}/>
         }))
       }
     </div>
