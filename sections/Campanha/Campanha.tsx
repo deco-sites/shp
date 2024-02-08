@@ -39,6 +39,11 @@ export type Props={
   } 
 } & NeedDesc & TipoDeFiltro & (Contador | SemContador)
 
+type FinalProd={
+  prod:Product
+  brinde?:any
+}
+
 type Filter={
   index:number
   value:string
@@ -64,6 +69,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   const [order, setOrder]=useState('inicio')
   const [loading,setLoading]=useState(true)
   const [gifts,setGifts]=useState<any>(null)
+  const [finalProducts,setFinalProducts]=useState<FinalProd[]>([])
 
   const ulFilters=useRef<HTMLUListElement>(null)
   const filtrosMob=useRef<HTMLDivElement>(null)
@@ -112,11 +118,22 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
       
       const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
 
-      console.log(objGifts)
+      setGifts(objGifts.filter(obj=>!obj.ProductName.includes('Kaspersky')))
     }
 
     checkCompreGanhe().then(()=>setLoading(false))
   },[products])
+
+  useEffect(()=>{
+    setFinalProducts(products.map(product=>{
+      if(gifts){
+        const brindeObj=gifts.find((obj:any)=> product.offers?.offers[0].giftSkuIds?.includes(obj.Id.toString()))
+        return {prod:product, brinde:brindeObj}
+      }else{
+        return {prod:product, brinde:undefined}
+      }
+    }))
+  },[gifts])
 
   useEffect(()=>{
     if(typeof globalThis.window!=='undefined' && !(tipo===null || typeof tipo==='string')){
@@ -225,9 +242,9 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         </div>
       ))}
       {loading ? <div className='loading loading-spinner w-32 mx-auto my-5 text-primary'/> : 
-        (products.map((product)=>{
-          const quantidade=prodQntd(product, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02'))
-          return <Card product={product} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade} brindes={gifts}/>
+        (finalProducts.map((product)=>{
+          const quantidade=prodQntd(product.prod, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02'))
+          return <Card product={product.prod} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade} brinde={product.brinde}/>
         }))
       }
     </div>
