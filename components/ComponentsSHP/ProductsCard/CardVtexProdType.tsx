@@ -210,9 +210,9 @@ const Card=({product, pix='12'}:Props)=>{
   },[])
 
   if(PCGamer){
-    return <PcCard  armazenamento={product.SSD || product.HD} imgUrl={image} prodName={name} memoria={product.Memória} objTrust={{'product_code':prodId, 'average':0, 'count':0, 'product_name':name}} trustPercent={0}
-    placaVideo={product['Placa de vídeo']} linkProd={linkProduto} prodId={prodId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility} seller={product.items[0].sellers[0].sellerId ?? '1'} groupId={refId ?? ''} 
-    processador={product.Processador} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix} fonte={product.Fonte}/>
+    return <PcCard  armazenamento={(product.SSD || product.HD) ?? ''} imgUrl={image} prodName={name} memoria={product.Memória ?? ''} objTrust={{'product_code':prodId, 'average':0, 'count':0, 'product_name':name}} trustPercent={0}
+    placaVideo={product['Placa de vídeo'] ?? ''} linkProd={linkProduto} prodId={prodId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility} seller={product.items[0].sellers[0].sellerId ?? '1'} groupId={refId ?? ''} 
+    processador={product.Processador ?? ''} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix} fonte={product.Fonte}/>
   }else{
     return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe} precoVista={priceVista} parcelas={maxInstallments} objTrust={objTrust}
       trustPercent={trustPercent} prodId={prodId} prodName={name} valorParcela={valorParcela} isAvailable={avaibility} pix={pix}/>
