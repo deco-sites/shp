@@ -29,7 +29,13 @@ interface Contador{
 
 interface SemContador{contador:false}
 
+interface CompreEGanhe{
+  /** @description Adicione palavras chaves dos brindes q n devem aparecer. Ex: Kaspersky */
+  naoMostrar:string[]
+}
+
 export type Props={
+  compreEGanhe:CompreEGanhe | null
   collection:string
   produtos: LoaderReturnType<Product[] | null>
   bannerUrl:{
@@ -116,11 +122,13 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         return acc
       },[])
       
-      const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
+      if(props.compreEGanhe){
+        const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
 
-      setGifts(objGifts.filter(obj=>!obj.ProductName.includes('Kaspersky')))
+        console.log(objGifts, objGifts.filter(obj=>!props.compreEGanhe?.naoMostrar.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
+        setGifts(objGifts.filter(obj=>!props.compreEGanhe?.naoMostrar.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
+      }
     }
-
     checkCompreGanhe().then(()=>setLoading(false))
   },[products])
 
@@ -244,6 +252,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
       {loading ? <div className='loading loading-spinner w-32 mx-auto my-5 text-primary'/> : 
         (finalProducts.map((product)=>{
           const quantidade=prodQntd(product.prod, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02'))
+
           return <Card product={product.prod} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade} brinde={product.brinde}/>
         }))
       }

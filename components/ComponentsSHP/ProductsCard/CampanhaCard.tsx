@@ -501,8 +501,8 @@ const Card=({product, frete, timeRemaining, quantidade, brinde}:Props)=>{
       NLI={prodName.slice(prodName.indexOf('NLI'),prodName.length).split(' ')[0]}
       placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')?.value! ?? ''}
       processador={additionalProp.find(item=>item.name==='Processador')?.value! ?? ''}
-      armazenamento={armaz!.value!}
-      tipoArm={armaz!.name!}
+      armazenamento={armaz?.value! ?? ''}
+      tipoArm={armaz?.name! ?? ''}
       memoria={additionalProp.find(item=>item.name==='Memória')?.value! ?? ''}
       fonte={additionalProp.find(item=>item.name==='Fonte')?.value! ?? ''}
       frete={frete!}

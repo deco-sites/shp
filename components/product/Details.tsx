@@ -3,20 +3,20 @@ import { Picture, Source } from 'deco-sites/std/components/Picture.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import { useId, useEffect, useState, useCallback, useRef } from 'preact/hooks'
 import type { ProductDetailsPage } from 'apps/commerce/types.ts'
-import Breadcrumb from 'deco-sites/fashion/components/ui/Breadcrumb.tsx'
-import Slider from 'deco-sites/fashion/components/ui/Slider.tsx'
-import SliderJS from 'deco-sites/fashion/components/ui/SliderJS.tsx'
+import Breadcrumb from 'deco-sites/shp/components/ui/Breadcrumb.tsx'
+import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
+import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import Share from './ShareButton.tsx'
-import Icon from 'deco-sites/fashion/components/ui/Icon.tsx'
+import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
-import { useOffer } from 'deco-sites/fashion/sdk/useOffer.ts'
-import { formatPrice } from 'deco-sites/fashion/sdk/format.ts'
-import { SendEventOnLoad } from 'deco-sites/fashion/sdk/analytics.tsx'
-import { mapProductToAnalyticsItem } from 'deco-sites/std/commerce/utils/productToAnalyticsItem.ts'
+import { useOffer } from 'deco-sites/shp/sdk/useOffer.ts'
+import { formatPrice } from 'deco-sites/shp/sdk/format.ts'
+import { SendEventOnView } from 'deco-sites/shp/components/Analytics.tsx'
+import { mapProductToAnalyticsItem } from 'apps/commerce/utils/productToAnalyticsItem.ts'
 import Button from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
-import ShippingSimulation from 'deco-sites/fashion/islands/ShippingSimulation.tsx'
+import ShippingSimulation from 'deco-sites/shp/islands/ShippingSimulation.tsx'
 import ProductSelector from './ProductVariantSelector.tsx'
-import ProductImageZoom from 'deco-sites/fashion/islands/ProductImageZoom.tsx'
+import ProductImageZoom from 'deco-sites/shp/islands/ProductImageZoom.tsx'
 
 
 export interface Props {
@@ -216,9 +216,11 @@ interface Flag{
   }
 
 function ProductInfo({ page, pix, flags }: Props) {
+    const id=useId()
     const { product } = page
     const { description, productID, offers, name, isVariantOf, brand, additionalProperty } = product
     const { price, listPrice, seller, installments } = useOffer(offers)
+
     const categoriesId = additionalProperty?.map((item) =>
       item.name === 'category' ? item.propertyID : undefined
     )
@@ -434,22 +436,6 @@ function ProductInfo({ page, pix, flags }: Props) {
                 />
             </div> 
                 )}
-            {/* Analytics Event */}
-            {/* <SendEventOnLoad
-              event={{
-                name: "view_item",
-                params: {
-                  items: [
-                    mapProductToAnalyticsItem({
-                      product,
-                      breadcrumbList,
-                      price,
-                      listPrice,
-                    }),
-                  ],
-                },
-              }}
-            /> */}
           </>
         ):(<div className='w-full h-auto'>
             <span className='block w-full bg-primary text-center font-bold my-5'>Produto Temporariamente Indisponível</span>
@@ -690,6 +676,15 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
    * On mobile, there's one single column with 3 rows. Note that the orders are different from desktop to mobile, that's why
    * we rearrange each cell with col-start- directives
    */
+
+
+  const eventItem = mapProductToAnalyticsItem({
+    product,
+    breadcrumbList: breadcrumbList,
+    price,
+    listPrice,
+  })
+
   return (
     <>
       <dialog ref={modal} className='bg-base-100 min-h-full min-w-[100vw] overflow-hidden'>
@@ -906,6 +901,19 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
         </div>
       </div>
       <SliderJS rootId={id}></SliderJS>
+
+      {/* Analytics Event */}
+      {/* <SendEventOnView
+          id={id}
+          event={{
+            name: "view_item",
+            params: {
+              item_list_id: "product",
+              item_list_name: "Product",
+              items: [eventItem],
+            },
+          }}
+        /> */}
     </>
   )
 }
