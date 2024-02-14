@@ -43,7 +43,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
             loading='lazy'
           />
           <span className='font-bold re1:text-2xl text-lg text-secondary'>
-            {title}
+            {titulo}
           </span>
         </div>
         <div className='hidden re1:flex gap-1 ml-auto'>
