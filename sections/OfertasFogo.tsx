@@ -18,7 +18,7 @@ export interface Props {
   interval: number
 }
 
-const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
+const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo }: Props) => {
   const id = useId() + '-fogo'
 
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
