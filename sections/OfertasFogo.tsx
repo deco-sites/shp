@@ -11,6 +11,7 @@ import type { Product } from 'apps/commerce/types.ts'
 import type { LoaderReturnType } from '$live/types.ts'
 
 export interface Props {
+  titulo: string
   products: LoaderReturnType<Product[] | null>
   /** @description formato AAAA-MM-DD*/
   finalDaOferta: string
@@ -42,7 +43,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0 }: Props) => {
             loading='lazy'
           />
           <span className='font-bold re1:text-2xl text-lg text-secondary'>
-            Suba de Nível no Arraiá Black da Shopinfo
+            {title}
           </span>
         </div>
         <div className='hidden re1:flex gap-1 ml-auto'>
