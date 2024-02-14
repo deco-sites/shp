@@ -1,7 +1,8 @@
 // deno-lint-ignore-file no-explicit-any
-import { useState, useEffect, useRef, useCallback } from 'preact/hooks'
+import { useState, useEffect, useRef } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 import { invoke } from 'deco-sites/shp/runtime.ts'
+import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 
 const searchMenuBarLoader = async (term:string, signal:AbortSignal)=>{
   const url=`https://api.shopinfo.com.br/Deco/getAutoComplete.php?ft=${encodeURI(term)}`
