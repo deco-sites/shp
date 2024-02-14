@@ -12,13 +12,14 @@ import type { LoaderReturnType } from '$live/types.ts'
 
 export interface Props {
   titulo: string
+  fireIcon: boolean
   products: LoaderReturnType<Product[] | null>
   /** @description formato AAAA-MM-DD*/
   finalDaOferta: string
   interval: number
 }
 
-const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo }: Props) => {
+const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo, fireIcon = true }: Props) => {
   const id = useId() + '-fogo'
 
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
@@ -35,13 +36,15 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo }: Prop
     <div className='re1:w-[60vw] w-screen mx-auto'>
       <div className='flex mx-auto w-full re1:w-[50vw] gap-2 justify-center items-center mb-5'>
         <div className='flex gap-2 mx-auto items-center w-4/5'>
-          <Image
-            src='https://shopinfo.vteximg.com.br/arquivos/icone-ofertas-fogo.png'
-            height={30}
-            width={30}
-            fetchPriority='low'
-            loading='lazy'
-          />
+          {fireIcon && (
+            <Image
+              src='https://shopinfo.vteximg.com.br/arquivos/icone-ofertas-fogo.png'
+              height={30}
+              width={30}
+              fetchPriority='low'
+              loading='lazy'
+            />
+          )}
           <span className='font-bold re1:text-2xl text-lg text-secondary'>
             {titulo}
           </span>
