@@ -74,7 +74,7 @@ const SearchMenuBar=()=>{
   }
   
   const redirectSearchPage=()=>{
-    console.log(inputValue)
+    sendEvent({name:'search', params:{search_term:inputValue} })
     globalThis.window.location.href='/s?q='+inputValue
   }
 

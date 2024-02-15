@@ -903,7 +903,7 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
       <SliderJS rootId={id}></SliderJS>
 
       {/* Analytics Event */}
-      {/* <SendEventOnView
+      <SendEventOnView
           id={id}
           event={{
             name: "view_item",
@@ -913,7 +913,7 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
               items: [eventItem],
             },
           }}
-        /> */}
+        />
     </>
   )
 }
