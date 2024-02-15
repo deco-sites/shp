@@ -10,11 +10,11 @@ export interface Props {
 
 const Categories = ({ Categs }: Props) => {
   return (
-    <div className='my-5'>
+    <div className='my-5 px-[5%] re1:px-[15%]'>
       <p className='text-secondary text-center text-3xl font-bold my-2'>
         Principais categorias
       </p>
-      <div className='flex gap-2 overflow-x-scroll scrollbar-none mx-2 re1:justify-center re1:items-center'>
+      <div className='flex gap-2 overflow-x-scroll scrollbar-none re1:justify-between re1:items-center'>
         {Categs?.map((categ) => (
         <li className='rounded-[8px] border border-transparent bg-[url(https://shopinfo.vteximg.com.br/arquivos/backgroundImg-icons.png)]
           min-w-[115px] max-w-[115px] min-h-[115px] max-h-[115px] 

@@ -33,9 +33,9 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo, fireIc
   }
 
   return (
-    <div className='re1:w-[60vw] w-screen mx-auto'>
-      <div className='flex mx-auto w-full re1:w-[50vw] gap-2 justify-center items-center mb-5'>
-        <div className='flex gap-2 mx-auto items-center w-4/5'>
+    <div className='w-full mx-auto re1:px-[15%] my-16'>
+      <div className='flex mx-auto w-full gap-2 justify-between re1:justify-center items-center mb-5 re1:px-0 px-6'>
+        <div className='flex gap-2 items-center'>
           {fireIcon && (
             <Image
               src='https://shopinfo.vteximg.com.br/arquivos/icone-ofertas-fogo.png'
@@ -85,7 +85,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo, fireIc
 
       <div
         id={id}
-        className='container grid grid-cols-[20px_1fr_20px] re1:grid-cols-[48px_1fr_48px] px-0 re1:px-5'
+        className='container grid grid-cols-[20px_1fr_20px] re1:grid-cols-[48px_1fr_48px]'
       >
         <Slider className='carousel carousel-center gap-6 col-span-full row-start-2 row-end-5 scrollbar-none overflow-y-hidden'>
           {products.map((slide, index) => {
@@ -98,7 +98,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo, fireIc
             return (
               <Slider.Item
                 index={index}
-                class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
+                class='carousel-item w-fit h-fit re1:first:pl-0 first:pl-6 re1:last:pr-0 last:pr-6'
               >
                 <ProdFogo
                   imgUrl={imgUrl}

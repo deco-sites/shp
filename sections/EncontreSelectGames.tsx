@@ -263,7 +263,7 @@ const selectGames=({ Games=[] }:Props)=>{
   Games.length<1 && null
 
   return(
-    <div className={`${globalThis.window.location.pathname==='/' ? 'bg-[#272727]' : 'bg-transparent'} w-full h-fit my-5 py-3`}>
+    <div className={`${globalThis.window.location.pathname==='/' ? 'bg-[#272727]' : 'bg-transparent'} w-full h-fit my-5 py-5`}>
       <div className='flex flex-col items-center w-[90vw] re1:w-[70vw] mx-auto gap-8'>
         {(globalThis.window.location.pathname!=='/') && 
           <h1 className='font-bold text-secondary re1:text-6xl text-3xl mb-4 text-center'>E aí? Vai jogar o que?</h1>

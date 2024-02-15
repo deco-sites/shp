@@ -22,8 +22,8 @@ const BannersColcha=({Banners=[]}:Props)=>{
   const isMobile=globalThis.window.innerWidth<=768
 
   return(
-    <div className='flex flex-col gap-4 re1:gap-0 items-center re1:flex-row re1:justify-around my-16 mx-auto w-full h-max px-[5%] re1:px-[15%]'>
-      <div className='re1:w-[75%]'>
+    <div className='flex flex-col gap-4 re1:gap-0 items-center re1:flex-row re1:justify-around my-16 mx-auto w-full h-max re1:h-[348px] px-[5%] re1:px-[15%]'>
+      <div className='re1:w-[75%] h-full'>
         <a className='grayscale-[50%] hover:grayscale-0' href={Banners[0].link}>
           <Picture>
             <Source
@@ -47,8 +47,8 @@ const BannersColcha=({Banners=[]}:Props)=>{
           </Picture>
         </a>
       </div>
-      <div className='flex flex-col gap-4 re1:gap-0 justify-between re1:w-[25%]'>
-        <a className='grayscale-[50%] hover:grayscale-0' href={Banners[1].link}>
+      <div className='flex flex-col gap-4 re1:gap-0 justify-between re1:w-[25%] h-full'>
+        <a className='re1:ml-auto grayscale-[50%] hover:grayscale-0' href={Banners[1].link}>
           <Picture>
             <Source
               media='(max-width:768px)'
@@ -70,7 +70,7 @@ const BannersColcha=({Banners=[]}:Props)=>{
             height={isMobile? Banners[1].mobile.h : Banners[1].desktop.h}/>
           </Picture>
         </a>
-        <a className='grayscale-[50%] hover:grayscale-0' href={Banners[2].link}>
+        <a className='re1:ml-auto grayscale-[50%] hover:grayscale-0' href={Banners[2].link}>
           <Picture>
             <Source
               media='(max-width:768px)'

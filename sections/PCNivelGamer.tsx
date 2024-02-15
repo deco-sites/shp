@@ -33,7 +33,7 @@ const PCNivelGamer = ({ items = [] }: Props) => {
   }, [])
 
   return (
-    <div className='my-5 text-secondary font-bold'>
+    <div className='my-16 text-secondary font-bold'>
       {isMobile ? (
         //bg-[url('https://shopinfo.vteximg.com.br/arquivos/home-minibanner-background-mobile.jpg')] bg-no-repeat bg-center bg-cover
         <div className='relative py-16'>

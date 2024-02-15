@@ -7,9 +7,7 @@ import type { LoaderReturnType } from '$live/types.ts'
 import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
-import { putSizeInUrl } from 'deco-sites/shp/FunctionsSHP/AddSizeInUrl.ts'
-import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
-import useTimer, { TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
+import useTimer from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 
 export interface VitrineProps {
   produtos: LoaderReturnType<Product[] | null>
@@ -20,29 +18,14 @@ export interface VitrineProps {
 }
 
 const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0 }: VitrineProps) => {
-  const [isMobile, setIsMobile] = useState(false)
   const id = useId() + '-vitrine'
-
-  const handleResize = useCallback(() => {
-    setIsMobile(globalThis.window.innerWidth <= 768)
-  }, [])
-
-  useEffect(() => {
-    handleResize()
-
-    globalThis.window.addEventListener('resize', handleResize)
-
-    return () => {
-      globalThis.window.removeEventListener('resize', handleResize)
-    }
-  }, [])
 
   if (!produtos || produtos.length === 0) {
     return null
   }
 
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
-  const timeRemaining:TimeRemaining=useTimer(finalDate)
+  const {days, hours, minutes, seconds}=useTimer(finalDate)
 
   const prev = useRef<HTMLDivElement>(null)
   const next = useRef<HTMLDivElement>(null)
@@ -53,13 +36,23 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0 }: VitrineProps) 
 
   return (
     <CompareContextProvider>
-
-      <div className='re1:w-[60vw] w-screen mx-auto'>
-        <div className='flex mx-auto w-full re1:w-[50vw] gap-2 justify-center items-center mb-5'>
-          <div className='flex gap-2 mx-auto items-center w-4/5'>
+      <div className='w-full mx-auto re1:px-[15%] my-16'>
+        <div className='flex mx-auto w-full gap-2 justify-between re1:justify-center items-center mb-5 re1:px-0 px-6'>
+          <div className='flex gap-2 items-center re1:w-full'>
             <span className='font-bold re1:text-2xl text-lg text-secondary'>
               {titulo}
             </span>
+          </div>
+          <div className="bg-primary rounded-lg flex justify-around p-1 items-center re1:w-[200px] w-fit re1:mr-0 mr-6">
+            <Image width={24} height={24} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
+              loading='lazy'
+            />
+            <label>
+              <p className="flex flex-col text-secondary">
+                <p className="text-[10px]">A OFERTA EXPIRA EM</p>
+                <span className="font-bold text-sm leading-3">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
+              </p>
+            </label>
           </div>
           <div className='hidden re1:flex gap-1 ml-auto'>
             <button
@@ -97,13 +90,13 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0 }: VitrineProps) 
 
         <div
           id={id}
-          className='container grid grid-cols-[20px_1fr_20px] re1:grid-cols-[48px_1fr_48px] px-0 re1:px-5'
+          className='container grid grid-cols-[20px_1fr_20px] re1:grid-cols-[48px_1fr_48px]'
         >
           <Slider className='carousel carousel-center gap-6 col-span-full row-start-2 row-end-5 scrollbar-none overflow-y-hidden'>
             {produtos.map((slide, index) => 
               <Slider.Item
                 index={index}
-                class='carousel-item w-fit h-fit first:pl-6 last:pr-6'
+                class='carousel-item w-fit h-fit re1:first:pl-0 first:pl-6 re1:last:pr-0 last:pr-6'
               >
                 <Card
                   product={slide} pix={'12'}
