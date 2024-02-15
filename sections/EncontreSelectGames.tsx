@@ -197,6 +197,11 @@ const selectGames=({ Games=[] }:Props)=>{
     if(globalThis.window.location.pathname!=='/'){
       const header=document.querySelector('body div.z-10.fixed')
       header && ((header.children[0] as HTMLElement).style.backgroundColor='rgba(0,0,0,.8)')
+    }else{
+      const script=document.createElement('script')
+      script.type='application/ld+json'
+      script.innerHTML='{ "@context":"http://schema.org", "@type":"Organization", "logo": "https://shopinfo.vteximg.com.br/arquivos/logoshopinfo-branco-188px.png", "image": "https://shopinfo.vteximg.com.br/arquivos/logoshopinfo-branco-188px.png", "address":{ "@type":"PostalAddress", "streetAddress":"Rua Luzitana, 1407", "addressLocality":"Campinas", "addressRegion":"SP", "postalCode":"13015-122", "addressCountry":"BR" }, "url":"https://www.shopinfo.com.br/", "name":"Shopinfo", "legalName" :"SHP BRASIL EIRELI.", "logo":"https://shopinfo.vteximg.com.br/arquivos/logoshopinfo-branco-188px.png?v=637499525353000000", "telephone":"+551933087222", "email":"falecom@shopinfo.com.br", "sameAs":[[ "https://pt-br.facebook.com/Shopinfo", "https://twitter.com/shopinfo", "https://www.youtube.com/shopinfooficial" ]] }'
+      document.head.append(script)
     }
     
     handleResize()
