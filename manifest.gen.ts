@@ -10,6 +10,7 @@ import * as $$$4 from "./loaders/getProductsSearchAPI.ts";
 import * as $$$5 from "./loaders/getProductsSearchAPIProdType.ts";
 import * as $$$6 from "./loaders/getSubCategories.ts";
 import * as $$$7 from "./loaders/getTrustvox.ts";
+import * as $$$$0 from "./handlers/vtexAbTest.ts";
 import * as $$$$$$0 from "./sections/Acessorios.tsx";
 import * as $$$$$$1 from "./sections/BannerGrid.tsx";
 import * as $$$$$$2 from "./sections/BannerPLP.tsx";
@@ -85,6 +86,9 @@ const manifest = {
     "deco-sites/shp/loaders/getProductsSearchAPIProdType.ts": $$$5,
     "deco-sites/shp/loaders/getSubCategories.ts": $$$6,
     "deco-sites/shp/loaders/getTrustvox.ts": $$$7,
+  },
+  "handlers": {
+    "deco-sites/shp/handlers/vtexAbTest.ts": $$$$0,
   },
   "sections": {
     "deco-sites/shp/sections/Acessorios.tsx": $$$$$$0,

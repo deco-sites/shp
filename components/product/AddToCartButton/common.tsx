@@ -1,5 +1,5 @@
 import Button from "$store/components/ui/Button.tsx";
-import { sendEvent } from "$store/sdk/analytics.tsx";
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 import { useUI } from "$store/sdk/useUI.ts";
 import { useState } from "preact/hooks";
 import Image from 'apps/website/components/Image.tsx'
@@ -54,7 +54,7 @@ const useAddToCart = ({
       displayCart.value = true;
     } finally {
       setLoading(false);
-      globalThis.window.location.href='/checkout'
+      // globalThis.window.location.href='/checkout'
     }
   };
 
