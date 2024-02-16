@@ -75,7 +75,7 @@ const SearchMenuBar=()=>{
   
   const redirectSearchPage=async ()=>{
     await sendEvent({name:'search', params:{search_term:inputValue} })
-    globalThis.window.location.href='/s?q='+inputValue
+    // globalThis.window.location.href='/s?q='+inputValue
   }
 
   const handleClickLupaDesk = (event:MouseEvent) => {
