@@ -1,6 +1,5 @@
 import { itemToAnalyticsItem, useCart } from "apps/vtex/hooks/useCart.ts";
 import BaseCart from "../common/Cart.tsx";
-import {useEffect} from 'preact/hooks'
 
 function Cart() {
   const { cart, loading, updateItems, addCouponsToCart } = useCart();

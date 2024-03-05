@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, useCallback } from 'preact/hooks'
-import { useCart } from "apps/vtex/hooks/useCart.ts"
+import { itemToAnalyticsItem, useCart } from "apps/vtex/hooks/useCart.ts"
 import MenuItem from './MenuItem.tsx'
 import MenuItemDesk from './MenuItemDesktop.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import SearchMenuBar from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchMenuBar.tsx'
 import Cart from 'deco-sites/shp/components/minicart/Cart.tsx'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 const HeaderSHP = () => {
 
@@ -106,10 +107,25 @@ const HeaderSHP = () => {
 
   const [openMinicart, setOpenMinicart]=useState(false)
 
+  
   const {cart}=useCart()
-  const {items}=cart.value ?? { items: [] }
+  const {items, totalizers}=cart.value ?? { items: [] }
+  const currency = cart.value?.storePreferencesData.currencyCode ?? "BRL"
+  const total = totalizers?.find((item) => item.id === "Items")?.value || 0
+  const coupon = cart.value?.marketingData?.coupon ?? undefined
   const totalItems=items.length
-
+  
+  useEffect(()=>{
+    
+    
+    openMinicart && sendEvent({
+      name: "view_cart",
+      params: { currency, value: total, items:items.map((item, index) =>
+        itemToAnalyticsItem({ ...item, coupon }, index)
+      ) },
+    });
+  },[openMinicart])
+  
   return (
     <>
       <div id='minicartWrapper' className={`${openMinicart ? 'flex' : 'hidden'} flex-col z-30 fixed w-full items-end bg-[#000]/80`}

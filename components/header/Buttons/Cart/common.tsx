@@ -21,6 +21,7 @@ function CartButton({ loading, currency, total, items }: Props) {
       params: { currency, value: total, items },
     });
     displayCart.value = true;
+    console.log('Batata')
   };
 
   return (
