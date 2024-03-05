@@ -73,10 +73,13 @@ const SearchMenuBar=()=>{
     }
   }
   
-  const redirectSearchPage=async ()=>{
-    await sendEvent({name:'search', params:{search_term:inputValue} })
-    // globalThis.window.location.href='/s?q='+inputValue
-  }
+  const redirectSearchPage= async()=>{
+    await new Promise<void>((resolve)=>{
+      sendEvent({name:'search', params:{search_term:inputValue} })
+      resolve()
+    })
+    globalThis.window.location.href='/s?q='+inputValue
+}
 
   const handleClickLupaDesk = (event:MouseEvent) => {
     if (globalThis.window.innerWidth <= 768) {
