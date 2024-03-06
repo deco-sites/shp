@@ -41,7 +41,7 @@ const Trustvox=({page, storeId}:Props)=>{
   }
 
   useEffect(()=>{
-    openMenu && !alreadyOpened && sendEvent({name:'select_content', params:{content_type:'trustvox'}})
+    openMenu && sendEvent({name:'select_content', params:{content_type:'trustvox'}})
   },[openMenu])
   
   return(

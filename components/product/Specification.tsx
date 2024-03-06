@@ -200,7 +200,7 @@ const Specification=({page}:Props)=>{
   const pecas=specs.filter(item=>pecasOrdem.includes(item!.name!)).sort((a,b)=>pecasOrdem.indexOf(a!.name!) - pecasOrdem.indexOf(b!.name!))
 
   useEffect(()=>{
-    openMenu && !alreadyOpened && sendEvent({name:'select_content', params:{content_type:'specification'}})
+    openMenu && sendEvent({name:'select_content', params:{content_type:'specification'}})
   },[openMenu])
 
 

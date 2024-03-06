@@ -166,7 +166,7 @@ const Description=({page}:Props)=>{
   },[])
 
   useEffect(()=>{
-    openMenu && !alreadyOpened && sendEvent({name:'select_content', params:{content_type:'description'}})
+    openMenu && sendEvent({name:'select_content', params:{content_type:'description'}})
   },[openMenu])
 
   return (
