@@ -116,8 +116,6 @@ const HeaderSHP = () => {
   const totalItems=items.length
   
   useEffect(()=>{
-    
-    
     openMinicart && sendEvent({
       name: "view_cart",
       params: { currency, value: total, items:items.map((item, index) =>

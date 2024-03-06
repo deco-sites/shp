@@ -776,7 +776,7 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
               </div>}
             </div>
             <div className='flex'>
-              <Share productName={name ?? ''}/>
+              <Share productName={name ?? ''} productId={(product.inProductGroupWithID ?? product.productID).toString()}/>
             </div>
           </div>
           <Slider class='carousel gap-6 w-full'>
