@@ -1,6 +1,7 @@
 import type { ProductDetailsPage } from 'apps/commerce/types.ts'
-import { useState } from 'preact/hooks'
+import { useEffect, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
+import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 
 export interface Props {
   page: ProductDetailsPage
@@ -38,6 +39,10 @@ const Trustvox=({page, storeId}:Props)=>{
     }
     setAlreadyOpened(true)
   }
+
+  useEffect(()=>{
+    openMenu && !alreadyOpened && sendEvent({name:'select_content', params:{content_type:'trustvox'}})
+  },[openMenu])
   
   return(
     <div id='REVIEW' className='w-full re1:px-[10%] border-b border-b-neutral'>

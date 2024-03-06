@@ -1,6 +1,7 @@
 import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import { useEffect, useRef, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props {
   page: ProductDetailsPage
@@ -163,7 +164,10 @@ const Description=({page}:Props)=>{
       })
     }
   },[])
-  
+
+  useEffect(()=>{
+    openMenu && !alreadyOpened && sendEvent({name:'select_content', params:{content_type:'description'}})
+  },[openMenu])
 
   return (
     <div className={`w-full re1:px-[10%] border-y border-y-neutral ${vazio ? 'hidden' : ''}`}>

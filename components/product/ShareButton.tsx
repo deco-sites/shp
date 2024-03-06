@@ -22,7 +22,7 @@ const Share = ({productName, productId}:{productName:string, productId:string}) 
     }
   },[open])
 
-  const SendEvent=(method:string, content_type:string, item_id:string)=>{
+  const SendShareEvent=(method:string, content_type:string, item_id:string)=>{
     return new Promise<void>((resolve)=>{
       sendEvent({
         name:"share",
@@ -43,7 +43,7 @@ const Share = ({productName, productId}:{productName:string, productId:string}) 
         <li>
           <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Twitter'
             onClick={()=>{
-              SendEvent('twitter', productName, productId).then(__=>{
+              SendShareEvent('twitter', productName, productId).then(__=>{
                 globalThis.window.location.href=`https://twitter.com/intent/tweet?text=${productName}%0A%0A${globalThis.window.location.hostname+globalThis.window.location.pathname}`
               })
             }}
@@ -62,7 +62,7 @@ const Share = ({productName, productId}:{productName:string, productId:string}) 
         <li>
           <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Whatsapp'
             onClick={()=>{
-              SendEvent('whatsapp', productName, productId).then(__=>{
+              SendShareEvent('whatsapp', productName, productId).then(__=>{
                 globalThis.window.location.href=`https://api.whatsapp.com/send?text=${productName}-${globalThis.window.location.hostname+globalThis.window.location.pathname}`
               })
             }}
@@ -81,7 +81,7 @@ const Share = ({productName, productId}:{productName:string, productId:string}) 
         <li>
           <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Facebook'
             onClick={()=>{
-              SendEvent('facebook', productName, productId).then(__=>{
+              SendShareEvent('facebook', productName, productId).then(__=>{
                 globalThis.window.location.href = `https://www.facebook.com/sharer.php?u=${globalThis.window.location.hostname+globalThis.window.location.pathname}`
               })
             }}
@@ -100,7 +100,7 @@ const Share = ({productName, productId}:{productName:string, productId:string}) 
         <li>
           <a className='flex items-center justify-center w-[35px] h-[35px] tooltip tooltip-top tooltip-secondary bg-neutral-content hover:bg-primary rounded-full' data-tip='Email'
             onClick={()=>{
-              SendEvent('email', productName, productId).then(__=>{
+              SendShareEvent('email', productName, productId).then(__=>{
                 globalThis.window.location.href=`mailto:subject=${productName}&amp;body=${globalThis.window.location.hostname+globalThis.window.location.pathname}`
               })
             }}

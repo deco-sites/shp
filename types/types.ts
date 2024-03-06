@@ -17,8 +17,17 @@ export interface ShareEvent extends IEvent<ShareParams>{
   name:'share'
 }
 
+export interface SelectContentParams{
+  content_type?:string
+}
+
+export interface SelectContentEvent extends IEvent<SelectContentParams>{
+  name:'select_content'
+}
+
 export type CustomEvents=
-  ShareEvent 
+  ShareEvent |
+  SelectContentEvent
 
 export type GA4Events=
   CustomEvents | AnalyticsEvent

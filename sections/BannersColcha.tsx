@@ -1,5 +1,6 @@
 import { Picture, Source } from 'deco-sites/std/components/Picture.tsx'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props{
   /**@description Coloque os 3 banners */
@@ -15,16 +16,25 @@ export interface Props{
       h:number
     }
     link:string
+    alt:string
   }>
 }
 
 const BannersColcha=({Banners=[]}:Props)=>{
   const isMobile=globalThis.window.innerWidth<=768
 
+  const SendSelectPromotionEvent=(idx:number)=>{
+    sendEvent({name:'select_promotion', params:{
+      creative_name:Banners[idx].alt,
+      creative_slot:`colcha_${idx}`,
+      promotion_name:Banners[idx].alt
+    }})
+  }
+
   return(
     <div className='flex flex-col gap-4 re1:gap-0 items-center re1:flex-row re1:justify-around my-16 mx-auto w-full h-max re1:h-[348px] px-[5%] re1:px-[15%]'>
       <div className='re1:w-[75%] h-full'>
-        <a className='grayscale-[50%] hover:grayscale-0' href={Banners[0].link}>
+        <a className='grayscale-[50%] hover:grayscale-0' href={Banners[0].link} onClick={()=>SendSelectPromotionEvent(0)}>
           <Picture>
             <Source
               media='(max-width:768px)'
@@ -48,7 +58,7 @@ const BannersColcha=({Banners=[]}:Props)=>{
         </a>
       </div>
       <div className='flex flex-col gap-4 re1:gap-0 justify-between re1:w-[25%] h-full'>
-        <a className='re1:ml-auto grayscale-[50%] hover:grayscale-0' href={Banners[1].link}>
+        <a className='re1:ml-auto grayscale-[50%] hover:grayscale-0' href={Banners[1].link} onClick={()=>SendSelectPromotionEvent(1)}>
           <Picture>
             <Source
               media='(max-width:768px)'
@@ -70,7 +80,7 @@ const BannersColcha=({Banners=[]}:Props)=>{
             height={isMobile? Banners[1].mobile.h : Banners[1].desktop.h}/>
           </Picture>
         </a>
-        <a className='re1:ml-auto grayscale-[50%] hover:grayscale-0' href={Banners[2].link}>
+        <a className='re1:ml-auto grayscale-[50%] hover:grayscale-0' href={Banners[2].link} onClick={()=>SendSelectPromotionEvent(2)}>
           <Picture>
             <Source
               media='(max-width:768px)'

@@ -4,6 +4,7 @@ import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/islands/SliderJS.tsx'
 import { Picture, Source } from 'deco-sites/std/components/Picture.tsx'
 import { useId } from 'preact/hooks'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 //import type { Image as LiveImage } from "deco-sites/std/components/types.ts";
 
 export interface Banner {
@@ -32,7 +33,7 @@ export interface Props {
   interval?: number
 }
 
-function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
+function BannerItem({ image, lcp, idx }: { image: Banner; lcp?: boolean, idx:number }) {
   const { alt, mobile, desktop, action } = image
 
   const [Mobile, setMobile] = useState(globalThis.window.innerWidth <= 768)
@@ -55,6 +56,16 @@ function BannerItem({ image, lcp }: { image: Banner; lcp?: boolean }) {
     <a
       href={action?.href ?? '#'}
       class='relative h-fit overflow-y-hidden w-full'
+      onClick={()=>{
+        sendEvent({
+          name:'select_promotion',
+          params:{
+            creative_name:alt,
+            creative_slot:`banner_${idx}`,
+            promotion_name:alt
+          }
+        })
+      }}
     >
       <Picture preload={lcp}>
         <Source
@@ -143,7 +154,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
         <Slider class='carousel carousel-center scrollbar-none w-[90vw] rounded-lg'>
           {images?.map((image, index) => (
             <Slider.Item index={index} class='carousel-item w-[90vw] h-fit'>
-              <BannerItem image={image} lcp={index === 0 && preload} />
+              <BannerItem image={image} lcp={index === 0 && preload} idx={index} />
             </Slider.Item>
           ))}
         </Slider>
