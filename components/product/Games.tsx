@@ -6,6 +6,7 @@ import { useEffect, useState, useRef, useId } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 import Slider from 'deco-sites/fashion/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/fashion/components/ui/SliderJS.tsx'
+import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 
 export interface Props {
   page:ProductDetailsPage
@@ -171,6 +172,10 @@ const Games=({ page }:Props)=>{
       globalThis.window.removeEventListener('load',comecar)
     }
   },[])
+
+  useEffect(()=>{
+    openMenu && !alreadyOpened && sendEvent({name:'select_content', params:{content_type:'games'}})
+  },[openMenu])
 
   return(
     <div ref={supremeDiv} className='w-full re1:px-[10%] border-b border-b-neutral'>

@@ -4,8 +4,9 @@ import { useEffect, useState } from 'preact/hooks'
 import { JSX } from 'preact'
 import { renderToString } from 'preact-render-to-string'
 import Image from 'deco-sites/std/components/Image.tsx'
-import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts';
+import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import {invoke} from 'deco-sites/shp/runtime.ts'
+import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage>
@@ -236,6 +237,10 @@ const ProductRecommendedProds = ({ page }: Props) => {
     }
     setAlreadyOpened(true)
   }
+
+  useEffect(()=>{
+    openMenu && !alreadyOpened && sendEvent({name:'select_content', params:{content_type:'recomendedProds'}})
+  },[openMenu])
 
   return (
     <div className='w-full re1:px-[10%] border-b border-b-neutral'>

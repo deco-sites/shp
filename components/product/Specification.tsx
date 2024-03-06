@@ -1,6 +1,7 @@
 import type { ProductDetailsPage, PropertyValue } from 'apps/commerce/types.ts'
-import {  useRef, useState } from 'preact/hooks'
+import {  useEffect, useRef, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
+import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 
 export interface Props {
   page: ProductDetailsPage
@@ -197,6 +198,10 @@ const Specification=({page}:Props)=>{
   }) || [] ).filter((item)=> item !== undefined)!
 
   const pecas=specs.filter(item=>pecasOrdem.includes(item!.name!)).sort((a,b)=>pecasOrdem.indexOf(a!.name!) - pecasOrdem.indexOf(b!.name!))
+
+  useEffect(()=>{
+    openMenu && !alreadyOpened && sendEvent({name:'select_content', params:{content_type:'specification'}})
+  },[openMenu])
 
 
   return (
