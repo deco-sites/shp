@@ -239,7 +239,7 @@ const ProductRecommendedProds = ({ page }: Props) => {
   }
 
   useEffect(()=>{
-    openMenu && !alreadyOpened && sendEvent({name:'select_content', params:{content_type:'recomendedProds'}})
+    openMenu && sendEvent({name:'select_content', params:{content_type:'recomendedProds'}})
   },[openMenu])
 
   return (
