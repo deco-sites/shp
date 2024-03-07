@@ -203,7 +203,6 @@ const Games=({ page }:Props)=>{
           </ul> 
 
           <SliderJS rootId={id} scroll='smooth' onChangeEvent={()=>{
-            console.log('aaaa')
             sendEvent({name:'desempenho_aprox', params:{
               item_id:product.isVariantOf?.model ?? product.productID,
               item_name:product.name
