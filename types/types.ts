@@ -77,13 +77,28 @@ export interface EncontrePC3Event extends IEvent<EncontrePC3Params>{
   name:'encontre_pc_3'
 }
 
+export interface FreightPDPParams{
+  cep?:string
+  avaiability?:string 
+  freight_value?:number
+  carrier_name?:string
+  delivery_time?:string
+  item_id?:string
+  item_name?:string
+}
+
+export interface FreightPDPEvent extends IEvent<FreightPDPParams>{
+  name:'freight_pdp'
+}
+
 export type CustomEvents=
   ShareEvent |
   SelectContentEvent |
   DesempenhoAproxEvent |
   ItemImageEvent |
   ItemSpecificationEvent |
-  EncontrePC1Event| EncontrePC2Event | EncontrePC3Event
+  EncontrePC1Event| EncontrePC2Event | EncontrePC3Event |
+  FreightPDPEvent
 
 export type GA4Events=
   CustomEvents | AnalyticsEvent
