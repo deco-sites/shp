@@ -1,4 +1,4 @@
-import type { ProductDetailsPage, PropertyValue } from 'apps/commerce/types.ts'
+import type { Product, ProductDetailsPage } from 'apps/commerce/types.ts'
 import {  useEffect, useRef, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
@@ -14,6 +14,7 @@ interface PecaProps{
   pecaCateg:string
   pecaName:string
   modalId:number
+  prod:Product
 }
 
 const getPecaLoader= async(term:string) =>{
@@ -36,6 +37,11 @@ const SpecPeca=({ ...props }:PecaProps)=>{
 
   const openModal=async (event:MouseEvent)=>{
     if(opened===0){
+      sendEvent({name:'item_specification',params:{
+        specification_title:props.pecaCateg,
+        item_id:props.prod.isVariantOf?.model ?? props.prod.productID,
+        item_name:props.prod.name
+      }})
       const data=await getPecaLoader(props.pecaName)
       setData(data)
     }
@@ -280,7 +286,7 @@ const Specification=({page}:Props)=>{
                   }
 
                   return(
-                    <SpecPeca pecaName={item!.value || ''} pecaCateg={item!.name!}
+                    <SpecPeca pecaName={item!.value || ''} pecaCateg={item!.name!} prod={product}
                       IconW={width} IconH={height} linkIcon={iconImg} key={index} modalId={index}
                     />
                   )
