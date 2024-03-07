@@ -25,9 +25,19 @@ export interface SelectContentEvent extends IEvent<SelectContentParams>{
   name:'select_content'
 }
 
+export interface DesempenhoAproxParams{
+  item_id?:string
+  item_name?:string
+}
+
+export interface DesempenhoAproxEvent extends IEvent<DesempenhoAproxParams>{
+  name:'desempenho_aprox'
+}
+
 export type CustomEvents=
   ShareEvent |
-  SelectContentEvent
+  SelectContentEvent |
+  DesempenhoAproxEvent
 
 export type GA4Events=
   CustomEvents | AnalyticsEvent

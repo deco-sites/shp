@@ -5,6 +5,7 @@ interface Props {
   scroll?: "smooth" | "auto";
   interval?: number;
   infinite?: boolean;
+  onChangeEvent?:() => void
 }
 
 const ATTRIBUTES = {
@@ -46,7 +47,7 @@ const isHTMLElement = (x: Element): x is HTMLElement =>
   // deno-lint-ignore no-explicit-any
   typeof (x as any).offsetLeft === "number";
 
-const setup = ({ rootId, scroll, interval, infinite }: Props) => {
+const setup = ({ rootId, scroll, interval, infinite, onChangeEvent }: Props) => {
   const root = document.getElementById(rootId);
   const slider = root?.querySelector(`[${ATTRIBUTES["data-slider"]}]`);
   const items = root?.querySelectorAll(`[${ATTRIBUTES["data-slider-item"]}]`);
@@ -100,6 +101,8 @@ const setup = ({ rootId, scroll, interval, infinite }: Props) => {
       behavior: scroll,
       left: item.offsetLeft - root.offsetLeft,
     });
+
+    onChangeEvent && onChangeEvent()
   };
 
   const onClickPrev = () => {
@@ -189,8 +192,9 @@ function Slider({
   scroll = "smooth",
   interval,
   infinite = false,
+  onChangeEvent
 }: Props) {
-  useEffect(() => setup({ rootId, scroll, interval, infinite }), [
+  useEffect(() => setup({ rootId, scroll, interval, infinite, onChangeEvent }), [
     rootId,
     scroll,
     interval,
