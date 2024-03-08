@@ -202,7 +202,12 @@ const Games=({ page }:Props)=>{
             ))}
           </ul> 
 
-          <SliderJS rootId={id} scroll='smooth' />
+          <SliderJS rootId={id} scroll='smooth' onChangeEvent={()=>{
+            sendEvent({name:'desempenho_aprox', params:{
+              item_id:product.isVariantOf?.model ?? product.productID,
+              item_name:product.name
+            }})
+          }}/>
         </div>}
 
         <div className='hidden re1:grid grid-cols-4 gap-y-[30px] gap-x-2 w-[80%] my-[3%] mx-auto' dangerouslySetInnerHTML={{__html: htmlContent.join('')}} />

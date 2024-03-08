@@ -8,6 +8,7 @@ import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { invoke } from 'deco-sites/shp/runtime.ts'
 import type { Product } from 'apps/commerce/types.ts'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 //arrumar filtro de checkbox e de preco
 
@@ -61,6 +62,8 @@ const BTNFinal= () => {
       case 1:
         if(jogos.length>=1){
           (async()=>{
+            sendEvent({name:'encontre_pc_1', params:{selected_games:jogos} })
+
             count.value===1 && (gamesChecked.value=jogos)
             minPrice.value=await fetchPrice()
             setSys60(jogos.map(game=>games.get(game)!.collection60 ?? '').filter(str=>str.length))
@@ -98,6 +101,7 @@ const BTNFinal= () => {
               Ids144.length<1 ? block144.value=true : block144.value=false
             })()
           }
+          sendEvent({name:'encontre_pc_2', params:{selected_value:RangeVal.value} })
           
           count.value++
         }
@@ -107,11 +111,12 @@ const BTNFinal= () => {
           alert('Você precisa selecionar uma das opções!')
         }else{
           (async()=>{
+            sendEvent({name:'encontre_pc_3', params:{selected_performance:(checkboxChecked.value!=='' && checkboxChecked.value==='60+') ? '60FPS' : '144FPS'} })
             const Skus=await callPromises((checkboxChecked.value!=='' && checkboxChecked.value==='60+') ? systems60 : systems144)
-            console.log({
-              prices:[minPrice.value, RangeVal.value],
-              Skus
-            })
+            // console.log({
+            //   prices:[minPrice.value, RangeVal.value],
+            //   Skus
+            // })
 
             if(Skus.length){
               globalThis.window.location.href=`shelf/?q=${Skus}`

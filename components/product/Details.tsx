@@ -17,6 +17,7 @@ import Button from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
 import ShippingSimulation from 'deco-sites/shp/islands/ShippingSimulation.tsx'
 import ProductSelector from './ProductVariantSelector.tsx'
 import ProductImageZoom from 'deco-sites/shp/islands/ProductImageZoom.tsx'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 
 export interface Props {
@@ -661,9 +662,9 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
   }, [currentScale, translate]);
 
   useEffect(()=>{
-    if(dots.current && dotIndex)(
+    if(dots.current && dotIndex){
       (dots.current.querySelector(`button[data-dot="${dotIndex}"]`)! as HTMLButtonElement).click()
-    )
+    }
   },[dotIndex])
 
   useEffect(() => {
@@ -871,6 +872,12 @@ function Details({ page, pix, aspectRatio, height, width, flags }: Props) {
                     src={img.url!}
                     alt={img.alternateName}
                     className='hidden re1:block'
+                    onClick={()=>{
+                      sendEvent({name:'item_image', params:{
+                        item_id:product.isVariantOf?.model ?? product.productID,
+                        item_name:product.name
+                      }})
+                    }}
                   />
                 </div>
               </Slider.Dot>

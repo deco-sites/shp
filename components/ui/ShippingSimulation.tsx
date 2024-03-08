@@ -9,6 +9,7 @@ import type {
   SKU,
   Sla,
 } from "apps/vtex/utils/types.ts"
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props {
   items: SKU[]
@@ -91,6 +92,12 @@ function ShippingSimulation({ items }: Props) {
         postalCode: postalCode.value,
         country: cart.value?.storePreferencesData.countryCode || "BRA",
       })
+
+      
+      sendEvent({name:'freight_pdp', params:{
+        cep: postalCode.value
+      }})
+
     } finally {
       loading.value = false
     }

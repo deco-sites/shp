@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import { useEffect } from "preact/hooks";
 
 interface Props {
@@ -5,6 +6,8 @@ interface Props {
   scroll?: "smooth" | "auto";
   interval?: number;
   infinite?: boolean;
+  /**@description Unico parametro possivel é o index do slide e n funciona com o scroll */
+  onChangeEvent?:(...args:any[]) => any
 }
 
 const ATTRIBUTES = {
@@ -43,10 +46,9 @@ const intersectionX = (element: DOMRect, container: DOMRect): number => {
 
 // as any are ok in typeguard functions
 const isHTMLElement = (x: Element): x is HTMLElement =>
-  // deno-lint-ignore no-explicit-any
   typeof (x as any).offsetLeft === "number";
 
-const setup = ({ rootId, scroll, interval, infinite }: Props) => {
+const setup = ({ rootId, scroll, interval, infinite, onChangeEvent }: Props) => {
   const root = document.getElementById(rootId);
   const slider = root?.querySelector(`[${ATTRIBUTES["data-slider"]}]`);
   const items = root?.querySelectorAll(`[${ATTRIBUTES["data-slider-item"]}]`);
@@ -100,6 +102,8 @@ const setup = ({ rootId, scroll, interval, infinite }: Props) => {
       behavior: scroll,
       left: item.offsetLeft - root.offsetLeft,
     });
+
+    onChangeEvent && onChangeEvent(index)
   };
 
   const onClickPrev = () => {
@@ -189,12 +193,14 @@ function Slider({
   scroll = "smooth",
   interval,
   infinite = false,
+  onChangeEvent
 }: Props) {
-  useEffect(() => setup({ rootId, scroll, interval, infinite }), [
+  useEffect(() => setup({ rootId, scroll, interval, infinite, onChangeEvent }), [
     rootId,
     scroll,
     interval,
     infinite,
+    onChangeEvent
   ]);
 
   return <div data-slider-controller-js />;
