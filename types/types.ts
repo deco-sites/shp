@@ -108,6 +108,22 @@ export interface CheckoutMinicartEvent extends IEvent<CheckoutMinicartParams>{
   name:'checkout_minicart'
 }
 
+export interface TrackOrderParams{
+  path?:string
+}
+
+export interface TrackOrderEvent extends IEvent<TrackOrderParams>{
+  name:'track_order'
+}
+
+export interface MyAccountParams{
+  path?:string
+}
+
+export interface MyAccountEvent extends IEvent<MyAccountParams>{
+  name:'my_account'
+}
+
 export type CustomEvents=
   ShareEvent |
   SelectContentEvent |
@@ -116,7 +132,9 @@ export type CustomEvents=
   ItemSpecificationEvent |
   EncontrePC1Event| EncontrePC2Event | EncontrePC3Event |
   FreightPDPEvent |
-  OpenMinicartEvent | CheckoutMinicartEvent
+  OpenMinicartEvent | CheckoutMinicartEvent |
+  TrackOrderEvent |
+  MyAccountEvent
 
 export type GA4Events=
   CustomEvents | AnalyticsEvent
