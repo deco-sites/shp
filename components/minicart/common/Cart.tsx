@@ -129,24 +129,31 @@ function Cart({
               </div>
 
               <div class="p-4">
-                <a class="inline-block w-full" href={checkoutHref}>
+                <a class="inline-block w-full" 
+                  href={checkoutHref}
+                >
                   <Button
                     data-deco="buy-button"
                     class="w-full bg-primary hover:bg-primary text-secondary border-none outline-none"
                     disabled={loading || isEmtpy}
                     onClick={() => {
-                      sendEvent({
-                        name: "begin_checkout",
-                        params: {
-                          coupon,
-                          currency,
-                          // discounts tem sinal negativo ent soma-se ao total
-                          value: total + discounts,
-                          items: items
-                            .map((_, index) => itemToAnalyticsItem(index))
-                            .filter((x): x is AnalyticsItem => Boolean(x)),
-                        },
-                      });
+                      // sendEvent({
+                      //   name: "begin_checkout",
+                      //   params: {
+                      //     coupon,
+                      //     currency,
+                      //     // discounts tem sinal negativo ent soma-se ao total
+                      //     value: total + discounts,
+                      //     items: items
+                      //       .map((_, index) => itemToAnalyticsItem(index))
+                      //       .filter((x): x is AnalyticsItem => Boolean(x)),
+                      //   },
+                      // });
+
+                      sendEvent({name:'checkout_minicart', params:{
+                        currency, 
+                        value:total
+                      }})
                     }}
                   >
                     Ir para Checkout

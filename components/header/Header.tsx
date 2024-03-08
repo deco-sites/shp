@@ -116,12 +116,19 @@ const HeaderSHP = () => {
   const totalItems=items.length
   
   useEffect(()=>{
-    openMinicart && sendEvent({
-      name: "view_cart",
-      params: { currency, value: total, items:items.map((item, index) =>
-        itemToAnalyticsItem({ ...item, coupon }, index)
-      ) },
-    });
+    if(openMinicart){
+      sendEvent({
+        name: "view_cart",
+        params: { currency, value: total, items:items.map((item, index) =>
+          itemToAnalyticsItem({ ...item, coupon }, index)
+        ) },
+      })
+
+      sendEvent({
+        name:'open_minicart',
+        params:{path:globalThis.window.location.pathname}
+      })
+    } 
   },[openMinicart])
   
   return (
