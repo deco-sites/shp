@@ -91,6 +91,23 @@ export interface FreightPDPEvent extends IEvent<FreightPDPParams>{
   name:'freight_pdp'
 }
 
+export interface OpenMinicartParams{
+  path?:string
+}
+
+export interface OpenMinicartEvent extends IEvent<OpenMinicartParams>{
+  name:'open_minicart'
+}
+
+export interface CheckoutMinicartParams{
+  currency?:string
+  value?:number
+}
+
+export interface CheckoutMinicartEvent extends IEvent<CheckoutMinicartParams>{
+  name:'checkout_minicart'
+}
+
 export type CustomEvents=
   ShareEvent |
   SelectContentEvent |
@@ -98,7 +115,8 @@ export type CustomEvents=
   ItemImageEvent |
   ItemSpecificationEvent |
   EncontrePC1Event| EncontrePC2Event | EncontrePC3Event |
-  FreightPDPEvent
+  FreightPDPEvent |
+  OpenMinicartEvent | CheckoutMinicartEvent
 
 export type GA4Events=
   CustomEvents | AnalyticsEvent
