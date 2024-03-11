@@ -180,6 +180,18 @@ export interface FiltersEvent extends IEvent<FiltersParams>{
   name:'filters'
 }
 
+export interface StockCountParams{
+  stock_count?:number
+  currency?:string
+  value?:number
+  item_id?:string
+  item_name?:string
+}
+
+export interface StockCountEvent extends IEvent<StockCountParams>{
+  name:'stock_count'
+}
+
 export type CustomEvents=
   ShareEvent |
   SelectContentEvent |
@@ -196,7 +208,8 @@ export type CustomEvents=
   BrandEvent |
   SearchDetailsEvent |
   ShowMoreEvent |
-  FiltersEvent
+  FiltersEvent |
+  StockCountEvent
 
 export type GA4Events=
   CustomEvents | AnalyticsEvent
