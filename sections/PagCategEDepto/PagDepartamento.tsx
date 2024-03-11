@@ -10,6 +10,7 @@ import {invoke} from 'deco-sites/shp/runtime.ts'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import { signal } from '@preact/signals'
+import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 
 export interface Props{
   titleCategoria?:string
@@ -519,6 +520,10 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
                       const {from,to}=fromTo
                       setShowMore(true)
                       setFromTo({from:from+20, to:to+20})
+                      sendEvent({name:'show_more', params:{
+                        item_list_id:globalThis.window.location.pathname,
+                        item_list_name:titleCategoria
+                      }})
                     }
                   }}>{showMore ? <div className='loading loading-spinner'/> : 'Carregar mais Produtos'}</button>}
                 </>

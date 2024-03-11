@@ -289,6 +289,11 @@ function ProductInfo({ page, pix, flags }: Props) {
         const name=inputNome.current.value
         const email=inputEmail.current.value
 
+        sendEvent({name:'lead_item_unavailable', params:{
+          item_id:product.isVariantOf?.model ?? product.productID,
+          item_name:product.name
+        }})
+
         if(skuId!=='' && name!=='' && email!==''){
           console.log({skuId, name, email})
           const formData=new FormData()
@@ -304,6 +309,13 @@ function ProductInfo({ page, pix, flags }: Props) {
         }
       }
     }
+
+    useEffect(()=>{
+      !isAvailable && sendEvent({name:'view_item_unavailable', params:{
+        item_id:product.isVariantOf?.model ?? product.productID,
+        item_name:product.name
+      }})
+    },[])
 
     return (
       <>
@@ -338,7 +350,17 @@ function ProductInfo({ page, pix, flags }: Props) {
                 <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
               </div>
             }
-            <p className='text-success text-lg'>{brand?.name}</p>
+            <p onClick={()=>{
+              sendEvent({name:'brand', params:{
+                currency:product?.offers?.priceCurrency ?? 'BRL',
+                value:product?.offers?.offers[0].price,
+                item_id:product.isVariantOf?.model ?? product.productID,
+                item_name:product.name
+              }}
+              )}
+            } className='text-success text-lg'>
+              {brand?.name}
+            </p>
           </div>
         </div>
         {/* Code and name */}

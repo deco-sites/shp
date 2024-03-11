@@ -124,6 +124,62 @@ export interface MyAccountEvent extends IEvent<MyAccountParams>{
   name:'my_account'
 }
 
+export interface ViewItemUnavailableParams{
+  item_id?:string
+  item_name?:string
+}
+
+export interface ViewItemUnavailableEvent extends IEvent<ViewItemUnavailableParams>{
+  name:'view_item_unavailable'
+}
+
+export interface LeadItemUnavailableParams{
+  item_id?:string
+  item_name?:string
+}
+
+export interface LeadItemUnavailableEvent extends IEvent<LeadItemUnavailableParams>{
+  name:'lead_item_unavailable'
+}
+
+export interface BrandParams{
+  currency?:string
+  value?:number
+  item_id?:string
+  item_name?:string
+}
+
+export interface BrandEvent extends IEvent<BrandParams>{
+  name:'brand'
+}
+
+export interface SearchDetailsParams{
+  content_type?:string
+  path?:string
+}
+
+export interface SearchDetailsEvent extends IEvent<SearchDetailsParams>{
+  name:'search_details'
+}
+
+export interface ShowMoreParams{
+  item_list_id?:string
+  item_list_name?:string
+}
+
+export interface ShowMoreEvent extends IEvent<ShowMoreParams>{
+  name:'show_more'
+}
+
+export interface FiltersParams{
+  filter?:string
+  filtred_by?:string
+}
+
+export interface FiltersEvent extends IEvent<FiltersParams>{
+  name:'filters'
+}
+
 export type CustomEvents=
   ShareEvent |
   SelectContentEvent |
@@ -134,7 +190,12 @@ export type CustomEvents=
   FreightPDPEvent |
   OpenMinicartEvent | CheckoutMinicartEvent |
   TrackOrderEvent |
-  MyAccountEvent
+  MyAccountEvent |
+  ViewItemUnavailableEvent |
+  LeadItemUnavailableEvent |
+  BrandEvent |
+  SearchDetailsEvent |
+  ShowMoreEvent
 
 export type GA4Events=
   CustomEvents | AnalyticsEvent

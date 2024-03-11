@@ -9,6 +9,7 @@ import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import Filtro from './Filtro.tsx'
 import FiltroModal from './FiltroModal.tsx'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props{
   produtos:any
@@ -213,6 +214,11 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
     Array.from(ulDesk.querySelectorAll('input[type="checkbox"]')).forEach((checkbox)=>{
       (checkbox as HTMLInputElement).addEventListener('input',(event)=>{
         const target=(event.target as HTMLInputElement)
+
+        // terget.checked && sendEvent({name:'filter', params:{
+
+        // }})
+
         setSelectedFilters((prevSelectedFilters:SelectedFilter[]) =>{
           const fq=target.getAttribute('data-fq') as string
 
@@ -576,6 +582,10 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
                     const {from,to}=fromTo
                     setShowMore(true)
                     setFromTo({from:from+20, to:to+20})
+                    sendEvent({name:'show_more', params:{
+                      item_list_id:globalThis.window.location.pathname,
+                      item_list_name:termo
+                    }})
                   }
                 }}>{showMore ? <div className='loading loading-spinner'/> : 'Carregar mais Produtos'}</button>}
               </>

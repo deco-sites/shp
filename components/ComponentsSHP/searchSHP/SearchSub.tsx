@@ -6,6 +6,7 @@ import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props{
   fqName:string
@@ -396,6 +397,10 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
                     const {from,to}=fromTo
                     setShowMore(true)
                     setFromTo({from:from+20, to:to+20})
+                    sendEvent({name:'show_more', params:{
+                      item_list_id:globalThis.window.location.pathname,
+                      item_list_name:termo
+                    }})
                   }
                 }}>{showMore ? <div className='loading loading-spinner'/> : 'Carregar mais Produtos'}</button>}
               </>
