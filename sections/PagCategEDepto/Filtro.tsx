@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 interface Props{
   title:string
@@ -67,7 +68,15 @@ const Filtro=({title, values}:Props)=>{
           {values.map(filter=>(
             <li className='py-1 px-2'>
               <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                <input id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={filter.Map}/>
+                <input id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={filter.Map}
+                  onChange={(e)=>{ 
+                    const Target=e.target as HTMLInputElement
+                    Target.checked && sendEvent({name:'filters', params:{
+                      filter: title,
+                      filtred_by: filter.Name
+                    }})
+                  }}
+                />
                 <span className='text-sm'>{filter.Name}</span>
               </label>
             </li>
