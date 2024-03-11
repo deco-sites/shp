@@ -195,7 +195,8 @@ export type CustomEvents=
   LeadItemUnavailableEvent |
   BrandEvent |
   SearchDetailsEvent |
-  ShowMoreEvent
+  ShowMoreEvent |
+  FiltersEvent
 
 export type GA4Events=
   CustomEvents | AnalyticsEvent
