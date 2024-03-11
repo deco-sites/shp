@@ -179,9 +179,16 @@ const SearchMenuBar=()=>{
 
           <div ref={suggestionsDesk} className={`${openSuggestions ? 're1:flex' : 'hidden'} flex-col w-full absolute top-full border border-neutral border-t-transparent bg-base-100 rounded-b-lg`}>
             {autoComplete.map((suggestion:any)=>{
+              const handleClick=()=>{
+                sendEvent({name:'search_details', params:{
+                  content_type:suggestion.name,
+                  path:globalThis.window.location.pathname
+                }})
+              }
+
               if(suggestion.thumbUrl){
                 return(
-                  <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727]' rel='nofollow'>
+                  <a href={suggestion.href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727]' rel='nofollow' onClick={handleClick}>
                     <Image src={suggestion.thumbUrl.replace('25-25/1','32-32/1')} width={32} height={32} loading='eager' decoding='async' fetchPriority='high'/>
                     <p className='line-clamp-1 text-sm text-secondary ml-1'>{suggestion.name}</p>
                   </a>
@@ -191,7 +198,7 @@ const SearchMenuBar=()=>{
                 const href=`/s?q=${finalInputValue.current}&fqName=${fqName}`
 
                 return(
-                <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-secondary ml-1' rel='nofollow'>
+                <a href={href} className='flex flex-row items-center py-1 px-1 hover:bg-[#272727] line-clamp-1 text-sm text-secondary ml-1' rel='nofollow' onClick={handleClick}>
                   {suggestion.name}
                 </a>
                 )
