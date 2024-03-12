@@ -318,7 +318,7 @@ function ProductInfo({ page, pix, flags }: Props) {
         item_name:product.name
       }})
 
-      stockQnt>=5 && sendEvent({name:'stock_count', params:{
+      stockQnt<=5 && sendEvent({name:'stock_count', params:{
         stock_count:stockQnt,
         currency:product?.offers?.priceCurrency ?? 'BRL',
         value:product?.offers?.offers[0].price,
@@ -389,7 +389,7 @@ function ProductInfo({ page, pix, flags }: Props) {
               <div class='mt-4 re1:mt-6'>
                 <div className='flex gap-3 justify-between'>
                   <div class='flex flex-col items-start'>
-                    {stockQnt>=5 && (
+                    {stockQnt<=5 && (
                       <p className='py-1 px-2 text-secondary bg-[#272727] rounded-lg mb-3'>
                         {stockQnt===1 ? (<>Esta é a <span className='text-primary'>ÚLTIMA</span> unidade</>) : (<>Restam <span className='text-primary'>{stockQnt}</span> unidades</>)}
                       </p>
@@ -462,20 +462,19 @@ function ProductInfo({ page, pix, flags }: Props) {
               </div>
               {/* Shipping Simulation */}
               {renderizado && (
-
                 <div class='mt-8 re1:mt-0'>
-                <ShippingSimulation
-                  items={[
-                    {
-                      id: Number(productID),
-                      quantity: 1,
-                      seller: seller ?? '1',
-                    },
-                  ]}
-                  Id={product.isVariantOf?.model ?? product.productID}
-                  Name={product.name ?? ''}
-                />
-              </div> 
+                  <ShippingSimulation
+                    items={[
+                      {
+                        id: Number(productID),
+                        quantity: 1,
+                        seller: seller ?? '1',
+                      },
+                    ]}
+                    Id={product.isVariantOf?.model ?? product.productID}
+                    Name={product.name ?? ''}
+                  />
+                </div> 
               )}
             </>
           ):(
