@@ -389,9 +389,11 @@ function ProductInfo({ page, pix, flags }: Props) {
               <div class='mt-4 re1:mt-6'>
                 <div className='flex gap-3 justify-between'>
                   <div class='flex flex-col items-start'>
-                    <p>
-                      {stockQnt===1 ? (<>Esta é a <span>última</span> unidade</>) : (stockQnt<5 && (<>Restam <span>{stockQnt}</span> unidades</>))}
-                    </p>
+                    {stockQnt>=5 && (
+                      <p className='py-1 px-2 text-secondary bg-[#272727] rounded-lg mb-3'>
+                        {stockQnt===1 ? (<>Esta é a <span className='text-primary'>ÚLTIMA</span> unidade</>) : (<>Restam <span className='text-primary'>{stockQnt}</span> unidades</>)}
+                      </p>
+                    )}
                     <span class='line-through text-xs text-base-content'>
                       De: {formatPrice(listPrice, offers!.priceCurrency!)}
                     </span>
@@ -402,7 +404,7 @@ function ProductInfo({ page, pix, flags }: Props) {
                       <span>no PIX</span>
                     </p>
                   </div>
-                  <div className='hidden re1:block'>
+                  <div className='hidden re1:flex items-end'>
                     {(seller && renderizado) && (
                       <Button
                         url={product?.url ?? ''}
@@ -470,9 +472,11 @@ function ProductInfo({ page, pix, flags }: Props) {
                       seller: seller ?? '1',
                     },
                   ]}
-                  />
+                  Id={product.isVariantOf?.model ?? product.productID}
+                  Name={product.name ?? ''}
+                />
               </div> 
-                  )}
+              )}
             </>
           ):(
           <div className='w-full h-auto'>
