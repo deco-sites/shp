@@ -310,8 +310,18 @@ function ProductInfo({ page, pix, flags }: Props) {
       }
     }
 
+    const stockQnt=product.offers?.offers[0].inventoryLevel.value ?? 999
+
     useEffect(()=>{
       !isAvailable && sendEvent({name:'view_item_unavailable', params:{
+        item_id:product.isVariantOf?.model ?? product.productID,
+        item_name:product.name
+      }})
+
+      stockQnt>=5 && sendEvent({name:'stock_count', params:{
+        stock_count:stockQnt,
+        currency:product?.offers?.priceCurrency ?? 'BRL',
+        value:product?.offers?.offers[0].price,
         item_id:product.isVariantOf?.model ?? product.productID,
         item_name:product.name
       }})
@@ -372,95 +382,104 @@ function ProductInfo({ page, pix, flags }: Props) {
             <span class='text-base-content'>CÓD. {isVariantOf?.model}</span>
           </div>
         </div>
-        {isAvailable ? (
-          <>
-            {/* Prices */}
-            <div class='mt-4 re1:mt-6'>
-              <div className='flex gap-3 justify-between'>
-                <div class='flex flex-col items-start'>
-                  <span class='line-through text-xs text-base-content'>
-                    De: {formatPrice(listPrice, offers!.priceCurrency!)}
-                  </span>
-                  <p class='font-medium text-xl re1:text-sm re4:text-lg flex gap-1'>
-                    <span className='text-primary text-3xl re1:text-2xl re4:text-3xl font-bold'>
-                      {formatPrice(((pix !== 1 && price !== undefined && pix) ? (price-(price*(pix/100))) : price ), offers!.priceCurrency!)}
+        {isAvailable ? 
+          (
+            <>
+              {/* Prices */}
+              <div class='mt-4 re1:mt-6'>
+                <div className='flex gap-3 justify-between'>
+                  <div class='flex flex-col items-start'>
+                    {stockQnt>=5 && (
+                      <p className='py-1 px-2 text-secondary bg-[#272727] rounded-lg mb-3'>
+                        {stockQnt===1 ? (<>Esta é a <span className='text-primary'>ÚLTIMA</span> unidade</>) : (<>Restam <span className='text-primary'>{stockQnt}</span> unidades</>)}
+                      </p>
+                    )}
+                    <span class='line-through text-xs text-base-content'>
+                      De: {formatPrice(listPrice, offers!.priceCurrency!)}
                     </span>
-                    <span>no PIX</span>
-                  </p>
-                </div>
-                <div className='hidden re1:block'>
-                  {(seller && renderizado) && (
-                    <Button
-                      url={product?.url ?? ''}
-                      productID={productID}
-                      seller={seller}
-                      price={price ?? 0}
-                      discount={price && listPrice ? listPrice - price : 0}
-                      name={product.name ?? ''}
-                      productGroupID={product.isVariantOf?.productGroupID ?? '1'}
-                    />
-                  )}
-                </div>
-              </div>
-              <div className='flex flex-col gap-6 mt-6'>
-                <div className='flex gap-2 items-center'>
-                  <div className='w-[30px] h-[30px]'>
-                    <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-home-beneficios-pix-.png'
-                      width={25} height={25} decoding='auto' loading='eager' fetchPriority='high'
-                    />
-                  </div>
-                  <p className='font-bold text-sm'>No PIX - <span className='text-success'>Economia de {formatPrice(pix && (price!*(pix/100)),offers!.priceCurrency!)}</span>
-                  </p>
-                </div>
-                <div className='flex gap-2 text-sm items-center'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="21" viewBox="0 0 30 21" fill="none"><path d="M1 0H0V21H1V0Z" fill="white"></path><path d="M30 0H29.3408V21H30V0Z" fill="white"></path><path d="M28.7902 0H28.1323V21H28.7902V0Z" fill="white"></path><path d="M27.3178 0H25.4243V21H27.3178V0Z" fill="white"></path><path d="M22.746 0H22.0868V21H22.746V0Z" fill="white"></path><path d="M21.3693 0H19.064V21H21.3693V0Z" fill="white"></path><path d="M17.3623 0H16.7031V21H17.3623V0Z" fill="white"></path><path d="M16.2186 0H14.2798V21H16.2186V0Z" fill="white"></path><path d="M2.58114 0H1.59167V21H2.58114V0Z" fill="white"></path><path d="M4.06534 0H3.40613V21H4.06534V0Z" fill="white"></path><path d="M6.15305 0H5.49384V21H6.15305V0Z" fill="white"></path><path d="M12.4162 0H11.757V21H12.4162V0Z" fill="white"></path><path d="M10.8776 0H10.2184V21H10.8776V0Z" fill="white"></path><path d="M8.96335 0H6.9093V21H8.96335V0Z" fill="white"></path><path d="M25.0681 0H24.1616V21H25.0681V0Z" fill="white"></path></svg>
-                  <span>No boleto a vista com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)}</span>
-                </div>
-                {maxInstallments!==0 && 
-                  <div className='flex gap-2 text-sm items-center'>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
-                    <p>
-                      Em 1x no cartão com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)} <br/> ou parcelado em <span class='text-sm font-bold'>{maxInstallments}x de {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
+                    <p class='font-medium text-xl re1:text-sm re4:text-lg flex gap-1'>
+                      <span className='text-primary text-3xl re1:text-2xl re4:text-3xl font-bold'>
+                        {formatPrice(((pix !== 1 && price !== undefined && pix) ? (price-(price*(pix/100))) : price ), offers!.priceCurrency!)}
+                      </span>
+                      <span>no PIX</span>
                     </p>
                   </div>
-                }
+                  <div className='hidden re1:flex items-end'>
+                    {(seller && renderizado) && (
+                      <Button
+                        url={product?.url ?? ''}
+                        productID={productID}
+                        seller={seller}
+                        price={price ?? 0}
+                        discount={price && listPrice ? listPrice - price : 0}
+                        name={product.name ?? ''}
+                        productGroupID={product.isVariantOf?.productGroupID ?? '1'}
+                      />
+                    )}
+                  </div>
+                </div>
+                <div className='flex flex-col gap-6 mt-6'>
+                  <div className='flex gap-2 items-center'>
+                    <div className='w-[30px] h-[30px]'>
+                      <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-home-beneficios-pix-.png'
+                        width={25} height={25} decoding='auto' loading='eager' fetchPriority='high'
+                      />
+                    </div>
+                    <p className='font-bold text-sm'>No PIX - <span className='text-success'>Economia de {formatPrice(pix && (price!*(pix/100)),offers!.priceCurrency!)}</span>
+                    </p>
+                  </div>
+                  <div className='flex gap-2 text-sm items-center'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="21" viewBox="0 0 30 21" fill="none"><path d="M1 0H0V21H1V0Z" fill="white"></path><path d="M30 0H29.3408V21H30V0Z" fill="white"></path><path d="M28.7902 0H28.1323V21H28.7902V0Z" fill="white"></path><path d="M27.3178 0H25.4243V21H27.3178V0Z" fill="white"></path><path d="M22.746 0H22.0868V21H22.746V0Z" fill="white"></path><path d="M21.3693 0H19.064V21H21.3693V0Z" fill="white"></path><path d="M17.3623 0H16.7031V21H17.3623V0Z" fill="white"></path><path d="M16.2186 0H14.2798V21H16.2186V0Z" fill="white"></path><path d="M2.58114 0H1.59167V21H2.58114V0Z" fill="white"></path><path d="M4.06534 0H3.40613V21H4.06534V0Z" fill="white"></path><path d="M6.15305 0H5.49384V21H6.15305V0Z" fill="white"></path><path d="M12.4162 0H11.757V21H12.4162V0Z" fill="white"></path><path d="M10.8776 0H10.2184V21H10.8776V0Z" fill="white"></path><path d="M8.96335 0H6.9093V21H8.96335V0Z" fill="white"></path><path d="M25.0681 0H24.1616V21H25.0681V0Z" fill="white"></path></svg>
+                    <span>No boleto a vista com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)}</span>
+                  </div>
+                  {maxInstallments!==0 && 
+                    <div className='flex gap-2 text-sm items-center'>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
+                      <p>
+                        Em 1x no cartão com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)} <br/> ou parcelado em <span class='text-sm font-bold'>{maxInstallments}x de {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
+                      </p>
+                    </div>
+                  }
+                </div>
               </div>
-            </div>
-            {/* Sku Selector */}
-            <div class='mt-4 re1:mt-6'>
-              <ProductSelector product={product} />
-            </div>
-            {/* Add to Cart and Favorites button */}
-            <div class='mt-4 re1:hidden flex flex-col gap-2'>
-            {(seller && renderizado) && (
-              <Button
-                url={product?.url ?? ''}
-                productID={productID}
-                seller={seller ?? '1'}
-                price={price ?? 0}
-                discount={price && listPrice ? listPrice - price : 0}
-                name={product.name ?? ''}
-                productGroupID={product.isVariantOf?.productGroupID ?? ''}
-              />
-            )}
-            </div>
-            {/* Shipping Simulation */}
-            {renderizado && (
-
-              <div class='mt-8 re1:mt-0'>
-              <ShippingSimulation
-                items={[
-                  {
-                    id: Number(productID),
-                    quantity: 1,
-                    seller: seller ?? '1',
-                  },
-                ]}
+              {/* Sku Selector */}
+              <div class='mt-4 re1:mt-6'>
+                <ProductSelector product={product} />
+              </div>
+              {/* Add to Cart and Favorites button */}
+              <div class='mt-4 re1:hidden flex flex-col gap-2'>
+              {(seller && renderizado) && (
+                <Button
+                  url={product?.url ?? ''}
+                  productID={productID}
+                  seller={seller ?? '1'}
+                  price={price ?? 0}
+                  discount={price && listPrice ? listPrice - price : 0}
+                  name={product.name ?? ''}
+                  productGroupID={product.isVariantOf?.productGroupID ?? ''}
                 />
-            </div> 
-                )}
-          </>
-        ):(<div className='w-full h-auto'>
+              )}
+              </div>
+              {/* Shipping Simulation */}
+              {renderizado && (
+
+                <div class='mt-8 re1:mt-0'>
+                <ShippingSimulation
+                  items={[
+                    {
+                      id: Number(productID),
+                      quantity: 1,
+                      seller: seller ?? '1',
+                    },
+                  ]}
+                  Id={product.isVariantOf?.model ?? product.productID}
+                  Name={product.name ?? ''}
+                />
+              </div> 
+              )}
+            </>
+          ):(
+          <div className='w-full h-auto'>
             <span className='block w-full bg-primary text-center font-bold my-5'>Produto Temporariamente Indisponível</span>
             <form className='flex flex-col gap-5 items-center re1:items-start justify-center' onSubmit={handleCadastro}>
               <label className='text-lg font-bold'>Avise-me se este produto chegar</label>

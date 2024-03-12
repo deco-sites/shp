@@ -7,12 +7,14 @@ import Image from 'deco-sites/std/components/Image.tsx'
 import type {
   SimulationOrderForm,
   SKU,
-  Sla,
+  Sla
 } from "apps/vtex/utils/types.ts"
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props {
   items: SKU[]
+  Id:string
+  Name:string
 }
 
 const formatShippingEstimate = (estimate: string) => {
@@ -74,7 +76,7 @@ function ShippingContent({ simulation }: {
   )
 }
 
-function ShippingSimulation({ items }: Props) {
+function ShippingSimulation({ items, Id, Name }: Props) {
   const postalCode = useSignal("")
   const loading = useSignal(false)
   const simulateResult = useSignal<SimulationOrderForm | null>(null)
@@ -93,9 +95,17 @@ function ShippingSimulation({ items }: Props) {
         country: cart.value?.storePreferencesData.countryCode || "BRA",
       })
 
+      const infos=simulateResult.value.logisticsInfo[0].slas
       
       sendEvent({name:'freight_pdp', params:{
-        cep: postalCode.value
+        cep: postalCode.value,
+        // se o item estivesse indisponível n ia pra PDP
+        avaiability:'available',
+        carrier_name: infos[0].deliveryIds[0].courierName,
+        delivery_time: infos[0].shippingEstimate,
+        freight_value: infos[0].price,
+        item_id: Id,
+        item_name: Name
       }})
 
     } finally {
