@@ -5,10 +5,15 @@ import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import { ObjTrust } from "deco-sites/shp/types/types.ts";
 import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props{
   product:any
   pix?:string
+  /**@description  pro evento de select_item do GA4*/
+  item_list_id?:string
+  /**@description  pro evento de select_item do GA4*/
+  item_list_name?:string
 }
 
 interface CardProps{
@@ -24,6 +29,7 @@ interface CardProps{
   pix:string
   objTrust:ObjTrust
   trustPercent:number
+  GA4Func?:()=>void
 } 
 
 interface CardPCProps extends CardProps{
@@ -46,7 +52,7 @@ const ProdCard=({...props}:CardProps)=>{
 
   return(
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
-    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
+    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
       <div className='flex px-3 pt-3 h-auto w-auto'>
         <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg'>-{diffPercent}%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} alt={prodName} title={prodName}/>
@@ -94,6 +100,7 @@ const PcCard=({...props}:CardPCProps)=>{
     name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
   }
 
+  
   useEffect(()=>{
     if(!PCs.some((pc)=>pc.id===pcObj.id && pc.name===pcObj.name)){
       compareInput.current && (compareInput.current.checked=false)
@@ -102,7 +109,7 @@ const PcCard=({...props}:CardPCProps)=>{
 
   return(
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg p-0 border relative
-    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
+    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
       <div className='flex flex-col px-3 pt-8 re1:pt-3 h-auto w-auto'>
         <div>
           <div className='flex items-center justify-start mt-[-12%] re1:mt-0'>
@@ -169,8 +176,9 @@ const PcCard=({...props}:CardPCProps)=>{
   )
 }
 
+const replaceListInfo=globalThis.window.location.pathname
 
-const Card=({product, pix='12'}:Props)=>{
+const Card=({product, pix='12', item_list_id=replaceListInfo, item_list_name=replaceListInfo}:Props)=>{
   const PCGamer=product.categoriesIds.includes('/10/')
   const image=product.items[0].images[0].imageUrl
   const prodId=product.items[0].itemId
@@ -209,13 +217,21 @@ const Card=({product, pix='12'}:Props)=>{
     handleTrust()
   },[])
 
+  const handleClick=()=>{
+    sendEvent({name:'select_item', params:{
+      item_list_id,
+      item_list_name,
+      items:[product]
+    }})
+  }
+
   if(PCGamer){
     return <PcCard  armazenamento={(product.SSD || product.HD) ?? ''} imgUrl={image} prodName={name} memoria={product.Memória ?? ''} objTrust={{'product_code':prodId, 'average':0, 'count':0, 'product_name':name}} trustPercent={0}
     placaVideo={product['Placa de vídeo'] ?? ''} linkProd={linkProduto} prodId={prodId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility} seller={product.items[0].sellers[0].sellerId ?? '1'} groupId={refId ?? ''} 
-    processador={product.Processador ?? ''} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix} fonte={product.Fonte}/>
+    processador={product.Processador ?? ''} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix} fonte={product.Fonte} GA4Func={handleClick}/>
   }else{
     return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe} precoVista={priceVista} parcelas={maxInstallments} objTrust={objTrust}
-      trustPercent={trustPercent} prodId={prodId} prodName={name} valorParcela={valorParcela} isAvailable={avaibility} pix={pix}/>
+      trustPercent={trustPercent} prodId={prodId} prodName={name} valorParcela={valorParcela} isAvailable={avaibility} pix={pix} GA4Func={handleClick}/>
   }
 }
 

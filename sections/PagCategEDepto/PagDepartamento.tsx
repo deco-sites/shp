@@ -144,6 +144,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   const [path,setPath]=useState<string[]>([titleCategoria])
   const [prodsResources, setProdsResources]=useState('')
   const [brands,setBrands]=useState<any>([])
+  const [sentEvent, setSentEvent]=useState(false)
 
   const {PCs, removeAll}=useCompareContext()
 
@@ -385,6 +386,20 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
 
     PCs.length && removeAll()
   },[order])
+
+  useEffect(()=>{
+    if(products.length){
+      if(!sentEvent){
+        // mandar evento apenas uma vez quando puxar os prods pela primeira vez
+        setSentEvent(true)
+        sendEvent({name:'view_item_list', params:{
+          item_list_id: idsDeCategoria,
+          item_list_name: titleCategoria,
+          items:products
+        }})
+      }
+    }
+  },[products])
 
   return(
     <>
