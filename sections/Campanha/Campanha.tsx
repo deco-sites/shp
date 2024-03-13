@@ -10,6 +10,7 @@ import useTimer,{ TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import prodQntd from 'deco-sites/shp/FunctionsSHP/productQntHotsite.ts'
 import FiltroMob from 'deco-sites/shp/sections/Campanha/FiltroMob.tsx'
 import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 //montando interface com infos que precisam de descricao no ADMIN
 interface NeedDesc{
@@ -76,6 +77,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   const [loading,setLoading]=useState(true)
   const [gifts,setGifts]=useState<any>(null)
   const [finalProducts,setFinalProducts]=useState<FinalProd[]>([])
+  const [sentEvent,setSentEvent]=useState(false)
 
   const ulFilters=useRef<HTMLUListElement>(null)
   const filtrosMob=useRef<HTMLDivElement>(null)
@@ -112,6 +114,18 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   },[order])
 
   useEffect(()=>{
+    if(products.length){
+      if(!sentEvent){
+        // mandar evento apenas uma vez quando puxar os prods pela primeira vez
+        setSentEvent(true)
+        sendEvent({name:'view_item_list', params:{
+          item_list_id: collection,
+          item_list_name: globalThis.window.location.pathname,
+          items:products as any
+        }})
+      }
+    }
+
     const checkCompreGanhe=async()=>{
       const giftsSkus=products.reduce((acc:string[],obj)=>{
         const giftSkus=obj.offers?.offers[0].giftSkuIds

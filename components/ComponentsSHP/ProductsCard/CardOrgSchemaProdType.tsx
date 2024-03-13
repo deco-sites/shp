@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import { Offer, Product, PropertyValue } from 'apps/commerce/types.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { useState, useEffect, useRef} from 'preact/hooks'
@@ -6,10 +7,15 @@ import {invoke} from 'deco-sites/shp/runtime.ts'
 import { ObjTrust } from 'deco-sites/shp/types/types.ts'
 import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import { useOffer } from 'deco-sites/shp/sdk/useOffer.ts'
+import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props{
   product:Product
   pix:string
+  /**@description  pro evento de select_item do GA4*/
+  item_list_id?:string
+  /**@description  pro evento de select_item do GA4*/
+  item_list_name?:string
 }
 
 interface ProdCard{
@@ -26,6 +32,7 @@ interface ProdCard{
   objTrust?:ObjTrust
   trustPercent?:number
   isAvailable:boolean
+  GA4Func?:()=>void
 }
 
 interface PcCard extends ProdCard{
@@ -61,7 +68,7 @@ const ProdCard=({...props}:ProdCard)=>{
 
   return(
     <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
-    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
+    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
       <div className='flex px-3 pt-3 h-auto w-auto'>
         <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg'>-{diffPercent}%</span>
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} alt={prodName} title={prodName}/>
@@ -120,7 +127,7 @@ const PcCard=({...props}:PcCard)=>{
 
   return(
     <a className='flex flex-col h-[370px] w-full max-w-[250px] bg-[#262626] rounded-lg p-0 border relative
-    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd}>
+    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
       <div className='flex flex-col px-3 pt-8 re1:pt-3 h-auto w-auto'>
         <div>
           <div className='flex items-center justify-start mt-[-12%] re1:mt-0'>
@@ -186,8 +193,9 @@ const PcCard=({...props}:PcCard)=>{
   )
 }
 
+const replaceListInfo=globalThis.window.location.pathname
 
-const Card=({product}:Props)=>{
+const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListInfo}:Props)=>{
   const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
 
   const offer=product.offers!.offers![0]!
@@ -217,6 +225,14 @@ const Card=({product}:Props)=>{
   const precoVista=offer.price!
   const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)!.billingIncrement!
 
+  const handleClick=()=>{
+    sendEvent({name:'select_item', params:{
+      item_list_id,
+      item_list_name,
+      items:[product as any]
+    }})
+  }
+
   if(product.additionalProperty!.some(propValue=>propValue.propertyID==='10' && propValue.name==='category')){
     const additionalProp:PropertyValue[]=product.isVariantOf!.additionalProperty!
 
@@ -244,6 +260,7 @@ const Card=({product}:Props)=>{
       precoVista={precoVista}
       valorParcela={valorParcela}
       isAvailable={avaibility}
+      GA4Func={handleClick}
     />
   }else{
     return <ProdCard
@@ -258,6 +275,7 @@ const Card=({product}:Props)=>{
       precoVista={precoVista}
       valorParcela={valorParcela}
       isAvailable={avaibility}
+      GA4Func={handleClick}
     />
   }
 }
