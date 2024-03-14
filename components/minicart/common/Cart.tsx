@@ -149,7 +149,7 @@ function Cart({
                       //       .filter((x): x is AnalyticsItem => Boolean(x)),
                       //   },
                       // });
-
+                      document.cookie = "usando_deco=true; path=/;"
                       sendEvent({name:'checkout_minicart', params:{
                         currency, 
                         value:total
