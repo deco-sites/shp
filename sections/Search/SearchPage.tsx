@@ -5,6 +5,7 @@ import SearchSub from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchS
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import {sendEvent} from 'deco-sites/shp/sdk/analytics.tsx'
+import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 
 export interface Props {
   iconesNavegacionais:Array<{
@@ -84,12 +85,6 @@ const SearchPage=({data, q, iconesNavegacionais, fqName, fqVal}:SectionProps<typ
         </div>
       </div>)
   }
-
-  sendEvent({name:'view_item_list', params:{
-    item_list_id: q,
-    item_list_name: 'search page',
-    items:data
-  }})
 
   return <CompareContextProvider>{(fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais}/>}</CompareContextProvider>
 }

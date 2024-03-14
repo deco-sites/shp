@@ -11,6 +11,7 @@ import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import { signal } from '@preact/signals'
 import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
+import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 
 export interface Props{
   titleCategoria?:string
@@ -395,7 +396,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
         sendEvent({name:'view_item_list', params:{
           item_list_id: idsDeCategoria,
           item_list_name: titleCategoria,
-          items:products
+          items:VtexTypeToAnalytics(products)
         }})
       }
     }

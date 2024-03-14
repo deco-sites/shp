@@ -11,6 +11,7 @@ import prodQntd from 'deco-sites/shp/FunctionsSHP/productQntHotsite.ts'
 import FiltroMob from 'deco-sites/shp/sections/Campanha/FiltroMob.tsx'
 import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
+import { OrgSchemaToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 
 //montando interface com infos que precisam de descricao no ADMIN
 interface NeedDesc{
@@ -121,7 +122,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         sendEvent({name:'view_item_list', params:{
           item_list_id: collection,
           item_list_name: globalThis.window.location.pathname,
-          items:products as any
+          items:OrgSchemaToAnalytics(products)
         }})
       }
     }
