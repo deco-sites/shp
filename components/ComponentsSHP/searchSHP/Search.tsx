@@ -10,6 +10,7 @@ import {invoke} from 'deco-sites/shp/runtime.ts'
 import Filtro from './Filtro.tsx'
 import FiltroModal from './FiltroModal.tsx'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
+import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 
 export interface Props{
   produtos:any
@@ -298,6 +299,12 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
   }
 
   useEffect(()=>{
+    sendEvent({name:'view_item_list', params:{
+      item_list_id: termo,
+      item_list_name: 'search page',
+      items:VtexTypeToAnalytics(produtos)
+    }})
+
     fetchFilters(`ft=${termo}`).then(async (pageData)=>{
       const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
         const slugSplittado=obj.Slug!.split('-')

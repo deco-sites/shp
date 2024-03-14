@@ -7,6 +7,7 @@ import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexP
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
+import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 
 export interface Props{
   fqName:string
@@ -178,6 +179,12 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
   ]
 
   useEffect(()=>{
+    sendEvent({name:'view_item_list', params:{
+      item_list_id: termo,
+      item_list_name: 'search page',
+      items: VtexTypeToAnalytics(produtos)
+    }})
+
     const initialScrollY=0
     let scrolledDown=false
 
