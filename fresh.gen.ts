@@ -11,7 +11,6 @@ import * as $CampanhaIsland from "./islands/CampanhaIsland.tsx";
 import * as $CompareContextIsland from "./islands/CompareContextIsland.tsx";
 import * as $CompareIsland from "./islands/CompareIsland.tsx";
 import * as $CompreJuntoIsland from "./islands/CompreJuntoIsland.tsx";
-import * as $Cookies_UsandoDecoCookieIsland from "./islands/Cookies/UsandoDecoCookieIsland.tsx";
 import * as $DescriptionIsland from "./islands/DescriptionIsland.tsx";
 import * as $DetailsIsland from "./islands/DetailsIsland.tsx";
 import * as $EncontrePCGamerIdealIsland from "./islands/EncontrePCGamerIdealIsland.tsx";
@@ -56,8 +55,6 @@ const manifest = {
     "./islands/CompareContextIsland.tsx": $CompareContextIsland,
     "./islands/CompareIsland.tsx": $CompareIsland,
     "./islands/CompreJuntoIsland.tsx": $CompreJuntoIsland,
-    "./islands/Cookies/UsandoDecoCookieIsland.tsx":
-      $Cookies_UsandoDecoCookieIsland,
     "./islands/DescriptionIsland.tsx": $DescriptionIsland,
     "./islands/DetailsIsland.tsx": $DetailsIsland,
     "./islands/EncontrePCGamerIdealIsland.tsx": $EncontrePCGamerIdealIsland,
