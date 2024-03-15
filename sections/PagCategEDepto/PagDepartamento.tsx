@@ -389,6 +389,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   },[order])
 
   useEffect(()=>{
+    console.log(products)
     if(products.length){
       if(!sentEvent){
         // mandar evento apenas uma vez quando puxar os prods pela primeira vez

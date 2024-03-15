@@ -192,6 +192,14 @@ export interface StockCountEvent extends IEvent<StockCountParams>{
   name:'stock_count'
 }
 
+export interface SignUpParams{
+  method?:string
+}
+
+export interface SignUpEvent extends IEvent<SignUpParams>{
+  name:'sign_up'
+}
+
 export type CustomEvents=
   ShareEvent |
   SelectContentEvent |
@@ -209,7 +217,8 @@ export type CustomEvents=
   SearchDetailsEvent |
   ShowMoreEvent |
   FiltersEvent |
-  StockCountEvent
+  StockCountEvent |
+  SignUpEvent
 
 export type GA4Events=
   CustomEvents | AnalyticsEvent
