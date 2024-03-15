@@ -1,0 +1,1 @@
+export {default} from 'deco-sites/shp/sections/SetCookieUsandoDeco/usandoDecoCookie.tsx'
