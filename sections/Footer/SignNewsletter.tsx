@@ -10,20 +10,15 @@ const SignNewsletter = () => {
       firstScript.defer = true;
 
       firstScript.onload = () => {
-        console.log('script 1 carregado');
-
         const secondScript = document.createElement('script');
 
         secondScript.text = "new RDStationForms('footer-057c7ba33caa73ecd1d1', 'null').createForm()";
-
         
         document.body.appendChild(secondScript);
       };
       
       globalThis.window.onload=()=>{
-      document.querySelector('#footer-057c7ba33caa73ecd1d1 form button')!.addEventListener('click',(e)=>{
-          e.preventDefault()
-          console.log('BATAAAAAAAAAAAAAAAAA')
+        document.querySelector('#footer-057c7ba33caa73ecd1d1 form button')!.addEventListener('click',()=>{
           sendEvent({name:'sign_up',params:{method:'newsletter'}})
         })
       }
