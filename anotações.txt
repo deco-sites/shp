@@ -1,5 +1,5 @@
 Precisa arrumar:
  Arrumar formulário Institucional Contato pra mudar pra RD
+ Add funcionalidade no comprar junto da PDP
 Bugs pra arrumar:
 Possiveis melhoras: 
- Criar eventos

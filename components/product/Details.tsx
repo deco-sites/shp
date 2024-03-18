@@ -318,7 +318,7 @@ function ProductInfo({ page, pix, flags }: Props) {
         item_name:product.name
       }})
 
-      stockQnt<=5 && sendEvent({name:'stock_count', params:{
+      isAvailable && stockQnt<=5 && sendEvent({name:'stock_count', params:{
         stock_count:stockQnt,
         currency:product?.offers?.priceCurrency ?? 'BRL',
         value:product?.offers?.offers[0].price,
