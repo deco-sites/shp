@@ -8,6 +8,7 @@ import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import {invoke} from 'deco-sites/shp/runtime.ts'
+import { useCart } from "apps/vtex/hooks/useCart.ts";
 
 export interface Props{
   page:LoaderReturnType<ProductDetailsPage>
@@ -24,6 +25,7 @@ const loaderBuyTogether=async(skuId:string):Promise<objBuyTogether[]>=> await in
 
 
 const CompreJunto=({page}:Props)=>{
+  const {addItems}=useCart()
   const {product}=page
   const [htmlContent, setHtmlContent]=useState<JSX.Element[]>([<div className='loading loading-spinner loading-lg text-primary'/>])
   const [data, setData]=useState<objBuyTogether[]>([])
@@ -68,7 +70,7 @@ const CompreJunto=({page}:Props)=>{
               const image = fetch.products[0]!.items[0].images[0].imageUrl
               const name = fetch.products[0]!.productName
               const price= fetch.products[0]!.items[0].sellers[0].commertialOffer.Installments[0].Value
-              const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),15)
+              const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),12)
               const link='/'+fetch.products[0]!.linkText+'/p'
 
               const skuProdB=obj.sku.includes(product.sku) ? obj.sku.replace(product.sku, '').replace(',','') : obj.sku
@@ -85,7 +87,23 @@ const CompreJunto=({page}:Props)=>{
                       </div>
                       <button data-skus={`['${product.sku}', '${skuProdB}']`} 
                         class="btn no-animation w-full hidden re1:flex gap-3 bg-primary border-primary hover:border-primary hover:bg-primary"
-                        onClick={(event)=>console.log((event.target as HTMLButtonElement).getAttribute('data-skus') || ((event.target as HTMLElement).parentElement as HTMLButtonElement).getAttribute('data-skus'))}
+                        onClick={(event)=>{
+                          console.log((event.target as HTMLButtonElement).getAttribute('data-skus') || ((event.target as HTMLElement).parentElement as HTMLButtonElement).getAttribute('data-skus'))
+                          addItems({
+                            orderItems: [
+                              {
+                                id: product.sku,
+                                seller: '1',
+                                quantity: 1,
+                              },
+                              {
+                                id: skuProdB,
+                                seller: '1',
+                                quantity: 1,
+                              },
+                            ],
+                          })
+                        }}
                       >
                         <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png'
                           width={22} height={20} decoding='auto' fetchPriority='high' loading='lazy' className='w-[10%]'
