@@ -8,6 +8,8 @@ import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import type { Product } from 'apps/commerce/types.ts'
+import { AppContext } from "deco-sites/shp/apps/site.ts";
+import { SectionProps } from "deco/types.ts";
 
 export interface Props {
   title:string
@@ -15,9 +17,17 @@ export interface Props {
   /** @description formato AAAA-MM-DD*/
   finalDaOferta: string
   interval: number
+  descontoPix: number
 }
 
-const ProdSlider = ({ title, products, finalDaOferta = '', interval = 0 }: Props) => {
+export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+  return {
+    ...props,
+    descontoPix: ctx.descontoPix,
+  }
+}
+
+const ProdSlider = ({ title, products, finalDaOferta = '', interval = 0, descontoPix }: SectionProps<typeof loader>) => {
   const id = useId() + '-fogo'
 
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
@@ -105,7 +115,7 @@ const ProdSlider = ({ title, products, finalDaOferta = '', interval = 0 }: Props
                     parseFloat((slide.offers!.highPrice / 10).toFixed(2))
                   }
                   precoPIX={
-                    slide.offers! && DescontoPIX(slide.offers.highPrice, 15)
+                    slide.offers! && DescontoPIX(slide.offers.highPrice, descontoPix)
                   }
                   discountFlag={15}
                   timeRemaining={timeRemaining}

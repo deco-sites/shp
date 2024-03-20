@@ -10,6 +10,7 @@ import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage>
+  pix:number
 }
 
 const recomendacoesLoader = async (param: string) => {
@@ -45,6 +46,7 @@ interface PcInfos {
     class: string;
     name: string;
   }>
+  pix:number
 }
 
 const recomendacoesV2Loader = async (param: string) => {
@@ -69,10 +71,11 @@ interface ProdCard{
   imgUrl:string
   linkProd:string
   precoDe:string
+  pix:number
 }
 
 const ProdCard=({...props}:ProdCard)=>{
-  const {productId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe} = props
+  const {productId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe, pix} = props
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>()
   const [trustPercent, setTrustPercent]=useState(0)
@@ -112,7 +115,7 @@ const ProdCard=({...props}:ProdCard)=>{
         </div>
         <div className='flex flex-col re1:px-3'>
           <span className='line-through text-base-content text-xs'>{precoDe}</span>
-          <p className='text-xs'><span className='text-success text-lg font-bold'>{DescontoPIX(parseFloat(precoVista), 12).toLocaleString('pt-BR', {style:'currency',currency:'BRL'})}</span> no pix</p>
+          <p className='text-xs'><span className='text-success text-lg font-bold'>{DescontoPIX(parseFloat(precoVista), pix).toLocaleString('pt-BR', {style:'currency',currency:'BRL'})}</span> no pix</p>
           <span className='text-xs text-base-content'>{parcelas}x R$ {valorParcela} sem juros</span>
         </div>
       </div>
@@ -135,10 +138,11 @@ interface PcCard{
   tipoArm:string
   precoDe:string
   precoParcelado:string
+  pix:number
 }
 
 const PcCard=({...props}:PcCard)=>{
-  const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado} = props
+  const {productId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, precoParcelado, pix} = props
   const precoDeNum=precoDe!=='' ? parseFloat((precoDe.split('R$ ')[1]).replace('.','').replace(',','.')) : parseFloat(precoParcelado.replace('.','').replace(',','.'))
   const vistaNum=parseFloat(precoVista.replace('.','').replace(',','.'))
   const percent=precoDe!=='' ? Math.floor(((precoDeNum - vistaNum) / precoDeNum) * 100) : 15
@@ -184,13 +188,13 @@ const PcCard=({...props}:PcCard)=>{
           </label>
         </div>
         <span className='text-lg font-bold text-success leading-3 mt-4'>{parcelas}x {parseFloat(valorParcela).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-        <p className='text-[11px] text-[#b4b4b4]'>ou por {DescontoPIX(parseFloat(precoVista), 12).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
+        <p className='text-[11px] text-[#b4b4b4]'>ou por {DescontoPIX(parseFloat(precoVista.replace(/[^\d,]/g, '').replace(',', '.')), pix).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
       </div>
     </a>
   )
 }
 
-const ProductRecommendedProds = ({ page }: Props) => {
+const ProductRecommendedProds = ({ page, pix }: Props) => {
   const { product } = page
   const prodID = product.isVariantOf!.productGroupID
   const prodSKU = product.sku
@@ -219,7 +223,7 @@ const ProductRecommendedProds = ({ page }: Props) => {
         const elements:JSX.Element[]=data.map(item=>
           <PcCard productId={item.id} prodName={item.name} precoVista={item.priceVista} valorParcela={item.valorParcela} parcelas={item.parcela}
             linkProd={item.link} imgUrl={item.image} precoDe={item.precoDe} armazenamento={item.armazenamento} precoParcelado={item.priceParcelado}
-            memoria={item.memoria} placaVideo={item.placaVideo} processador={item.processador} tipoArm={item.tipoArmazenamento}
+            memoria={item.memoria} placaVideo={item.placaVideo} processador={item.processador} tipoArm={item.tipoArmazenamento} pix={pix}
           />
         )
         setHtmlContent(elements)
@@ -230,7 +234,7 @@ const ProductRecommendedProds = ({ page }: Props) => {
         console.log(data)
         const elements:JSX.Element[]=data[0].map(item=>{
           const arr=item.index.split('#')
-          return <ProdCard productId={arr[0]} prodName={arr[1]} precoVista={arr[2]} valorParcela={arr[3]} parcelas={arr[4]} linkProd={arr[5]} imgUrl={arr[6]} precoDe={arr[7]}/>
+          return <ProdCard productId={arr[0]} prodName={arr[1]} precoVista={arr[2]} valorParcela={arr[3]} parcelas={arr[4]} linkProd={arr[5]} imgUrl={arr[6]} precoDe={arr[7]} pix={pix} />
         })
         setHtmlContent(elements)
       })()

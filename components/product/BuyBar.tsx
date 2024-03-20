@@ -7,13 +7,13 @@ import {invoke} from 'deco-sites/shp/runtime.ts'
 import { useOffer } from 'deco-sites/shp/sdk/useOffer.ts'
 import { ObjTrust } from 'deco-sites/shp/types/types.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
-import WishlistButton from "deco-sites/shp/components/wishlist/WishlistButton.tsx";
 
 export interface Props {
   page: ProductDetailsPage
+  pix:number
 }
 
-const BuyBar=({page}:Props)=>{
+const BuyBar=({page, pix}:Props)=>{
   const {product}=page
   const { description, productID, offers, name, isVariantOf, brand, additionalProperty } = product
   const { price, listPrice, seller, installments } = useOffer(offers)
@@ -24,7 +24,7 @@ const BuyBar=({page}:Props)=>{
 
   const isPC=product.category?.includes('Computadores gamer')
 
-  const pricePix=DescontoPIX(price! , 12)
+  const pricePix=DescontoPIX(price! , pix)
 
   const handleScroll=()=>{
     // const footer=document.querySelector("section[data-manifest-key*='Footer.tsx'] footer")

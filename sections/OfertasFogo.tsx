@@ -8,7 +8,8 @@ import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import type { Product } from 'apps/commerce/types.ts'
-import type { LoaderReturnType } from '$live/types.ts'
+import type { LoaderReturnType, SectionProps } from 'deco/types.ts'
+import { AppContext } from "deco-sites/shp/apps/site.ts"
 
 export interface Props {
   titulo: string
@@ -17,9 +18,17 @@ export interface Props {
   /** @description formato AAAA-MM-DD*/
   finalDaOferta: string
   interval: number
+  descontoPix: number
 }
 
-const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo, fireIcon = true }: Props) => {
+export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+  return {
+    ...props,
+    descontoPix: ctx.descontoPix,
+  }
+}
+
+const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo, fireIcon = true, descontoPix }: SectionProps<typeof loader>) => {
   const id = useId() + '-fogo'
 
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
@@ -108,7 +117,7 @@ const FireOffers = ({ products, finalDaOferta = '', interval = 0, titulo, fireIc
                     parseFloat((slide.offers!.highPrice / 10).toFixed(2))
                   }
                   precoPIX={
-                    slide.offers! && DescontoPIX(slide.offers.highPrice, 15)
+                    slide.offers! && DescontoPIX(slide.offers.highPrice, descontoPix)
                   }
                   discountFlag={15}
                   timeRemaining={timeRemaining}

@@ -4,13 +4,14 @@ import BuyBar from 'deco-sites/shp/components/product/BuyBar.tsx'
 
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage | null>
+  descontoPix:number
 }
 
-const ProductBuyBar=({ page }: Props)=>{
+const ProductBuyBar=({ page, descontoPix }: Props)=>{
 
   return (
     <div class='bg-base-100 text-secondary'>
-      {page ? <BuyBar page={page}/> : null}
+      {page ? <BuyBar page={page} pix={descontoPix}/> : null}
     </div>
   )
 }

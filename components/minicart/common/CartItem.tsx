@@ -38,25 +38,27 @@ export interface Props {
   locale: string;
   currency: string;
 
+  pix:number
+
   onUpdateQuantity: (quantity: number, index: number) => Promise<void>;
   itemToAnalyticsItem: (index: number) => AnalyticsItem | null | undefined;
 }
 
-  const addMaximumIventoryAlert=(itemName:string)=>{
-    const divAlert=document.createElement('div')
-    divAlert.innerHTML=`
-      <div role='alert' class='alert bg-[#dd1f26] text-xs re1:text-base text-white max-w-[95%] re1:max-w-[400px] mx-auto flex items-center'>
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>A quantidade desejada para o item ${itemName} não está disponível</span>
-      </div>
-        `
-    divAlert.classList.add('fixed', 'z-30', 'top-4', 'w-full')
+const addMaximumIventoryAlert=(itemName:string)=>{
+  const divAlert=document.createElement('div')
+  divAlert.innerHTML=`
+    <div role='alert' class='alert bg-[#dd1f26] text-xs re1:text-base text-white max-w-[95%] re1:max-w-[400px] mx-auto flex items-center'>
+      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      <span>A quantidade desejada para o item ${itemName} não está disponível</span>
+    </div>
+      `
+  divAlert.classList.add('fixed', 'z-30', 'top-4', 'w-full')
 
-    document.querySelector('body')?.append(divAlert)
-    setTimeout(()=>{divAlert.remove()},5000)
-  }
+  document.querySelector('body')?.append(divAlert)
+  setTimeout(()=>{divAlert.remove()},5000)
+}
 
-function CartItem({item, index, locale, currency, onUpdateQuantity, itemToAnalyticsItem}: Props) {
+function CartItem({item, index, locale, currency, pix, onUpdateQuantity, itemToAnalyticsItem}: Props) {
   const { image, name, price: { sale, list }, quantity } = item;
   const isGift = sale < 0.01;
   const [loading, setLoading] = useState(false);
@@ -91,7 +93,7 @@ function CartItem({item, index, locale, currency, onUpdateQuantity, itemToAnalyt
             {isGift
               ? "Grátis"
               : (<p>
-                  <span className='text-primary font-bold'>{formatPrice(sale, currency, locale)}</span> ou <span className='text-primary font-bold'>{DescontoPIX(sale, 12).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</span> no pix
+                  <span className='text-primary font-bold'>{formatPrice(sale, currency, locale)}</span> ou <span className='text-primary font-bold'>{DescontoPIX(sale, pix).toLocaleString('pt-BR', {style:'currency', currency:'BRL'})}</span> no pix
                 </p>)}
           </span>
         </div>

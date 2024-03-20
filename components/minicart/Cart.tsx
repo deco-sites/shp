@@ -5,14 +5,15 @@ const CartVTEX = lazy(() => import("./vtex/Cart.tsx"));
 
 export interface Props {
   platform:string
+  pix:number
 }
 
-function Cart({ platform='vtex' }: Props) {
+function Cart({ platform='vtex', pix }: Props) {
   if(!IS_BROWSER){return <></>}
   if (platform === "vtex") {
     return (
       <Suspense fallback={<span class="loading loading-ring" />}>
-        <CartVTEX />
+        <CartVTEX pix={pix}/>
       </Suspense>
     )
   }

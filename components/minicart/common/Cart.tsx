@@ -7,6 +7,8 @@ import CartItem, { Item, Props as ItemProps } from "./CartItem.tsx";
 import Coupon, { Props as CouponProps } from "./Coupon.tsx";
 import FreeShippingProgressBar from "./FreeShippingProgressBar.tsx";
 import { DescontoPIX } from "../../../FunctionsSHP/DescontoPix.ts";
+import { AppContext } from "deco-sites/shp/apps/site.ts";
+import { SectionProps } from "deco/types.ts";
 
 interface Props {
   items: Item[];
@@ -22,6 +24,7 @@ interface Props {
   onAddCoupon: CouponProps["onAddCoupon"];
   onUpdateQuantity: ItemProps["onUpdateQuantity"];
   itemToAnalyticsItem: ItemProps["itemToAnalyticsItem"];
+  pix:number
 }
 
 function Cart({
@@ -35,13 +38,14 @@ function Cart({
   discounts,
   freeShippingTarget,
   checkoutHref,
+  pix,
   itemToAnalyticsItem,
   onUpdateQuantity,
   onAddCoupon,
 }: Props) {
   const { displayCart } = useUI();
   const isEmtpy = items.length === 0;
-  const productsPricePix:number[]|undefined=items.map(item=>item.quantity>1 ? (item.quantity*DescontoPIX(item.price.sale, 12)) : DescontoPIX(item.price.sale,12))
+  const productsPricePix:number[]|undefined=items.map(item=>item.quantity>1 ? (item.quantity*DescontoPIX(item.price.sale, pix)) : DescontoPIX(item.price.sale, pix))
   const totalPix=productsPricePix?.reduce((acc, item)=>acc+item,0)
 
   return (
@@ -84,6 +88,7 @@ function Cart({
                     index={index}
                     locale={locale}
                     currency={currency}
+                    pix={pix}
                     onUpdateQuantity={onUpdateQuantity}
                     itemToAnalyticsItem={itemToAnalyticsItem}
                   />
