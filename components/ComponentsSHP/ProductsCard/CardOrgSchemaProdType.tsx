@@ -11,11 +11,12 @@ import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props{
   product:Product
-  pix:string
   /**@description  pro evento de select_item do GA4*/
   item_list_id?:string
   /**@description  pro evento de select_item do GA4*/
   item_list_name?:string
+
+  descontoPix:number
 }
 
 interface ProdCard{
@@ -195,8 +196,12 @@ const PcCard=({...props}:PcCard)=>{
 
 const replaceListInfo=globalThis.window.location.pathname
 
-const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListInfo}:Props)=>{
+const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListInfo, descontoPix}:Props)=>{
   const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
+
+  if(!avaibility){
+    return null
+  }
 
   const offer=product.offers!.offers![0]!
   const imgUrl=product.image![0].url!
@@ -225,6 +230,7 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
   const precoVista=offer.price!
   const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)!.billingIncrement!
 
+  
   const handleClick=()=>{
     sendEvent({name:'select_item', params:{
       item_list_id,

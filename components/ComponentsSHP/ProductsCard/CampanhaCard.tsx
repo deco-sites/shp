@@ -48,6 +48,7 @@ export type Props={
   timeRemaining?: TimeRemaining
   quantidade:number
   brinde:any
+  descontoPix:number
 }
 
 const CardProd=(props:CardProps)=>{
@@ -441,7 +442,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
   </a>)
 }
 
-const Card=({product, frete, timeRemaining, quantidade, brinde}:Props)=>{
+const Card=({product, frete, timeRemaining, quantidade, brinde, descontoPix}:Props)=>{
   const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
 
   if(!avaibility){return null}

@@ -12,6 +12,8 @@ import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts
 import { signal } from '@preact/signals'
 import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
+import { AppContext } from "deco-sites/shp/apps/site.ts";
+import { SectionProps } from "deco/types.ts";
 
 export interface Props{
   titleCategoria?:string
@@ -25,6 +27,7 @@ export interface Props{
     categoryName:string,
     imgUrl:string
   }>
+  descontoPix:number
 }
 
 const fetchFilters=async (idCateg:string)=>await invoke['deco-sites/shp'].loaders.getFacetsByCategId({categoryId:idCateg})
@@ -130,7 +133,14 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
   )
 }
 
-export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria='', iconesNavegacionais}:Props)=>{
+export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+  return {
+    ...props, 
+    descontoPix:ctx.descontoPix
+  }
+}
+
+export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria='', iconesNavegacionais, descontoPix }:SectionProps<typeof loader>)=>{
   const [hideDescSeo,setHideDescSeo]=useState(true)
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(globalThis.window.innerWidth<=768)
@@ -517,7 +527,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
                   {products.length > 0 ? (
                     <>
                       <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                        {products.map((product:any)=><Card product={product} />)}
+                        {products.map((product:any)=><Card product={product} descontoPix={descontoPix}/>)}
                       </div>
 
                       <div className='text-sm re1:text-base text-center mt-10'>

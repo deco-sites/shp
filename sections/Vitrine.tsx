@@ -3,11 +3,12 @@ import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSc
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import type { Product } from 'apps/commerce/types.ts'
-import type { LoaderReturnType } from '$live/types.ts'
+import type { LoaderReturnType, SectionProps } from 'deco/types.ts'
 import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import useTimer from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
+import { AppContext } from "deco-sites/shp/apps/site.ts";
 
 export interface VitrineProps {
   produtos: LoaderReturnType<Product[] | null>
@@ -15,9 +16,17 @@ export interface VitrineProps {
   /** @description formato AAAA-MM-DD*/
   finalDaOferta: string
   interval: number
+  descontoPix: number
 }
 
-const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0 }: VitrineProps) => {
+export const loader = (props: VitrineProps, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+  return {
+    ...props, 
+    descontoPix:ctx.descontoPix
+  }
+}
+
+const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix }: SectionProps<typeof loader>) => {
   const id = useId() + '-vitrine'
 
   if (!produtos || produtos.length === 0) {
@@ -99,7 +108,7 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0 }: VitrineProps) 
                 class='carousel-item w-fit h-fit re1:first:pl-0 first:pl-6 re1:last:pr-0 last:pr-6'
               >
                 <Card
-                  product={slide} pix={'12'}
+                  product={slide} descontoPix={descontoPix}
                 />
               </Slider.Item>
             )}

@@ -23,8 +23,9 @@ interface FilterObj{
 export const loader: (
   fqType:Props,
   _req: Request,
-  ctx: LoaderContext<unknown, Manifest>
-) => Promise<{ data: Product[], filters:FilterObj[] }> = async (fqType, _req, ctx) => {
+  ctx: LoaderContext<unknown, Manifest> & {descontoPix:number}
+) => Promise<{ data: Product[], filters:FilterObj[], descontoPix:number }> = async (fqType, _req, ctx) => {
+
   const REQ = _req
 
   const q = REQ.url.split('?q=')[1].split(',')
@@ -48,10 +49,10 @@ export const loader: (
     })
   })
 
-  return { data, filters:filters.filter(filtro=>filtro.values.length) }
+  return { data, filters:filters.filter(filtro=>filtro.values.length), descontoPix:ctx.descontoPix }
 }
 
-const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
+const Shelf=({data, filters, descontoPix}:SectionProps<typeof loader>)=>{
   const [produtos,setProdutos]=useState<Product[]>(data)
   const [selectedFilters, setSelectedFilters]=useState<FilterObj[]>(filters)
   const [divFlut, setDivFlut]=useState(false)
@@ -214,7 +215,7 @@ const Shelf=({data, filters}:SectionProps<typeof loader>)=>{
           </div>
           {produtos.length ? (
             <div ref={contentWrapper} className='grid auto-rows-min grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4 re1:w-[75%] w-full mt-4 mb-12 re1:my-0'>
-              {produtos.map(element=><Card product={element} pix={'12'}/>)}
+              {produtos.map(element=><Card product={element} descontoPix={descontoPix}/>)}
             </div>
           ):(
             <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>

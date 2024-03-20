@@ -14,6 +14,7 @@ export interface Props{
   item_list_id?:string
   /**@description  pro evento de select_item do GA4*/
   item_list_name?:string
+  descontoPix:number
 }
 
 interface CardProps{
@@ -178,7 +179,7 @@ const PcCard=({...props}:CardPCProps)=>{
 
 const replaceListInfo=globalThis.window.location.pathname
 
-const Card=({product, pix='12', item_list_id=replaceListInfo, item_list_name=replaceListInfo}:Props)=>{
+const Card=({product, pix='12', item_list_id=replaceListInfo, item_list_name=replaceListInfo, descontoPix}:Props)=>{
   const PCGamer=product.categoriesIds.includes('/10/')
   const image=product.items[0].images[0].imageUrl
   const prodId=product.items[0].itemId
