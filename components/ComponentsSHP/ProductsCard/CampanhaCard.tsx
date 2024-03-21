@@ -18,7 +18,7 @@ interface CardProps{
   linkProd:string
   imgUrl:string
   precoDe:number
-  pix:string
+  pix:number
   objTrust:ObjTrust
   trustPercent:number
   timeRemaining?: TimeRemaining
@@ -48,11 +48,12 @@ export type Props={
   timeRemaining?: TimeRemaining
   quantidade:number
   brinde:any
+  descontoPix:number
 }
 
 const CardProd=(props:CardProps)=>{
   const {days, hours, minutes, seconds} = props.timeRemaining || {days:'00', hours:'00', minutes:'00', seconds:'00'}
-  const salePricePix=DescontoPIX(props.precoVista, parseFloat(props.pix))
+  const salePricePix=DescontoPIX(props.precoVista, props.pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/props.precoDe)-100))
 
   return (
@@ -195,7 +196,7 @@ const CardProd=(props:CardProps)=>{
 
 const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...props}:CardPCProps)=>{
   const {days, hours, minutes, seconds} = props.timeRemaining || {days:'00', hours:'00', minutes:'00', seconds:'00'}
-  const salePricePix=DescontoPIX(props.precoVista, parseFloat(props.pix))
+  const salePricePix=DescontoPIX(props.precoVista, props.pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/props.precoDe)-100))
   const compareInput=useRef<HTMLInputElement>(null)
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
@@ -441,7 +442,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
   </a>)
 }
 
-const Card=({product, frete, timeRemaining, quantidade, brinde}:Props)=>{
+const Card=({product, frete, timeRemaining, quantidade, brinde, descontoPix}:Props)=>{
   const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
 
   if(!avaibility){return null}
@@ -465,7 +466,6 @@ const Card=({product, frete, timeRemaining, quantidade, brinde}:Props)=>{
   })()
 
   const linkProd=product.isVariantOf!.url!
-  const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))!.effects.parameters[0].value!
   const prodName=product.name!
   const refId=product.inProductGroupWithID!
   const prodId=product.productID
@@ -508,7 +508,7 @@ const Card=({product, frete, timeRemaining, quantidade, brinde}:Props)=>{
       frete={frete!}
       parcelas={maxInstallments}
       imgUrl={imgUrl}
-      pix={pix}
+      pix={descontoPix}
       linkProd={linkProd}
       prodName={prodName}
       prodId={prodId}
@@ -527,7 +527,7 @@ const Card=({product, frete, timeRemaining, quantidade, brinde}:Props)=>{
     return <CardProd
       parcelas={maxInstallments}
       imgUrl={imgUrl}
-      pix={pix}
+      pix={descontoPix}
       linkProd={linkProd}
       prodName={prodName}
       prodId={prodId}

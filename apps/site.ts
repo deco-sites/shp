@@ -5,7 +5,7 @@ import manifest, { Manifest } from "../manifest.gen.ts";
 
 type StdApp = ReturnType<typeof std>;
 export default function Site(
-  state: Props,
+  state: Props & {descontoPix:number},
 ): App<Manifest, Props, [
   StdApp,
 ]> {

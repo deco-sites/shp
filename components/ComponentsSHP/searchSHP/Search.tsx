@@ -11,6 +11,8 @@ import Filtro from './Filtro.tsx'
 import FiltroModal from './FiltroModal.tsx'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
+import { AppContext } from "deco-sites/shp/apps/site.ts";
+import { SectionProps } from "deco/types.ts";
 
 export interface Props{
   produtos:any
@@ -20,6 +22,7 @@ export interface Props{
     categoryName:string,
     imgUrl:string
   }>
+  descontoPix:number
 }
 
 interface Category{
@@ -137,7 +140,14 @@ const LimparFiltros=({filters}:{filters:SelectedFilter[]})=>{
   )
 }
 
-const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
+export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+  return {
+    ...props, 
+    descontoPix:ctx.descontoPix
+  }
+}
+
+const Search=({ produtos, termo, iconesNavegacionais=[], descontoPix }:SectionProps<typeof loader>)=>{
 
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(globalThis.window.innerWidth<=768)
@@ -215,10 +225,6 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
     Array.from(ulDesk.querySelectorAll('input[type="checkbox"]')).forEach((checkbox)=>{
       (checkbox as HTMLInputElement).addEventListener('input',(event)=>{
         const target=(event.target as HTMLInputElement)
-
-        // terget.checked && sendEvent({name:'filter', params:{
-
-        // }})
 
         setSelectedFilters((prevSelectedFilters:SelectedFilter[]) =>{
           const fq=target.getAttribute('data-fq') as string
@@ -578,7 +584,7 @@ const Search=({ produtos, termo, iconesNavegacionais=[] }:Props)=>{
               <>
                 {products.length > 0 ? (
                   <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                    {products.map((product:any)=><Card product={product} />)}
+                    {products.map((product:any)=><Card product={product} descontoPix={descontoPix}/>)}
                   </div>
                 ) : (
                   <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>

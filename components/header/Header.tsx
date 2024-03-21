@@ -7,7 +7,11 @@ import SearchMenuBar from 'deco-sites/shp/components/ComponentsSHP/searchSHP/Sea
 import Cart from 'deco-sites/shp/components/minicart/Cart.tsx'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
-const HeaderSHP = () => {
+export interface Props{
+  descontoPix:number
+}
+
+const HeaderSHP = ({descontoPix}:Props) => {
 
   const [isMobile, setIsMobile] = useState(globalThis.window.innerWidth <= 768)
 
@@ -148,7 +152,7 @@ const HeaderSHP = () => {
             </label>
             <p id='close-minicart' className='font-bold cursor-pointer' onClick={()=>{setOpenMinicart(false)}}>✕</p>
           </div>
-          <Cart platform="vtex"/>
+          <Cart platform="vtex" pix={descontoPix}/>
         </div>
       </div>
       

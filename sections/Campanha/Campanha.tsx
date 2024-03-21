@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { LoaderReturnType } from 'deco/mod.ts'
+import { LoaderReturnType, SectionProps } from 'deco/types.ts'
 import { TipoDeFiltro, Filtros } from 'deco-sites/shp/types/CampanhaTypes.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { Product } from 'apps/commerce/types.ts'
@@ -12,6 +12,7 @@ import FiltroMob from 'deco-sites/shp/sections/Campanha/FiltroMob.tsx'
 import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 import { OrgSchemaToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
+import { AppContext } from "deco-sites/shp/apps/site.ts";
 
 //montando interface com infos que precisam de descricao no ADMIN
 interface NeedDesc{
@@ -37,6 +38,7 @@ interface CompreEGanhe{
 }
 
 export type Props={
+  descontoPix:number
   compreEGanhe:CompreEGanhe | null
   collection:string
   produtos: LoaderReturnType<Product[] | null>
@@ -68,7 +70,14 @@ const loaderData= async(idCollection:string, order?:string, filter?:string):Prom
   return await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString})
 }
 
-const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao, ...props}:Props)=>{
+export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+  return {
+    ...props, 
+    descontoPix:ctx.descontoPix
+  }
+}
+
+const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao, descontoPix, ...props}:SectionProps<typeof loader>)=>{
   const finalDate = props.contador ? new Date(props.finalDaOferta) : undefined
   const timeRemaining:TimeRemaining|undefined=props.contador ? useTimer(finalDate) : undefined
 
@@ -268,7 +277,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         (finalProducts.map((product)=>{
           const quantidade=prodQntd(product.prod, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02'))
 
-          return <Card product={product.prod} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade} brinde={product.brinde}/>
+          return <Card product={product.prod} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade} brinde={product.brinde} descontoPix={descontoPix}/>
         }))
       }
     </div>

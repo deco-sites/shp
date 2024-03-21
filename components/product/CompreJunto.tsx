@@ -12,6 +12,7 @@ import { useCart } from "apps/vtex/hooks/useCart.ts";
 
 export interface Props{
   page:LoaderReturnType<ProductDetailsPage>
+  descontoPix:number
 }
 
 interface objBuyTogether{
@@ -24,7 +25,7 @@ const loaderSearchAPI= async (skuId:string)=>await invoke['deco-sites/shp'].load
 const loaderBuyTogether=async(skuId:string):Promise<objBuyTogether[]>=> await invoke['deco-sites/shp'].loaders.getBuyTogetherValuesBySku({skuId:skuId}) || []
 
 
-const CompreJunto=({page}:Props)=>{
+const CompreJunto=({page, descontoPix}:Props)=>{
   const {addItems}=useCart()
   const {product}=page
   const [htmlContent, setHtmlContent]=useState<JSX.Element[]>([<div className='loading loading-spinner loading-lg text-primary'/>])
@@ -70,7 +71,7 @@ const CompreJunto=({page}:Props)=>{
               const image = fetch.products[0]!.items[0].images[0].imageUrl
               const name = fetch.products[0]!.productName
               const price= fetch.products[0]!.items[0].sellers[0].commertialOffer.Installments[0].Value
-              const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),12)
+              const finalPrice=DescontoPIX((price-(price*(parseFloat(obj.promotion)/100))),descontoPix)
               const link='/'+fetch.products[0]!.linkText+'/p'
 
               const skuProdB=obj.sku.includes(product.sku) ? obj.sku.replace(product.sku, '').replace(',','') : obj.sku

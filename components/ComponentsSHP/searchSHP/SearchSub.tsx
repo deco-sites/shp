@@ -8,6 +8,8 @@ import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
+import { AppContext } from "deco-sites/shp/apps/site.ts";
+import { SectionProps } from "deco/types.ts";
 
 export interface Props{
   fqName:string
@@ -52,7 +54,14 @@ interface FiltroObj{
   value:string
 }
 
-const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props)=>{
+export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+  return {
+    ...props, 
+    descontoPix:ctx.descontoPix
+  }
+}
+
+const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo, descontoPix }:SectionProps<typeof loader>)=>{
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(globalThis.globalThis.window.innerWidth<=768)
   const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:19})
@@ -393,7 +402,7 @@ const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo }:Props
               <>
                 {products.length > 0 ? (
                   <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                    {products.map((product:any)=><Card product={product} />)}
+                    {products.map((product:any)=><Card product={product} descontoPix={descontoPix}/>)}
                   </div>
                 ) : (
                   <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>

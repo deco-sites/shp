@@ -4,12 +4,13 @@ import RecommendedProds from 'deco-sites/shp/components/product/RecommendedProds
 
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage | null>
+  descontoPix:number
 }
 
-const ProductRecommendedProds=({ page }: Props)=>{
+const ProductRecommendedProds=({ page, descontoPix }: Props)=>{
   return (
     <div class='bg-base-100 text-secondary'>
-      {page ? <RecommendedProds page={page}/> : null}
+      {page ? <RecommendedProds page={page} pix={descontoPix}/> : null}
     </div>
   )
 }

@@ -4,12 +4,13 @@ import CompreJunto from 'deco-sites/shp/components/product/CompreJunto.tsx'
 
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage | null>
+  descontoPix:number
 }
 
-const ProductCompreJunto=({ page }: Props)=>{
+const ProductCompreJunto=({ page, descontoPix }: Props)=>{
   return (
     <div class='bg-base-100 text-secondary'>
-      {page ? <CompreJunto page={page}/> : null}
+      {page ? <CompreJunto page={page} pix={descontoPix}/> : null}
     </div>
   )
 }

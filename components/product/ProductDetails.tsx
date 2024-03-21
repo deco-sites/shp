@@ -12,7 +12,7 @@ export type Variant = 'front-back' | 'slider' | 'auto'
 export interface Props {
   page: LoaderReturnType<ProductDetailsPage | null>
   /**@description Desconto pix, caso não haja coloque 1 */
-  pix: number
+  descontoPix: number
   /**@description As flags já vem de maneira automática, aqui serve pra estilizar elas */
   flags?:Flag[]
 }
@@ -43,7 +43,7 @@ function NotFound() {
   )
 }
 
-function ProductDetails({ page, pix, flags }: Props) {
+function ProductDetails({ page, descontoPix, flags }: Props) {
   /**
    * Showcase the different product views we have on this template. In case there are less
    * than two images, render a front-back, otherwhise render a slider
@@ -52,7 +52,7 @@ function ProductDetails({ page, pix, flags }: Props) {
 
   return (
     <div class='py-10 re1:p-10 bg-base-100 text-secondary'>
-      {page ? <Details page={page} pix={pix} flags={flags}/> : <NotFound />}
+      {page ? <Details page={page} pix={descontoPix} flags={flags}/> : <NotFound />}
     </div>
   )
 }

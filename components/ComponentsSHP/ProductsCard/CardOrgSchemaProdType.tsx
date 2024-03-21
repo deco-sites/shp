@@ -11,11 +11,12 @@ import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props{
   product:Product
-  pix:string
   /**@description  pro evento de select_item do GA4*/
   item_list_id?:string
   /**@description  pro evento de select_item do GA4*/
   item_list_name?:string
+
+  descontoPix:number
 }
 
 interface ProdCard{
@@ -28,7 +29,7 @@ interface ProdCard{
   linkProd:string
   imgUrl:string
   precoDe:number
-  pix:string
+  pix:number
   objTrust?:ObjTrust
   trustPercent?:number
   isAvailable:boolean
@@ -49,7 +50,7 @@ interface PcCard extends ProdCard{
 
 const ProdCard=({...props}:ProdCard)=>{
   const {prodId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe, isAvailable, pix} = props
-  const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
+  const salePricePix=DescontoPIX(precoVista, pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
 
@@ -106,7 +107,7 @@ const ProdCard=({...props}:ProdCard)=>{
 
 const PcCard=({...props}:PcCard)=>{
   const {prodId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, isAvailable, pix, fonte} = props
-  const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
+  const salePricePix=DescontoPIX(precoVista, pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':prodId, 'average':0, 'count':0, 'product_name':prodName})
@@ -195,8 +196,12 @@ const PcCard=({...props}:PcCard)=>{
 
 const replaceListInfo=globalThis.window.location.pathname
 
-const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListInfo}:Props)=>{
+const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListInfo, descontoPix}:Props)=>{
   const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
+
+  if(!avaibility){
+    return null
+  }
 
   const offer=product.offers!.offers![0]!
   const imgUrl=product.image![0].url!
@@ -216,7 +221,6 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
   const linkProd=product.isVariantOf!.url!
 
   const { seller } = useOffer(product.offers)
-  const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))?.effects.parameters[0].value ?? '12'
   const prodName=product.name!
   const prodId=product.productID
   const refId=product.inProductGroupWithID!
@@ -225,6 +229,7 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
   const precoVista=offer.price!
   const valorParcela=offer.priceSpecification.find(item=>item.billingDuration===maxInstallments)!.billingIncrement!
 
+  
   const handleClick=()=>{
     sendEvent({name:'select_item', params:{
       item_list_id,
@@ -252,7 +257,7 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
       parcelas={maxInstallments}
       fonte={additionalProp.find(item=>item.name==='Fonte')?.value ?? ''}
       imgUrl={imgUrl}
-      pix={pix}
+      pix={descontoPix}
       linkProd={linkProd}
       prodName={prodName}
       prodId={prodId}
@@ -267,7 +272,7 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
       refId={refId}
       parcelas={maxInstallments}
       imgUrl={imgUrl}
-      pix={pix}
+      pix={descontoPix}
       linkProd={linkProd}
       prodName={prodName}
       prodId={prodId}
