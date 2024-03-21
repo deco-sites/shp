@@ -16,7 +16,7 @@ export interface PcContextProps{
   memoria:string
   armazenamento:string
   tipoArm:string
-  pix:string
+  pix:number
   flagPercent:number
   fonte:string
   groupId:string

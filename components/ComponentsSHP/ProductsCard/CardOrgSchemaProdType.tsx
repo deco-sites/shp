@@ -29,7 +29,7 @@ interface ProdCard{
   linkProd:string
   imgUrl:string
   precoDe:number
-  pix:string
+  pix:number
   objTrust?:ObjTrust
   trustPercent?:number
   isAvailable:boolean
@@ -50,7 +50,7 @@ interface PcCard extends ProdCard{
 
 const ProdCard=({...props}:ProdCard)=>{
   const {prodId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe, isAvailable, pix} = props
-  const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
+  const salePricePix=DescontoPIX(precoVista, pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
 
@@ -107,7 +107,7 @@ const ProdCard=({...props}:ProdCard)=>{
 
 const PcCard=({...props}:PcCard)=>{
   const {prodId, prodName, precoVista, valorParcela, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, precoDe, isAvailable, pix, fonte} = props
-  const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
+  const salePricePix=DescontoPIX(precoVista, pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':prodId, 'average':0, 'count':0, 'product_name':prodName})
@@ -221,7 +221,6 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
   const linkProd=product.isVariantOf!.url!
 
   const { seller } = useOffer(product.offers)
-  const pix=offer.teasers!.find(item=>item.name.toUpperCase().includes('PIX'))?.effects.parameters[0].value ?? '12'
   const prodName=product.name!
   const prodId=product.productID
   const refId=product.inProductGroupWithID!
@@ -258,7 +257,7 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
       parcelas={maxInstallments}
       fonte={additionalProp.find(item=>item.name==='Fonte')?.value ?? ''}
       imgUrl={imgUrl}
-      pix={pix}
+      pix={descontoPix}
       linkProd={linkProd}
       prodName={prodName}
       prodId={prodId}
@@ -273,7 +272,7 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
       refId={refId}
       parcelas={maxInstallments}
       imgUrl={imgUrl}
-      pix={pix}
+      pix={descontoPix}
       linkProd={linkProd}
       prodName={prodName}
       prodId={prodId}

@@ -9,7 +9,6 @@ import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props{
   product:any
-  pix?:string
   /**@description  pro evento de select_item do GA4*/
   item_list_id?:string
   /**@description  pro evento de select_item do GA4*/
@@ -27,7 +26,7 @@ interface CardProps{
   imgUrl:string
   precoDe:number
   isAvailable:boolean
-  pix:string
+  pix:number
   objTrust:ObjTrust
   trustPercent:number
   GA4Func?:()=>void
@@ -48,7 +47,7 @@ interface CardPCProps extends CardProps{
 const ProdCard=({...props}:CardProps)=>{
   const {prodId, prodName, precoVista, valorParcela, parcelas, imgUrl, linkProd, precoDe, isAvailable, pix} = props
 
-  const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
+  const salePricePix=DescontoPIX(precoVista, pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
   return(
@@ -91,7 +90,7 @@ const ProdCard=({...props}:CardProps)=>{
 
 const PcCard=({...props}:CardPCProps)=>{
   const {prodId, prodName, precoVista, parcelas, linkProd, imgUrl, placaVideo, processador, memoria, armazenamento, tipoArm, valorParcela, isAvailable, pix, precoDe, fonte} = props
-  const salePricePix=DescontoPIX(precoVista, parseFloat(pix))
+  const salePricePix=DescontoPIX(precoVista, pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
   const arm=(armazenamento || '').toString().toUpperCase()
   const compareInput=useRef<HTMLInputElement>(null)
@@ -179,7 +178,7 @@ const PcCard=({...props}:CardPCProps)=>{
 
 const replaceListInfo=globalThis.window.location.pathname
 
-const Card=({product, pix='12', item_list_id=replaceListInfo, item_list_name=replaceListInfo, descontoPix}:Props)=>{
+const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListInfo, descontoPix}:Props)=>{
   const PCGamer=product.categoriesIds.includes('/10/')
   const image=product.items[0].images[0].imageUrl
   const prodId=product.items[0].itemId
@@ -229,10 +228,10 @@ const Card=({product, pix='12', item_list_id=replaceListInfo, item_list_name=rep
   if(PCGamer){
     return <PcCard  armazenamento={(product.SSD || product.HD) ?? ''} imgUrl={image} prodName={name} memoria={product.Memória ?? ''} objTrust={{'product_code':prodId, 'average':0, 'count':0, 'product_name':name}} trustPercent={0}
     placaVideo={product['Placa de vídeo'] ?? ''} linkProd={linkProduto} prodId={prodId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility} seller={product.items[0].sellers[0].sellerId ?? '1'} groupId={refId ?? ''} 
-    processador={product.Processador ?? ''} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={pix} fonte={product.Fonte} GA4Func={handleClick}/>
+    processador={product.Processador ?? ''} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={descontoPix} fonte={product.Fonte} GA4Func={handleClick}/>
   }else{
     return <ProdCard imgUrl={image} linkProd={linkProduto} precoDe={priceDe} precoVista={priceVista} parcelas={maxInstallments} objTrust={objTrust}
-      trustPercent={trustPercent} prodId={prodId} prodName={name} valorParcela={valorParcela} isAvailable={avaibility} pix={pix} GA4Func={handleClick}/>
+      trustPercent={trustPercent} prodId={prodId} prodName={name} valorParcela={valorParcela} isAvailable={avaibility} pix={descontoPix} GA4Func={handleClick}/>
   }
 }
 
