@@ -14,6 +14,7 @@ import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 import { AppContext } from "deco-sites/shp/apps/site.ts";
 import { SectionProps } from "deco/types.ts";
+import gamesCollections from 'deco-sites/shp/static/gamesCollection.json' with { type: "json" }
 
 export interface Props{
   titleCategoria?:string
@@ -31,7 +32,6 @@ export interface Props{
 }
 
 const fetchFilters=async (idCateg:string)=>await invoke['deco-sites/shp'].loaders.getFacetsByCategId({categoryId:idCateg})
-
 const fetchProducts=async (queryString:string)=>await invoke['deco-sites/shp'].loaders.getProductsSearchAPI({queryString})
 
 const getBrands=async()=>{
@@ -54,6 +54,12 @@ const replaceClasses=(desc:string)=>{
   string=string.replaceAll('<a','<a class="text-primary hover:text-secondary"')
 
   return string
+}
+
+interface Game{
+  Name:string,
+  '60FPS':string,
+  '144FPS':string
 }
 
 interface FilterObj{
@@ -112,6 +118,19 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
               const [min,max]=decoded.join('').split(' TO ')
 
               name=`${parseFloat(min).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} - ${parseFloat(max).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}`
+            }else if(filter.fq==='productClusterIds'){
+              const games:Record<string, Game> = {
+                ...gamesCollections
+              }
+
+              const GameKey=Object.keys(games).find(gameKey=>{
+                const game=games[gameKey]
+
+                return game['60FPS']===filter.value || game['144FPS']===filter.value
+              })!
+
+              name=games[GameKey].Name
+              
             }else{name=decodeURI(filter.value)}
 
             return (
@@ -313,7 +332,37 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
         return obj
       })
 
-      const dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands,...pageData!.SpecificationFilters, 'Faixa de Preço': priceFilters}
+      let dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands,...pageData!.SpecificationFilters, 'Faixa de Preço': priceFilters}
+
+      if(idsDeCategoria==='10'){
+        const gamesFilters:SpecObj[]=[]
+        const games:Record<string, Game> = {
+          ...gamesCollections
+        }
+
+        for(const game in games){
+          const commonInfo={
+            Map:'productClusterIds',
+            Link:'',
+            LinkEncoded:'',
+            Position:null,
+            Quantity:null
+          }
+
+          gamesFilters.push({
+            ...commonInfo,
+            Name: games[game].Name + ' 60fps',
+            Value: games[game]['60FPS']
+          })
+
+          gamesFilters.push({
+            ...commonInfo,
+            Name: games[game].Name + ' 144fps',
+            Value: games[game]['144FPS']
+          })
+        }
+        dataFilters={'Jogos':gamesFilters, ...dataFilters}
+      }
 
       const arrFilterObj:FilterObj[]=[]
 
@@ -462,6 +511,27 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
                     )}
                   >
                     <p className='whitespace-nowrap text-xs'>{numbers.join(' - ')}</p>
+                    <span className='text-primary text-xs my-auto font-bold'>✕</span>
+                  </div>
+                )
+              }else if(filter.fq==='productClusterIds'){
+                const games:Record<string, Game> = {
+                  ...gamesCollections
+                }
+  
+                const GameKey=Object.keys(games).find(gameKey=>{
+                  const game=games[gameKey]
+  
+                  return game['60FPS']===filter.value || game['144FPS']===filter.value
+                })!
+                
+                return(
+                  <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
+                    onClick={()=>setSelectedFilters(prevFilters=>
+                      prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                    )}
+                  >
+                    <p className='whitespace-nowrap text-xs'>{games[GameKey].Name}</p>
                     <span className='text-primary text-xs my-auto font-bold'>✕</span>
                   </div>
                 )

@@ -1,0 +1,117 @@
+{
+  "lol":{
+    "Name":"LoL",
+    "60FPS": "290",
+    "144FPS": "291"
+  },
+  "csgo":{
+    "Name":"CS:GO",
+    "60FPS": "288",
+    "144FPS": "289"
+  },
+  "valorant":{
+    "Name":"Valorant",
+    "60FPS": "282",
+    "144FPS": "283"
+  },
+  "cyberpunk":{
+    "Name":"Cyberpunk",
+    "60FPS": "303",
+    "144FPS": "304"
+  },
+  "gta5":{
+    "Name":"GTA 5",
+    "60FPS": "284",
+    "144FPS": "285"
+  },
+  "fortnite":{
+    "Name":"Fortnite",
+    "60FPS": "286",
+    "144FPS": "287"
+  },
+  "apex":{
+    "Name":"Apex",
+    "60FPS": "299",
+    "144FPS": "300"
+  },
+  "rb6":{
+    "Name":"RB6",
+    "60FPS": "302",
+    "144FPS": "301"
+  },
+  "pubg":{
+    "Name":"PUBG",
+    "60FPS": "298",
+    "144FPS": "297"
+  },
+  "warzone":{
+    "Name":"Warzone",
+    "60FPS": "292",
+    "144FPS": "293"
+  },
+  "overwatch":{
+    "Name":"Overwatch",
+    "60FPS": "295",
+    "144FPS": "296"
+  },
+  "wow":{
+    "Name":"WoW",
+    "60FPS": "430",
+    "144FPS": "431"
+  },
+  "minecraft":{
+    "Name":"Minecraft",
+    "60FPS": "428",
+    "144FPS": "427"
+  },
+  "freefire":{
+    "Name":"Free Fire",
+    "60FPS": "325",
+    "144FPS": "429"
+  },
+  "NewWorld":{
+    "Name":"New World",
+    "60FPS": "410",
+    "144FPS": "426"
+  },
+  "godofwar":{
+    "Name":"God of War",
+    "60FPS": "416",
+    "144FPS": "422"
+  },
+  "asvalhalla":{
+    "Name":"AC Valhalla",
+    "60FPS": "411",
+    "144FPS": "409"
+  },
+  "forza5":{
+    "Name":"Forza 5",
+    "60FPS": "419",
+    "144FPS": "424"
+  },
+  "fifa23":{
+    "Name":"Fifa 23",
+    "60FPS": "420",
+    "144FPS": "425"
+  },
+  "eldenring":{
+    "Name":"Eldenring",
+    "60FPS": "412",
+    "144FPS": "421"
+  },
+  "genshinimpact":{
+    "Name":"Genshin Impact",
+    "60FPS": "413",
+    "144FPS": "423"
+  },
+  "eurotruck":{
+    "Name":"Eurotruck",
+    "60FPS": "417",
+    "144FPS": "414"
+  },
+  "roblox":{
+    "Name":"Roblox",
+    "60FPS": "418",
+    "144FPS": "415"
+  }
+}
