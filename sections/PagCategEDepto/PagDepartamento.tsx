@@ -123,13 +123,14 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
                 ...gamesCollections
               }
 
-              const GameKey=Object.keys(games).find(gameKey=>{
+              Object.keys(games).forEach(gameKey=>{
                 const game=games[gameKey]
-
-                return game['60FPS']===filter.value || game['144FPS']===filter.value
-              })!
-
-              name=games[GameKey].Name
+                if(game['60FPS']===filter.value){
+                  name=game.Name+' 60fps'
+                }else if(game['144FPS']===filter.value){
+                  name=game.Name+' 144fps'
+                }
+              })
               
             }else{name=decodeURI(filter.value)}
 
@@ -420,9 +421,12 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
     }
   }
 
-  useEffect(()=>{setSelectedFilters(selectedFiltersSignal.value)},[selectedFiltersSignal.value])
+  useEffect(()=>{setSelectedFilters(selectedFiltersSignal.value)
+    
+  },[selectedFiltersSignal.value])
 
   useEffect(()=>{
+    console.log(selectedFilters)
     typeof globalThis.window!=='undefined' && setFromTo({from:0, to:19})
     const filterValues=selectedFilters.map(filter=>filter.value)
     const filterFqs=selectedFilters.map(filter=>filter.fq)
@@ -518,28 +522,43 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
                 const games:Record<string, Game> = {
                   ...gamesCollections
                 }
+
+                let fps=''
   
                 const GameKey=Object.keys(games).find(gameKey=>{
                   const game=games[gameKey]
+
+                  const checkGameKey=(FPS:string)=>{
+                    const typeFPS:'60FPS' | '144FPS'=`${FPS==='60' ? '60' : '144'}FPS`
+
+                    if(game[typeFPS]===filter.value){
+                      fps=FPS+'fps'
+                      return true
+                    }
+                    return false
+                  }
   
-                  return game['60FPS']===filter.value || game['144FPS']===filter.value
+                  return checkGameKey('60') || checkGameKey('144')
                 })!
-                
+
                 return(
                   <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
-                    onClick={()=>setSelectedFilters(prevFilters=>
-                      prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
-                    )}
+                    onClick={()=>{
+                      selectedFiltersSignal.value=selectedFilters.filter(obj=>!(obj.fq===filter.fq && obj.value===filter.value)
+                      )}
+                    }
                   >
-                    <p className='whitespace-nowrap text-xs'>{games[GameKey].Name}</p>
+                    <p className='whitespace-nowrap text-xs'>{games[GameKey].Name + ' ' + fps}</p>
                     <span className='text-primary text-xs my-auto font-bold'>✕</span>
                   </div>
                 )
               }else{
                 return (
                   <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
-                    onClick={()=>setSelectedFilters(prevFilters=>
-                      prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                    onClick={()=>setSelectedFilters(prevFilters=>{
+                      // console.log('prevFilters', prevFilters)
+                      return prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
+                      }
                     )}
                   >
                     <p className='whitespace-nowrap text-xs'>{decodeURIComponent(filter.value).replaceAll('@dot@','.')}</p>
