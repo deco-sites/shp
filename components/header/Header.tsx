@@ -20,6 +20,7 @@ const HeaderSHP = ({descontoPix}:Props) => {
   }, [])
 
   const closeClickHandler = useCallback(() => {
+    console.log('close')
     setMenuMobileClass('hidden')
   }, [])
 
@@ -35,20 +36,6 @@ const HeaderSHP = ({descontoPix}:Props) => {
       }
     }
   }, [])
-
-  const close = useRef<HTMLSpanElement>(null)
-  
-  useEffect(() => {
-    if (close.current) {
-      close.current.addEventListener('touchend', closeClickHandler);
-    }
-    
-    return () => {
-      if (close.current) {
-        close.current.removeEventListener('touchend', closeClickHandler);
-      }
-    }
-  }, [closeClickHandler])
 
   const [menuMobileClass, setMenuMobileClass] = useState('hidden')
 
@@ -677,7 +664,7 @@ const HeaderSHP = ({descontoPix}:Props) => {
                     Entre ou Cadastre-se
                   </a>
                   <span
-                    ref={close}
+                    onClick={closeClickHandler}
                     className='text-secondary font-extrabold cursor-pointer'
                   >
                     X
@@ -685,15 +672,14 @@ const HeaderSHP = ({descontoPix}:Props) => {
                 </div>
 
                 <div className='w-full justify-between flex p-2'>
-                  <a className='flex gap-2' href='https://api.shopinfo.com.br/rastreio/'>
-                  <Image
-                    src='https://shopinfo.vteximg.com.br/arquivos/frete-icon.png'
-                    alt='caminhão' width={26} height={18} preload fetchPriority='high' loading='eager' decoding='sync'
-                  />
+                  <a className='flex gap-2 items-center' href='https://api.shopinfo.com.br/rastreio/'>
+                    <svg width="19" height="14" viewBox="0 0 19 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 0V1.1875H11.2812V10.0938H7.62612C7.36131 9.07309 6.44338 8.3125 5.34375 8.3125C4.24412 8.3125 3.32619 9.07309 3.06138 10.0938H2.375V7.125H1.1875V11.2812H3.06138C3.32619 12.3019 4.24412 13.0625 5.34375 13.0625C6.44338 13.0625 7.36131 12.3019 7.62612 11.2812H12.5614C12.8262 12.3019 13.7441 13.0625 14.8438 13.0625C15.9434 13.0625 16.8613 12.3019 17.1261 11.2812H19V6.43862L18.9626 6.34541L17.7751 2.78291L17.6462 2.375H12.4688V0H0ZM0.59375 2.375V3.5625H5.9375V2.375H0.59375ZM12.4688 3.5625H16.7918L17.8125 6.60547V10.0938H17.1261C16.8613 9.07309 15.9434 8.3125 14.8438 8.3125C13.7441 8.3125 12.8262 9.07309 12.5614 10.0938H12.4688V3.5625ZM1.1875 4.75V5.9375H4.75V4.75H1.1875ZM5.34375 9.5C6.00697 9.5 6.53125 10.0243 6.53125 10.6875C6.53125 11.3507 6.00697 11.875 5.34375 11.875C4.68053 11.875 4.15625 11.3507 4.15625 10.6875C4.15625 10.0243 4.68053 9.5 5.34375 9.5ZM14.8438 9.5C15.507 9.5 16.0312 10.0243 16.0312 10.6875C16.0312 11.3507 15.507 11.875 14.8438 11.875C14.1805 11.875 13.6562 11.3507 13.6562 10.6875C13.6562 10.0243 14.1805 9.5 14.8438 9.5Z" fill="#FFF"/>
+                    </svg>
                     <p className='text-secondary'>Rastreio</p>
                   </a>
 
-                  <a className='flex gap-2' href='https://api.whatsapp.com/send?phone=5519982013576'>
+                  <a className='flex gap-2 items-center' href='https://api.whatsapp.com/send?phone=5519982013576'>
                       <Image
                         src='https://shopinfo.vteximg.com.br/arquivos/icone-mobile-whatsappp.png'
                         alt='carrinho'

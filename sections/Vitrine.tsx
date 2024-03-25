@@ -52,9 +52,9 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix }: S
               {titulo}
             </span>
           </div>
-          <div className="bg-primary rounded-lg flex justify-around p-1 items-center re1:w-[200px] w-fit re1:mr-0 mr-6">
+          <div className="bg-primary rounded-lg flex justify-around p-1 items-center re1:w-[200px] w-fit ">
             <Image width={24} height={24} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
-              loading='lazy'
+              loading='lazy' className='re1:mr-0 mr-2'
             />
             <label>
               <p className="flex flex-col text-secondary">
