@@ -68,7 +68,7 @@ const ProdCard=({...props}:ProdCard)=>{
   },[])
 
   return(
-    <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
+    <a className='flex flex-col h-[370px] w-full max-w-[250px] bg-[#262626] rounded-lg border relative
     border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
       <div className='flex px-3 pt-3 h-auto w-auto'>
         <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg'>-{diffPercent}%</span>

@@ -4,7 +4,9 @@ export interface Props{
 }
 
 const loader=async({categoryId}:Props)=>{
-  const categs=await fetch(`https://shopinfo.vtexcommercestable.com.br/api/catalog_system/pub/facets/search/?fq=C:/${categoryId}/`).then(async (r)=>{ 
+  const url=`https://shopinfo.vtexcommercestable.com.br/api/catalog_system/pub/facets/search/?fq=C:/${categoryId}/`
+  console.log('Fetching: '+url)
+  const categs=await fetch(url).then(async (r)=>{ 
   const resp=r.clone()
     const text=await r.text()
     if(text==='empty'){

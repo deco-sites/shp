@@ -18,7 +18,8 @@ export interface Props {
   /** @description formato AAAA-MM-DD*/
   finalDaOferta: string
   interval: number
-  descontoPix: number
+  /** @description Não preencher*/
+  descontoPix?: number
 }
 
 export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {

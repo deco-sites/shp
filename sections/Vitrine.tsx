@@ -16,7 +16,10 @@ export interface VitrineProps {
   /** @description formato AAAA-MM-DD*/
   finalDaOferta: string
   interval: number
-  descontoPix: number
+  /** @description Não preencher*/
+  descontoPix?: number
+  /** @description caso haja mais de um section dessa na msm page, coloque um id diferente aqui*/
+  differentId?:string
 }
 
 export const loader = (props: VitrineProps, _req: Request, ctx: AppContext & {descontoPix:number}) => {
@@ -26,8 +29,8 @@ export const loader = (props: VitrineProps, _req: Request, ctx: AppContext & {de
   }
 }
 
-const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix }: SectionProps<typeof loader>) => {
-  const id = useId() + '-vitrine'
+const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, differentId='0' }: SectionProps<typeof loader>) => {
+  const id =`${useId()}-${differentId}-vitrine`
 
   if (!produtos || produtos.length === 0) {
     return null
@@ -46,26 +49,26 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix }: S
   return (
     <CompareContextProvider>
       <div className='w-full mx-auto re1:px-[15%] my-16'>
-        <div className='flex mx-auto w-full gap-2 justify-between re1:justify-center items-center mb-5 re1:px-0 px-6'>
+        <div className='flex flex-col re1:flex-row mx-auto w-full gap-2 justify-between re1:justify-center items-center mb-5 re1:px-0 px-6'>
           <div className='flex gap-2 items-center re1:w-full'>
-            <span className='font-bold re1:text-2xl text-lg text-secondary'>
+            <span className='font-bold re1:text-4xl text-xl text-secondary'>
               {titulo}
             </span>
           </div>
-          <div className="bg-primary rounded-lg flex justify-around p-1 items-center re1:w-[200px] w-fit re1:mr-0 mr-6">
-            <Image width={24} height={24} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
-              loading='lazy'
+          <div className="bg-transparent border-secondary rounded-lg flex justify-around p-1 items-center re1:w-[54%] re3:w-[48%] re4:w-[38%] re5:w-[28%] w-fit ">
+            <Image width={61} height={61} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
+              loading='lazy' className='re1:mr-0 mr-2 w-[40px] re1:w-[61px] h-[40px] re1:h-[61px]'
             />
             <label>
-              <p className="flex flex-col text-secondary">
-                <p className="text-[10px]">A OFERTA EXPIRA EM</p>
-                <span className="font-bold text-sm leading-3">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
+              <p className="flex flex-col text-secondary items-center">
+                <p className="text-[14px]">AS PROMOÇÕES EXPIRAM EM</p>
+                <span className="font-bold text-[22px] leading-3">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
               </p>
             </label>
           </div>
           <div className='hidden re1:flex gap-1 ml-auto'>
             <button
-              className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-primary hover:border-primary'
+              className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-secondary hover:border-secondary'
               onClick={() =>
                 prev.current &&
                 prev.current.firstChild instanceof HTMLButtonElement &&
@@ -73,14 +76,14 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix }: S
               }
             >
               <Icon
-                class='text-primary'
+                class='text-secondary'
                 size={20}
                 id='ChevronLeft'
                 strokeWidth={3}
               />
             </button>
             <button
-              className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-primary hover:border-primary'
+              className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-secondary hover:border-secondary'
               onClick={() =>
                 next.current &&
                 next.current.firstChild instanceof HTMLButtonElement &&
@@ -88,7 +91,7 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix }: S
               }
             >
               <Icon
-                class='text-primary'
+                class='text-secondary'
                 size={20}
                 id='ChevronRight'
                 strokeWidth={3}

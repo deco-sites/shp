@@ -38,7 +38,8 @@ interface CompreEGanhe{
 }
 
 export type Props={
-  descontoPix:number
+  /** @description Não precisa preencher */
+  descontoPix?:number
   compreEGanhe:CompreEGanhe | null
   collection:string
   produtos: LoaderReturnType<Product[] | null>
