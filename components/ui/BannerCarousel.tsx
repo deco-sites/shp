@@ -120,7 +120,7 @@ function Dots({ images, interval = 0 }: Props) {
             <Slider.Dot index={index}>
               <div class='py-5'>
                 <div
-                  class='w-10 md:w-16 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-white from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]'
+                  class='w-6 md:w-16 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-white from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]'
                   style={{ animationDuration: `${interval}s` }}
                   key={animationKey}
                 />
