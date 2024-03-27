@@ -75,7 +75,7 @@ const ProdCard=({...props}:ProdCard)=>{
         <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} alt={prodName} title={prodName}/>
       </div>
       <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-4'>
-        <p className='text-sm line-clamp-2 px-3'>
+        <p className='text-sm line-clamp-2 px-3 text-secondary'>
           {prodName}
         </p>
         <div className='flex items-center justify-center my-[20px]'> 
