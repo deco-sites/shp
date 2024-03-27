@@ -157,7 +157,10 @@ const BTNFinal= () => {
     <div className='flex gap-2'>
       {count.value>=2 && (
         <button className='btn btn-circle min-w-[45px] min-h-[45px] max-h-[45px] max-w-[45px] bg-transparent hover:bg-transparent border border-primary hover:border-primary'
-          onClick={()=>count.value>1 && count.value--}
+          onClick={()=>{
+            count.value>1 && count.value--
+            count.value===3 && setDisableButton(false)
+          }}
         >
           <Icon
             class='text-primary'
@@ -268,7 +271,7 @@ const selectGames=({ Games=[] }:Props)=>{
   Games.length<1 && null
 
   return(
-    <div className={`${globalThis.window.location.pathname==='/' ? 'bg-[#272727]' : 'bg-transparent'} w-full h-fit my-5 py-5`}>
+    <div className={`${globalThis.window.location.pathname==='/' ? 'bg-[#272727]' : 'bg-transparent'} w-full h-fit my-5 py-12`}>
       <div className='flex flex-col items-center w-[90vw] re1:w-[70vw] mx-auto gap-8'>
         {(globalThis.window.location.pathname!=='/') && 
           <h1 className='font-bold text-secondary re1:text-6xl text-3xl mb-4 text-center'>E aí? Vai jogar o que?</h1>
@@ -295,7 +298,7 @@ const selectGames=({ Games=[] }:Props)=>{
 
         <GameContextProvider>
         {count.value===1 && (
-          <div className='flex items-center h-[300px]'>
+          <div className='flex items-center h-[180px]'>
             <div id={id} className='container grid grid-cols-[20px_1fr_20px] re1:grid-cols-[35px_1fr_35px] px-0 re1:px-5'>
               <div className='hidden re1:flex justify-center items-center prev'>
                 <Slider.PrevButton class='btn bg-transparent hover:bg-transparent border-none relative'>
@@ -331,7 +334,7 @@ const selectGames=({ Games=[] }:Props)=>{
           )}
 
           {count.value===2 && (
-            <div className='flex items-center h-[300px]'>
+            <div className='flex items-center h-[180px]'>
               <div className='flex flex-col items-center justify-center text-secondary gap-10'>
                 <div className="flex re1:gap-12 gap-3 items-center justify-between">
                   <label className='flex items-center text-success text-lg font-bold'>
@@ -356,7 +359,7 @@ const selectGames=({ Games=[] }:Props)=>{
                   </label>
                 </div>
         
-                <label className='re1:w-[600px] w-[300px] flex flex-col items-start'>
+                <label className='re1:w-[600px] w-[180px] flex flex-col items-start'>
                   <div className='h-[4px] relative top-[4px] bg-primary' style={{width:`${percentRange()}%`}}/>
                   <input
                     type="range"
@@ -379,9 +382,9 @@ const selectGames=({ Games=[] }:Props)=>{
               {!loadingPromises.value ? (
                 <div className='flex flex-col items-center justify-center text-secondary gap-6'>
                   <div className="flex gap-12 items-center justify-center">
-                    <label className='flex gap-2 items-center'>
+                    <label className={`flex gap-2 items-center cursor-pointer ${block60.value && '!cursor-not-allowed'}`}>
                       {block60.value && (<span className='text-5xl text-primary font-bold tooltip tooltip-bottom mr-1' data-tip='Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!'>!</span>)}
-                      <div className={`flex flex-col text-sm re1:text-lg font-bold items-start ${block60.value && 'brightness-50 cursor-not-allowed'}`}>
+                      <div className={`flex flex-col text-sm re1:text-lg font-bold items-start ${block60.value && 'brightness-50'}`}>
                         <p>Acima de</p>
                         <p>60FPS</p>
                       </div>
@@ -390,9 +393,9 @@ const selectGames=({ Games=[] }:Props)=>{
                       />
                     </label>
                     <hr className='w-[2px] h-[70px] bg-secondary'/>
-                    <label className='flex gap-2 items-center'>
+                    <label className={`flex gap-2 items-center cursor-pointer ${block144.value && '!cursor-not-allowed'}`}>
                       {block144.value && (<span className='text-primary font-bold text-5xl tooltip tooltip-bottom mr-1' data-tip='Não existem produtos com essa configuração para os jogos e a faixa de preço selecionados!'>!</span>)}
-                      <div className={`flex flex-col text-sm re1:text-lg font-bold items-start ${block144.value && 'brightness-50 cursor-not-allowed'}`}>
+                      <div className={`flex flex-col text-sm re1:text-lg font-bold items-start ${block144.value && 'brightness-50'}`}>
                         <p>Acima de</p>
                         <p>144FPS</p>
                       </div>

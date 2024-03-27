@@ -32,8 +32,8 @@ const BannersColcha=({Banners=[]}:Props)=>{
   }
 
   return(
-    <div className='flex flex-col gap-4 re1:gap-0 items-center re1:flex-row re1:justify-around my-16 mx-auto w-full h-max re1:h-auto re4:h-[348px] px-[5%] re1:px-[15%]'>
-      <div className='re1:w-[75%] h-full'>
+    <div className='flex flex-col gap-4 re1:gap-0 items-center re1:flex-row re1:justify-between my-16 mx-auto w-full h-max re1:h-[250px] re4:h-[298px] re5:h-[335px] px-[5%] re1:px-[15%]'>
+      <div className='re1:w-[70%] h-full'>
         <a className='grayscale-[50%] hover:grayscale-0' href={Banners[0].link} onClick={()=>SendSelectPromotionEvent(0)}>
           <Picture>
             <Source
@@ -57,7 +57,7 @@ const BannersColcha=({Banners=[]}:Props)=>{
           </Picture>
         </a>
       </div>
-      <div className='flex flex-col gap-4 re1:gap-0 justify-between re1:w-[25%] h-full'>
+      <div className='flex flex-col gap-4 re1:gap-0 justify-between re1:w-[20%] h-full'>
         <a className='re1:ml-auto grayscale-[50%] hover:grayscale-0' href={Banners[1].link} onClick={()=>SendSelectPromotionEvent(1)}>
           <Picture>
             <Source

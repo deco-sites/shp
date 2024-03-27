@@ -16,7 +16,7 @@ export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoP
 
 const Benefits = ({descontoPix}:SectionProps<typeof loader>) => {
   return (
-    <div className="flex flex-row text-secondary items-center re1:justify-center mx-auto gap-6 re1:gap-24 m-3 w-11/12 h-24 overflow-x-auto scrollbar-none text-sm">
+    <div className="flex flex-row text-secondary items-center re1:justify-center mx-auto gap-6 re1:gap-16 re4:gap-24 m-3 w-11/12 h-24 overflow-x-auto scrollbar-none text-sm">
         <label className="min-w-[150px] re1:min-w-0 text-center re1:text-left flex re1:flex-row flex-col items-center gap-3">
           <Image
             decoding='sync' loading='eager' fetchPriority='high'
