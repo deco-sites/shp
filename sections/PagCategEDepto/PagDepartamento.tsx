@@ -28,7 +28,7 @@ export interface Props{
     categoryName:string,
     imgUrl:string
   }>
-  descontoPix:number
+  descontoPix?:number
 }
 
 const fetchFilters=async (idCateg:string)=>await invoke['deco-sites/shp'].loaders.getFacetsByCategId({categoryId:idCateg})
