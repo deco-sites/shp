@@ -40,7 +40,7 @@ interface CompreEGanhe{
 export type Props={
   /** @description Não precisa preencher */
   descontoPix?:number
-  compreEGanhe:CompreEGanhe | null
+  compreEGanhe?:CompreEGanhe
   collection:string
   produtos: LoaderReturnType<Product[] | null>
   bannerUrl:{
@@ -108,6 +108,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     setLoading(true)
     const filterVal=filterSelected.fqType==='P' ? '['+filterSelected.value+']' : filterSelected.value
     const Filter=filterSelected.value==='' ? undefined : `${filterSelected.fqType}:${filterVal}`
+    console.log(Filter)
     const data=await loaderData(collection, order, Filter)
     setProducts(data)
   }

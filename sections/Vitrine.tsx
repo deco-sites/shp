@@ -61,8 +61,8 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
             />
             <label>
               <p className="flex flex-col text-secondary items-center">
-                <p className="text-[14px]">AS PROMOÇÕES EXPIRAM EM</p>
-                <span className="font-bold text-[22px] leading-3">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
+                <p className="text-[12px]">AS PROMOÇÕES EXPIRAM EM</p>
+                <span className="font-bold text-[20px] leading-3">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
               </p>
             </label>
           </div>
