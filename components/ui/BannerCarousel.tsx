@@ -114,17 +114,15 @@ function Dots({ images, interval = 0 }: Props) {
           `,
         }}
       />
-      <ul class='carousel justify-center gap-4 z-[5]'>
+      <ul class='carousel justify-center gap-3 z-[5]'>
         {images?.map((_, index) => (
           <li class='carousel-item'>
             <Slider.Dot index={index}>
-              <div class='py-5'>
-                <div
-                  class='w-6 md:w-16 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-white from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]'
-                  style={{ animationDuration: `${interval}s` }}
-                  key={animationKey}
-                />
-              </div>
+              <div
+                class='border-[.5px] rounded-lg w-[10px] h-[10px] group-disabled:w-10 group-disabled:animate-progress bg-gradient-to-r from-white from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]'
+                style={{ animationDuration: `${interval}s` }}
+                key={animationKey}
+              />
             </Slider.Dot>
           </li>
         ))}
@@ -139,11 +137,11 @@ function BannerCarousel({ images, preload, interval }: Props) {
 
   return (
     <div id={id} class='flex flex-col'>
-      <div class='flex justify-center items-center my-5'>
-        <div class='hidden re1:flex items-center justify-center z-[2] absolute left-[150px]'>
-          <Slider.PrevButton class='btn btn-circle glass'>
+      <div class='flex justify-center items-center mb-5'>
+        <div class='hidden re1:flex items-center justify-center z-[2] absolute left-[17%]'>
+          <Slider.PrevButton class='btn btn-circle bg-black'>
             <Icon
-              class='text-[rgba(255,255,255,0.7)]'
+              class='text-primary'
               size={20}
               id='ChevronLeft'
               strokeWidth={3}
@@ -151,18 +149,18 @@ function BannerCarousel({ images, preload, interval }: Props) {
           </Slider.PrevButton>
         </div>
 
-        <Slider class='carousel carousel-center scrollbar-none w-[90vw] rounded-lg'>
+        <Slider class='carousel carousel-center scrollbar-none w-[100vw]'>
           {images?.map((image, index) => (
-            <Slider.Item index={index} class='carousel-item w-[90vw] h-fit'>
+            <Slider.Item index={index} class='carousel-item w-[100vw] h-fit'>
               <BannerItem image={image} lcp={index === 0 && preload} idx={index} />
             </Slider.Item>
           ))}
         </Slider>
 
-        <div class='hidden re1:flex items-center justify-center absolute z-[2] right-[150px]'>
-          <Slider.NextButton class='btn btn-circle glass'>
+        <div class='hidden re1:flex items-center justify-center absolute z-[2] right-[17%]'>
+          <Slider.NextButton class='btn btn-circle bg-black'>
             <Icon
-              class='text-[rgba(255,255,255,0.7)]'
+              class='text-primary'
               size={20}
               id='ChevronRight'
               strokeWidth={3}
@@ -171,7 +169,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
         </div>
       </div>
 
-      <div className='absolute flex justify-center items-center gap-2 top-[85vw] re2:top-[340px] re3:top-[370px] re4:top-[430px] re5:top-[450px] w-full'>
+      <div className='relative flex justify-center items-center gap-2 re1:bottom-[80px] w-full'>
         <Dots images={images} interval={!pause ? interval : 0} />
         <button
           class='btn rounded-[50%] glass max-w-[20px] min-w-[20px] max-h-[20px] min-h-[20px] p-0 md:pl-[1px]'
