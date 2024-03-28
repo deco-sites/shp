@@ -8,6 +8,7 @@ import * as $AddToCartButton_vtex from "./islands/AddToCartButton/vtex.tsx";
 import * as $BannerItem from "./islands/BannerItem.tsx";
 import * as $BuyBarIsland from "./islands/BuyBarIsland.tsx";
 import * as $CampanhaIsland from "./islands/CampanhaIsland.tsx";
+import * as $CategoriesNewIsland from "./islands/CategoriesNewIsland.tsx";
 import * as $CompareContextIsland from "./islands/CompareContextIsland.tsx";
 import * as $CompareIsland from "./islands/CompareIsland.tsx";
 import * as $CompreJuntoIsland from "./islands/CompreJuntoIsland.tsx";
@@ -54,6 +55,7 @@ const manifest = {
     "./islands/BannerItem.tsx": $BannerItem,
     "./islands/BuyBarIsland.tsx": $BuyBarIsland,
     "./islands/CampanhaIsland.tsx": $CampanhaIsland,
+    "./islands/CategoriesNewIsland.tsx": $CategoriesNewIsland,
     "./islands/CompareContextIsland.tsx": $CompareContextIsland,
     "./islands/CompareIsland.tsx": $CompareIsland,
     "./islands/CompreJuntoIsland.tsx": $CompreJuntoIsland,
