@@ -497,7 +497,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
               <p>Principais categorias</p>
               <hr className='border-[#262626] w-[40%] re1:w-[80%]'/>
             </div>
-            <ul className='flex re1:items-center justify-start re1:justify-around gap-4 re1:gap-0 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
+            <ul className='flex re1:items-center justify-start re1:justify-center gap-4 re1:gap-4 w-full mb-4 px-4 re1:px-0 overflow-x-auto'>
               {iconesNavegacionais.map((icon)=>(
                 <IconeNavegacional href={icon.href} imgUrl={icon.imgUrl} categoryName={icon.categoryName} />
               ))}
