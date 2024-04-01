@@ -18,27 +18,21 @@ export interface Props {
 const Categories = ({ Categs=[] }: Props) => {
   const id=useId()+'-newCategs'
   
-
-  const sliderItemsMobile = () => {
+  const generateAgroupmentItems=(agroupment:number)=>{
     const finalPairs: JSX.Element[] = []
 
-    for (let i = 0; i < Categs.length; i += 2) {
+    for (let i = 0; i < Categs.length; i+=agroupment) {
 
-      const pair =
-        <>
-          <a href={Categs[i]?.linkTo} className='flex flex-col w-full h-full text-center hover:scale-90 transition ease-in-out duration-300 min-w-[145px] max-w-[145px]'>
-            <Image className='m-auto w-[100px] re1:w-[145px]' src={Categs[i]?.categImg} alt={Categs[i]?.name} width={145} height={196} fetchPriority='high' loading='lazy' decoding='sync'/>
-            <span className='text-secondary text-[18px] font-bold mb-[10px]'>{Categs[i]?.name}</span>
-          </a> 
-          {Categs[i+1] &&
-            <a href={Categs[i+1]?.linkTo} className='flex flex-col w-full h-full text-center hover:scale-90 transition ease-in-out duration-300 min-w-[145px] max-w-[145px]'>
-              <Image className='m-auto w-[100px] re1:w-[145px]' src={Categs[i+1]?.categImg} alt={Categs[i+1]?.name} width={145} height={196} fetchPriority='high' loading='lazy' decoding='sync'/>
-              <span className='text-secondary text-[18px] font-bold mb-[10px]'>{Categs[i+1]?.name}</span>
-            </a>
-          } 
-        </>
-
-      finalPairs.push(pair)
+      const group = 
+      <>
+        {Categs.slice(i,i+agroupment).map(Categ=>(
+          <a href={Categ.linkTo} className='flex flex-col w-full h-full text-center hover:scale-90 transition ease-in-out duration-300 min-w-[145px] max-w-[145px]'>
+            <Image className='m-auto w-[100px] re1:w-[145px]' src={Categ.categImg} alt={Categ.name} width={145} height={196} fetchPriority='high' loading='lazy' decoding='sync'/>
+            <span className='text-secondary text-[18px] font-bold mb-[10px]'>{Categ.name}</span>
+          </a>
+        ))}
+      </>
+      finalPairs.push(group)
     }
 
     return finalPairs.map((element, index) => (
@@ -49,29 +43,8 @@ const Categories = ({ Categs=[] }: Props) => {
     ))
   }
 
-  const sliderItemsDesktop = () => {
-    const finalPairs: JSX.Element[] = []
-
-    for (let i = 0; i < Categs.length; i++) {
-
-      const pair = 
-        <a href={Categs[i]?.linkTo} className='flex flex-col w-full h-full text-center hover:scale-90 transition ease-in-out duration-300 min-w-[145px] max-w-[145px]'>
-          <Image className='m-auto w-[100px] re1:w-[145px]' src={Categs[i]?.categImg} alt={Categs[i]?.name} width={145} height={196} fetchPriority='high' loading='lazy' decoding='sync'/>
-          <span className='text-secondary text-[18px] font-bold mb-[10px]'>{Categs[i]?.name}</span>
-        </a>
-      finalPairs.push(pair)
-    }
-
-    return finalPairs.map((element, index) => (
-      <Slider.Item
-        index={index}
-        className='carousel-item items-center justify-between'
-      >{element}</Slider.Item>
-    ))
-  }
-
   const [isMobile, setIsMobile]=useState(globalThis.window.innerWidth<768)
-  const [sliderItems, setSliderItems]=useState(isMobile ? sliderItemsMobile() : sliderItemsDesktop())
+  const [sliderItems, setSliderItems]=useState(isMobile ? generateAgroupmentItems(2) : generateAgroupmentItems(4))
 
   useEffect(()=>{
     const handleResize=()=>{
@@ -86,7 +59,7 @@ const Categories = ({ Categs=[] }: Props) => {
   },[])
 
   useEffect(()=>{
-    setSliderItems(isMobile ? sliderItemsMobile() : sliderItemsDesktop())
+    setSliderItems(isMobile ? generateAgroupmentItems(2) : generateAgroupmentItems(4))
   },[isMobile])
 
   return (
@@ -130,7 +103,7 @@ const Categories = ({ Categs=[] }: Props) => {
             </Slider.Dot>
           ))}
         </ul>
-        
+      
         <SliderJS rootId={id} scroll='smooth' />
       </div>
     </div>
