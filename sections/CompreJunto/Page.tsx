@@ -5,7 +5,7 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { Product } from 'apps/commerce/types.ts'
 import { useEffect, useState, useRef } from 'preact/hooks'
 import {invoke} from 'deco-sites/shp/runtime.ts'
-import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CampanhaCard.tsx'
+import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CompreJuntoCard.tsx'
 import useTimer,{ TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import prodQntd from 'deco-sites/shp/FunctionsSHP/productQntHotsite.ts'
 import FiltroMob from 'deco-sites/shp/sections/Campanha/FiltroMob.tsx'
@@ -13,6 +13,7 @@ import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareConte
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 import { OrgSchemaToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 import { AppContext } from "deco-sites/shp/apps/site.ts";
+import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 
 //montando interface com infos que precisam de descricao no ADMIN
 interface NeedDesc{
@@ -32,15 +33,9 @@ interface Contador{
 
 interface SemContador{contador:false}
 
-interface CompreEGanhe{
-  /** @description Adicione palavras chaves dos brindes q n devem aparecer. Ex: Kaspersky */
-  naoMostrar:string[]
-}
-
 export type Props={
   /** @description Não precisa preencher */
   descontoPix?:number
-  compreEGanhe?:CompreEGanhe
   collection:string
   produtos: LoaderReturnType<Product[] | null>
   bannerUrl:{
@@ -52,13 +47,26 @@ export type Props={
 
 type FinalProd={
   prod:Product
-  brinde?:any
+  combo?:comboObj
 }
 
 type Filter={
   index:number
   value:string
   fqType:string
+}
+
+interface objBuyTogether{
+  sku:string,
+  promotion:string,
+}
+
+interface comboObj{
+  id:string
+  image:string
+  name:string
+  finalPrice:number
+  link:string
 }
 
 const loaderData= async(idCollection:string, order?:string, filter?:string):Promise<Product[]>=>{
@@ -78,6 +86,10 @@ export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoP
   }
 }
 
+const loaderSearchAPI= async (skuId:string)=>await invoke['deco-sites/shp'].loaders.getProductsSearchAPI({queryString:`fq=skuId:${skuId}`})
+
+const loaderBuyTogether=async(skuId:string):Promise<objBuyTogether[]>=> await invoke['deco-sites/shp'].loaders.getBuyTogetherValuesBySku({skuId:skuId}) || []
+
 const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao, descontoPix, ...props}:SectionProps<typeof loader>)=>{
   const finalDate = props.contador ? new Date(props.finalDaOferta) : undefined
   const timeRemaining:TimeRemaining|undefined=props.contador ? useTimer(finalDate) : undefined
@@ -86,7 +98,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   const [products, setProducts]=useState<Product[]>(produtos || [])
   const [order, setOrder]=useState('inicio')
   const [loading,setLoading]=useState(true)
-  const [gifts,setGifts]=useState<any>(null)
+  const [combos,setCombos]=useState<any>(null)
   const [finalProducts,setFinalProducts]=useState<FinalProd[]>([])
   const [sentEvent,setSentEvent]=useState(false)
 
@@ -138,36 +150,54 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
       }
     }
 
-    const checkCompreGanhe=async()=>{
-      const giftsSkus=products.reduce((acc:string[],obj)=>{
-        const giftSkus=obj.offers?.offers[0].giftSkuIds
+    const checkCombos=async()=>{
+      const combos: objBuyTogether[] = []
+      const finalCombos:comboObj[]=[]
+      const prodsWithCombos:Array<Product & {comboId?:string}> =[]
 
-        if(giftSkus){
-          giftSkus.forEach(sku=>!acc.includes(sku) && acc.push(sku))
-        }
-        return acc
-      },[])
-      
-      if(props.compreEGanhe){
-        const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
-
-        console.log(objGifts, objGifts.filter(obj=>!props.compreEGanhe?.naoMostrar.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
-        setGifts(objGifts.filter(obj=>!props.compreEGanhe?.naoMostrar.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
+      for (const product of products){
+        const comboSkus = await loaderBuyTogether(product.sku)
+        comboSkus.forEach(combo=>!combos.includes(combo) && combos.push(combo))
+        prodsWithCombos.push({...product, comboId:comboSkus[0]?.sku})
       }
+
+      for (const combo of combos){
+        const fetch = await loaderSearchAPI(combo.sku)
+
+        if(fetch && fetch.products.length){
+          const image = fetch.products[0]!.items[0].images[0].imageUrl
+          const name = fetch.products[0]!.productName
+          const price= fetch.products[0]!.items[0].sellers[0].commertialOffer.Installments[0].Value
+          const finalPrice=DescontoPIX((price-(price*(parseFloat(combo.promotion)/100))),descontoPix)
+          const link='/'+fetch.products[0]!.linkText+'/p'
+
+          const comboObj:comboObj={
+            id:combo.sku,
+            image, name, finalPrice, link
+          }
+
+          finalCombos.push(comboObj)
+        }
+      }
+
+      const finalProds:FinalProd[]=prodsWithCombos.map(product=>{
+        if(product.comboId){
+          const comboObj=finalCombos.find((obj:any)=> obj.id===product.comboId)
+          return {prod:product, combo:comboObj}
+        }else{
+          return {prod:product, combo:undefined}
+        }
+      })
+
+      return finalProds
     }
-    checkCompreGanhe().then(()=>setLoading(false))
+
+    checkCombos().then((resp)=>setFinalProducts(resp))
   },[products])
 
   useEffect(()=>{
-    setFinalProducts(products.map(product=>{
-      if(gifts){
-        const brindeObj=gifts.find((obj:any)=> product.offers?.offers[0].giftSkuIds?.includes(obj.Id.toString()))
-        return {prod:product, brinde:brindeObj}
-      }else{
-        return {prod:product, brinde:undefined}
-      }
-    }))
-  },[gifts])
+    finalProducts.length && setLoading(false)
+  },[finalProducts])
 
   useEffect(()=>{
     if(typeof globalThis.window!=='undefined' && !(tipo===null || typeof tipo==='string')){
@@ -279,7 +309,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         (finalProducts.map((product)=>{
           const quantidade=prodQntd(product.prod, new Date(props.contador ? props.inicioDaOferta : '2023-06-30'), new Date(props.contador ? props.finalDaOferta : '2023-12-02'))
 
-          return <Card product={product.prod} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade} brinde={product.brinde} descontoPix={descontoPix}/>
+          return <Card product={product.prod} frete={freteGratis} timeRemaining={timeRemaining} quantidade={quantidade} combo={product.combo} descontoPix={descontoPix}/>
         }))
       }
     </div>

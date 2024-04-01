@@ -10,7 +10,7 @@ export interface Props {
 const ProductCompreJunto=({ page, descontoPix }: Props)=>{
   return (
     <div class='bg-base-100 text-secondary'>
-      {page ? <CompreJunto page={page} pix={descontoPix}/> : null}
+      {page ? <CompreJunto page={page} descontoPix={descontoPix}/> : null}
     </div>
   )
 }

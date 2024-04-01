@@ -70,10 +70,10 @@ const Categories = ({ Categs=[] }: Props) => {
       <div className='flex flex-col' id={id}>
           <div className='flex re1:grid re1:grid-cols-[20px_1fr_20px] re1:justify-between re1:items-center'>
             <div className='hidden re1:flex justify-center items-center prev'>
-              <Slider.PrevButton class='relative right-[20px] btn min-w-[20px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none'>
+              <Slider.PrevButton class='relative right-[20px] btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none'>
                 <Icon
                   class='text-primary'
-                  size={15}
+                  size={25}
                   id='ChevronLeft'
                   strokeWidth={3}
                 />
@@ -85,10 +85,10 @@ const Categories = ({ Categs=[] }: Props) => {
             </Slider>
 
             <div class='hidden re1:flex items-center justify-center next'>
-              <Slider.NextButton class='relative left-[20px] btn min-w-[20px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none'>
+              <Slider.NextButton class='relative left-[20px] btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none'>
                 <Icon
                   class='text-primary'
-                  size={15}
+                  size={25}
                   id='ChevronRight'
                   strokeWidth={3}
                 />

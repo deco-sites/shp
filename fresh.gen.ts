@@ -12,6 +12,7 @@ import * as $CategoriesNewIsland from "./islands/CategoriesNewIsland.tsx";
 import * as $CompareContextIsland from "./islands/CompareContextIsland.tsx";
 import * as $CompareIsland from "./islands/CompareIsland.tsx";
 import * as $CompreJuntoIsland from "./islands/CompreJuntoIsland.tsx";
+import * as $CompreJuntoPageIsland from "./islands/CompreJuntoPageIsland.tsx";
 import * as $Cookies_UsanDecoCookieIsland from "./islands/Cookies/UsanDecoCookieIsland.tsx";
 import * as $DescriptionIsland from "./islands/DescriptionIsland.tsx";
 import * as $DetailsIsland from "./islands/DetailsIsland.tsx";
@@ -59,6 +60,7 @@ const manifest = {
     "./islands/CompareContextIsland.tsx": $CompareContextIsland,
     "./islands/CompareIsland.tsx": $CompareIsland,
     "./islands/CompreJuntoIsland.tsx": $CompreJuntoIsland,
+    "./islands/CompreJuntoPageIsland.tsx": $CompreJuntoPageIsland,
     "./islands/Cookies/UsanDecoCookieIsland.tsx": $Cookies_UsanDecoCookieIsland,
     "./islands/DescriptionIsland.tsx": $DescriptionIsland,
     "./islands/DetailsIsland.tsx": $DetailsIsland,
