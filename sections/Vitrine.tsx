@@ -71,7 +71,7 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
               </svg>
             </a>
           </div>
-          <div className="bg-transparent border-secondary rounded-lg flex justify-center re1:justify-around p-1 items-center w-full re1:w-[54%] re3:w-[48%] re4:w-[38%] re5:w-[28%]">
+          <div className="bg-transparent border-secondary rounded-lg flex justify-center re1:justify-end p-1 items-center w-full re1:w-[54%] re3:w-[48%] re4:w-[38%] re5:w-[28%]">
             <Image width={61} height={61} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
               loading='lazy' className='re1:mr-0 mr-2 w-[40px] re1:w-[61px] h-[40px] re1:h-[61px]'
             />
