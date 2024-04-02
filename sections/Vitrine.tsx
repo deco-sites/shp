@@ -13,6 +13,10 @@ import { AppContext } from "deco-sites/shp/apps/site.ts";
 export interface VitrineProps {
   produtos: LoaderReturnType<Product[] | null>
   titulo: string
+  CTA:{
+    linkCTA:string
+    textoCTA:string
+  }
   /** @description formato AAAA-MM-DD*/
   finalDaOferta: string
   interval: number
@@ -29,7 +33,7 @@ export const loader = (props: VitrineProps, _req: Request, ctx: AppContext & {de
   }
 }
 
-const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, differentId='0' }: SectionProps<typeof loader>) => {
+const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, differentId='0', CTA }: SectionProps<typeof loader>) => {
   const id =`${useId()}-${differentId}-vitrine`
 
   if (!produtos || produtos.length === 0) {
@@ -49,13 +53,25 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
   return (
     <CompareContextProvider>
       <div className='w-full mx-auto re1:px-[15%] my-16'>
-        <div className='flex flex-col re1:flex-row mx-auto w-full gap-2 justify-between re1:justify-center items-center mb-5 re1:px-0 px-6'>
-          <div className='flex gap-2 items-center re1:w-full'>
-            <span className='font-bold re1:text-4xl text-xl text-secondary'>
+        <div className='flex flex-col re1:flex-row mx-auto w-full gap-2 justify-center items-center mb-5 re1:px-0 px-6'>
+          <div className='re1:flex hidden gap-2 items-center'>
+            <span className='font-bold uppercase re1:text-4xl text-xl text-secondary'>
               {titulo}
             </span>
           </div>
-          <div className="bg-transparent border-secondary rounded-lg flex justify-around p-1 items-center re1:w-[54%] re3:w-[48%] re4:w-[38%] re5:w-[28%] w-fit ">
+          <div className='flex gap-5 justify-center items-center mx-auto'>
+            <span className='block re1:hidden font-bold uppercase text-sm text-secondary'>
+              {titulo}
+            </span>
+            <p className='w-[200px] text-white re1:text-sm text-xs' dangerouslySetInnerHTML={{__html:CTA.textoCTA}}/>
+            <a className='re1:py-[8px] re1:px-[32px] items-center re1:border border-[#F0F0F0] inline-flex gap-2 cursor-pointer rounded-lg'>
+              <p className='hidden re1:block'>Confira</p> 
+              <svg className='re1:hidden' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M20.03 12C20.03 7.59 16.41 3.97 12 3.97C7.59 3.97 3.97 7.59 3.97 12C3.97 16.41 7.59 20.03 12 20.03C16.41 20.03 20.03 16.41 20.03 12ZM22 12C22 17.54 17.54 22 12 22C6.46 22 2 17.54 2 12C2 6.46 6.46 2 12 2C17.54 2 22 6.46 22 12ZM13.54 13V16L17.5 12L13.54 8V11H6.5V13" fill="white"></path>
+              </svg>
+            </a>
+          </div>
+          <div className="bg-transparent border-secondary rounded-lg flex justify-center re1:justify-around p-1 items-center w-full re1:w-[54%] re3:w-[48%] re4:w-[38%] re5:w-[28%]">
             <Image width={61} height={61} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
               loading='lazy' className='re1:mr-0 mr-2 w-[40px] re1:w-[61px] h-[40px] re1:h-[61px]'
             />
@@ -66,7 +82,8 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
               </p>
             </label>
           </div>
-          <div className='hidden re1:flex gap-1 ml-auto'>
+          {/* Setinhas do lado do contador */}
+          {/* <div className='hidden re1:flex gap-1 ml-auto'>
             <button
               className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-secondary hover:border-secondary'
               onClick={() =>
@@ -97,35 +114,46 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
                 strokeWidth={3}
               />
             </button>
-          </div>
+          </div> */}
         </div>
 
-        <div
-          id={id}
-          className='container grid grid-cols-[20px_1fr_20px] re1:grid-cols-[48px_1fr_48px]'
-        >
-          <Slider className='carousel carousel-center gap-6 col-span-full row-start-2 row-end-5 scrollbar-none overflow-y-hidden'>
-            {produtos.map((slide, index) => 
-              <Slider.Item
-                index={index}
-                class='carousel-item w-fit h-fit re1:first:pl-0 first:pl-6 re1:last:pr-0 last:pr-6'
-              >
-                <Card
-                  product={slide} descontoPix={descontoPix}
+        <div className='flex re1:grid grid-cols-[20px_1fr_20px] re1:justify-between re1:items-center' id={id}>
+            <div className='hidden re1:flex justify-center items-center prev'>
+              <Slider.PrevButton class='relative right-[20px] btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none'>
+                <Icon
+                  class='text-primary'
+                  size={25}
+                  id='ChevronLeft'
+                  strokeWidth={3}
                 />
-              </Slider.Item>
-            )}
-          </Slider>
+              </Slider.PrevButton>
+            </div>
 
-          <div className='hidden' ref={prev}>
-            <Slider.PrevButton />
-          </div>
+            <Slider className='carousel carousel-center gap-6 scrollbar-none'>
+              {produtos.map((slide, index) => 
+                <Slider.Item
+                  index={index}
+                  class='carousel-item items-center justify-between first:pl-6 last:pr-6'
+                >
+                  <Card
+                    product={slide} descontoPix={descontoPix}
+                  />
+                </Slider.Item>
+              )}
+            </Slider>
 
-          <div className='hidden' ref={next}>
-            <Slider.NextButton />
-          </div>
+            <div class='hidden re1:flex items-center justify-center next'>
+              <Slider.NextButton class='relative left-[20px] btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none'>
+                <Icon
+                  class='text-primary'
+                  size={25}
+                  id='ChevronRight'
+                  strokeWidth={3}
+                />
+              </Slider.NextButton>
+            </div>
 
-          <SliderJS rootId={id} infinite interval={interval * 1000} />
+          <SliderJS rootId={id} interval={interval * 1000} scroll='smooth'/>
         </div>
       </div>
     </CompareContextProvider>
