@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
 import { Offer, Product, PropertyValue } from 'apps/commerce/types.ts'
 import { useState, useEffect, useRef } from 'preact/hooks'
 import { invoke } from 'deco-sites/shp/runtime.ts'
@@ -8,6 +7,14 @@ import { TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import { DescontoPIX } from 'deco-sites/shp/FunctionsSHP/DescontoPix.ts'
 import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import { useOffer } from 'deco-sites/fashion/sdk/useOffer.ts'
+
+interface comboObj{
+  id:string
+  image:string
+  name:string
+  finalPrice:number
+  link:string
+}
 
 interface CardProps{
   prodId:string
@@ -23,10 +30,7 @@ interface CardProps{
   trustPercent:number
   timeRemaining?: TimeRemaining
   quantidade:number
-  brinde?:{
-    imageUrl:string
-    productName:string
-  }
+  combo?:comboObj
 } 
 
 interface CardPCProps extends CardProps{
@@ -47,7 +51,7 @@ export type Props={
   frete?:string
   timeRemaining?: TimeRemaining
   quantidade:number
-  brinde:any
+  combo?:comboObj
   descontoPix:number
 }
 
@@ -161,8 +165,8 @@ const CardProd=(props:CardProps)=>{
   
         <div className='flex flex-col items-center justify-around bg-[#353535] py-[10px] text-center'>
           <div className='flex flex-col items-center justify-between'>
-            <Image src={props.brinde.imageUrl} width={150} height={150}/>
-            <p>{props.brinde.productName}</p>
+            <Image src={props.combo?.image ?? ''} width={150} height={150}/>
+            <p>{props.combo?.name}</p>
             <div className='w-full py-2 flex gap-3 justify-center bg-primary border-primary hover:border-primary hover:bg-primary rounded-lg'>
               <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png' className='h-[18px] my-auto'
                 width={22} height={18} decoding='auto' fetchPriority='high' loading='eager'
@@ -389,7 +393,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
       </div>
 
       <div className='flex flex-col items-center justify-around bg-[#353535] py-[10px] text-center'>
-        {!props.brinde ? (
+        {!props.combo ? (
           <>
             <div>
               <span className='text-sm'>Restam:</span>
@@ -408,8 +412,8 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
           </>
         ) : (
           <div className='flex flex-col items-center justify-between'>
-            <Image src={props.brinde.imageUrl} width={150} height={150}/>
-            <p>{props.brinde.productName}</p>
+            <Image src={props.combo?.image} width={150} height={150}/>
+            <p>{props.combo?.name}</p>
             <div className='w-full py-2 flex gap-3 justify-center bg-primary border-primary hover:border-primary hover:bg-primary rounded-lg'>
               <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png' className='h-[18px] my-auto'
                 width={22} height={18} decoding='auto' fetchPriority='high' loading='eager'
@@ -423,7 +427,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
   </a>)
 }
 
-const Card=({product, frete, timeRemaining, quantidade, brinde, descontoPix}:Props)=>{
+const Card=({product, frete, timeRemaining, quantidade, combo, descontoPix}:Props)=>{
   const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
 
   if(!avaibility){return null}
@@ -502,7 +506,7 @@ const Card=({product, frete, timeRemaining, quantidade, brinde, descontoPix}:Pro
       trustPercent={trustPercent}
       timeRemaining={timeRemaining}
       quantidade={quantidade}
-      brinde={brinde ? {imageUrl:brinde.ImageUrl as string, productName:brinde.ProductName as string} : undefined}
+      combo={combo}
     />
   }else{
     return <CardProd
@@ -519,7 +523,7 @@ const Card=({product, frete, timeRemaining, quantidade, brinde, descontoPix}:Pro
       trustPercent={trustPercent}
       timeRemaining={timeRemaining}
       quantidade={quantidade}
-      brinde={brinde ? {imageUrl:brinde.ImageUrl as string, productName:brinde.ProductName as string} : undefined}
+      combo={combo}
     />
   }
 }
