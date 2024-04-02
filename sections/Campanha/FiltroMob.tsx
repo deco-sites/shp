@@ -1,6 +1,6 @@
 import { useRef, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
-import type { Filtros } from 'deco-sites/shp/types/CampanhaTypes.ts'
+import type { Filtros } from 'deco-sites/shp/types/CompreJuntoTypes.ts'
 
 
 interface Props{

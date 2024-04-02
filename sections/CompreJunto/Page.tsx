@@ -1,6 +1,6 @@
 // deno-lint-ignore-file no-explicit-any
 import { LoaderReturnType, SectionProps } from 'deco/types.ts'
-import { TipoDeFiltro, Filtros } from 'deco-sites/shp/types/CampanhaTypes.ts'
+import { TipoDeFiltro, Filtros, objBuyTogether, comboObj, FinalProd, Filter } from 'deco-sites/shp/types/CompreJuntoTypes.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { Product } from 'apps/commerce/types.ts'
 import { useEffect, useState, useRef } from 'preact/hooks'
@@ -45,30 +45,6 @@ export type Props={
   } 
 } & NeedDesc & TipoDeFiltro & (Contador | SemContador)
 
-type FinalProd={
-  prod:Product
-  combo?:comboObj
-}
-
-type Filter={
-  index:number
-  value:string
-  fqType:string
-}
-
-interface objBuyTogether{
-  sku:string,
-  promotion:string,
-}
-
-interface comboObj{
-  id:string
-  image:string
-  name:string
-  finalPrice:number
-  link:string
-}
-
 const loaderData= async(idCollection:string, order?:string, filter?:string):Promise<Product[]>=>{
   const arrQueryString=[`fq=productClusterIds:${idCollection}`]
   if(order && !(order==='' || order==='inicio')) arrQueryString.push(`O=${order}`)
@@ -98,7 +74,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   const [products, setProducts]=useState<Product[]>(produtos || [])
   const [order, setOrder]=useState('inicio')
   const [loading,setLoading]=useState(true)
-  const [combos,setCombos]=useState<any>(null)
+  const [mainProducts, setMainProducts]=useState<FinalProd[]>([])
   const [finalProducts,setFinalProducts]=useState<FinalProd[]>([])
   const [sentEvent,setSentEvent]=useState(false)
 
@@ -118,11 +94,14 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
 
   const fetchData=async()=>{
     setLoading(true)
-    const filterVal=filterSelected.fqType==='P' ? '['+filterSelected.value+']' : filterSelected.value
-    const Filter=filterSelected.value==='' ? undefined : `${filterSelected.fqType}:${filterVal}`
-    console.log(Filter)
-    const data=await loaderData(collection, order, Filter)
-    setProducts(data)
+    if(filterSelected.fqType!=='COMBO'){
+      const filterVal=filterSelected.fqType==='P' ? '['+filterSelected.value+']' : filterSelected.value
+      const Filter=filterSelected.value==='' ? undefined : `${filterSelected.fqType}:${filterVal}`
+      const data=await loaderData(collection, order, Filter)
+      setProducts(data)
+    }else{
+      setFinalProducts(mainProducts.filter(item=>item.combo?.id===filterSelected.value))
+    }
   }
 
   useEffect(()=>{
@@ -157,7 +136,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
 
       for (const product of products){
         const comboSkus = await loaderBuyTogether(product.sku)
-        comboSkus.forEach(combo=>!combos.includes(combo) && combos.push(combo))
+        comboSkus.forEach(combo=>{!combos.some(comb=>comb.sku===combo.sku) && combos.push(combo)})
         prodsWithCombos.push({...product, comboId:comboSkus[0]?.sku})
       }
 
@@ -192,7 +171,10 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
       return finalProds
     }
 
-    checkCombos().then((resp)=>setFinalProducts(resp))
+    checkCombos().then((resp)=>{
+      setMainProducts(resp)
+      setFinalProducts(resp)
+    })
   },[products])
 
   useEffect(()=>{
