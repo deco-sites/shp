@@ -86,7 +86,6 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
   const [products, setProducts]=useState<Product[]>(produtos || [])
   const [order, setOrder]=useState('inicio')
   const [loading,setLoading]=useState(true)
-  const [gifts,setGifts]=useState<any>(null)
   const [finalProducts,setFinalProducts]=useState<FinalProd[]>([])
   const [sentEvent,setSentEvent]=useState(false)
 
@@ -110,6 +109,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     const Filter=filterSelected.value==='' ? undefined : `${filterSelected.fqType}:${filterVal}`
     console.log(Filter)
     const data=await loaderData(collection, order, Filter)
+    console.log(data)
     setProducts(data)
   }
 
@@ -139,6 +139,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     }
 
     const checkCompreGanhe=async()=>{
+      let gifts:any=null
       const giftsSkus=products.reduce((acc:string[],obj)=>{
         const giftSkus=obj.offers?.offers[0].giftSkuIds
 
@@ -152,22 +153,26 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
 
         console.log(objGifts, objGifts.filter(obj=>!props.compreEGanhe?.naoMostrar.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
-        setGifts(objGifts.filter(obj=>!props.compreEGanhe?.naoMostrar.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
+
+        gifts=objGifts.filter(obj=>!props.compreEGanhe?.naoMostrar.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase())))
       }
+
+      setFinalProducts(products.map(product=>{
+        if(gifts){
+          const brindeObj=gifts.find((obj:any)=> product.offers?.offers[0].giftSkuIds?.includes(obj.Id.toString()))
+          return {prod:product, brinde:brindeObj}
+        }else{
+          return {prod:product, brinde:undefined}
+        }
+      }))
     }
-    checkCompreGanhe().then(()=>setLoading(false))
+    
+    checkCompreGanhe()
   },[products])
 
   useEffect(()=>{
-    setFinalProducts(products.map(product=>{
-      if(gifts){
-        const brindeObj=gifts.find((obj:any)=> product.offers?.offers[0].giftSkuIds?.includes(obj.Id.toString()))
-        return {prod:product, brinde:brindeObj}
-      }else{
-        return {prod:product, brinde:undefined}
-      }
-    }))
-  },[gifts])
+    finalProducts.length && setLoading(false)
+  },[finalProducts])
 
   useEffect(()=>{
     if(typeof globalThis.window!=='undefined' && !(tipo===null || typeof tipo==='string')){
