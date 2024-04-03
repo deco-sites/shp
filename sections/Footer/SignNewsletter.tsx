@@ -25,7 +25,7 @@ const SignNewsletter = () => {
       
       const StyleTag=document.createElement('style')
       StyleTag.innerHTML=`
-        #footer-057c7ba33caa73ecd1d1 h1{
+        #footer-057c7ba33caa73ecd1d1 p{
           text-align:center!important;
           font-size:24pt!important;
         }

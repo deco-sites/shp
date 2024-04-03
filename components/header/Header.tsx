@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'preact/hooks'
 import { itemToAnalyticsItem, useCart } from "apps/vtex/hooks/useCart.ts"
 import MenuItem from './MenuItem.tsx'
 import MenuItemDesk from './MenuItemDesktop.tsx'
+import GravataTopo, {GravataProps} from './GravataTopo.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import SearchMenuBar from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchMenuBar.tsx'
 import Cart from 'deco-sites/shp/components/minicart/Cart.tsx'
@@ -9,9 +10,10 @@ import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 export interface Props{
   descontoPix:number
+  gravata:GravataProps
 }
 
-const HeaderSHP = ({descontoPix}:Props) => {
+const HeaderSHP = ({descontoPix, gravata}:Props) => {
 
   const [isMobile, setIsMobile] = useState(globalThis.window.innerWidth <= 768)
 
@@ -144,6 +146,7 @@ const HeaderSHP = ({descontoPix}:Props) => {
       </div>
       
       <div className='z-10 absolute re1:fixed top-0 w-full'>
+        <GravataTopo banner={gravata.banner} bgColor={gravata.bgColor} link={gravata.link}/>
         <div className='h-16 flex p-4 re2:text-sm re3:text-base bg-[#000] items-center justify-center re1:pt-4 re1:pb-10 re2:px-2 re3:px-4 re4:px-32 re5:px-52 re1:h-28'>
           {isMobile && (
             <button /* menuBar */
@@ -165,7 +168,7 @@ const HeaderSHP = ({descontoPix}:Props) => {
           </a>
 
           {!isMobile && (
-            <div className='hidden re1:flex gap-6 absolute top-[70%] re5:left-[30%]'>
+            <div className='hidden re1:flex gap-6 absolute top-[80%] re5:left-[30%]'>
               <div onMouseOver={gamerHover} className={borderGamer}>
                 <a href='/computadores-gamer/' className='font-bold text-secondary text-sm cursor-pointer'>
                   PC Gamer
@@ -929,6 +932,7 @@ const HeaderSHP = ({descontoPix}:Props) => {
           </>
         )}
       </div>
+      <div className='h-[26px] re1:h-[60px]'/>
       <div className='h-28'/>
     </>
   )

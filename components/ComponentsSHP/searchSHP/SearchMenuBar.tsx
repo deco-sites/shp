@@ -217,7 +217,7 @@ const SearchMenuBar=()=>{
 
       <div
           ref={divInputSearchMobile}
-          className='flex w-full h-12 items-center justify-between absolute top-16 bg-base-100 re1:hidden'
+          className='flex w-full h-12 items-center justify-between absolute top-[5.5rem] bg-base-100 re1:hidden'
         >
           <label className='flex justify-between items-center w-[90%] m-auto bg-black rounded-md px-4 py-2'>
             <input
