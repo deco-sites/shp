@@ -13,13 +13,13 @@ export interface GravataProps{
 
 const GravataTopo=({ link, banner, bgColor }:GravataProps)=>{
   return (
-    <a href={link} className="flex items-center justify-center w-full h-[26px] re1:h-[60px]" style={{backgroundColor:bgColor}}>
+    <a href={link} className="flex items-center justify-center w-full h-[40px] re1:h-[60px]" style={{backgroundColor:bgColor}}>
       <Picture>
         <Source
           media="(max-width: 767px)"
           src={banner.mobile}
           width={423}
-          height={26}
+          height={40}
         />
         <Source
           media="(min-width: 768px)"
@@ -28,7 +28,7 @@ const GravataTopo=({ link, banner, bgColor }:GravataProps)=>{
           height={60}
         />
         <img
-          className='h-[26px] re1:h-[60px] w-[423px] re1:w-[1232px] '
+          className='h-[40px] re1:h-[60px] w-[423px] re1:w-[1232px] '
           src={banner.desktop}
           alt={banner.alt}
           width={1232}
