@@ -932,7 +932,7 @@ const HeaderSHP = ({descontoPix, gravata}:Props) => {
           </>
         )}
       </div>
-      <div className='h-[26px] re1:h-[60px]'/>
+      <div className='h-[40px] re1:h-[60px]'/>
       <div className='h-28'/>
     </>
   )
