@@ -1,5 +1,6 @@
 export interface FiltroType{
   name:string
+  showName?:boolean
   iconURL:string
   iconTamanho:{
     width:number

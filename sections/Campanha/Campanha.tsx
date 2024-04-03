@@ -28,6 +28,7 @@ interface Contador{
   inicioDaOferta:string
   /** @description formato AAAA-MM-DD*/
   finalDaOferta:string
+  ofertaMadruga?:boolean
 }
 
 interface SemContador{contador:false}
@@ -61,6 +62,25 @@ type Filter={
   fqType:string
 }
 
+const createContadorMadrugada=()=>{
+  const agora=new Date()
+  const horas = agora.getHours()
+  let inicioContador: Date
+  let fimContador: Date
+
+  if (horas < 20) {
+    // Antes das 20:00, o contador ainda não começou hoje
+    inicioContador = new Date(agora.setHours(20, 0, 0, 0)) // Define para hoje às 20:00
+    fimContador = new Date(inicioContador.getTime() + (14 * 60 * 60 * 1000)) // Adiciona 14 horas para acabar às 10:00 do dia seguinte
+  } else {
+    // Depois das 20:00, o contador já começou
+    inicioContador = new Date(agora.setHours(20, 0, 0, 0)) // Começou hoje às 20:00
+    fimContador = new Date(agora.setHours(34, 0, 0, 0)) // Define para amanhã às 10:00 (34 horas porque 24 + 10)
+  }
+
+  return fimContador
+}
+
 const loaderData= async(idCollection:string, order?:string, filter?:string):Promise<Product[]>=>{
   const arrQueryString=[`fq=productClusterIds:${idCollection}`]
   if(order && !(order==='' || order==='inicio')) arrQueryString.push(`O=${order}`)
@@ -79,7 +99,11 @@ export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoP
 }
 
 const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao, descontoPix, ...props}:SectionProps<typeof loader>)=>{
-  const finalDate = props.contador ? new Date(props.finalDaOferta) : undefined
+  const finalDate = props.contador ? new Date(
+    props.ofertaMadruga ? 
+    createContadorMadrugada() : 
+    props.finalDaOferta
+  ) : undefined
   const timeRemaining:TimeRemaining|undefined=props.contador ? useTimer(finalDate) : undefined
 
   const [filterSelected, setFilterSelected]=useState<Filter>({index:777,value:'inicio',fqType:''})
@@ -109,7 +133,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     const Filter=filterSelected.value==='' ? undefined : `${filterSelected.fqType}:${filterVal}`
     console.log(Filter)
     const data=await loaderData(collection, order, Filter)
-    console.log(data)
+    console.log('Fetched Products: '+data)
     setProducts(data)
   }
 
@@ -166,7 +190,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         }
       }))
     }
-    
+
     checkCompreGanhe()
   },[products])
 
@@ -240,13 +264,14 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         <ul className='hidden re1:grid gap-32 my-4 items-center justify-center px-8' style={{ gridTemplateColumns: `repeat(${tipo.tipoDeFiltro.length+1}, auto)` }} ref={ulFilters}>
           {tipo.tipoDeFiltro.map((filtro,idx)=>(
             <li data-index={idx} data-value={filtro.value} data-fq={filtro.fqType} 
-              className={`flex cursor-pointer py-2 border-b-2 border-b-transparent ${setasPadrao && `after:content-[""] after:min-w-[70%] 
+              className={`flex flex-col items-center cursor-pointer py-2 border-b-2 border-b-transparent ${setasPadrao && `after:content-[""] after:min-w-[70%] 
               after:min-h-full after:bg-[url(https://shopinfo.vteximg.com.br/arquivos/lp-captacao-black-2021-seta.png)] after:bg-contain after:bg-no-repeat after:bg-center after:-rotate-90`}`}
             >
               <Image src={filtro.iconURL} width={filtro.iconTamanho.width} height={filtro.iconTamanho.height}
                 onClick={handleClickFilters}
                 className='hover:scale-105'
               />
+              {filtro.showName && <p className='mt-1 text-secondary font-bold'>{filtro.name}</p>}
             </li>
           ))}
 
