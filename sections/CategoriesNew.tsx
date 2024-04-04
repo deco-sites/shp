@@ -46,7 +46,7 @@ const Categories = ({ Categs=[] }: Props) => {
 
   return (
     <div className='my-5 px-[5%] re1:px-[15%]'>
-      <p className='text-secondary text-left text-3xl font-bold my-2'>
+      <p className='uppercase text-secondary text-left text-xl re1:text-4xl font-bold my-2'>
         Categorias
       </p>
       <div className='flex flex-col' id={id}>

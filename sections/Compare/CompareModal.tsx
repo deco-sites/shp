@@ -4,12 +4,14 @@ import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Icon from "deco-sites/shp/components/ui/Icon.tsx";
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import AddToCartButton from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
+import { DescontoPIX } from "deco-sites/shp/FunctionsSHP/DescontoPix.ts";
 
 interface Props{
   PCs:PcContextProps[]
+  descontoPix?:number
 }
 
-const PCCard=({PC}:{PC:PcContextProps})=>{
+const PCCard=({PC, descontoPix}:{PC:PcContextProps, descontoPix?:number})=>{
   const {removePC}=useCompareContext()
   const buttonDiv=useRef<HTMLDivElement>(null)
 
@@ -24,7 +26,7 @@ const PCCard=({PC}:{PC:PcContextProps})=>{
       <Image width={150} height={150} src={PC.imgUrl} fetchPriority='high' decoding='sync' loading='eager'/>
       <a href={PC.linkProd} className='line-clamp-3 text-sm text-center'>{PC.name}</a>
       <span className='text-[#25d366] text-lg font-bold'>{PC.parcelas}x {PC.valorParcela.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}</span>
-      <span className='text-xs text-[#b4b4b4]'>ou por {PC.precoVista.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</span>
+      <span className='text-xs text-[#b4b4b4]'>ou por {(descontoPix ? DescontoPIX(PC.precoVista, descontoPix) : PC.precoVista).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</span>
       <button className='bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'
         onClick={()=>{(buttonDiv.current?.querySelector('button[data-deco="add-to-cart"]') as HTMLDivElement)?.click()}}
       >Comprar</button>
@@ -43,7 +45,7 @@ const PCCard=({PC}:{PC:PcContextProps})=>{
   )
 }
 
-const Especificacoes=({PCs}:Props)=>{
+const Especificacoes=({PCs}:{PCs:PcContextProps[]})=>{
   const [isOpen, setIsOpen]=useState(true)
   
   return(
@@ -118,7 +120,7 @@ const Especificacoes=({PCs}:Props)=>{
   )
 }
 
-const Games=({PCs}:Props)=>{
+const Games=({PCs}:{PCs:PcContextProps[]})=>{
   const [isOpen, setIsOpen]=useState(true)
   const [fps,setFps]=useState<Array<Record<string,number>|undefined>>([])
   const [games, setGames]=useState<string[]>([])
@@ -203,7 +205,7 @@ const Games=({PCs}:Props)=>{
   )
 }
 
-const CompareModal = ({PCs}:Props) => {
+const CompareModal = ({PCs, descontoPix}:Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(()=>{PCs.length<1 && closeModal()},[PCs])
@@ -233,7 +235,7 @@ const CompareModal = ({PCs}:Props) => {
               <button className='absolute -right-[5%] re1:right-0 -top-[5%] re1:top-0 cursor-poiter btn btn-sm btn-circle bg-neutral border-transparent' onClick={closeModal}>✕</button>
             </div>
             <div className='flex flex-col gap-10 relative re1:static overflow-y-auto overflow-x-auto w-full re1:scrollbar-shp'>
-              <div className='grid grid-cols-5 gap-7 min-w-max re1:min-w-[unset]'><div className='w-[180px]'/>{PCs.map((PC)=><PCCard PC={PC}/>)}</div>
+              <div className='grid grid-cols-5 gap-7 min-w-max re1:min-w-[unset]'><div className='w-[180px]'/>{PCs.map((PC)=><PCCard PC={PC} descontoPix={descontoPix}/>)}</div>
               <Especificacoes PCs={PCs} />
               <Games PCs={PCs} />
             </div>

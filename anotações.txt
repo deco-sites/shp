@@ -1,5 +1,5 @@
 Precisa arrumar:
  Arrumar formulário Institucional Contato pra mudar pra RD
+ Compare pra usar o PIX do App (ver como puxar o site em um Context)
 Bugs pra arrumar:
-Possiveis melhoras: 
- filtro de jogos na pagina de pc
+Possiveis melhoras:
