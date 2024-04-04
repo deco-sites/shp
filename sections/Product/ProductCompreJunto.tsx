@@ -4,7 +4,7 @@ import ProductCompreJunto, {
 import { AppContext } from "deco-sites/shp/apps/site.ts";
 import { SectionProps } from "deco/types.ts";
 
-export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+export const loader = (props: Omit<Props,'descontoPix'>, _req: Request, ctx: AppContext & {descontoPix:number}) => {
   return {
     ...props,
     descontoPix: ctx.descontoPix,
