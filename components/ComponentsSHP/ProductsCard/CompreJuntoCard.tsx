@@ -200,20 +200,24 @@ const CardProd=(props:CardProps)=>{
                 <p className='font-bold'>Total: <span className='text-success'>{(props.combo?.finalPrice + salePricePix).toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}</span></p>
                 <button className='w-full re1:w-[80%] py-2 flex gap-3 justify-center bg-primary border-primary hover:border-primary hover:bg-primary rounded-lg'
                   onClick={()=>{
-                    addItems({
-                      orderItems: [
-                        {
-                          id: props.prodId,
-                          seller: '1',
-                          quantity: 1,
-                        },
-                        {
-                          id: props.combo?.id ?? '',
-                          seller: '1',
-                          quantity: 1,
-                        },
-                      ],
-                    })
+                    try{
+                      addItems({
+                        orderItems: [
+                          {
+                            id: props.prodId,
+                            seller: '1',
+                            quantity: 1,
+                          },
+                          {
+                            id: props.combo?.id ?? '',
+                            seller: '1',
+                            quantity: 1,
+                          },
+                        ],
+                      })
+                    }finally{
+                      globalThis.window.location.href='/checkout'
+                    }
                   }}
                 >
                   <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png' className='h-[18px] my-auto'
