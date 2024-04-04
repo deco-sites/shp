@@ -1,7 +1,9 @@
 import { useCompareContext, CompareContextType, PcContextProps } from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import CompareModal from 'deco-sites/shp/sections/Compare/CompareModal.tsx'
+import { AppContext } from 'deco-sites/shp/apps/site.ts'
 import {useEffect} from 'preact/hooks'
+import { SectionProps } from "deco/types.ts";
 
 interface Props{
   PCs:PcContextProps[]
@@ -35,8 +37,14 @@ const PCCard=({PC}:{PC:PcContextProps})=>{
   )
 }
 
+// export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix?:number}) => {
+//   return {
+//     ...props, 
+//     descontoPix:ctx.descontoPix
+//   }
+// }
+
 const Compare=({PCs}:Props)=>{
-  // useEffect(()=>console.log(PCs),[PCs])
 
   return (
     <div className='fixed bottom-0 left-0 w-full re1:h-[100px] bg-black flex flex-col re1:flex-row p-[15px] re1:py-[15px] re1:px-0 z-[11]'>
@@ -46,7 +54,7 @@ const Compare=({PCs}:Props)=>{
         {PCs[2] ? <PCCard PC={PCs[2]}/> : <Vazio />}
         {PCs[3] ? <PCCard PC={PCs[3]}/> : <Vazio />}
       </div>
-      <CompareModal PCs={PCs}/>
+      <CompareModal PCs={PCs} />
     </div>
   )
 }
