@@ -1,4 +1,4 @@
-import { useEffect, useId, useState, useCallback, useRef } from 'preact/hooks'
+import { useId } from 'preact/hooks'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
@@ -43,9 +43,6 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
   const {days, hours, minutes, seconds}=useTimer(finalDate)
 
-  const prev = useRef<HTMLDivElement>(null)
-  const next = useRef<HTMLDivElement>(null)
-
   if (!produtos || produtos.length === 0) {
     return <></>
   }
@@ -64,7 +61,7 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
               {titulo}
             </span>
             <p className='w-[200px] text-white re1:text-sm text-xs' dangerouslySetInnerHTML={{__html:CTA.textoCTA}}/>
-            <a className='re1:py-[8px] re1:px-[32px] items-center re1:border border-[#F0F0F0] inline-flex gap-2 cursor-pointer rounded-lg'>
+            <a href={CTA.linkCTA} className='re1:py-[8px] re1:px-[32px] items-center re1:border border-[#F0F0F0] inline-flex gap-2 cursor-pointer rounded-lg'>
               <p className='hidden re1:block text-white'>Confira</p> 
               <svg className='re1:hidden' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M20.03 12C20.03 7.59 16.41 3.97 12 3.97C7.59 3.97 3.97 7.59 3.97 12C3.97 16.41 7.59 20.03 12 20.03C16.41 20.03 20.03 16.41 20.03 12ZM22 12C22 17.54 17.54 22 12 22C6.46 22 2 17.54 2 12C2 6.46 6.46 2 12 2C17.54 2 22 6.46 22 12ZM13.54 13V16L17.5 12L13.54 8V11H6.5V13" fill="white"></path>

@@ -6,10 +6,8 @@ import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
-import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
-import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
-import { AppContext } from "deco-sites/shp/apps/site.ts";
-import { SectionProps } from "deco/types.ts";
+import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
+import { VtexTypeToAnalytics } from 'deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts'
 
 export interface Props{
   fqName:string
@@ -21,6 +19,7 @@ export interface Props{
     categoryName:string,
     imgUrl:string
   }>
+  descontoPix:number
 }
 
 const fetchFilters=async (idCateg:string)=> await invoke['deco-sites/shp'].loaders.getFacetsByCategId({categoryId:idCateg})
@@ -54,14 +53,7 @@ interface FiltroObj{
   value:string
 }
 
-export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
-  return {
-    ...props, 
-    descontoPix:ctx.descontoPix
-  }
-}
-
-const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo, descontoPix }:SectionProps<typeof loader>)=>{
+const SearchSub=({ iconesNavegacionais, produtos, fqValue, fqName, termo, descontoPix }:Props)=>{
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(globalThis.globalThis.window.innerWidth<=768)
   const [fromTo,setFromTo]=useState<Record<string,number>>({from:0, to:19})

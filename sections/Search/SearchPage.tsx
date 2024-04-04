@@ -6,6 +6,7 @@ import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNaveg
 import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import {sendEvent} from 'deco-sites/shp/sdk/analytics.tsx'
 import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
+import { AppContext } from "deco-sites/shp/apps/site.ts";
 
 export interface Props {
   iconesNavegacionais:Array<{
@@ -17,7 +18,8 @@ export interface Props {
 
 export  const loader = async (
   {iconesNavegacionais}:Props,
-  _req:Request
+  _req:Request,
+  ctx:AppContext & {descontoPix:number}
 ) => {
   const REQ = _req
 
@@ -59,10 +61,10 @@ export  const loader = async (
     }
   }).catch(err=>console.error(err)) || []
 
-  return { data, q, iconesNavegacionais, fqName, fqVal}
+  return { data, q, iconesNavegacionais, fqName, fqVal, descontoPix:ctx.descontoPix}
 }
 
-const SearchPage=({data, q, iconesNavegacionais, fqName, fqVal}:SectionProps<typeof loader>)=>{
+const SearchPage=({data, q, iconesNavegacionais, fqName, fqVal, descontoPix}:SectionProps<typeof loader>)=>{
   if(!data.length){
     return (
       <div className='re1:px-[5%] re4:px-[15%] appearance-none'>
@@ -86,7 +88,7 @@ const SearchPage=({data, q, iconesNavegacionais, fqName, fqVal}:SectionProps<typ
       </div>)
   }
 
-  return <CompareContextProvider>{(fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais}/>}</CompareContextProvider>
+  return <CompareContextProvider>{(fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal} descontoPix={descontoPix}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} descontoPix={descontoPix}/>}</CompareContextProvider>
 }
 
 export default SearchPage

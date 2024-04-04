@@ -11,8 +11,6 @@ import Filtro from './Filtro.tsx'
 import FiltroModal from './FiltroModal.tsx'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
-import { AppContext } from "deco-sites/shp/apps/site.ts";
-import { SectionProps } from "deco/types.ts";
 
 export interface Props{
   produtos:any
@@ -140,14 +138,7 @@ const LimparFiltros=({filters}:{filters:SelectedFilter[]})=>{
   )
 }
 
-export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
-  return {
-    ...props, 
-    descontoPix:ctx.descontoPix
-  }
-}
-
-const Search=({ produtos, termo, iconesNavegacionais=[], descontoPix }:SectionProps<typeof loader>)=>{
+const Search=({ produtos, termo, iconesNavegacionais=[], descontoPix }:Props)=>{
 
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(globalThis.window.innerWidth<=768)
