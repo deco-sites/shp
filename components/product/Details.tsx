@@ -119,7 +119,7 @@ interface Flag{
     const arm = pecas?.find((peca) => peca?.type === 'HD' || peca?.type === 'SSD')
   
     return (
-      <div className='flex justify-evenly items-start re1:mt-6'>
+      <div className='flex justify-between re1:justify-evenly items-start re1:mt-6 scrollbar-none overflow-x-scroll'>
         <div className='hidden re1:flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
           <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto">
             <Picture>
@@ -140,11 +140,11 @@ interface Flag{
           </div>
           <div className='flex flex-row re1:flex-col items-center'>
             <span className='hidden text-sm re1:block'>{placa?.type}:</span>
-            <span className='text-sm re1:max-w-[90px] text-center'>{placa?.value}</span>
+            <span className='text-[13px] re1:text-sm re1:max-w-[90px] text-center'>{placa?.value}</span>
           </div>
         </div>
         <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
-          <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] mt-auto re1:mb-auto re1:mt-0">
+          <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto re1:mt-0">
             <Picture>
               <Source
                 media='(max-width:768px)'
@@ -163,7 +163,7 @@ interface Flag{
           </div>
           <div className='flex flex-row re1:flex-col items-center'>
             <span className='hidden text-sm re1:block'>{mem?.type}:</span>
-            <span className='text-sm re1:max-w-[90px] text-center'>{mem?.value}</span>
+            <span className='text-[13px] re1:text-sm re1:max-w-[90px] text-center'>{mem?.value}</span>
           </div>
         </div>
         <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
@@ -186,11 +186,11 @@ interface Flag{
           </div>
           <div className='flex flex-row re1:flex-col items-center'>
             <span className='hidden text-sm re1:block'>{processador?.type}:</span>
-            <span className='text-sm re1:max-w-[90px] text-center'>{processador?.value}</span>
+            <span className='text-[13px] re1:text-sm re1:max-w-[90px] text-center'>{processador?.value}</span>
           </div>
         </div>
         <div className='flex re1:flex-col justify-center items-center gap-1 re1:gap-2'>
-          <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] mt-auto re1:mb-auto re1:mt-0">
+          <div className="flex h-[15px] re1:h-[30px] w-[15px] re1:w-[30px] my-auto re1:mb-auto re1:mt-0">
             <Picture>
               <Source
                 media='(max-width:768px)'
@@ -209,7 +209,7 @@ interface Flag{
           </div>
           <div className='flex flex-row re1:flex-col items-center'>
             <span className='hidden text-sm re1:block'>{arm?.type}:</span>
-            <span className='text-sm re1:max-w-[90px] text-center'>{arm?.value?.replace('HD','').replace('SSD','')}</span>
+            <span className='text-[13px] re1:text-sm re1:max-w-[90px] text-center'>{arm?.value?.replace('HD','').replace('SSD','')}</span>
           </div>
         </div>
       </div>
@@ -329,11 +329,10 @@ function ProductInfo({ page, pix, flags }: Props) {
 
     return (
       <>
-        {PCGamer && <div className='block re1:hidden mb-4'><PcSpec page={page} /></div>}
         <div className='flex flex-col gap-3'>
           <div>
             <ul className='flex gap-[10px] overflow-x-scroll re1:overflow-x-auto whitespace-nowrap scrollbar-none'>
-              <li className='cursor-default flex items-center justify-center bg-[#DEDA35] text-black py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>12% NO PIX</li>
+              <li className='cursor-default flex items-center justify-center bg-[#DEDA35] text-black py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg'>{pix}% NO PIX</li>
               {Flags.map((flag:Flag)=><li style={{backgroundColor:flag.bgColor}} className={`cursor-default flex items-center justify-center text-${flag.textColor} py-1 px-2 text-xs font-bold w-fit h-6 rounded-lg`}>{flag.value}</li>)}
             </ul>
           </div>
@@ -360,15 +359,18 @@ function ProductInfo({ page, pix, flags }: Props) {
                 <span className='text-yellow-300 text-xs'>({objTrust?.count})</span>
               </div>
             }
-            <p onClick={()=>{
-              sendEvent({name:'brand', params:{
-                currency:product?.offers?.priceCurrency ?? 'BRL',
-                value:product?.offers?.offers[0].price,
-                item_id:product.isVariantOf?.model ?? product.productID,
-                item_name:product.name
-              }}
-              )}
-            } className='text-success text-lg'>
+            <p 
+            //   Comentei o evento pois a agencia pediu
+            //   onClick={()=>{
+            //     sendEvent({name:'brand', params:{
+            //       currency:product?.offers?.priceCurrency ?? 'BRL',
+            //       value:product?.offers?.offers[0].price,
+            //       item_id:product.isVariantOf?.model ?? product.productID,
+            //       item_name:product.name
+            //     }}
+            //   )}
+            // } 
+            className='text-success text-lg'>
               {brand?.name}
             </p>
           </div>
@@ -382,6 +384,17 @@ function ProductInfo({ page, pix, flags }: Props) {
             <span class='text-base-content'>CÓD. {isVariantOf?.model}</span>
           </div>
         </div>
+        {PCGamer && (<>
+          <div className='block re1:hidden my-6'><PcSpec page={page} /></div>
+          <button className='flex gap-1 re1:hidden items-center cursor-pointer' onClick={()=>{
+			const secSpec=document.querySelector('section[data-manifest-key="deco-sites/shp/sections/Product/ProductSpecification.tsx"] label')
+			secSpec?.scrollIntoView({behavior:'smooth'})
+			secSpec?.click()
+          }}>
+          <span className='text-primary'>Ver especificações</span>
+          <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-setinha.png' width={8} height={5} fetchPriority='low' loading='lazy'/>
+          </button>
+        </>)}
         {isAvailable ? 
           (
             <>
@@ -397,12 +410,14 @@ function ProductInfo({ page, pix, flags }: Props) {
                     <span class='line-through text-xs text-base-content'>
                       De: {formatPrice(listPrice, offers!.priceCurrency!)}
                     </span>
-                    <p class='font-medium text-xl re1:text-sm re4:text-lg flex gap-1'>
-                      <span className='text-primary text-3xl re1:text-2xl re4:text-3xl font-bold'>
+                    <p class='flex gap-1'>
+                      <span className='text-primary text-3xl re4:text-3xl font-bold'>
                         {formatPrice(((pix !== 1 && price !== undefined && pix) ? (price-(price*(pix/100))) : price ), offers!.priceCurrency!)}
                       </span>
-                      <span>no PIX</span>
+					  {!PCGamer && <span class='mt-auto font-medium text-sm text-base-content re1:hidden'>no PIX</span>}
                     </p>
+					{!PCGamer && <p className='re1:hidden'>ou por {(maxInstallments*valorParcela).toLocaleString('pt-BR', {style:'currency', currency:'brl'})} em {maxInstallments}x de <span className='text-primary'>{valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span></p>}
+                    {PCGamer && <span class='font-medium text-xl re1:text-sm re4:text-lg'>no PIX</span>}
                   </div>
                   <div className='hidden re1:flex items-end'>
                     {(seller && renderizado) && (
@@ -418,29 +433,88 @@ function ProductInfo({ page, pix, flags }: Props) {
                     )}
                   </div>
                 </div>
-                <div className='flex flex-col gap-6 mt-6'>
+                {PCGamer ? (<div className='flex flex-col gap-6 mt-6 text-base-content'>
+                  <span className='text-success font-bold text-sm'>Economize - {formatPrice(pix && (price!*(pix/100)),offers!.priceCurrency!)}</span>
                   <div className='flex gap-2 items-center'>
-                    <div className='w-[30px] h-[30px]'>
+                    <div className='w-[30px] h-[30px] my-auto brightness-50'>
                       <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-home-beneficios-pix-.png'
-                        width={25} height={25} decoding='auto' loading='eager' fetchPriority='high'
+                        width={30} height={30} decoding='auto' loading='eager' fetchPriority='high'
                       />
                     </div>
-                    <p className='font-bold text-sm'>No PIX - <span className='text-success'>Economia de {formatPrice(pix && (price!*(pix/100)),offers!.priceCurrency!)}</span>
-                    </p>
+                    <p className='text-sm'>Parcele sua compra<br/> no PIX</p>
                   </div>
-                  <div className='flex gap-2 text-sm items-center'>
+                  {/* Comentado pq atualmente estamos sem boleto */}
+                  {/* <div className='flex gap-2 text-sm items-center'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="21" viewBox="0 0 30 21" fill="none"><path d="M1 0H0V21H1V0Z" fill="white"></path><path d="M30 0H29.3408V21H30V0Z" fill="white"></path><path d="M28.7902 0H28.1323V21H28.7902V0Z" fill="white"></path><path d="M27.3178 0H25.4243V21H27.3178V0Z" fill="white"></path><path d="M22.746 0H22.0868V21H22.746V0Z" fill="white"></path><path d="M21.3693 0H19.064V21H21.3693V0Z" fill="white"></path><path d="M17.3623 0H16.7031V21H17.3623V0Z" fill="white"></path><path d="M16.2186 0H14.2798V21H16.2186V0Z" fill="white"></path><path d="M2.58114 0H1.59167V21H2.58114V0Z" fill="white"></path><path d="M4.06534 0H3.40613V21H4.06534V0Z" fill="white"></path><path d="M6.15305 0H5.49384V21H6.15305V0Z" fill="white"></path><path d="M12.4162 0H11.757V21H12.4162V0Z" fill="white"></path><path d="M10.8776 0H10.2184V21H10.8776V0Z" fill="white"></path><path d="M8.96335 0H6.9093V21H8.96335V0Z" fill="white"></path><path d="M25.0681 0H24.1616V21H25.0681V0Z" fill="white"></path></svg>
                     <span>No boleto a vista com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)}</span>
-                  </div>
+                  </div> */}
                   {maxInstallments!==0 && 
-                    <div className='flex gap-2 text-sm items-center'>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg>
-                      <p>
-                        Em 1x no cartão com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)} <br/> ou parcelado em <span class='text-sm font-bold'>{maxInstallments}x de {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
-                      </p>
-                    </div>
+                    <>
+                      <div className='flex gap-2 text-sm items-center'>
+                        <div className='w-[30px] h-[30px] my-auto'>
+                          <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-cartao-1x.jpg'
+                            width={30} height={20} decoding='auto' loading='eager' fetchPriority='high'
+                          />
+                        </div>
+                        {/* SVG cartão */}
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg> */}
+                        <p>
+                          à vista no cartão por <br/> <span className='text-success font-bold'>{formatPrice(price!-price!*(5/100),offers!.priceCurrency!)}</span> 
+                        </p>
+                      </div>
+
+                      <div className='flex gap-2 text-sm items-center'>
+                      <div className='w-[30px] h-[30px] my-auto'>
+                          <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-cartao10x.jpg'
+                            width={30} height={20} decoding='auto' loading='eager' fetchPriority='high'
+                          />
+                        </div>
+                        {/* SVG cartão */}
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg> */}
+                        <p>
+                          parcelado no cartão em<br/>{maxInstallments}x de {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros
+                        </p>
+                      </div>
+                    </>
                   }
                 </div>
+				) : (
+				<div className='hidden re1:flex flex-col gap-6 mt-6 text-base-content'>
+                  {/* Comentado pq atualmente estamos sem boleto */}
+                  {/* <div className='flex gap-2 text-sm items-center'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="21" viewBox="0 0 30 21" fill="none"><path d="M1 0H0V21H1V0Z" fill="white"></path><path d="M30 0H29.3408V21H30V0Z" fill="white"></path><path d="M28.7902 0H28.1323V21H28.7902V0Z" fill="white"></path><path d="M27.3178 0H25.4243V21H27.3178V0Z" fill="white"></path><path d="M22.746 0H22.0868V21H22.746V0Z" fill="white"></path><path d="M21.3693 0H19.064V21H21.3693V0Z" fill="white"></path><path d="M17.3623 0H16.7031V21H17.3623V0Z" fill="white"></path><path d="M16.2186 0H14.2798V21H16.2186V0Z" fill="white"></path><path d="M2.58114 0H1.59167V21H2.58114V0Z" fill="white"></path><path d="M4.06534 0H3.40613V21H4.06534V0Z" fill="white"></path><path d="M6.15305 0H5.49384V21H6.15305V0Z" fill="white"></path><path d="M12.4162 0H11.757V21H12.4162V0Z" fill="white"></path><path d="M10.8776 0H10.2184V21H10.8776V0Z" fill="white"></path><path d="M8.96335 0H6.9093V21H8.96335V0Z" fill="white"></path><path d="M25.0681 0H24.1616V21H25.0681V0Z" fill="white"></path></svg>
+                    <span>No boleto a vista com 5% OFF por {formatPrice(price!-price!*(5/100),offers!.priceCurrency!)}</span>
+                  </div> */}
+                  {maxInstallments!==0 && 
+                    <>
+                      <div className='flex gap-2 text-sm items-center'>
+                        <div className='w-[30px] h-[30px] my-auto'>
+                          <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-cartao-1x.jpg'
+                            width={30} height={20} decoding='auto' loading='eager' fetchPriority='high'
+                          />
+                        </div>
+                        {/* SVG cartão */}
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg> */}
+                        <p>
+                          à vista no cartão por <br/> <span className='text-success font-bold'>{formatPrice(price!-price!*(5/100),offers!.priceCurrency!)}</span> 
+                        </p>
+                      </div>
+
+                      <div className='flex gap-2 text-sm items-center'>
+                      <div className='w-[30px] h-[30px] my-auto'>
+                          <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-cartao10x.jpg'
+                            width={30} height={20} decoding='auto' loading='eager' fetchPriority='high'
+                          />
+                        </div>
+                        {/* SVG cartão */}
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="31" height="21" viewBox="0 0 31 21" fill="none"><path d="M30.5 18.375V10.5H27.5V18.375H30.5Z" fill="white"></path><path d="M1.382 20.2296C1.969 20.7432 2.675 21 3.5 21H27.875C29.3247 21 30.5 19.8247 30.5 18.375H27.5H3.5V10.5V5.25V2.625H27.5V5.25H3.5V10.5H27.5H30.5V2.625C30.5 1.90312 30.2065 1.28537 29.6195 0.77175C29.0315 0.25725 28.325 0 27.5 0H3.5C2.675 0 1.969 0.25725 1.382 0.77175C0.794 1.28537 0.5 1.90312 0.5 2.625V18.375C0.5 19.0969 0.794 19.7151 1.382 20.2296Z" fill="white"></path></svg> */}
+                        <p>
+                          parcelado no cartão em<br/>{maxInstallments}x de {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros
+                        </p>
+                      </div>
+                    </>
+                  }
+                </div>)}
               </div>
               {/* Sku Selector */}
               <div class='mt-4 re1:mt-6'>
