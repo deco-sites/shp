@@ -2,6 +2,7 @@ import Image from 'deco-sites/std/components/Image.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import {useEffect, useState, useRef} from 'preact/hooks'
 import type { Product } from 'apps/commerce/types.ts'
+import removeDot from "deco-sites/shp/FunctionsSHP/removeDOTFromFilters.ts";
 
 export interface Props {
   peca: Array<{
@@ -57,7 +58,7 @@ const PCGamerIdeal = () => {
     setPlacas(specificationFilters['Placa de vídeo'])
     setProcessadores(specificationFilters['Processador'])
     setMemorias(specificationFilters['Memória'])
-    setArms([...specificationFilters['HD'], ...specificationFilters['SSD']])
+    setArms(removeDot([...specificationFilters['HD'], ...specificationFilters['SSD']]))
   }
 
   const handleSelect=async(event:Event)=>{

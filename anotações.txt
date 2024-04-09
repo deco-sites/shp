@@ -1,5 +1,6 @@
 Precisa arrumar:
  Arrumar formulário Institucional Contato pra mudar pra RD
  Compare pra usar o PIX do App (ver como puxar o site em um Context)
+ PagDepartamento passar PIX pra fora do CompareContextProvider
 Bugs pra arrumar:
 Possiveis melhoras:

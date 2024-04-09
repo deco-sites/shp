@@ -5,6 +5,8 @@ import Form from './FormularioRd.tsx'
 import ProdSlider from './ProdSlider.tsx'
 import type { Product } from 'apps/commerce/types.ts'
 import type { LoaderReturnType } from '$live/types.ts'
+import { AppContext } from "deco-sites/shp/apps/site.ts"
+import { SectionProps } from "deco/types.ts"
 
 interface Slider{
   title:string
@@ -19,7 +21,14 @@ export interface Props{
   slider2:Slider
 }
 
-const LpB2B=({slider1, slider2}:Props)=>{
+export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+  return {
+    ...props,
+    descontoPix: ctx.descontoPix,
+  }
+}
+
+const LpB2B=({slider1, slider2, descontoPix}:SectionProps<typeof loader>)=>{
   return (
     <>
       <section className='flex justify-end items-center h-max re1:h-[90vh] bg-right re1:bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-1.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-1.jpg)]'>
@@ -36,8 +45,8 @@ const LpB2B=({slider1, slider2}:Props)=>{
 
       <section className='flex justify-end items-center h-max re1:h-[90vh] bg-top re1:bg-center bg-cover bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-mobile-B2B-bg-2.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-desktop-B2B-bg-2.jpg)]'>
         <div className='flex flex-col gap-10 items-center justify-around my-4'>
-          <ProdSlider title={slider1.title} products={slider1.products} finalDaOferta={slider1.finalDaOferta} interval={slider1.interval}/>
-          <ProdSlider title={slider2.title} products={slider2.products} finalDaOferta={slider2.finalDaOferta} interval={slider2.interval}/>
+          <ProdSlider title={slider1.title} products={slider1.products} finalDaOferta={slider1.finalDaOferta} interval={slider1.interval} descontoPix={descontoPix}/>
+          <ProdSlider title={slider2.title} products={slider2.products} finalDaOferta={slider2.finalDaOferta} interval={slider2.interval} descontoPix={descontoPix}/>
         </div>
       </section>
       
@@ -70,7 +79,7 @@ const LpB2B=({slider1, slider2}:Props)=>{
         
         <div className='flex w-[80%] items-center justify-around my-8 re1:mt-32 re1:mb-0'>
           <Image className='w-[50px] h-[50px] re1:w-[150px] re1:h-[143px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Garantia.png' width={150} height={153}/>
-          <Image className='w-[50px] h-[50px] re1:w-[140px] re1:h-[153px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Frete-Gr%C3%A1tis.png' width={140} height={153}/>
+          <Image className='w-[50px] h-[50px] re1:w-[140px] re1:h-[153px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Frete-Grátis.png' width={140} height={153}/>
           <Image className='w-[69px] h-[53px] re1:w-[196px] re1:h-[153px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b--suporte.png' width={196} height={153}/>
           <Image className='w-[61px] h-[54px] re1:w-[175px] re1:h-[153px]' src='https://shopinfo.vteximg.com.br/arquivos/lp-icone-b2b-Pedido-Personalizado.png' width={175} height={153}/>
         </div>
@@ -119,7 +128,7 @@ const LpB2B=({slider1, slider2}:Props)=>{
                 </div>
               </label>
               <label className='flex gap-2 justify-center items-center h-fit re1:h-[100px] my-4'>
-                <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-lp-b2b-seguran%C3%A7a.png' className='w-[60px] h-[60px]' width={70} height={70}/>
+                <Image src='https://shopinfo.vteximg.com.br/arquivos/icone-lp-b2b-segurança.png' className='w-[60px] h-[60px]' width={70} height={70}/>
                 <div>
                   <h3 className='text-base re1:text-xl font-bold'>SEGURANÇA E CONFIABILIDADE</h3>
                   <span className='text-sm re1:text-base'>Temos o compromisso com a Privacidade e a segurança dos, clientes, por isso o nosso site conta com Certificado de Navegação Segura.</span>
