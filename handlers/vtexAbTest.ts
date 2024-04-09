@@ -1,7 +1,7 @@
 import { getSetCookies, Handler, setCookie } from "std/http/mod.ts";
 import { isFreshCtx } from "apps/website/handlers/fresh.ts";
 
-const VTEX_ENDPOINT = "secure.shopinfo.com.br";
+const VTEX_ENDPOINT = "seguro.shopinfo.com.br";
 
 const HOP_BY_HOP = [
   "Keep-Alive",
