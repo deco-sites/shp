@@ -15,6 +15,7 @@ import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnal
 import { AppContext } from "deco-sites/shp/apps/site.ts";
 import { SectionProps } from "deco/types.ts";
 import gamesCollections from 'deco-sites/shp/static/gamesCollection.json' with { type: "json" }
+import removeDot from "deco-sites/shp/FunctionsSHP/removeDOTFromFilters.ts";
 
 export interface Props{
   titleCategoria?:string
@@ -154,7 +155,7 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
   )
 }
 
-export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+export const loader = (props: Omit<Props, 'descontoPix'>, _req: Request, ctx: AppContext & {descontoPix:number}) => {
   return {
     ...props, 
     descontoPix:ctx.descontoPix
@@ -334,7 +335,15 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
         return obj
       })
 
-      let dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands,...pageData!.SpecificationFilters, 'Faixa de Preço': priceFilters}
+      let dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, 'Faixa de Preço': priceFilters}
+
+      dataFilters={
+        ...dataFilters,
+        ...Object.entries(pageData!.SpecificationFilters).reduce((acc, [key,value])=> ({
+          ...acc,
+          [key]:removeDot(value as SpecObj[])
+        }),{})
+      }
 
       if(idsDeCategoria==='10'){
         const gamesFilters:SpecObj[]=[]
