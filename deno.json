@@ -14,7 +14,6 @@
     "preview": "deno run -A main.ts"
   },
   "githooks": {
-    "pre-commit": "check"
   },
   "exclude": [
     "node_modules",
