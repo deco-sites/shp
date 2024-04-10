@@ -33,15 +33,16 @@ interface Contador{
 
 interface SemContador{contador:false}
 
-interface CompreEGanhe{
+type CompreEGanhe={
+  tem:true
   /** @description Adicione palavras chaves dos brindes q n devem aparecer. Ex: Kaspersky */
-  naoMostrar:string[]
-}
+  naoMostrar?:string[]
+}|{tem:false}
 
 export type Props={
   /** @description Não precisa preencher */
   descontoPix?:number
-  compreEGanhe?:CompreEGanhe
+  compreEGanhe:CompreEGanhe
   collection:string
   produtos: LoaderReturnType<Product[] | null>
   bannerUrl:{
@@ -173,12 +174,15 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         return acc
       },[])
       
-      if(props.compreEGanhe){
+      if(props.compreEGanhe.tem===true){
+        // Assegura ao TypeScript que naoMostrar existe aqui
+        const compreEGanhe = props.compreEGanhe as { tem: true, naoMostrar?: string[] }
+
         const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
 
-        console.log(objGifts, objGifts.filter(obj=>!props.compreEGanhe?.naoMostrar.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
+        console.log(objGifts, objGifts.filter(obj=>!compreEGanhe.naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
 
-        gifts=objGifts.filter(obj=>!props.compreEGanhe?.naoMostrar.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase())))
+        gifts=objGifts.filter(obj=>!compreEGanhe.naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase())))
       }
 
       setFinalProducts(products.map(product=>{
