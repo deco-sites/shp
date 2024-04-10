@@ -29,7 +29,7 @@ export interface Props{
     categoryName:string,
     imgUrl:string
   }>
-  descontoPix?:number
+  descontoPix:number
   /**@description Não Preencher */
 }
 
@@ -155,14 +155,7 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
   )
 }
 
-export const loader = (props: Omit<Props, 'descontoPix'>, _req: Request, ctx: AppContext & {descontoPix:number}) => {
-  return {
-    ...props, 
-    descontoPix:ctx.descontoPix
-  }
-}
-
-export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria='', iconesNavegacionais, descontoPix }:SectionProps<typeof loader>)=>{
+export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, titleCategoria='', iconesNavegacionais, descontoPix }:Props)=>{
   const [hideDescSeo,setHideDescSeo]=useState(true)
   const [loading, setLoading]=useState(true)
   const [isMobile, setIsMobile]=useState(globalThis.window.innerWidth<=768)
@@ -701,7 +694,14 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   )
 }
 
-const finalSection=(props:Props)=>{
+export const loader = (props: Omit<Props, 'descontoPix'>, _req: Request, ctx: AppContext & {descontoPix:number}) => {
+  return {
+    ...props, 
+    descontoPix:ctx.descontoPix
+  }
+}
+
+const finalSection=(props:SectionProps<typeof loader>)=>{
   return (
     <CompareContextProvider>
       <PagDepartamento {...props}/>

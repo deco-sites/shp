@@ -387,9 +387,9 @@ function ProductInfo({ page, pix, flags }: Props) {
         {PCGamer && (<>
           <div className='block re1:hidden my-6'><PcSpec page={page} /></div>
           <button className='flex gap-1 re1:hidden items-center cursor-pointer' onClick={()=>{
-			const secSpec=document.querySelector('section[data-manifest-key="deco-sites/shp/sections/Product/ProductSpecification.tsx"] label')
-			secSpec?.scrollIntoView({behavior:'smooth'})
-			secSpec?.click()
+            const secSpec=document.querySelector('section[data-manifest-key="deco-sites/shp/sections/Product/ProductSpecification.tsx"] label')
+            secSpec?.scrollIntoView({behavior:'smooth'});
+            (secSpec as HTMLElement).click()
           }}>
           <span className='text-primary'>Ver especificações</span>
           <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-setinha.png' width={8} height={5} fetchPriority='low' loading='lazy'/>

@@ -75,12 +75,11 @@ import * as $$$$$$58 from "./sections/Shelf/Filtro.tsx";
 import * as $$$$$$59 from "./sections/Shelf/Modal.tsx";
 import * as $$$$$$60 from "./sections/Shelf/Shelf.tsx";
 import * as $$$$$$61 from "./sections/TesteProMaylon.tsx";
-import * as $$$$$$62 from "./sections/TesteSection.tsx";
-import * as $$$$$$63 from "./sections/TitleAndText.tsx";
-import * as $$$$$$64 from "./sections/Vitrine.tsx";
-import * as $$$$$$65 from "./sections/WhatsApp.tsx";
-import * as $$$$$$66 from "./sections/WishlistGallery.tsx";
-import * as $$$$$$67 from "./sections/WishlistTeste.tsx";
+import * as $$$$$$62 from "./sections/TitleAndText.tsx";
+import * as $$$$$$63 from "./sections/Vitrine.tsx";
+import * as $$$$$$64 from "./sections/WhatsApp.tsx";
+import * as $$$$$$65 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$66 from "./sections/WishlistTeste.tsx";
 
 const manifest = {
   "loaders": {
@@ -160,12 +159,11 @@ const manifest = {
     "deco-sites/shp/sections/Shelf/Modal.tsx": $$$$$$59,
     "deco-sites/shp/sections/Shelf/Shelf.tsx": $$$$$$60,
     "deco-sites/shp/sections/TesteProMaylon.tsx": $$$$$$61,
-    "deco-sites/shp/sections/TesteSection.tsx": $$$$$$62,
-    "deco-sites/shp/sections/TitleAndText.tsx": $$$$$$63,
-    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$64,
-    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$65,
-    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$66,
-    "deco-sites/shp/sections/WishlistTeste.tsx": $$$$$$67,
+    "deco-sites/shp/sections/TitleAndText.tsx": $$$$$$62,
+    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$63,
+    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$64,
+    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$65,
+    "deco-sites/shp/sections/WishlistTeste.tsx": $$$$$$66,
   },
   "apps": {
     "deco-sites/shp/apps/decohub.ts": $$$$$$$$$$$0,
