@@ -38,7 +38,6 @@ import * as $ShelfIsland from "./islands/ShelfIsland.tsx";
 import * as $ShippingSimulation from "./islands/ShippingSimulation.tsx";
 import * as $SliderJS from "./islands/SliderJS.tsx";
 import * as $SpecificationIsland from "./islands/SpecificationIsland.tsx";
-import * as $TesteIsland from "./islands/TesteIsland.tsx";
 import * as $TesteMaylonIsland from "./islands/TesteMaylonIsland.tsx";
 import * as $TrustvoxIsland from "./islands/TrustvoxIsland.tsx";
 import * as $VitrineIsland from "./islands/VitrineIsland.tsx";
@@ -87,7 +86,6 @@ const manifest = {
     "./islands/ShippingSimulation.tsx": $ShippingSimulation,
     "./islands/SliderJS.tsx": $SliderJS,
     "./islands/SpecificationIsland.tsx": $SpecificationIsland,
-    "./islands/TesteIsland.tsx": $TesteIsland,
     "./islands/TesteMaylonIsland.tsx": $TesteMaylonIsland,
     "./islands/TrustvoxIsland.tsx": $TrustvoxIsland,
     "./islands/VitrineIsland.tsx": $VitrineIsland,
