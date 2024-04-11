@@ -1,16 +1,23 @@
-export const formatPrice = (
-  price: number | undefined,
-  currency: string,
-  locale = "pt-BR",
-) => {
-  const formatter = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency,
-  });
+const formatters = new Map<string, Intl.NumberFormat>();
 
-  if (!price) {
-    return null;
+const formatter = (currency: string, locale: string) => {
+  const key = `${currency}::${locale}`;
+
+  if (!formatters.has(key)) {
+    formatters.set(
+      key,
+      new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency,
+      }),
+    );
   }
 
-  return formatter.format(price);
+  return formatters.get(key)!;
 };
+
+export const formatPrice = (
+  price: number | undefined,
+  currency = "BRL",
+  locale = "pt-BR",
+) => price ? formatter(currency, locale).format(price) : null;
