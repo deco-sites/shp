@@ -179,7 +179,7 @@ const CardProd=(props:CardProps)=>{
           </>
         ) : (
           <div className='flex flex-col items-center justify-between w-[80%]'>
-            <Image src={props.brinde.imageUrl} width={150} height={150}/>
+            <Image src={props.brinde.imageUrl} width={130} height={130}/>
             <p>{props.brinde.productName}</p>
             <div className='w-full py-2 flex gap-3 justify-center bg-primary border-primary hover:border-primary hover:bg-primary rounded-lg'>
               <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png' className='h-[18px] my-auto'
@@ -427,7 +427,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
           </>
         ) : (
           <div className='flex flex-col items-center justify-between w-[80%]'>
-            <Image src={props.brinde.imageUrl} width={150} height={150}/>
+            <Image src={props.brinde.imageUrl} width={130} height={130}/>
             <p>{props.brinde.productName}</p>
             <div className='w-full py-2 flex gap-3 justify-center bg-primary border-primary hover:border-primary hover:bg-primary rounded-lg'>
               <Image src='https://shopinfo.vteximg.com.br/arquivos/vector-cart-buy-button.png' className='h-[18px] my-auto'

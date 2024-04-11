@@ -183,11 +183,14 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
         console.log(objGifts, objGifts.filter(obj=>!compreEGanhe.naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
 
         gifts=objGifts.filter(obj=>!compreEGanhe.naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase())))
+
+        console.log(gifts)
       }
 
       setFinalProducts(products.map(product=>{
         if(gifts){
-          const brindeObj=gifts.find((obj:any)=> product.offers?.offers[0].giftSkuIds?.includes(obj.Id.toString()))
+          // const brindeObj=gifts.find((obj:any)=> product.offers?.offers[0].giftSkuIds?.includes(obj.Id.toString()))
+          const brindeObj=gifts[0]
           return {prod:product, brinde:brindeObj}
         }else{
           return {prod:product, brinde:undefined}
