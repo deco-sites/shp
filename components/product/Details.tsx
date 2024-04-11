@@ -517,9 +517,9 @@ function ProductInfo({ page, pix, flags }: Props) {
                 </div>)}
               </div>
               {/* Sku Selector */}
-              <div class='mt-4 re1:mt-6'>
+              {/* <div class='mt-4 re1:mt-6'>
                 <ProductSelector product={product} />
-              </div>
+              </div> */}
               {/* Add to Cart and Favorites button */}
               <div class='mt-4 re1:hidden flex flex-col gap-2'>
               {(seller && renderizado) && (
