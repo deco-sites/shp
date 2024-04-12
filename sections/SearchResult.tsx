@@ -1,9 +1,9 @@
-import SearchResult, {
-  Props,
-} from "deco-sites/fashion/components/search/SearchResult.tsx";
+export { default, loader } from "../components/search/SearchResult.tsx";
 
-function SearchResultSection(props: Props) {
-  return <SearchResult {...props} />;
+export function LoadingFallback() {
+  return (
+    <div style={{ height: "100vh" }} class="flex justify-center items-center">
+      <span class="loading loading-spinner" />
+    </div>
+  );
 }
-
-export default SearchResultSection;

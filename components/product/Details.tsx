@@ -15,8 +15,8 @@ import { SendEventOnView } from 'deco-sites/shp/components/Analytics.tsx'
 import { mapProductToAnalyticsItem } from 'apps/commerce/utils/productToAnalyticsItem.ts'
 import Button from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
 import ShippingSimulation from 'deco-sites/shp/islands/ShippingSimulation.tsx'
-import ProductSelector from './ProductVariantSelector.tsx'
-import ProductImageZoom from 'deco-sites/shp/islands/ProductImageZoom.tsx'
+// import ProductSelector from './ProductVariantSelector.tsx'
+// import ProductImageZoom from 'deco-sites/shp/islands/ProductImageZoom.tsx'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 

@@ -179,8 +179,9 @@ const Description=({page}:Props)=>{
       </label>
       <div className={`${openMenu ? 'flex items-center justify-center' : 'hidden'}`}>
         <div className={loading}/>
-        {descriptionFromBD ? (<div ref={descriptionDiv} dangerouslySetInnerHTML={{__html: blockDescription!}}/>) 
-        : (<div ref={descriptionDiv} dangerouslySetInnerHTML={{__html: description!}}/>)}
+        <div ref={descriptionDiv} 
+          dangerouslySetInnerHTML={{__html: descriptionFromBD ? (blockDescription ?? '') : (description ?? '')}}
+        />
       </div>
     </div>
   )
