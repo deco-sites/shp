@@ -231,6 +231,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     Target.classList.replace('border-b-transparent','border-b-primary')
     liMobWillSelect && (liMobWillSelect as HTMLLIElement).classList.replace('text-secondary','text-primary')
     
+    setOrder('OrderByPriceASC')
     setFilterSelected({index,value,fqType})
   }
 
