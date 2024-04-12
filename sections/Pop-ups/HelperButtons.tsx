@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
 import ScrollToTop from 'deco-sites/shp/components/pop-ups/ScrollToTop.tsx'
 import Help from 'deco-sites/shp/components/pop-ups/Help.tsx'
+import Whatsapp from 'deco-sites/shp/components/pop-ups/Whatsapp.tsx'
 
 export interface Props{
   links:Array<{
@@ -33,7 +34,8 @@ const HelperButtons=({links}:Props)=>{
 
   return (
     <div className={`z-[10] fixed right-[20px] flex flex-col gap-3 items-end ${isPDP ? 'bottom-40' : 'bottom-32'}`}>
-      <Help links={links}/>
+      <Whatsapp/>
+      <Help/>
       <div className={showToTop ? '' : 'hidden'}>
         <ScrollToTop />
       </div>
