@@ -8,6 +8,7 @@ import { useOffer } from "../../sdk/useOffer.ts";
 import type { ProductListingPage } from "apps/commerce/types.ts";
 import { mapProductToAnalyticsItem } from "apps/commerce/utils/productToAnalyticsItem.ts";
 import ProductGallery, { Columns } from "../product/ProductGallery.tsx";
+import {AppContext} from 'deco-sites/shp/apps/site.ts'
 
 export type Format = "Show More" | "Pagination";
 
@@ -34,6 +35,7 @@ export interface Props {
 
   /** @description 0 for ?page=0 as your first page */
   startingPage?: 0 | 1;
+  
 }
 
 function NotFound() {
@@ -50,9 +52,11 @@ function Result({
   cardLayout,
   startingPage = 0,
   url: _url,
+  descontoPix
 }: Omit<Props, "page"> & {
   page: ProductListingPage;
   url: string;
+  descontoPix:number;
 }) {
   const { products, filters, breadcrumb, pageInfo, sortOptions } = page;
   const perPage = pageInfo?.recordPerPage || products.length;
@@ -94,6 +98,9 @@ function Result({
               layout={{ card: cardLayout, columns: layout?.columns, format }}
               pageInfo={pageInfo}
               url={url}
+              item_list_name={breadcrumb.itemListElement?.at(-1)?.name}
+              item_list_id={breadcrumb.itemListElement?.at(-1)?.item}
+              descontoPix={descontoPix}
             />
           </div>
         </div>
@@ -157,10 +164,11 @@ function SearchResult(
   return <Result {...props} page={page} />;
 }
 
-export const loader = (props: Props, req: Request) => {
+export const loader = (props: Props, req: Request, ctx: AppContext & {descontoPix:number}) => {
   return {
     ...props,
     url: req.url,
+    descontoPix:ctx.descontoPix
   };
 };
 

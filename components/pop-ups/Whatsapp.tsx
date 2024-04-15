@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks'
 
-const Help = () =>{
+const Whatsapp = () =>{
 
   const [hover, setHover]=useState(false)
 
@@ -26,5 +26,4 @@ const Help = () =>{
   )
 }
 
-export default Help
-
+export default Whatsapp

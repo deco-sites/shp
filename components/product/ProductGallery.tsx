@@ -7,8 +7,9 @@ import ProductCard, {
 } from "../../components/product/ProductCard.tsx";
 import { Format } from "../../components/search/SearchResult.tsx";
 import Spinner from "../../components/ui/Spinner.tsx";
-// import ShowMore from "../../islands/ShowMore.tsx";
+import ShowMore from "../../islands/ShowMore.tsx";
 import { usePlatform } from "../../sdk/usePlatform.tsx";
+import ProdCard from 'deco-sites/shp/components/componentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
 
 export interface Columns {
   mobile?: 1 | 2;
@@ -25,6 +26,11 @@ export interface Props {
     format?: Format;
   };
   url: URL;
+  /**@description  pro evento de select_item do GA4*/
+  item_list_id?:string
+  /**@description  pro evento de select_item do GA4*/
+  item_list_name?:string
+  descontoPix:number
 }
 
 const MOBILE_COLUMNS = {
@@ -40,8 +46,9 @@ const DESKTOP_COLUMNS = {
 };
 
 function ProductGallery(
-  { products, pageInfo, layout, offset, url }: Props,
+  props: Props,
 ) {
+  const { products, pageInfo, layout, offset, url }=props
   const platform = usePlatform();
   const mobile = MOBILE_COLUMNS[layout?.columns?.mobile ?? 2];
   const desktop = DESKTOP_COLUMNS[layout?.columns?.desktop ?? 4];
@@ -68,17 +75,18 @@ function ProductGallery(
       )}
 
       {products?.map((product, index) => (
-        <ProductCard
-          key={`product-card-${product.productID}`}
-          product={product}
-          preload={index === 0}
-          index={offset + index}
-          layout={layout?.card}
-          platform={platform}
-        />
+        // <ProductCard
+        //   key={`product-card-${product.productID}`}
+        //   product={product}
+        //   preload={index === 0}
+        //   index={offset + index}
+        //   layout={layout?.card}
+        //   platform={platform}
+        // />
+        <ProdCard product={product} item_list_id={props.item_list_id} item_list_name={props.item_list_name} descontoPix={props.descontoPix}/>
       ))}
 
-      {/* {(layout && layout?.format === "Show More") && (
+      {(layout && layout?.format === "Show More") && (
         <>
           <ShowMore
             pageInfo={pageInfo}
@@ -102,7 +110,7 @@ function ProductGallery(
             )}
           </ShowMore>
         </>
-      )} */}
+      )}
     </div>
   );
 }
