@@ -9,7 +9,7 @@ import { Format } from "../../components/search/SearchResult.tsx";
 import Spinner from "../../components/ui/Spinner.tsx";
 import ShowMore from "../../islands/ShowMore.tsx";
 import { usePlatform } from "../../sdk/usePlatform.tsx";
-import ProdCard from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
+import ProdCard from 'deco-sites/shp/islands/ProductCardIsland.tsx'
 
 export interface Columns {
   mobile?: 1 | 2;

@@ -27,12 +27,13 @@ import * as $OfertasFogoIsland from "./islands/OfertasFogoIsland.tsx";
 import * as $PCNivelGamer from "./islands/PCNivelGamer.tsx";
 import * as $PagDepartamentoIsland from "./islands/PagDepartamentoIsland.tsx";
 import * as $Pop_ups_HelperButtonsIsland from "./islands/Pop-ups/HelperButtonsIsland.tsx";
+import * as $ProductCardIsland from "./islands/ProductCardIsland.tsx";
 import * as $ProductImageZoom from "./islands/ProductImageZoom.tsx";
 import * as $RecommendedProds from "./islands/RecommendedProds.tsx";
 import * as $SearchControls from "./islands/SearchControls.tsx";
+import * as $SearchFiltersIsland from "./islands/SearchFiltersIsland.tsx";
 import * as $SearchIsland from "./islands/SearchIsland.tsx";
 import * as $SearchMenuBarIsland from "./islands/SearchMenuBarIsland.tsx";
-import * as $SearchResultIsland from "./islands/SearchResultIsland.tsx";
 import * as $SearchSubIsland from "./islands/SearchSubIsland.tsx";
 import * as $SelectGamesIsland from "./islands/SelectGamesIsland.tsx";
 import * as $ShelfIsland from "./islands/ShelfIsland.tsx";
@@ -77,12 +78,13 @@ const manifest = {
     "./islands/PCNivelGamer.tsx": $PCNivelGamer,
     "./islands/PagDepartamentoIsland.tsx": $PagDepartamentoIsland,
     "./islands/Pop-ups/HelperButtonsIsland.tsx": $Pop_ups_HelperButtonsIsland,
+    "./islands/ProductCardIsland.tsx": $ProductCardIsland,
     "./islands/ProductImageZoom.tsx": $ProductImageZoom,
     "./islands/RecommendedProds.tsx": $RecommendedProds,
     "./islands/SearchControls.tsx": $SearchControls,
+    "./islands/SearchFiltersIsland.tsx": $SearchFiltersIsland,
     "./islands/SearchIsland.tsx": $SearchIsland,
     "./islands/SearchMenuBarIsland.tsx": $SearchMenuBarIsland,
-    "./islands/SearchResultIsland.tsx": $SearchResultIsland,
     "./islands/SearchSubIsland.tsx": $SearchSubIsland,
     "./islands/SelectGamesIsland.tsx": $SelectGamesIsland,
     "./islands/ShelfIsland.tsx": $ShelfIsland,
