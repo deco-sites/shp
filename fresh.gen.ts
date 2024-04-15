@@ -32,10 +32,12 @@ import * as $RecommendedProds from "./islands/RecommendedProds.tsx";
 import * as $SearchControls from "./islands/SearchControls.tsx";
 import * as $SearchIsland from "./islands/SearchIsland.tsx";
 import * as $SearchMenuBarIsland from "./islands/SearchMenuBarIsland.tsx";
+import * as $SearchResultIsland from "./islands/SearchResultIsland.tsx";
 import * as $SearchSubIsland from "./islands/SearchSubIsland.tsx";
 import * as $SelectGamesIsland from "./islands/SelectGamesIsland.tsx";
 import * as $ShelfIsland from "./islands/ShelfIsland.tsx";
 import * as $ShippingSimulation from "./islands/ShippingSimulation.tsx";
+import * as $ShowMore from "./islands/ShowMore.tsx";
 import * as $SliderJS from "./islands/SliderJS.tsx";
 import * as $SpecificationIsland from "./islands/SpecificationIsland.tsx";
 import * as $TesteMaylonIsland from "./islands/TesteMaylonIsland.tsx";
@@ -80,10 +82,12 @@ const manifest = {
     "./islands/SearchControls.tsx": $SearchControls,
     "./islands/SearchIsland.tsx": $SearchIsland,
     "./islands/SearchMenuBarIsland.tsx": $SearchMenuBarIsland,
+    "./islands/SearchResultIsland.tsx": $SearchResultIsland,
     "./islands/SearchSubIsland.tsx": $SearchSubIsland,
     "./islands/SelectGamesIsland.tsx": $SelectGamesIsland,
     "./islands/ShelfIsland.tsx": $ShelfIsland,
     "./islands/ShippingSimulation.tsx": $ShippingSimulation,
+    "./islands/ShowMore.tsx": $ShowMore,
     "./islands/SliderJS.tsx": $SliderJS,
     "./islands/SpecificationIsland.tsx": $SpecificationIsland,
     "./islands/TesteMaylonIsland.tsx": $TesteMaylonIsland,

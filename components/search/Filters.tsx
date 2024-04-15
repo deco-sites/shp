@@ -7,6 +7,8 @@ import type {
   FilterToggleValue,
   ProductListingPage,
 } from "apps/commerce/types.ts";
+import Icon from "deco-sites/shp/components/ui/Icon.tsx";
+import { useSignal } from "@preact/signals";
 
 interface Props {
   filters: ProductListingPage["filters"];
@@ -20,9 +22,9 @@ function ValueItem(
 ) {
   return (
     <a href={url} class="flex items-center gap-2">
-      <div aria-checked={selected} class="checkbox" />
-      <span class="text-sm">{label}</span>
-      {quantity > 0 && <span class="text-sm text-base-content">({quantity})</span>}
+      <div aria-checked={selected} class="checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]" />
+      <span class="text-sm text-white">{label}</span>
+      {/* {quantity > 0 && <span class="text-sm text-base-content">({quantity})</span>} */}
     </a>
   );
 }
@@ -33,7 +35,7 @@ function FilterValues({ key, values }: FilterToggle) {
     : "flex-col";
 
   return (
-    <ul class={`flex flex-wrap gap-2 ${flexDirection}`}>
+    <ul class={'flex flex-col gap-2 bg-[#141414] overflow-y-auto max-h-[300px] re1:scrollbar-shp'}>
       {values.map((item) => {
         const { url, selected, value, quantity } = item;
 
@@ -65,16 +67,37 @@ function FilterValues({ key, values }: FilterToggle) {
   );
 }
 
+function Filtro({filter}:{filter:FilterToggle}){
+  const open=useSignal(true)
+
+  return(
+    <li class="w-full flex flex-col bg-base-100 re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0">
+      <h5 className='px-3 py-5 flex justify-between cursor-pointer'
+        onClick={()=>{
+          open.value=!open
+        }}
+      >
+        {filter.label}
+        <Icon 
+          id={open ? 'ChevronUp' : 'ChevronDown'}
+          size={12}
+          strokeWidth={2}
+        />
+      </h5>
+      <div className={`${open ? 'max-h-[340px]' : 'max-h-0'} trasition-[max-height] overflow-hidden duration-500 ease-in-out`}>
+        <FilterValues {...filter} />
+      </div>
+    </li>
+  )
+}
+
 function Filters({ filters }: Props) {
   return (
     <ul class="flex flex-col gap-6 p-4">
       {filters
         .filter(isToggle)
         .map((filter) => (
-          <li class="flex flex-col gap-4">
-            <span>{filter.label}</span>
-            <FilterValues {...filter} />
-          </li>
+          <Filtro filter={filter} />
         ))}
     </ul>
   );
