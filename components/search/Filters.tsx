@@ -137,7 +137,7 @@ function Filtro({filter}:{filter:FilterToggle}){
 
 function Filters({ filters }: Props) {
   return (
-    <ul class="flex flex-col p-4">
+    <ul class="flex flex-col">
       {filters
         .filter(isToggle)
         .map((filter) => (

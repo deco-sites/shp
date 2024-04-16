@@ -19,7 +19,7 @@ function SearchControls(
   const open = useSignal(false);
 
   return (
-    <div class="flex flex-col justify-between mb-4  sm:mb-0 sm:p-0 sm:gap-4 sm:flex-row sm:h-[53px] sm:border-b sm:border-base-200">
+    <div class="flex flex-col justify-between my-5 sm:p-0 sm:gap-4 sm:flex-row">
       <div class="flex flex-row items-center sm:p-0 mb-2">
         <Breadcrumb itemListElement={breadcrumb?.itemListElement} />
       </div>

@@ -9,7 +9,7 @@ function Breadcrumb({ itemListElement = [] }: Props) {
   const itemsFiltered = items.filter(({ name, item }) => name && item)
 
   return (
-    <div class='text-white breadcrumbs'>
+    <div class='text-white breadcrumbs text-sm'>
       <ul>
         {itemsFiltered.map(({ name, item }, index) => 
           index === itemsFiltered.length - 1 ? (
