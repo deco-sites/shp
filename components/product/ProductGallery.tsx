@@ -63,7 +63,7 @@ function ProductGallery(
 
   return (
     <div
-      class={`grid ${mobile} gap-2 items-center ${desktop} sm:gap-10`}
+      class={`grid ${mobile} gap-x-4 gap-y-4 pb-4 items-center ${desktop}`}
     >
       {layout?.format == "Show More" && (
         <Head>
@@ -74,15 +74,7 @@ function ProductGallery(
         </Head>
       )}
 
-      {products?.map((product, index) => (
-        // <ProductCard
-        //   key={`product-card-${product.productID}`}
-        //   product={product}
-        //   preload={index === 0}
-        //   index={offset + index}
-        //   layout={layout?.card}
-        //   platform={platform}
-        // />
+      {products?.map((product) => (
         <ProdCard product={product} item_list_id={props.item_list_id} item_list_name={props.item_list_name} descontoPix={props.descontoPix}/>
       ))}
 

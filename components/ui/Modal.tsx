@@ -91,7 +91,7 @@ const Modal = ({
             <h1>
               <span class="font-medium text-2xl">{title}</span>
             </h1>
-            <Button class="btn btn-ghost" onClick={onClose}>
+            <Button class="btn btn-ghost btn-sm btn-circle bg-neutral text-secondary border-transparent" onClick={onClose}>
               <Icon id="XMark" width={20} height={20} strokeWidth={2} />
             </Button>
           </header>

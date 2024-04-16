@@ -19,27 +19,27 @@ function SearchControls(
   const open = useSignal(false);
 
   return (
-    <div class="flex flex-col justify-between mb-4 p-4 sm:mb-0 sm:p-0 sm:gap-4 sm:flex-row sm:h-[53px] sm:border-b sm:border-base-200">
+    <div class="flex flex-col justify-between my-5 sm:p-0 sm:gap-4 sm:flex-row">
       <div class="flex flex-row items-center sm:p-0 mb-2">
         <Breadcrumb itemListElement={breadcrumb?.itemListElement} />
       </div>
 
-      <div class="flex flex-row items-center justify-between border-b border-base-200 sm:gap-4 sm:border-none">
+      <div class="flex flex-row items-center justify-between border-b border-base-200 sm:gap-4 sm:border-none w-full re1:w-[15%]">
         <Button
-          class={displayFilter ? "btn-ghost" : "btn-ghost sm:hidden"}
+          class={`${displayFilter ? "" : "sm:hidden"} w-[45%] text-white flex bg-transparent border border-secondary h-12 items-center justify-center gap-2 rounded-none`}
           onClick={() => {
             open.value = true;
           }}
         >
-          Filtrar
           <Icon id="FilterList" width={16} height={16} />
+          <p>Filtros</p>
         </Button>
         {sortOptions.length > 0 && <Sort sortOptions={sortOptions} />}
       </div>
 
       <Modal
         loading="lazy"
-        title="Filtrar"
+        title="Filtros"
         mode="sidebar-right"
         open={open.value}
         onClose={() => {

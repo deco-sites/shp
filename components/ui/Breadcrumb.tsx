@@ -9,12 +9,12 @@ function Breadcrumb({ itemListElement = [] }: Props) {
   const itemsFiltered = items.filter(({ name, item }) => name && item)
 
   return (
-    <div class='text-white re1:breadcrumbs'>
+    <div class='text-white breadcrumbs text-sm'>
       <ul>
         {itemsFiltered.map(({ name, item }, index) => 
           index === itemsFiltered.length - 1 ? (
             <li>
-              <p className='truncate w-60 font-bold'>{name}</p>
+              <p className='truncate w-fit font-bold'>{name}</p>
             </li>
           ) : (
             <li className='underline decoration-solid'><a href={item}>{name}</a></li>

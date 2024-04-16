@@ -74,7 +74,7 @@ function Result({
 
   return (
     <>
-      <div class="container px-4 sm:py-10">
+      <div class="px-4 re1:px-[5%] re4:px-[15%]">
         {(isFirstPage || !isPartial) && (
           <SearchControls
             sortOptions={sortOptions}
@@ -84,14 +84,19 @@ function Result({
           />
         )}
 
-        <div class="flex flex-row">
+        <div class="flex justify-between relative">
           {layout?.variant === "aside" && filters.length > 0 &&
-            (isFirstPage || !isPartial) && (
-            <aside class="hidden sm:block w-min min-w-[250px]">
-              <Filters filters={filters} />
-            </aside>
+            (isFirstPage || !isPartial) ? (
+              <>
+                <aside class="hidden sm:block w-[22%] absolute z-[2]">
+                  <Filters filters={filters} />
+                </aside>
+                <div className='w-[22%]' />
+              </>
+          ):(
+            <div className='w-[22%]' />
           )}
-          <div class="flex-grow" id={id}>
+          <div class="re1:w-[75%]" id={id}>
             <ProductGallery
               products={products}
               offset={offset}
