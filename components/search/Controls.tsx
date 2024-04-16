@@ -26,7 +26,7 @@ function SearchControls(
 
       <div class="flex flex-row items-center justify-between border-b border-base-200 sm:gap-4 sm:border-none w-full re1:w-[15%]">
         <Button
-          class={`${displayFilter ? "" : "sm:hidden"} w-[49%] text-white flex bg-transparent border border-secondary h-12 items-center justify-center gap-2 rounded-none`}
+          class={`${displayFilter ? "" : "sm:hidden"} w-[45%] text-white flex bg-transparent border border-secondary h-12 items-center justify-center gap-2 rounded-none`}
           onClick={() => {
             open.value = true;
           }}
@@ -39,7 +39,7 @@ function SearchControls(
 
       <Modal
         loading="lazy"
-        title="Filtrar"
+        title="Filtros"
         mode="sidebar-right"
         open={open.value}
         onClose={() => {

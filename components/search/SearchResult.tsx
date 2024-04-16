@@ -84,12 +84,17 @@ function Result({
           />
         )}
 
-        <div class="flex justify-between">
+        <div class="flex justify-between relative">
           {layout?.variant === "aside" && filters.length > 0 &&
-            (isFirstPage || !isPartial) && (
-            <aside class="hidden sm:block w-[22%]">
-              <Filters filters={filters} />
-            </aside>
+            (isFirstPage || !isPartial) ? (
+              <>
+                <aside class="hidden sm:block w-[22%] absolute z-[2]">
+                  <Filters filters={filters} />
+                </aside>
+                <div className='w-[22%]' />
+              </>
+          ):(
+            <div className='w-[22%]' />
           )}
           <div class="re1:w-[75%]" id={id}>
             <ProductGallery

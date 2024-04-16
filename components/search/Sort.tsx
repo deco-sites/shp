@@ -51,7 +51,7 @@ function Sort({ sortOptions }: Props) {
     //   ))}
     // </select>
 
-    <label id='labelOrder' className='text-white text-sm h-12 re1:h-auto re1:text-base bg-[#111] w-[49%] py-[5px] re1:py-[15px] re1:w-full border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
+    <label id='labelOrder' className='text-white text-sm h-12 re1:h-auto re1:text-base bg-[#111] w-[45%] py-[5px] re1:py-[15px] re1:w-full border border-secondary relative after:border-r after:border-b after:border-r-base-content after:border-b-base-content 
       after:right-[20px] after:top-1/2 after:transform after:-translate-y-1/2 after:absolute after:w-[5px] after:h-[5px] re1:after:w-[10px] re1:after:h-[10px] after:rotate-45 cursor-pointer'
       onClick={()=>{
         const label= document.querySelector('#labelOrder') as HTMLLabelElement
