@@ -91,10 +91,10 @@ function Result({
                 <aside class="hidden sm:block w-[22%] absolute z-[2]">
                   <Filters filters={filters} />
                 </aside>
-                <div className='w-[22%]' />
+                <div className='hidden sm:block w-[22%]' />
               </>
           ):(
-            <div className='w-[22%]' />
+            <div className='hidden sm:block w-[22%]' />
           )}
           <div class="re1:w-[75%]" id={id}>
             <ProductGallery
