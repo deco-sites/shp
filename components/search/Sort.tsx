@@ -65,7 +65,7 @@ function Sort({ sortOptions }: Props) {
         }
       }}
     >
-      <ul className='hidden z-10 absolute w-full bg-[#111] bottom-12'>
+      <ul className='hidden z-[2] absolute w-full bg-[#111] top-12 re1:top-16'>
         {sortOptions.map(({ value, label }) => ({
           value,
           label: portugueseMappings[label as keyof typeof portugueseMappings],
