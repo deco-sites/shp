@@ -204,7 +204,7 @@ const Shelf=({data, filters, descontoPix}:SectionProps<typeof loader>)=>{
   },[selectedFilters])
 
   return(
-    <CompareContextProvider>
+    <CompareContextProvider descontoPix={descontoPix}>
       <div className='my-5'>
         <div className='flex flex-col re1:flex-row px-4 w-full justify-between re1:px-[5%] re4:px-[15%] text-white'>
           <ul ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>

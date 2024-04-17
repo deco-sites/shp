@@ -5,6 +5,8 @@ import Icon from "deco-sites/shp/components/ui/Icon.tsx";
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import AddToCartButton from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
 import { DescontoPIX } from "deco-sites/shp/FunctionsSHP/DescontoPix.ts";
+import { AppContext } from "deco-sites/shp/apps/site.ts";
+import { SectionProps } from "deco/types.ts";
 
 interface Props{
   PCs:PcContextProps[]
@@ -209,6 +211,8 @@ const CompareModal = ({PCs, descontoPix}:Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(()=>{PCs.length<1 && closeModal()},[PCs])
+
+  useEffect(()=>{console.log(descontoPix)},[])
 
   const openModal = () => {
     setIsOpen(true)

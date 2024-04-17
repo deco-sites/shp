@@ -1,5 +1,5 @@
 import { useContext, useState, useCallback, useEffect } from 'preact/hooks'
-import { createContext, FunctionalComponent } from 'preact'
+import { createContext, FunctionalComponent, ComponentChildren } from 'preact'
 import Compare from 'deco-sites/shp/sections/Compare/Compare.tsx'
 
 export interface PcContextProps{
@@ -30,6 +30,11 @@ export interface CompareContextType {
   removeAll:() => void
 }
 
+export interface ProviderExtraProps{
+  children:ComponentChildren
+  descontoPix:number
+}
+
 const CompareContext=createContext<CompareContextType | undefined>(undefined)
 
 export const useCompareContext=():CompareContextType=>{
@@ -40,7 +45,7 @@ export const useCompareContext=():CompareContextType=>{
   return context
 }
 
-const CompareContextProvider:FunctionalComponent=({children})=>{
+const CompareContextProvider:FunctionalComponent<ProviderExtraProps> =({children, descontoPix}:ProviderExtraProps)=>{
   const [PCs, setPCs]=useState<PcContextProps[]>([])
 
   const addPC= useCallback((pc:PcContextProps)=>{
@@ -64,7 +69,7 @@ const CompareContextProvider:FunctionalComponent=({children})=>{
     removeAll
   }
 
-  return <CompareContext.Provider value={value}>{children}{PCs.length>=1 && <Compare PCs={PCs}/>}</CompareContext.Provider>
+  return <CompareContext.Provider value={value}>{children}{PCs.length>=1 && <Compare PCs={PCs} descontoPix={descontoPix} />}</CompareContext.Provider>
 }
 
 export default CompareContextProvider

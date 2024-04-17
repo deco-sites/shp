@@ -48,7 +48,7 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
   }
 
   return (
-    <CompareContextProvider>
+    <CompareContextProvider descontoPix={descontoPix}>
       <div className='w-full mx-auto re1:px-[15%] my-16'>
         <div className='flex flex-col re1:flex-row mx-auto w-full gap-2 justify-center items-center mb-5 re1:px-0 px-6'>
           <div className='re1:flex hidden gap-2 items-center'>

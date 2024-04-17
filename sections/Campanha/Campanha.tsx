@@ -259,7 +259,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
 
 
   return (
-  <CompareContextProvider>
+  <CompareContextProvider descontoPix={descontoPix}>
     <div className='bg-[#262626]'>
       <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block' preload loading='eager'/></a>
       <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden' preload loading='eager'/></a>
