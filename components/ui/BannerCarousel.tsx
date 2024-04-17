@@ -18,6 +18,19 @@ export interface Banner {
     /** @description when user clicks on the image, go to this link */
     href: string
   }
+  ativo:boolean
+  /** @description Datas para exibir o banner, Ex. 2020-10-05T18:30:00*/
+  datas:{
+    inicial:string
+    final:string
+  }
+  /**@description Defina a hora no formato 24horas*/
+  automatico?:Automatico | undefined
+}
+
+interface Automatico{
+  comeca:number
+  termina:number
 }
 
 export interface Props {
@@ -134,6 +147,19 @@ function Dots({ images, interval = 0 }: Props) {
 function BannerCarousel({ images, preload, interval }: Props) {
   const id = useId() + '-bannerCarousel'
   const [pause, setPause] = useState(false)
+  const finalImages=images?.filter(image=>image.ativo).filter(image=>{
+    const now=new Date()
+    if(image.automatico){
+      const hora=now.getHours()
+      const {comeca, termina}=image.automatico
+      return (hora >= comeca || hora<termina)
+    }else{
+      const initial=new Date(image.datas.inicial)
+      const final=new Date(image.datas.final)
+  
+      return (now>=initial && now<=final)
+    }
+  })
 
   return (
     <div id={id} class='flex flex-col'>
@@ -150,7 +176,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
         </div>
 
         <Slider class='carousel carousel-center scrollbar-none w-[100vw]'>
-          {images?.map((image, index) => (
+          {finalImages?.map((image, index) => (
             <Slider.Item index={index} class='carousel-item w-[100vw] h-fit'>
               <BannerItem image={image} lcp={index === 0 && preload} idx={index} />
             </Slider.Item>
@@ -170,7 +196,7 @@ function BannerCarousel({ images, preload, interval }: Props) {
       </div>
 
       <div className='relative flex justify-center items-center gap-2 re1:bottom-[45px] w-full'>
-        <Dots images={images} interval={!pause ? interval : 0} />
+        <Dots images={finalImages} interval={!pause ? interval : 0} />
         <button
           class='btn rounded-[50%] glass max-w-[20px] min-w-[20px] max-h-[20px] min-h-[20px] p-0 md:pl-[1px]'
           onClick={() => {
