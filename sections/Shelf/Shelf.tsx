@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'preact/hooks'
+import { useState, useRef, useEffect, useMemo } from 'preact/hooks'
 import type { SectionProps } from '$live/mod.ts'
 import type { Product } from 'apps/commerce/types.ts'
 import { LoaderContext } from '$live/mod.ts'
@@ -204,7 +204,7 @@ const Shelf=({data, filters, descontoPix}:SectionProps<typeof loader>)=>{
   },[selectedFilters])
 
   return(
-    <CompareContextProvider descontoPix={descontoPix}>
+    <CompareContextProvider descontoPix={useMemo(()=>descontoPix,[descontoPix])}>
       <div className='my-5'>
         <div className='flex flex-col re1:flex-row px-4 w-full justify-between re1:px-[5%] re4:px-[15%] text-white'>
           <ul ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>

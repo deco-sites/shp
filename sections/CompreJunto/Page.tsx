@@ -3,7 +3,7 @@ import { LoaderReturnType, SectionProps } from 'deco/types.ts'
 import { TipoDeFiltro, Filtros, objBuyTogether, comboObj, FinalProd, Filter } from 'deco-sites/shp/types/CompreJuntoTypes.ts'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import { Product } from 'apps/commerce/types.ts'
-import { useEffect, useState, useRef } from 'preact/hooks'
+import { useEffect, useState, useRef, useMemo } from 'preact/hooks'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CompreJuntoCard.tsx'
 import useTimer,{ TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
@@ -234,7 +234,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
 
 
   return (
-  <CompareContextProvider descontoPix={descontoPix}>
+  <CompareContextProvider descontoPix={useMemo(()=>descontoPix,[descontoPix])}>
     <div className='bg-[#262626]'>
       <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block' preload loading='eager'/></a>
       <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden' preload loading='eager'/></a>

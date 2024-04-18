@@ -1,9 +1,9 @@
 // deno-lint-ignore-file no-explicit-any
-import { LoaderReturnType, SectionProps } from 'deco/types.ts'
-import { TipoDeFiltro, Filtros } from 'deco-sites/shp/types/CampanhaTypes.ts'
+import { useEffect, useState, useRef, useCallback, useMemo } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
+import { LoaderReturnType, SectionProps } from 'deco/types.ts'
+import { TipoDeFiltro } from 'deco-sites/shp/types/CampanhaTypes.ts'
 import { Product } from 'apps/commerce/types.ts'
-import { useEffect, useState, useRef } from 'preact/hooks'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CampanhaCard.tsx'
 import useTimer,{ TimeRemaining } from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
@@ -63,33 +63,40 @@ type Filter={
   fqType:string
 }
 
-const createContadorMadrugada=()=>{
-  const agora=new Date()
-  const horas = agora.getHours()
-  let inicioContador: Date
-  let fimContador: Date
+const createContadorMadrugada = () => {
+  const agora = new Date();
+  agora.setMinutes(0, 0, 0); // Zera os minutos, segundos e milissegundos
 
-  if (horas < 20) {
-    // Antes das 20:00, o contador ainda não começou hoje
-    inicioContador = new Date(agora.setHours(20, 0, 0, 0)) // Define para hoje às 20:00
-    fimContador = new Date(inicioContador.getTime() + (14 * 60 * 60 * 1000)) // Adiciona 14 horas para acabar às 10:00 do dia seguinte
+  if (agora.getHours() < 20) {
+    agora.setHours(20); // Define para hoje às 20:00
   } else {
-    // Depois das 20:00, o contador já começou
-    inicioContador = new Date(agora.setHours(20, 0, 0, 0)) // Começou hoje às 20:00
-    fimContador = new Date(agora.setHours(34, 0, 0, 0)) // Define para amanhã às 10:00 (34 horas porque 24 + 10)
+    agora.setDate(agora.getDate() + 1); // Passa para o dia seguinte
+    agora.setHours(10); // Define para às 10:00
   }
 
-  return fimContador
+  return agora;
 }
 
-const loaderData= async(idCollection:string, order?:string, filter?:string):Promise<Product[]>=>{
-  const arrQueryString=[`fq=productClusterIds:${idCollection}`]
-  if(order && !(order==='' || order==='inicio')) arrQueryString.push(`O=${order}`)
-  filter && arrQueryString.push('fq='+filter)
-  arrQueryString.push('_from=0&_to=49')
-  const queryString=encodeURI(arrQueryString.join('&'))
+// const loaderData= async(idCollection:string, order?:string, filter?:string):Promise<Product[]>=>{
+//   const arrQueryString=[`fq=productClusterIds:${idCollection}`]
+//   if(order && !(order==='' || order==='inicio')) arrQueryString.push(`O=${order}`)
+//   filter && arrQueryString.push('fq='+filter)
+//   arrQueryString.push('_from=0&_to=49')
+//   const queryString=encodeURI(arrQueryString.join('&'))
 
-  return await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString})
+//   return await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({queryString})
+// }
+
+const loaderData = async (idCollection: string, order?: string, filter?: string): Promise<Product[]> => {
+  const arrQueryString = [`fq=productClusterIds:${idCollection}`];
+  
+  if (order) arrQueryString.push(`O=${order}`);
+  if (filter) arrQueryString.push(`fq=${filter}`);
+  
+  arrQueryString.push('_from=0&_to=49');
+  const queryString = encodeURI(arrQueryString.join('&'));
+
+  return await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({ queryString });
 }
 
 export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix:number}) => {
@@ -128,27 +135,57 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     {'Melhor Desconto':'OrderByBestDiscountDESC'}
   ]
 
-  const fetchData=async()=>{
+  // Responsável por executar o loaderData e arrumar o Filtro caso haja um filtro de Preço
+  // Setters add na Array de dep. por boas práticas
+  const fetchData=useCallback(async()=>{
     setLoading(true)
     const filterVal=filterSelected.fqType==='P' ? '['+filterSelected.value+']' : filterSelected.value
     const Filter=filterSelected.value==='' ? undefined : `${filterSelected.fqType}:${filterVal}`
-    console.log(Filter)
     const data=await loaderData(collection, order, Filter)
-    console.log('Fetched Products: '+data)
+    // console.log('Fetched Products: '+data)
     setProducts(data)
+  },[collection, order, filterSelected, setLoading, setProducts])
+
+  useEffect(() => {
+    if (filterSelected.value !== 'inicio' || order !== 'inicio') {
+      fetchData()
+    }
+  }, [filterSelected, order])
+
+  const checkCompreGanhe=async(products:Product[])=>{
+    let gifts:any=null
+    const giftsSkus=products.reduce((acc:string[],obj)=>{
+      const giftSkus=obj.offers?.offers[0].giftSkuIds
+
+      if(giftSkus){
+        giftSkus.forEach(sku=>!acc.includes(sku) && acc.push(sku))
+      }
+      return acc
+    },[])
+    
+    if(props.compreEGanhe.tem===true){
+      // Assegura ao TypeScript que naoMostrar existe aqui
+      const compreEGanhe = props.compreEGanhe as { tem: true, naoMostrar?: string[] }
+
+      const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
+
+      console.log(objGifts, objGifts.filter(obj=>!compreEGanhe.naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
+
+      gifts=objGifts.filter(obj=>!compreEGanhe.naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase())))
+
+      console.log(gifts)
+    }
+
+    setFinalProducts(products.map(product=>{
+      if(gifts){
+        // const brindeObj=gifts.find((obj:any)=> product.offers?.offers[0].giftSkuIds?.includes(obj.Id.toString()))
+        const brindeObj=gifts[0]
+        return {prod:product, brinde:brindeObj}
+      }else{
+        return {prod:product, brinde:undefined}
+      }
+    }))
   }
-
-  useEffect(()=>{
-    if(filterSelected.value!=='inicio'){
-      fetchData()
-    }
-  },[filterSelected])
-
-  useEffect(()=>{
-    if(order!=='inicio'){
-      fetchData()
-    }
-  },[order])
 
   useEffect(()=>{
     if(products.length){
@@ -163,42 +200,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
       }
     }
 
-    const checkCompreGanhe=async()=>{
-      let gifts:any=null
-      const giftsSkus=products.reduce((acc:string[],obj)=>{
-        const giftSkus=obj.offers?.offers[0].giftSkuIds
-
-        if(giftSkus){
-          giftSkus.forEach(sku=>!acc.includes(sku) && acc.push(sku))
-        }
-        return acc
-      },[])
-      
-      if(props.compreEGanhe.tem===true){
-        // Assegura ao TypeScript que naoMostrar existe aqui
-        const compreEGanhe = props.compreEGanhe as { tem: true, naoMostrar?: string[] }
-
-        const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
-
-        console.log(objGifts, objGifts.filter(obj=>!compreEGanhe.naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
-
-        gifts=objGifts.filter(obj=>!compreEGanhe.naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase())))
-
-        console.log(gifts)
-      }
-
-      setFinalProducts(products.map(product=>{
-        if(gifts){
-          // const brindeObj=gifts.find((obj:any)=> product.offers?.offers[0].giftSkuIds?.includes(obj.Id.toString()))
-          const brindeObj=gifts[0]
-          return {prod:product, brinde:brindeObj}
-        }else{
-          return {prod:product, brinde:undefined}
-        }
-      }))
-    }
-
-    checkCompreGanhe()
+    checkCompreGanhe(products)
   },[products])
 
   useEffect(()=>{
@@ -212,7 +214,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     }
   },[])
 
-  const handleClickFilters=(event:MouseEvent)=>{
+  const handleClickFilters=useCallback((event:MouseEvent)=>{
     const Target=(event.target! as HTMLImageElement).parentElement! as HTMLLIElement
     const value=Target.getAttribute('data-value')!
     const index=parseFloat(Target.getAttribute('data-index')!)
@@ -233,7 +235,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
     
     setOrder('OrderByPriceASC')
     setFilterSelected({index,value,fqType})
-  }
+  },[setFilterSelected, setOrder])
 
   const handleClickMobFilters=(event:MouseEvent)=>{
     const Target=event.target! as HTMLLIElement
@@ -259,7 +261,7 @@ const Campanha=({collection, produtos, bannerUrl, tipo, freteGratis, setasPadrao
 
 
   return (
-  <CompareContextProvider descontoPix={descontoPix}>
+  <CompareContextProvider descontoPix={useMemo(()=>descontoPix,[descontoPix])}>
     <div className='bg-[#262626]'>
       <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block' preload loading='eager'/></a>
       <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden' preload loading='eager'/></a>
