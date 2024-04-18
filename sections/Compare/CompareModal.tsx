@@ -5,15 +5,13 @@ import Icon from "deco-sites/shp/components/ui/Icon.tsx";
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import AddToCartButton from 'deco-sites/shp/islands/AddToCartButton/vtex.tsx'
 import { DescontoPIX } from "deco-sites/shp/FunctionsSHP/DescontoPix.ts";
-import { AppContext } from "deco-sites/shp/apps/site.ts";
-import { SectionProps } from "deco/types.ts";
 
 interface Props{
   PCs:PcContextProps[]
-  descontoPix?:number
+  descontoPix:number
 }
 
-const PCCard=({PC, descontoPix}:{PC:PcContextProps, descontoPix?:number})=>{
+const PCCard=({PC, descontoPix}:{PC:PcContextProps, descontoPix:number})=>{
   const {removePC}=useCompareContext()
   const buttonDiv=useRef<HTMLDivElement>(null)
 
@@ -28,7 +26,7 @@ const PCCard=({PC, descontoPix}:{PC:PcContextProps, descontoPix?:number})=>{
       <Image width={150} height={150} src={PC.imgUrl} fetchPriority='high' decoding='sync' loading='eager'/>
       <a href={PC.linkProd} className='line-clamp-3 text-sm text-center'>{PC.name}</a>
       <span className='text-[#25d366] text-lg font-bold'>{PC.parcelas}x {PC.valorParcela.toLocaleString('pt-BR',{style:'currency', currency:'BRL'})}</span>
-      <span className='text-xs text-[#b4b4b4]'>ou por {(descontoPix ? DescontoPIX(PC.precoVista, descontoPix) : PC.precoVista).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</span>
+      <span className='text-xs text-[#b4b4b4]'>ou por {DescontoPIX(PC.precoVista, descontoPix).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</span>
       <button className='bg-primary text-secondary font-bold py-[10px] px-[15px] rounded-lg w-[80%]'
         onClick={()=>{(buttonDiv.current?.querySelector('button[data-deco="add-to-cart"]') as HTMLDivElement)?.click()}}
       >Comprar</button>

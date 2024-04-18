@@ -9,6 +9,7 @@ import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import useTimer from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import { AppContext } from "deco-sites/shp/apps/site.ts";
+import {useEffect} from 'preact/hooks'
 
 export interface VitrineProps {
   produtos: LoaderReturnType<Product[] | null>
@@ -46,6 +47,8 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
   if (!produtos || produtos.length === 0) {
     return <></>
   }
+
+  useEffect(()=>{console.log(produtos)},[])
 
   return (
     <CompareContextProvider descontoPix={descontoPix}>

@@ -53,7 +53,6 @@ const ProdCard=({...props}:ProdCard)=>{
   const salePricePix=DescontoPIX(precoVista, pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
-
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':prodId, 'average':0, 'count':0, 'product_name':prodName})
   const [trustPercent, setTrustPercent]=useState(0)
   
@@ -117,7 +116,7 @@ const PcCard=({...props}:PcCard)=>{
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
   const pcObj:PcContextProps={
     placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent, fonte, groupId:props.groupId, seller:props.seller,
-    name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
+    name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista, linkProd, imgUrl, pix
   }
 
   useEffect(()=>{
@@ -125,6 +124,8 @@ const PcCard=({...props}:PcCard)=>{
       compareInput.current && (compareInput.current.checked=false)
     }
   },[PCs])
+
+  useEffect(()=>{console.log(salePricePix)},[])
 
   return(
     <a className='flex flex-col h-[370px] w-full max-w-[250px] bg-[#262626] rounded-lg p-0 border relative
@@ -237,6 +238,8 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
       items:[product as any]
     }})
   }
+
+  useEffect(()=>{console.log(descontoPix)},[])
 
   if(product.additionalProperty!.some(propValue=>propValue.propertyID==='10' && propValue.name==='category')){
     const additionalProp:PropertyValue[]=product.isVariantOf!.additionalProperty!
