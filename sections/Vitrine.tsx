@@ -48,8 +48,6 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
     return <></>
   }
 
-  useEffect(()=>{console.log(produtos)},[])
-
   return (
     <CompareContextProvider descontoPix={descontoPix}>
       <div className='w-full mx-auto re1:px-[15%] my-16'>

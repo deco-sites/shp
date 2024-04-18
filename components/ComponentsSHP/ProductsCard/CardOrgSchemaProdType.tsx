@@ -125,8 +125,6 @@ const PcCard=({...props}:PcCard)=>{
     }
   },[PCs])
 
-  useEffect(()=>{console.log(salePricePix)},[])
-
   return(
     <a className='flex flex-col h-[370px] w-full max-w-[250px] bg-[#262626] rounded-lg p-0 border relative
     border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
@@ -238,8 +236,6 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
       items:[product as any]
     }})
   }
-
-  useEffect(()=>{console.log(descontoPix)},[])
 
   if(product.additionalProperty!.some(propValue=>propValue.propertyID==='10' && propValue.name==='category')){
     const additionalProp:PropertyValue[]=product.isVariantOf!.additionalProperty!

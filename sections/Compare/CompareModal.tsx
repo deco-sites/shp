@@ -210,8 +210,6 @@ const CompareModal = ({PCs, descontoPix}:Props) => {
 
   useEffect(()=>{PCs.length<1 && closeModal()},[PCs])
 
-  useEffect(()=>{console.log(descontoPix)},[])
-
   const openModal = () => {
     setIsOpen(true)
   }
