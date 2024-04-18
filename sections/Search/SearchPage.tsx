@@ -88,7 +88,7 @@ const SearchPage=({data, q, iconesNavegacionais, fqName, fqVal, descontoPix}:Sec
       </div>)
   }
 
-  return <CompareContextProvider>{(fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal} descontoPix={descontoPix}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} descontoPix={descontoPix}/>}</CompareContextProvider>
+  return <CompareContextProvider descontoPix={descontoPix}>{(fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal} descontoPix={descontoPix}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} descontoPix={descontoPix}/>}</CompareContextProvider>
 }
 
 export default SearchPage

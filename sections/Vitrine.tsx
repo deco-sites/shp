@@ -9,6 +9,7 @@ import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import useTimer from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import { AppContext } from "deco-sites/shp/apps/site.ts";
+import {useEffect} from 'preact/hooks'
 
 export interface VitrineProps {
   produtos: LoaderReturnType<Product[] | null>
@@ -48,7 +49,7 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
   }
 
   return (
-    <CompareContextProvider>
+    <CompareContextProvider descontoPix={descontoPix}>
       <div className='w-full mx-auto re1:px-[15%] my-16'>
         <div className='flex flex-col re1:flex-row mx-auto w-full gap-2 justify-center items-center mb-5 re1:px-0 px-6'>
           <div className='re1:flex hidden gap-2 items-center'>

@@ -97,7 +97,7 @@ const PcCard=({...props}:CardPCProps)=>{
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
   const pcObj:PcContextProps={
     placaVideo, processador, memoria, armazenamento:arm, tipoArm, flagPercent:diffPercent, fonte, seller:props.seller, groupId:props.groupId,
-    name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
+    name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista, linkProd, imgUrl, pix
   }
 
   

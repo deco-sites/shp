@@ -7,6 +7,7 @@ import { SectionProps } from "deco/types.ts";
 
 interface Props{
   PCs:PcContextProps[]
+  descontoPix:number
 }
 
 const Vazio=()=>{
@@ -37,14 +38,8 @@ const PCCard=({PC}:{PC:PcContextProps})=>{
   )
 }
 
-// export const loader = (props: Props, _req: Request, ctx: AppContext & {descontoPix?:number}) => {
-//   return {
-//     ...props, 
-//     descontoPix:ctx.descontoPix
-//   }
-// }
 
-const Compare=({PCs}:Props)=>{
+const Compare=({PCs, descontoPix}:Props)=>{
 
   return (
     <div className='fixed bottom-0 left-0 w-full re1:h-[100px] bg-black flex flex-col re1:flex-row p-[15px] re1:py-[15px] re1:px-0 z-[11]'>
@@ -54,7 +49,7 @@ const Compare=({PCs}:Props)=>{
         {PCs[2] ? <PCCard PC={PCs[2]}/> : <Vazio />}
         {PCs[3] ? <PCCard PC={PCs[3]}/> : <Vazio />}
       </div>
-      <CompareModal PCs={PCs} />
+      <CompareModal PCs={PCs} descontoPix={descontoPix}/>
     </div>
   )
 }

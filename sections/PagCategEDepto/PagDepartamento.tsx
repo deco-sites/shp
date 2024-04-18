@@ -387,7 +387,6 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
       const Path=globalThis.window.location.pathname
       const segments=Path.split('/')
       const result=segments.map((__,index)=>index!==0 ? segments.slice(0,index+1).join('/') : '/')
-      console.log(result)
       setPath(result)
     }
 
@@ -429,7 +428,6 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   },[selectedFiltersSignal.value])
 
   useEffect(()=>{
-    console.log(selectedFilters)
     typeof globalThis.window!=='undefined' && setFromTo({from:0, to:19})
     const filterValues=selectedFilters.map(filter=>filter.value)
     const filterFqs=selectedFilters.map(filter=>filter.fq)
@@ -455,7 +453,6 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
   },[order])
 
   useEffect(()=>{
-    console.log(products)
     if(products.length){
       if(!sentEvent){
         // mandar evento apenas uma vez quando puxar os prods pela primeira vez
@@ -703,7 +700,7 @@ export const loader = (props: Omit<Props, 'descontoPix'>, _req: Request, ctx: Ap
 
 const finalSection=(props:SectionProps<typeof loader>)=>{
   return (
-    <CompareContextProvider>
+    <CompareContextProvider descontoPix={props.descontoPix}>
       <PagDepartamento {...props}/>
     </CompareContextProvider>
   )

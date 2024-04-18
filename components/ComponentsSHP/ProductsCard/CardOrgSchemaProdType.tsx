@@ -53,7 +53,6 @@ const ProdCard=({...props}:ProdCard)=>{
   const salePricePix=DescontoPIX(precoVista, pix)
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
-
   const [objTrust, setObjTrust]=useState<{'product_code':string, 'average':number, 'count':number, 'product_name':string}>({'product_code':prodId, 'average':0, 'count':0, 'product_name':prodName})
   const [trustPercent, setTrustPercent]=useState(0)
   
@@ -117,7 +116,7 @@ const PcCard=({...props}:PcCard)=>{
   const {PCs, addPC, removePC}:CompareContextType=useCompareContext()
   const pcObj:PcContextProps={
     placaVideo, processador, memoria, armazenamento, tipoArm, flagPercent:diffPercent, fonte, groupId:props.groupId, seller:props.seller,
-    name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista:salePricePix, linkProd, imgUrl, pix
+    name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista, linkProd, imgUrl, pix
   }
 
   useEffect(()=>{
