@@ -1,4 +1,5 @@
 import Icon from "$store/components/ui/Icon.tsx";
+import { memo } from 'preact/compat'
 
 const ScrollToTop = () =>{
   const handleClick=()=>globalThis.window.scrollTo({ top:0, behavior: 'smooth' })
@@ -12,4 +13,6 @@ const ScrollToTop = () =>{
   )
 }
 
-export default ScrollToTop
+const Memoized=memo(ScrollToTop)
+
+export default Memoized

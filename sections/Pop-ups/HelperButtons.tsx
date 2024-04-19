@@ -3,15 +3,15 @@ import ScrollToTop from 'deco-sites/shp/components/pop-ups/ScrollToTop.tsx'
 import Help from 'deco-sites/shp/components/pop-ups/Help.tsx'
 import Whatsapp from 'deco-sites/shp/components/pop-ups/Whatsapp.tsx'
 
-export interface Props{
-  links:Array<{
-    text:string
-    icon:{type:'image', src:string, w:number, h:number} | {type:'svg', code:string}
-    href:string
-  }>
-}
+// export interface Props{
+//   links:Array<{
+//     text:string
+//     icon:{type:'image', src:string, w:number, h:number} | {type:'svg', code:string}
+//     href:string
+//   }>
+// }
 
-const HelperButtons=({links}:Props)=>{
+const HelperButtons=()=>{
 
   const [showToTop, setShowToTop]=useState(false)
   const [isPDP, setIsPDP]=useState(false)

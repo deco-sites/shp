@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat'
 import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import type { LoaderReturnType } from '$live/types.ts'
 import CompreJunto from 'deco-sites/shp/components/product/CompreJunto.tsx'
@@ -15,4 +16,4 @@ const ProductCompreJunto=({ page, descontoPix }: Props)=>{
   )
 }
 
-export default ProductCompreJunto
+export default memo(ProductCompreJunto)

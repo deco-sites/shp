@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat'
 import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import type { LoaderReturnType } from '$live/types.ts'
 import BuyBar from 'deco-sites/shp/components/product/BuyBar.tsx'
@@ -16,4 +17,4 @@ const ProductBuyBar=({ page, descontoPix }: Props)=>{
   )
 }
 
-export default ProductBuyBar
+export default memo(ProductBuyBar)

@@ -1,4 +1,5 @@
 import { useState } from 'preact/hooks'
+import { memo } from 'preact/compat'
 
 const Whatsapp = () =>{
 
@@ -26,4 +27,6 @@ const Whatsapp = () =>{
   )
 }
 
-export default Whatsapp
+const Memoized=memo(Whatsapp)
+
+export default Memoized

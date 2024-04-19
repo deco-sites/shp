@@ -4,9 +4,8 @@ import Search from 'deco-sites/shp/components/ComponentsSHP/searchSHP/Search.tsx
 import SearchSub from 'deco-sites/shp/components/ComponentsSHP/searchSHP/SearchSub.tsx'
 import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNavegacional.tsx'
 import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
-import {sendEvent} from 'deco-sites/shp/sdk/analytics.tsx'
-import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 import { AppContext } from "deco-sites/shp/apps/site.ts";
+import {useMemo} from 'preact/hooks'
 
 export interface Props {
   iconesNavegacionais:Array<{
@@ -88,7 +87,7 @@ const SearchPage=({data, q, iconesNavegacionais, fqName, fqVal, descontoPix}:Sec
       </div>)
   }
 
-  return <CompareContextProvider descontoPix={descontoPix}>{(fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal} descontoPix={descontoPix}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} descontoPix={descontoPix}/>}</CompareContextProvider>
+  return <CompareContextProvider descontoPix={useMemo(()=>descontoPix,[descontoPix])}>{(fqVal && fqName) ? <SearchSub produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} fqName={fqName} fqValue={fqVal} descontoPix={descontoPix}/> : <Search produtos={data} termo={q} iconesNavegacionais={iconesNavegacionais} descontoPix={descontoPix}/>}</CompareContextProvider>
 }
 
 export default SearchPage
