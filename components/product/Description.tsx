@@ -1,5 +1,6 @@
-import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import { useEffect, useRef, useState } from 'preact/hooks'
+import { memo } from 'preact/compat'
+import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import Image from 'deco-sites/std/components/Image.tsx'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
@@ -187,4 +188,4 @@ const Description=({page}:Props)=>{
   )
 }
 
-export default Description
+export default memo(Description)

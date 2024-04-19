@@ -1,7 +1,7 @@
+import { useState, useEffect, useId, useRef, useCallback } from 'preact/hooks'
 import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import type { LoaderReturnType } from '$live/types.ts'
 import {JSX} from 'preact'
-import { useState, useEffect, useId, useRef } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
@@ -31,11 +31,12 @@ const CompreJunto=({page, descontoPix}:Props)=>{
   const [htmlContent, setHtmlContent]=useState<JSX.Element[]>([<div className='loading loading-spinner loading-lg text-primary'/>])
   const [data, setData]=useState<objBuyTogether[]>([])
   const [vazio, setVazio]=useState('')
-  const handleData=async()=>{
+
+  const handleData=useCallback(async()=>{
     const fetch=await loaderBuyTogether(product.sku)
     setData(fetch)
     !fetch.length && setVazio('hidden')
-  }
+  },[setData, setVazio])
 
   const id='buyTogether-'+useId()
   const dotsWrapper=useRef<HTMLUListElement>(null)
