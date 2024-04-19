@@ -1,3 +1,4 @@
+import { memo } from 'preact/compat'
 import { useState } from 'preact/hooks'
 
 const Help = () =>{
@@ -31,5 +32,7 @@ const Help = () =>{
   )
 }
 
-export default Help
+const Memoized=memo(Help)
+
+export default Memoized
 

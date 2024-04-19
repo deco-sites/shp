@@ -180,8 +180,6 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
 
   const divFlutLabel=useRef<HTMLLabelElement>(null)
 
-  const contentWrapper=useRef<HTMLDivElement>(null)
-
   const getProductsStartY=()=>{
     if(filterLabel.current){
       const filterLabelRect=filterLabel.current.getBoundingClientRect()
@@ -305,16 +303,10 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
         scrolledDown=false
       }
 
-      //divFlut
-      if(contentWrapper.current){
-        const contentRect=contentWrapper.current.getBoundingClientRect()
-        const endContent=contentRect.bottom + globalThis.window.scrollY
-        //if(globalThis.window.scrollY > getProductsStartY() && globalThis.window.scrollY < endContent){
-        if(globalThis.window.scrollY > getProductsStartY()){
-          setDivFlut(true)
-        }else{
-          divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
-        }
+      if(globalThis.window.scrollY > getProductsStartY()){
+        setDivFlut(true)
+      }else{
+        divFlutLabel.current && ((divFlutLabel.current.querySelector('dialog') as HTMLDialogElement).open!==true && setDivFlut(false))
       }
     }
 
@@ -474,7 +466,7 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
             fetchPriority='high' preload 
           />
         </div>
-        <div ref={contentWrapper} className='re1:px-[5%] re4:px-[15%]'>
+        <div className='re1:px-[5%] re4:px-[15%]'>
           <div className='my-5 re1:my-[60px] px-4 re1:px-0 breadcrumbs'>
             <ul>{path.map((path,index,self)=>{
               if(index===0){
