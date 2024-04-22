@@ -193,7 +193,7 @@ const HeaderSHP = ({descontoPix, gravata}:Props) => {
               </div>
 
               <div className='hover:border-b-2 hover:border-primary' onMouseEnter={()=>{hideAll()}}>
-                <a href='/para-sua-empresa' className='font-bold text-secondary text-sm cursor-pointer'>
+                <a href='/landing-page-b2b' className='font-bold text-secondary text-sm cursor-pointer'>
                   Para sua Empresa
                 </a>
               </div>
@@ -895,7 +895,7 @@ const HeaderSHP = ({descontoPix, gravata}:Props) => {
 
                 <a
                   className='flex w-[95%] bg-[#333] text-white rounded-lg border-2 border-transparent h-12 font-bold justify-between p-5 my-[2px] mx-auto items-center'
-                  href='/para-sua-empresa'
+                  href='/landing-page-b2b'
                 >
                   <div className='flex gap-2 items-center'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="17" viewBox="0 0 12 17" fill="none">
