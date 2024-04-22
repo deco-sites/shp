@@ -32,7 +32,7 @@ const CookieConsentFinal=({paths}:Props)=>{
   },[])
 
   return !show ? null : (
-    <div className='fixed bottom-0'>
+    <div className='fixed bottom-0 z-10'>
       <CookieConsent ref={button}/>
     </div>
   )
