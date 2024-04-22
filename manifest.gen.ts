@@ -57,29 +57,30 @@ import * as $$$$$$43 from "./sections/PagCategEDepto/iconeNavegacional.tsx";
 import * as $$$$$$41 from "./sections/PagCategEDepto/PagDepartamento.tsx";
 import * as $$$$$$42 from "./sections/PagCategEDepto/PriceFilter.tsx";
 import * as $$$$$$38 from "./sections/PCNivelGamer.tsx";
-import * as $$$$$$44 from "./sections/Pop-ups/HelperButtons.tsx";
-import * as $$$$$$46 from "./sections/Product/ProductBuyBar.tsx";
-import * as $$$$$$47 from "./sections/Product/ProductCompreJunto.tsx";
-import * as $$$$$$48 from "./sections/Product/ProductDescription.tsx";
-import * as $$$$$$49 from "./sections/Product/ProductDetails.tsx";
-import * as $$$$$$50 from "./sections/Product/ProductGames.tsx";
-import * as $$$$$$51 from "./sections/Product/ProductRecommendedProds.tsx";
-import * as $$$$$$52 from "./sections/Product/ProductSpecification.tsx";
-import * as $$$$$$53 from "./sections/Product/ProductTrustvox.tsx";
-import * as $$$$$$45 from "./sections/ProductShelf.tsx";
-import * as $$$$$$54 from "./sections/ReturnH1.tsx";
-import * as $$$$$$56 from "./sections/Search/SearchPage.tsx";
-import * as $$$$$$55 from "./sections/SearchResult.tsx";
-import * as $$$$$$57 from "./sections/SetCookieUsandoDeco/usandoDecoCookie.tsx";
-import * as $$$$$$58 from "./sections/Shelf/Filtro.tsx";
-import * as $$$$$$59 from "./sections/Shelf/Modal.tsx";
-import * as $$$$$$60 from "./sections/Shelf/Shelf.tsx";
-import * as $$$$$$61 from "./sections/TesteProMaylon.tsx";
-import * as $$$$$$62 from "./sections/TitleAndText.tsx";
-import * as $$$$$$63 from "./sections/Vitrine.tsx";
-import * as $$$$$$64 from "./sections/WhatsApp.tsx";
-import * as $$$$$$65 from "./sections/WishlistGallery.tsx";
-import * as $$$$$$66 from "./sections/WishlistTeste.tsx";
+import * as $$$$$$44 from "./sections/Pop-ups/CookieConsent.tsx";
+import * as $$$$$$45 from "./sections/Pop-ups/HelperButtons.tsx";
+import * as $$$$$$47 from "./sections/Product/ProductBuyBar.tsx";
+import * as $$$$$$48 from "./sections/Product/ProductCompreJunto.tsx";
+import * as $$$$$$49 from "./sections/Product/ProductDescription.tsx";
+import * as $$$$$$50 from "./sections/Product/ProductDetails.tsx";
+import * as $$$$$$51 from "./sections/Product/ProductGames.tsx";
+import * as $$$$$$52 from "./sections/Product/ProductRecommendedProds.tsx";
+import * as $$$$$$53 from "./sections/Product/ProductSpecification.tsx";
+import * as $$$$$$54 from "./sections/Product/ProductTrustvox.tsx";
+import * as $$$$$$46 from "./sections/ProductShelf.tsx";
+import * as $$$$$$55 from "./sections/ReturnH1.tsx";
+import * as $$$$$$57 from "./sections/Search/SearchPage.tsx";
+import * as $$$$$$56 from "./sections/SearchResult.tsx";
+import * as $$$$$$58 from "./sections/SetCookieUsandoDeco/usandoDecoCookie.tsx";
+import * as $$$$$$59 from "./sections/Shelf/Filtro.tsx";
+import * as $$$$$$60 from "./sections/Shelf/Modal.tsx";
+import * as $$$$$$61 from "./sections/Shelf/Shelf.tsx";
+import * as $$$$$$62 from "./sections/TesteProMaylon.tsx";
+import * as $$$$$$63 from "./sections/TitleAndText.tsx";
+import * as $$$$$$64 from "./sections/Vitrine.tsx";
+import * as $$$$$$65 from "./sections/WhatsApp.tsx";
+import * as $$$$$$66 from "./sections/WishlistGallery.tsx";
+import * as $$$$$$67 from "./sections/WishlistTeste.tsx";
 
 const manifest = {
   "loaders": {
@@ -140,30 +141,31 @@ const manifest = {
     "deco-sites/shp/sections/PagCategEDepto/PagDepartamento.tsx": $$$$$$41,
     "deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx": $$$$$$42,
     "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$38,
-    "deco-sites/shp/sections/Pop-ups/HelperButtons.tsx": $$$$$$44,
-    "deco-sites/shp/sections/Product/ProductBuyBar.tsx": $$$$$$46,
-    "deco-sites/shp/sections/Product/ProductCompreJunto.tsx": $$$$$$47,
-    "deco-sites/shp/sections/Product/ProductDescription.tsx": $$$$$$48,
-    "deco-sites/shp/sections/Product/ProductDetails.tsx": $$$$$$49,
-    "deco-sites/shp/sections/Product/ProductGames.tsx": $$$$$$50,
-    "deco-sites/shp/sections/Product/ProductRecommendedProds.tsx": $$$$$$51,
-    "deco-sites/shp/sections/Product/ProductSpecification.tsx": $$$$$$52,
-    "deco-sites/shp/sections/Product/ProductTrustvox.tsx": $$$$$$53,
-    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$45,
-    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$54,
-    "deco-sites/shp/sections/Search/SearchPage.tsx": $$$$$$56,
-    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$55,
+    "deco-sites/shp/sections/Pop-ups/CookieConsent.tsx": $$$$$$44,
+    "deco-sites/shp/sections/Pop-ups/HelperButtons.tsx": $$$$$$45,
+    "deco-sites/shp/sections/Product/ProductBuyBar.tsx": $$$$$$47,
+    "deco-sites/shp/sections/Product/ProductCompreJunto.tsx": $$$$$$48,
+    "deco-sites/shp/sections/Product/ProductDescription.tsx": $$$$$$49,
+    "deco-sites/shp/sections/Product/ProductDetails.tsx": $$$$$$50,
+    "deco-sites/shp/sections/Product/ProductGames.tsx": $$$$$$51,
+    "deco-sites/shp/sections/Product/ProductRecommendedProds.tsx": $$$$$$52,
+    "deco-sites/shp/sections/Product/ProductSpecification.tsx": $$$$$$53,
+    "deco-sites/shp/sections/Product/ProductTrustvox.tsx": $$$$$$54,
+    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$46,
+    "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$55,
+    "deco-sites/shp/sections/Search/SearchPage.tsx": $$$$$$57,
+    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$56,
     "deco-sites/shp/sections/SetCookieUsandoDeco/usandoDecoCookie.tsx":
-      $$$$$$57,
-    "deco-sites/shp/sections/Shelf/Filtro.tsx": $$$$$$58,
-    "deco-sites/shp/sections/Shelf/Modal.tsx": $$$$$$59,
-    "deco-sites/shp/sections/Shelf/Shelf.tsx": $$$$$$60,
-    "deco-sites/shp/sections/TesteProMaylon.tsx": $$$$$$61,
-    "deco-sites/shp/sections/TitleAndText.tsx": $$$$$$62,
-    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$63,
-    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$64,
-    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$65,
-    "deco-sites/shp/sections/WishlistTeste.tsx": $$$$$$66,
+      $$$$$$58,
+    "deco-sites/shp/sections/Shelf/Filtro.tsx": $$$$$$59,
+    "deco-sites/shp/sections/Shelf/Modal.tsx": $$$$$$60,
+    "deco-sites/shp/sections/Shelf/Shelf.tsx": $$$$$$61,
+    "deco-sites/shp/sections/TesteProMaylon.tsx": $$$$$$62,
+    "deco-sites/shp/sections/TitleAndText.tsx": $$$$$$63,
+    "deco-sites/shp/sections/Vitrine.tsx": $$$$$$64,
+    "deco-sites/shp/sections/WhatsApp.tsx": $$$$$$65,
+    "deco-sites/shp/sections/WishlistGallery.tsx": $$$$$$66,
+    "deco-sites/shp/sections/WishlistTeste.tsx": $$$$$$67,
   },
   "apps": {
     "deco-sites/shp/apps/decohub.ts": $$$$$$$$$$$0,
