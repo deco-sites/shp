@@ -1,5 +1,6 @@
 import { getSetCookies, Handler, setCookie } from "std/http/mod.ts";
 import { isFreshCtx } from "apps/website/handlers/fresh.ts";
+import { Script } from 'apps/website/types.ts'
 
 const VTEX_ENDPOINT = "seguro.shopinfo.com.br";
 
@@ -26,11 +27,14 @@ const removeCFHeaders = (headers: Headers) => {
 };
 
 const proxyTo = (
-  { proxyUrl: rawProxyUrl, basePath, host: hostToUse, customHeaders = {} }: {
+  { proxyUrl: rawProxyUrl, basePath, host: hostToUse, customHeaders = {}, includeScriptsToHead }: {
     proxyUrl: string;
     basePath?: string;
     host?: string;
     customHeaders?: Record<string, string>;
+    includeScriptsToHead?: {
+      includes?: Script[];
+    };
   },
 ): Handler =>
 async (req, _ctx) => {
@@ -92,29 +96,78 @@ async (req, _ctx) => {
     }
   }
 
-  /**
-   * VTEX's API respects if-none-match
-   */
-  if (response.status === 200) {
-    const returnedBody = await response.text();
-    const newBody = returnedBody
+  const contentType = response.headers.get("Content-Type");
+
+    let newBodyStream = null;
+
+    if (
+      contentType?.includes("text/html") &&
+      includeScriptsToHead?.includes &&
+      includeScriptsToHead.includes.length > 0
+    ) {
+      // Use a more efficient approach to insert scripts
+      const insertScriptsStream = new TransformStream({
+        async transform(chunk, controller) {
+          const chunkStr = new TextDecoder().decode(await chunk);
+
+          // Find the position of <head> tag
+          const headEndPos = chunkStr.indexOf("</head>");
+          if (headEndPos !== -1) {
+            // Split the chunk at </head> position
+            const beforeHeadEnd = chunkStr.substring(0, headEndPos);
+            const afterHeadEnd = chunkStr.substring(headEndPos);
+
+            // Prepare scripts to insert
+            let scriptsInsert = "";
+            for (const script of (includeScriptsToHead?.includes ?? [])) {
+              scriptsInsert += typeof script.src === "string"
+                ? script.src
+                : script.src(req);
+            }
+
+            // Combine and encode the new chunk
+            const newChunkStr = beforeHeadEnd + scriptsInsert + afterHeadEnd;
+
+            controller.enqueue(new TextEncoder().encode(newChunkStr));
+          } else {
+            // If </head> not found, pass the chunk unchanged
+            controller.enqueue(chunk);
+          }
+        },
+      });
+
+      // Modify the response body by piping through the transform stream
+      if (response.body) {
+        newBodyStream = response.body.pipeThrough(insertScriptsStream);
+      }
+    }
+
+    
+    /**
+     * VTEX's API respects if-none-match
+    */
+    if (response.status === 200) {
+      const returnedBody = await response.text();
+      const newBody = returnedBody
       .replaceAll(
         VTEX_ENDPOINT,
         req.headers.get("host") ?? "localhost",
       );
+      
+      return new Response(newBody, {
+        status: response.status,
+        headers: responseHeaders,
+      });
+    }
 
+    const newBody = newBodyStream === null ? response.body : newBodyStream
+    
     return new Response(newBody, {
       status: response.status,
       headers: responseHeaders,
     });
-  }
-
-  return new Response(response.body, {
-    status: response.status,
-    headers: responseHeaders,
-  });
-};
-
+  };
+  
 /**
  * @title {{{key}}} - {{{value}}}
  */
@@ -149,12 +202,18 @@ export interface Props {
    * @description custom headers
    */
   customHeaders?: Header[];
+  /**
+   * @description Scripts to be included in the head of the html
+   */
+  includeScriptsToHead?: {
+    includes?: Script[];
+  };
 }
 
 /**
  * @title VTEX Proxy (for A/B test)
  * @description Proxies request to the target url.
  */
-export default function Proxy({ url, basePath, host }: Props) {
-  return proxyTo({ proxyUrl: url, basePath, host });
+export default function Proxy({ url, basePath, host, includeScriptsToHead }: Props) {
+  return proxyTo({ proxyUrl: url, basePath, host, includeScriptsToHead });
 }
