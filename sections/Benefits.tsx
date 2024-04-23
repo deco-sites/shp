@@ -50,7 +50,7 @@ const Benefits = ({descontoPix}:SectionProps<typeof loader>) => {
             decoding='sync' loading='eager' fetchPriority='high'
             className="" width={62} height={35} src="https://shopinfo.vteximg.com.br/arquivos/icon-truck-frete.png" 
           />
-          <p><b>Frete Grátis</b> <br/> Sul e Sudeste em PCs</p>
+          <p><b>Frete Grátis</b> <br/> Brasil em PCs</p>
         </label>
     </div>
   )
