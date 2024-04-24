@@ -3,18 +3,19 @@ import { useEffect, useState, useRef } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
-import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
+import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import { signal } from '@preact/signals'
 import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
-import { VtexTypeToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
+import { OrgSchemaToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 import { AppContext } from "deco-sites/shp/apps/site.ts";
-import { SectionProps } from "deco/types.ts";
+import { LoaderReturnType, SectionProps } from "deco/types.ts";
 import gamesCollections from 'deco-sites/shp/static/gamesCollection.json' with { type: "json" }
 import removeDot from "deco-sites/shp/FunctionsSHP/removeDOTFromFilters.ts";
+import { Product, PropertyValue } from "apps/commerce/types.ts";
 
 export interface Props{
   bannerUrl:string
@@ -23,10 +24,10 @@ export interface Props{
   /**@description Filtro de Jogos */
   Jogos:boolean
   collectionId:string
+  produtos: LoaderReturnType<Product[] | null>
 }
 
-const fetchFilters=async (idCateg:string)=>await invoke['deco-sites/shp'].loaders.getFacetsByCategId({categoryId:idCateg})
-const fetchProducts=async (queryString:string)=>await invoke['deco-sites/shp'].loaders.getProductsSearchAPI({queryString})
+const fetchFilters=async (queryString:string)=>await invoke['deco-sites/shp'].loaders.getFacetsQueryString({queryString})
 
 const getBrands=async()=>{
   const url=`https://api.shopinfo.com.br/Deco/getBrands.php`
@@ -54,6 +55,11 @@ interface SpecObj{
   Quantity: number | null
   Value:string
   Slug?:string
+}
+
+interface FiltroObj{
+  label:string
+  value:string
 }
 
 const selectedFiltersSignal=signal<Array<{fq:string, value:string}>>([])
@@ -131,14 +137,12 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
   )
 }
 
-export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix }:Props)=>{
+export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, produtos }:Props)=>{
   const [loading, setLoading]=useState(true)
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
   const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
-  const [products, setProducts]=useState<any>([])
-  const [showMore, setShowMore]=useState(false)
-  const [prodsResources, setProdsResources]=useState('')
+  const [products, setProducts]=useState<any>(produtos || [])
   const [brands,setBrands]=useState<any>([])
   const [sentEvent, setSentEvent]=useState(false)
 
@@ -221,7 +225,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix }:Pr
 
   useEffect(()=>{
     (async()=>{
-      const pageData=await fetchFilters(collectionId)
+      const pageData=await fetchFilters('productClusterIds:'+collectionId)
       const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
         const slugSplittado=obj.Slug!.split('-')
         const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
@@ -284,6 +288,27 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix }:Pr
 
   useEffect(()=>{filters.length && addFilterListeners()},[filters])
 
+  // const handleMoreProducts=async()=>{
+  //   setLoading(true)
+  //   const fqsFilter=selectedFilters.map(obj=>{
+  //     if(obj.fq==='b'){
+  //       const brandId=brands.find((brand:any)=>brand.name===obj.value)!.id
+  //       return `fq=B:${brandId}`
+  //     }else{
+  //       return `fq=${obj.fq}:${obj.value}`
+  //     }
+  //   })
+  //   const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
+  //   order!=='selecione' && queryString.push(`O=${order}`)
+  //   const data= await fetchProducts(queryString.join('&'))
+  //   if(data){
+  //     setFetchLength(data.products.length)
+  //     fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data.products]) : setProducts(data.products)
+  //     setProdsResources(data.productsResources?.split('/').pop() ?? '')
+  //     setLoading(false)
+  //   }
+  // }
+
   useEffect(()=>{setSelectedFilters(selectedFiltersSignal.value)
     
   },[selectedFiltersSignal.value])
@@ -307,6 +332,77 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix }:Pr
   },[order])
 
   useEffect(()=>{
+    // filtragem de filtros no desktop
+    // if(products.length){
+    //   const keys=filters.map(filter=>filter.label)
+    //   const productsFields:FiltroObj[]=[]
+    //   products.forEach((product:Product)=>{
+    //     const fields=[]
+    //     for(const addProp of product.isVariantOf?.additionalProperty ?? []){
+    //       if(keys.includes(addProp.name!)){
+    //         fields.push({label: key, value: product[key][0]})
+    //       }else if(key==='brand'){
+    //         fields.push({label: 'Marcas', value: product[key]})
+    //       }
+    //     }
+    //     productsFields.push(...fields)
+    //   })
+
+    //   const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
+    //   const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
+    //     const {label,value}=obj
+    //     if(!acc[label]) acc[label]=[]
+    //     acc[label].push(value)
+    //     return acc
+    //   },{} as Record<string, string[]>)
+
+      // if(listFiltersDesk.current && selectedFilters.length){
+      //   const keys=Object.keys(filtrosByLabel)
+      //   const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
+      //   const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
+      //   h5S.forEach(h5=>{
+      //     const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
+      //     Input.value=''
+
+      //     const key=h5.innerText
+      //     Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
+      //       const Li=li as HTMLLIElement
+      //       if(filtrosByLabel[key].includes(Li.innerText)){
+      //         Li.removeAttribute('data-filtered')
+      //       }else{
+      //         Li.setAttribute('data-filtered','filtrado')
+      //       }
+      //     })
+          
+      //   })
+
+      //   h5NaoDisp.forEach(h5=>{
+      //     const divPai=h5.parentElement! as HTMLDivElement
+      //     divPai.classList.replace('flex','hidden')
+      //   })
+      // }else if(listFiltersDesk.current){
+      //   const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
+      //   h5S.forEach(h5=>{
+      //     const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
+      //     Input.value=''
+
+      //     Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
+      //       const Li=li as HTMLLIElement
+      //       Li.removeAttribute('data-filtered')
+      //     })
+      //   })
+
+      //   const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
+      //   h5NaoDisp.forEach(h5=>{
+      //     const divPai=h5.parentElement! as HTMLDivElement
+      //     divPai.classList.replace('hidden','flex')
+      //   })
+      // }
+    }
+  },[products])
+
+  useEffect(()=>{
+    console.log(products)
     if(products.length){
       if(!sentEvent){
         // mandar evento apenas uma vez quando puxar os prods pela primeira vez
@@ -314,9 +410,10 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix }:Pr
         sendEvent({name:'view_item_list', params:{
           item_list_id: collectionId,
           item_list_name: 'Compre e Ganhe',
-          items:VtexTypeToAnalytics(products)
+          items:OrgSchemaToAnalytics(products)
         }})
       }
+      setLoading(false)
     }
   },[products])
 
@@ -468,19 +565,9 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix }:Pr
               {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
                 <>
                   {products.length > 0 ? (
-                    <>
-                      <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                        {products.map((product:any)=><Card product={product} descontoPix={descontoPix}/>)}
-                      </div>
-
-                      <div className='text-sm re1:text-base text-center mt-10'>
-                        <p>Mostrando <b className='font-bold'>{products.length} de {prodsResources}</b></p>
-                        <div className='bg-white w-[220px] re1:w-[360px] h-[8px] rounded-[4px] overflow-hidden'>
-                          <div className='h-full bg-primary rounded-[4px] transition-[width] w-0 duration-500 ease-in-out' 
-                          style={{width:(100*products.length/parseInt(prodsResources)) + '%'}}/>
-                        </div>
-                      </div>
-                    </>
+                    <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
+                      {products.map((product:any)=><Card product={product} descontoPix={descontoPix}/>)}
+                    </div>
                   ) : (
                     <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
                   )}
