@@ -331,7 +331,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     PCs.length && removeAll()
   },[order])
 
-  useEffect(()=>{
+  // useEffect(()=>{
     // filtragem de filtros no desktop
     // if(products.length){
     //   const keys=filters.map(filter=>filter.label)
@@ -398,8 +398,8 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
       //     divPai.classList.replace('hidden','flex')
       //   })
       // }
-    }
-  },[products])
+  //   }
+  // },[products])
 
   useEffect(()=>{
     console.log(products)
