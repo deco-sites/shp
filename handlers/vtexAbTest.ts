@@ -142,25 +142,25 @@ async (req, _ctx) => {
       }
     }
 
+    const newBody = newBodyStream === null ? response.body : newBodyStream
     
     /**
      * VTEX's API respects if-none-match
     */
     if (response.status === 200) {
-      const returnedBody = await response.text();
-      const newBody = returnedBody
+      const returnedBody = await new Response(newBody).text();
+
+      const newBodyToReturn = returnedBody
       .replaceAll(
         VTEX_ENDPOINT,
         req.headers.get("host") ?? "localhost",
       );
       
-      return new Response(newBody, {
+      return new Response(newBodyToReturn, {
         status: response.status,
         headers: responseHeaders,
       });
     }
-
-    const newBody = newBodyStream === null ? response.body : newBodyStream
     
     return new Response(newBody, {
       status: response.status,
@@ -215,5 +215,6 @@ export interface Props {
  * @description Proxies request to the target url.
  */
 export default function Proxy({ url, basePath, host, includeScriptsToHead }: Props) {
+  console.log(includeScriptsToHead)
   return proxyTo({ proxyUrl: url, basePath, host, includeScriptsToHead });
 }

@@ -59,18 +59,18 @@ import * as $$$$$$42 from "./sections/PagCategEDepto/PriceFilter.tsx";
 import * as $$$$$$38 from "./sections/PCNivelGamer.tsx";
 import * as $$$$$$44 from "./sections/Pop-ups/CookieConsent.tsx";
 import * as $$$$$$45 from "./sections/Pop-ups/HelperButtons.tsx";
-import * as $$$$$$47 from "./sections/Product/ProductBuyBar.tsx";
-import * as $$$$$$48 from "./sections/Product/ProductCompreJunto.tsx";
-import * as $$$$$$49 from "./sections/Product/ProductDescription.tsx";
-import * as $$$$$$50 from "./sections/Product/ProductDetails.tsx";
-import * as $$$$$$51 from "./sections/Product/ProductGames.tsx";
-import * as $$$$$$52 from "./sections/Product/ProductRecommendedProds.tsx";
-import * as $$$$$$53 from "./sections/Product/ProductSpecification.tsx";
-import * as $$$$$$54 from "./sections/Product/ProductTrustvox.tsx";
-import * as $$$$$$46 from "./sections/ProductShelf.tsx";
+import * as $$$$$$46 from "./sections/Product/ProductBuyBar.tsx";
+import * as $$$$$$47 from "./sections/Product/ProductCompreJunto.tsx";
+import * as $$$$$$48 from "./sections/Product/ProductDescription.tsx";
+import * as $$$$$$49 from "./sections/Product/ProductDetails.tsx";
+import * as $$$$$$50 from "./sections/Product/ProductGames.tsx";
+import * as $$$$$$51 from "./sections/Product/ProductRecommendedProds.tsx";
+import * as $$$$$$52 from "./sections/Product/ProductSpecification.tsx";
+import * as $$$$$$53 from "./sections/Product/ProductTrustvox.tsx";
+import * as $$$$$$54 from "./sections/ProductShelf.tsx";
 import * as $$$$$$55 from "./sections/ReturnH1.tsx";
-import * as $$$$$$57 from "./sections/Search/SearchPage.tsx";
-import * as $$$$$$56 from "./sections/SearchResult.tsx";
+import * as $$$$$$56 from "./sections/Search/SearchPage.tsx";
+import * as $$$$$$57 from "./sections/SearchResult.tsx";
 import * as $$$$$$58 from "./sections/SetCookieUsandoDeco/usandoDecoCookie.tsx";
 import * as $$$$$$59 from "./sections/Shelf/Filtro.tsx";
 import * as $$$$$$60 from "./sections/Shelf/Modal.tsx";
@@ -143,18 +143,18 @@ const manifest = {
     "deco-sites/shp/sections/PCNivelGamer.tsx": $$$$$$38,
     "deco-sites/shp/sections/Pop-ups/CookieConsent.tsx": $$$$$$44,
     "deco-sites/shp/sections/Pop-ups/HelperButtons.tsx": $$$$$$45,
-    "deco-sites/shp/sections/Product/ProductBuyBar.tsx": $$$$$$47,
-    "deco-sites/shp/sections/Product/ProductCompreJunto.tsx": $$$$$$48,
-    "deco-sites/shp/sections/Product/ProductDescription.tsx": $$$$$$49,
-    "deco-sites/shp/sections/Product/ProductDetails.tsx": $$$$$$50,
-    "deco-sites/shp/sections/Product/ProductGames.tsx": $$$$$$51,
-    "deco-sites/shp/sections/Product/ProductRecommendedProds.tsx": $$$$$$52,
-    "deco-sites/shp/sections/Product/ProductSpecification.tsx": $$$$$$53,
-    "deco-sites/shp/sections/Product/ProductTrustvox.tsx": $$$$$$54,
-    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$46,
+    "deco-sites/shp/sections/Product/ProductBuyBar.tsx": $$$$$$46,
+    "deco-sites/shp/sections/Product/ProductCompreJunto.tsx": $$$$$$47,
+    "deco-sites/shp/sections/Product/ProductDescription.tsx": $$$$$$48,
+    "deco-sites/shp/sections/Product/ProductDetails.tsx": $$$$$$49,
+    "deco-sites/shp/sections/Product/ProductGames.tsx": $$$$$$50,
+    "deco-sites/shp/sections/Product/ProductRecommendedProds.tsx": $$$$$$51,
+    "deco-sites/shp/sections/Product/ProductSpecification.tsx": $$$$$$52,
+    "deco-sites/shp/sections/Product/ProductTrustvox.tsx": $$$$$$53,
+    "deco-sites/shp/sections/ProductShelf.tsx": $$$$$$54,
     "deco-sites/shp/sections/ReturnH1.tsx": $$$$$$55,
-    "deco-sites/shp/sections/Search/SearchPage.tsx": $$$$$$57,
-    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$56,
+    "deco-sites/shp/sections/Search/SearchPage.tsx": $$$$$$56,
+    "deco-sites/shp/sections/SearchResult.tsx": $$$$$$57,
     "deco-sites/shp/sections/SetCookieUsandoDeco/usandoDecoCookie.tsx":
       $$$$$$58,
     "deco-sites/shp/sections/Shelf/Filtro.tsx": $$$$$$59,
