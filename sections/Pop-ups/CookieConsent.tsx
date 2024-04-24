@@ -9,31 +9,19 @@ export interface Props{
 const CookieConsentFinal=({paths}:Props)=>{
   const [show, setShow]=useState(true)
 
-  const button=useRef<HTMLButtonElement>(null)
 
   useEffect(()=>{
-    const hide=()=>{
-      setShow(false)
-    }
-
-    if(button.current && typeof globalThis.window!=='undefined'){
+    if(typeof globalThis.window !== 'undefined'){
       if(paths){
         const pathName=globalThis.window.location.pathname
-        // console.log(pathName)
         paths.includes(pathName) && setShow(false)
       }
-
-      button.current.addEventListener('click',hide)
-    }
-
-    return ()=>{
-      button.current?.removeEventListener('click',hide)
     }
   },[])
 
   return !show ? null : (
     <div className='fixed bottom-0 z-10'>
-      <CookieConsent ref={button}/>
+      <CookieConsent />
     </div>
   )
 }
