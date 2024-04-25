@@ -1,10 +1,10 @@
 // deno-lint-ignore-file no-explicit-any
 import { useEffect, useState, useRef } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
-import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
-import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
+import Filtro from './Filtro.tsx'
+import FiltroMob from './FiltroMob.tsx'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
-import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
+import PriceFilter from './PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
@@ -15,7 +15,7 @@ import { AppContext } from "deco-sites/shp/apps/site.ts";
 import { LoaderReturnType, SectionProps } from "deco/types.ts";
 import gamesCollections from 'deco-sites/shp/static/gamesCollection.json' with { type: "json" }
 import removeDot from "deco-sites/shp/FunctionsSHP/removeDOTFromFilters.ts";
-import { Product, PropertyValue } from "apps/commerce/types.ts";
+import { Product } from "apps/commerce/types.ts";
 
 export interface Props{
   bannerUrl:string
@@ -43,7 +43,7 @@ interface Game{
 
 interface FilterObj{
   label:string
-  values:SpecObj[]
+  values:string[]
 }
 
 interface SpecObj{
@@ -62,11 +62,11 @@ interface FiltroObj{
   value:string
 }
 
-const selectedFiltersSignal=signal<Array<{fq:string, value:string}>>([])
+const selectedFiltersSignal=signal<Array<{fq:string|null, value:string}>>([])
 
-const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
+const LimparFiltros=({filters}:{filters:Array<{fq:string|null, value:string}>})=>{
   const [open,setOpen]=useState(true)
-  const [selectedFilters, setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
+  const [selectedFilters, setSelectedFilters]=useState<Array<{fq:string|null, value:string}>>([])
 
   useEffect(()=>{
     setSelectedFilters(filters)
@@ -141,8 +141,8 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
   const [loading, setLoading]=useState(true)
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
-  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
-  const [products, setProducts]=useState<any>(produtos || [])
+  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string|null, value:string}>>([])
+  const [products, setProducts]=useState<Product[]>(produtos ?? [])
   const [brands,setBrands]=useState<any>([])
   const [sentEvent, setSentEvent]=useState(false)
 
@@ -197,19 +197,19 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
       setSelectedFilters(filtersSelected)     
     })
 
-    const btnPriceRange=ulDesk.querySelector('button#priceRange')!
-    btnPriceRange.addEventListener('click',()=>{
-      const minInput=ulDesk.querySelector('input[name="min"]') as HTMLInputElement
-      const maxInput=ulDesk.querySelector('input[name="max"]') as HTMLInputElement
+    // const btnPriceRange=ulDesk.querySelector('button#priceRange')!
+    // btnPriceRange.addEventListener('click',()=>{
+    //   const minInput=ulDesk.querySelector('input[name="min"]') as HTMLInputElement
+    //   const maxInput=ulDesk.querySelector('input[name="max"]') as HTMLInputElement
 
-      if(minInput.value.length!==0 && maxInput.value.length!==0){
-        const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
-        const fq='P'
-        setSelectedFilters(prevSelectedFilters=>[...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq,value}])
-      }else{
-        alert('Você precisa preencher os dois campos de preço!')
-      }
-    })
+    //   if(minInput.value.length!==0 && maxInput.value.length!==0){
+    //     const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
+    //     const fq='P'
+    //     setSelectedFilters(prevSelectedFilters=>[...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq,value}])
+    //   }else{
+    //     alert('Você precisa preencher os dois campos de preço!')
+    //   }
+    // })
   }
 
   const orderFilters=[
@@ -223,68 +223,68 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     {'Melhor Desconto':'OrderByBestDiscountDESC'} 
   ]
 
-  useEffect(()=>{
-    (async()=>{
-      const pageData=await fetchFilters('productClusterIds:'+collectionId)
-      const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
-        const slugSplittado=obj.Slug!.split('-')
-        const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
-        obj.Value=finalValue
-        obj.Map='P'
-        return obj
-      })
+  // useEffect(()=>{
+    // (async()=>{
+    //   const pageData=await fetchFilters('productClusterIds:'+collectionId)
+    //   const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
+    //     const slugSplittado=obj.Slug!.split('-')
+    //     const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
+    //     obj.Value=finalValue
+    //     obj.Map='P'
+    //     return obj
+    //   })
 
-      let dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, 'Faixa de Preço': priceFilters}
+    //   let dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, 'Faixa de Preço': priceFilters}
 
-      dataFilters={
-        ...dataFilters,
-        ...Object.entries(pageData!.SpecificationFilters).reduce((acc, [key,value])=> ({
-          ...acc,
-          [key]:removeDot(value as SpecObj[])
-        }),{})
-      }
+    //   dataFilters={
+    //     ...dataFilters,
+    //     ...Object.entries(pageData!.SpecificationFilters).reduce((acc, [key,value])=> ({
+    //       ...acc,
+    //       [key]:removeDot(value as SpecObj[])
+    //     }),{})
+    //   }
 
-      if(Jogos){
-        const gamesFilters:SpecObj[]=[]
-        const games:Record<string, Game> = {
-          ...gamesCollections
-        }
+    //   if(Jogos){
+    //     const gamesFilters:SpecObj[]=[]
+    //     const games:Record<string, Game> = {
+    //       ...gamesCollections
+    //     }
 
-        for(const game in games){
-          const commonInfo={
-            Map:'productClusterIds',
-            Link:'',
-            LinkEncoded:'',
-            Position:null,
-            Quantity:null
-          }
+    //     for(const game in games){
+    //       const commonInfo={
+    //         Map:'productClusterIds',
+    //         Link:'',
+    //         LinkEncoded:'',
+    //         Position:null,
+    //         Quantity:null
+    //       }
 
-          gamesFilters.push({
-            ...commonInfo,
-            Name: games[game].Name + ' 60fps',
-            Value: games[game]['60FPS']
-          })
+    //       gamesFilters.push({
+    //         ...commonInfo,
+    //         Name: games[game].Name + ' 60fps',
+    //         Value: games[game]['60FPS']
+    //       })
 
-          gamesFilters.push({
-            ...commonInfo,
-            Name: games[game].Name + ' 144fps',
-            Value: games[game]['144FPS']
-          })
-        }
-        dataFilters={'Jogos':gamesFilters, ...dataFilters}
-      }
+    //       gamesFilters.push({
+    //         ...commonInfo,
+    //         Name: games[game].Name + ' 144fps',
+    //         Value: games[game]['144FPS']
+    //       })
+    //     }
+    //     dataFilters={'Jogos':gamesFilters, ...dataFilters}
+    //   }
 
-      const arrFilterObj:FilterObj[]=[]
+    //   const arrFilterObj:FilterObj[]=[]
 
-      for(const key in dataFilters){
-        arrFilterObj.push({label:key , values:dataFilters[key]})
-      }
+    //   for(const key in dataFilters){
+    //     arrFilterObj.push({label:key , values:dataFilters[key]})
+    //   }
 
-      setFilters(arrFilterObj)
-    })()
+    //   setFilters(arrFilterObj)
+    // })()
 
-    getBrands().then(r=>setBrands(r)).catch(err=>console.error('Error: ',err))
-  },[])
+    // getBrands().then(r=>setBrands(r)).catch(err=>console.error('Error: ',err))
+  // },[])
 
   useEffect(()=>{filters.length && addFilterListeners()},[filters])
 
@@ -309,18 +309,28 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
   //   }
   // }
 
-  useEffect(()=>{setSelectedFilters(selectedFiltersSignal.value)
-    
+  useEffect(()=>{
+    setSelectedFilters(selectedFiltersSignal.value)
   },[selectedFiltersSignal.value])
+
+  const handleFiltersChange=(selected:Array<{fq:string|null, value:string}>)=>{
+    //fq=null é filtragem de spec dos produtos
+    //fq='productClusterIds' é fitragem de jogos,dá pra filtrar pela coleção dos produtos
+    //fq='P' é filtragem de Preço ai tem q fazer novo request
+  }
 
   useEffect(()=>{
     const filterValues=selectedFilters.map(filter=>filter.value)
-    const filterFqs=selectedFilters.map(filter=>filter.fq)
+    // const filterFqs=selectedFilters.map(filter=>filter.fq)
     
     Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
       const Input=input as HTMLInputElement
-      (filterValues.includes(Input.value) && filterFqs.includes(Input.getAttribute('data-fq')!))? (Input.checked=true) : (Input.checked=false)
+      (filterValues.includes(Input.value) 
+        // && filterFqs.includes(Input.getAttribute('data-fq')!)
+      )? (Input.checked=true) : (Input.checked=false)
     })
+
+    
 
     PCs.length && removeAll()
   },[selectedFilters])
@@ -331,75 +341,33 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     PCs.length && removeAll()
   },[order])
 
-  // useEffect(()=>{
-    // filtragem de filtros no desktop
-    // if(products.length){
-    //   const keys=filters.map(filter=>filter.label)
-    //   const productsFields:FiltroObj[]=[]
-    //   products.forEach((product:Product)=>{
-    //     const fields=[]
-    //     for(const addProp of product.isVariantOf?.additionalProperty ?? []){
-    //       if(keys.includes(addProp.name!)){
-    //         fields.push({label: key, value: product[key][0]})
-    //       }else if(key==='brand'){
-    //         fields.push({label: 'Marcas', value: product[key]})
-    //       }
-    //     }
-    //     productsFields.push(...fields)
-    //   })
+  const createFiltersBasedInProducts=(products:Product[])=>{
+    const excludesKeys=['Imagem do Fabricante', 'Kit Gamer', 'Cabos Inclusos', 'Garantia', 'Sistema Operacional', 'Windows', 'Recomendações', 'Monitor', 'Bloco Descrição']
+    
+    const productsFields:FiltroObj[]=[]
+      products.forEach((product:Product)=>{
+        const fields=[]
+        for(const addProp of product.isVariantOf?.additionalProperty ?? []){
+          if(addProp.valueReference==='SPECIFICATION' && !excludesKeys.includes(addProp.name!)){
+            fields.push({label: addProp.name!, value: addProp.value!})
+          }
+        }
+        productsFields.push(...fields)
+      })
 
-    //   const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
-    //   const filtrosByLabel:Record<string, string[]> =fieldsFiltrados.reduce((acc, obj)=>{
-    //     const {label,value}=obj
-    //     if(!acc[label]) acc[label]=[]
-    //     acc[label].push(value)
-    //     return acc
-    //   },{} as Record<string, string[]>)
+      console.log(productsFields)
 
-      // if(listFiltersDesk.current && selectedFilters.length){
-      //   const keys=Object.keys(filtrosByLabel)
-      //   const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>keys.includes(item.innerText))
-      //   const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>!keys.includes(item.innerText)).filter(item=>item.innerText!=='Faixa de Preço')
-      //   h5S.forEach(h5=>{
-      //     const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-      //     Input.value=''
+      const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
+      const filtrosByLabel:FilterObj[]=fieldsFiltrados.reduce((acc, obj)=>{
+        const {label,value}=obj
 
-      //     const key=h5.innerText
-      //     Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-      //       const Li=li as HTMLLIElement
-      //       if(filtrosByLabel[key].includes(Li.innerText)){
-      //         Li.removeAttribute('data-filtered')
-      //       }else{
-      //         Li.setAttribute('data-filtered','filtrado')
-      //       }
-      //     })
-          
-      //   })
+        !acc.some(filter=>filter.label===label) && acc.push({label, values:[]})
+        acc.find(filter=>filter.label===label)?.values.push(value)
+        return acc
+      },[] as FilterObj[])
 
-      //   h5NaoDisp.forEach(h5=>{
-      //     const divPai=h5.parentElement! as HTMLDivElement
-      //     divPai.classList.replace('flex','hidden')
-      //   })
-      // }else if(listFiltersDesk.current){
-      //   const h5S=Array.from(listFiltersDesk.current.querySelectorAll('h5'))
-      //   h5S.forEach(h5=>{
-      //     const Input=h5.nextElementSibling!.querySelector('label input[type="text"]')! as HTMLInputElement
-      //     Input.value=''
-
-      //     Array.from(h5.nextElementSibling!.querySelectorAll('ul li')).forEach(li=>{
-      //       const Li=li as HTMLLIElement
-      //       Li.removeAttribute('data-filtered')
-      //     })
-      //   })
-
-      //   const h5NaoDisp=Array.from(listFiltersDesk.current.querySelectorAll('h5')).filter(item=>item.innerText!=='Faixa de Preço')
-      //   h5NaoDisp.forEach(h5=>{
-      //     const divPai=h5.parentElement! as HTMLDivElement
-      //     divPai.classList.replace('hidden','flex')
-      //   })
-      // }
-  //   }
-  // },[products])
+      setFilters(filtrosByLabel)
+  }
 
   useEffect(()=>{
     console.log(products)
@@ -416,6 +384,10 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
       setLoading(false)
     }
   },[products])
+
+  useEffect(()=>{
+    createFiltersBasedInProducts(produtos ?? [])
+  },[])
 
   return(
     <>
@@ -492,9 +464,9 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
             })}
           </ul>
           
-          <div className='flex justify-between items-end px-4 re1:px-0 my-5'>
-            <label className='w-[45%]' ref={filterLabel}>
-              <span className='font-bold hidden re1:block'>
+          <div className='flex justify-between items-center px-4 re1:px-0 my-5'>
+            <label className='w-[45%] re1:w-[100px]' ref={filterLabel}>
+              <span className='font-bold hidden re1:flex items-center'>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_278_2979)">
                   <path d="M1.26587 3.363H8.63824C8.86849 4.4265 9.81562 5.226 10.947 5.226C12.0784 5.226 13.0255 4.4265 13.2557 3.363H14.7341C15.0102 3.363 15.2341 3.13912 15.2341 2.863C15.2341 2.58687 15.0102 2.363 14.7341 2.363H13.2557C13.0255 1.2995 12.0784 0.5 10.947 0.5C9.81562 0.5 8.86849 1.2995 8.63824 2.363H1.26587C0.989744 2.363 0.765869 2.58687 0.765869 2.863C0.765869 3.13912 0.989744 3.363 1.26587 3.363ZM10.947 1.5C11.6986 1.5 12.31 2.1115 12.31 2.863C12.31 3.6145 11.6985 4.226 10.947 4.226C10.1955 4.226 9.58399 3.6145 9.58399 2.863C9.58399 2.1115 10.1954 1.5 10.947 1.5Z" fill="#DD1F26"/>
@@ -507,29 +479,39 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
                   </clipPath>
                   </defs>
                 </svg>
-                <p className='pl-1'>Filtros</p>
+                <p className='pl-[10px]'>Filtros</p>
               </span>
               <FiltroMob filters={filters} id='menu'/>
             </label>
-            <label className='' ref={orderLabel}
+            <label ref={orderLabel} data-open={false} className='w-[175px] font-bold relative'
               onClick={()=>{
                 const OrderLabel=orderLabel.current
 
                 if(OrderLabel){
                   const seta=OrderLabel.querySelector('#seta')
+                  const list=OrderLabel.querySelector('ul')
 
+                  if(OrderLabel.getAttribute('data-open')==='true'){
+                    seta?.classList.remove('rotate-180')
+                    list?.classList.add('hidden')
+                    OrderLabel.setAttribute('data-open','false')
+                  }else{
+                    seta?.classList.add('rotate-180')
+                    list?.classList.remove('hidden')
+                    OrderLabel.setAttribute('data-open','true')
+                  }
                 }
               }}
             >
-              <div>
-                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div className='flex justify-center items-center w-full'>
+                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg" className='min-w-[16px] min-h-[14px]'>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M10.692 12.4778C11.1532 12.4778 11.527 12.104 11.527 11.6429V6.42777C11.527 5.93757 12.1198 5.69227 12.4662 6.03912L13.5552 7.12977C13.8856 7.46062 14.4216 7.46082 14.7522 7.13022C15.0785 6.80387 15.0831 6.27617 14.7625 5.94422L10.0164 1.03047C9.95766 0.969721 9.85706 1.01477 9.85706 1.09487V11.6429C9.85706 12.104 10.2309 12.4778 10.692 12.4778ZM12.527 11.6429C12.527 12.6563 11.7055 13.4778 10.692 13.4778C9.67861 13.4778 8.85706 12.6563 8.85706 11.6429V1.09487C8.85706 0.112222 10.053 -0.371028 10.7357 0.335772L15.4817 5.24947C16.1814 5.97382 16.1714 7.12522 15.4593 7.83732C14.738 8.55862 13.5684 8.55822 12.8476 7.83637L12.527 7.51527V11.6429Z" fill="#DD1F26"/>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M5.2315 1.00098C4.7821 1.00098 4.41775 1.36528 4.41775 1.81473V7.04963C4.41775 7.54198 3.8205 7.78628 3.47545 7.43513L2.40535 6.34618C2.084 6.01913 1.56595 6.01893 1.24435 6.34573C0.922609 6.67268 0.917935 7.20468 1.23425 7.53748L5.9049 12.4512C5.96265 12.5119 6.0452 12.455 6.0452 12.3839L6.04525 1.81473C6.04525 1.36528 5.6809 1.00098 5.2315 1.00098ZM3.41775 1.81473C3.41775 0.813026 4.2298 0.000976562 5.2315 0.000976562C6.2332 0.000976562 7.04525 0.813026 7.04525 1.81473L7.0452 12.3839C7.0452 13.3512 5.86745 13.8633 5.1801 13.1402L0.509465 8.22643C-0.17825 7.50293 -0.168591 6.35583 0.531604 5.64433C1.24515 4.91923 2.4056 4.91963 3.11865 5.64528L3.41775 5.94968V1.81473Z" fill="#DD1F26"/>
                 </svg>
 
-                <span className='text-xs line-clamp-1 w-full px-[10px] re1:px-[20px]'>{Object.keys(orderFilters.find(obj=>order===Object.values(obj)[0]) ?? {'Ordenar Por':''})[0]}</span>
+                <span className='text-sm line-clamp-1 re1:w-full px-[10px] text-center'>{Object.keys(orderFilters.find(obj=>order===Object.values(obj)[0]) ?? {'Ordenar Por':''})[0]}</span>
                 
-                <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" id="seta">
+                <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" id="seta" className='min-w-[14px]'>
                   <rect width="14" height="8" fill="url(#pattern0_78_481)"/>
                   <defs>
                   <pattern id="pattern0_78_481" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -541,10 +523,10 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
               </div>
 
-              <ul className='hidden z-10 absolute w-full bg-[#111] top-12 re1:top-[unset]'>
+              <ul className='hidden z-10 absolute w-full re1:w-[175px] bg-[#4C4C4C] top-10 text-sm'>
                 {orderFilters.map(filter => (
                   <li 
-                    className='p-[10px] bg-[#111] text-white cursor-pointer hover:bg-[#d1d1d1] hover:text-black'
+                    className='p-[10px] bg-transparent text-white cursor-pointer hover:bg-[#666]'
                     onClick={() => setOrder(Object.values(filter)[0])}
                   >
                     {Object.keys(filter)[0]}
@@ -558,7 +540,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
             <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
               <LimparFiltros filters={selectedFilters}/>
               {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
-              <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/>
+              {/* <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/> */}
             </ul>
 
             <div className='flex flex-col items-center w-full re1:w-[75%] px-4 re1:px-0'>

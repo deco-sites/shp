@@ -1,7 +1,7 @@
 import { useRef, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
-import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
-import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
+import Filtro from './Filtro.tsx'
+import PriceFilter from './PriceFilter.tsx'
 
 
 interface Props{
@@ -11,7 +11,7 @@ interface Props{
 
 interface FilterObj{
   label:string
-  values:SpecObj[]
+  values:string[]
 }
 
 interface SpecObj{
@@ -44,7 +44,7 @@ const FiltroMob=({ filters, id }:Props)=>{
 
   return(
     <div className='re1:hidden' >
-      <button className='flex bg-transparent border border-secondary w-full h-12 px-10 items-center justify-center gap-2' onClick={openModal}>
+      <button className='flex bg-transparent w-full items-center justify-start gap-[10px]' onClick={openModal}>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_278_2979)">
           <path d="M1.26587 3.363H8.63824C8.86849 4.4265 9.81562 5.226 10.947 5.226C12.0784 5.226 13.0255 4.4265 13.2557 3.363H14.7341C15.0102 3.363 15.2341 3.13912 15.2341 2.863C15.2341 2.58687 15.0102 2.363 14.7341 2.363H13.2557C13.0255 1.2995 12.0784 0.5 10.947 0.5C9.81562 0.5 8.86849 1.2995 8.63824 2.363H1.26587C0.989744 2.363 0.765869 2.58687 0.765869 2.863C0.765869 3.13912 0.989744 3.363 1.26587 3.363ZM10.947 1.5C11.6986 1.5 12.31 2.1115 12.31 2.863C12.31 3.6145 11.6985 4.226 10.947 4.226C10.1955 4.226 9.58399 3.6145 9.58399 2.863C9.58399 2.1115 10.1954 1.5 10.947 1.5Z" fill="#DD1F26"/>
@@ -57,7 +57,7 @@ const FiltroMob=({ filters, id }:Props)=>{
           </clipPath>
           </defs>
         </svg>
-        <p>Filtros</p>
+        <p className='font-bold'>Filtros</p>
       </button>
 
       <dialog id={id} ref={modal} className='bg-base-100 min-h-full min-w-[100vw] overflow-x-hidden overflow-y-auto'>
@@ -85,8 +85,8 @@ const FiltroMob=({ filters, id }:Props)=>{
             <span className='text-2xl font-bold px-4'>Filtros</span>
             <ul className='w-full'>
               {filters.map((filtro,index)=>index!==filters.length-1 ?
-                (<Filtro title={filtro.label} values={filtro.values} />) :
-                (<PriceFilter filtro={filtro}/>)
+                (<Filtro title={filtro.label} values={filtro.values} />) : null
+                // (<PriceFilter filtro={filtro}/>)
               )}
             </ul>
             <div className='px-4 w-full'>

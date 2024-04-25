@@ -5,17 +5,7 @@ import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
 
 interface Props{
   title:string
-  values:SpecObj[]
-}
-
-interface SpecObj{
-  Link:string
-  LinkEncoded:string
-  Map:string
-  Name:string
-  Position: number | null
-  Quantity: number | null
-  Value:string
+  values:string[]
 }
 
 const Filtro=({title, values}:Props)=>{
@@ -68,16 +58,16 @@ const Filtro=({title, values}:Props)=>{
           {values.map(filter=>(
             <li className='py-1 px-2'>
               <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                <input id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={filter.Map}
+                <input id='filter' type='checkbox' name={filter} value={filter} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]'
                   onChange={(e)=>{ 
                     const Target=e.target as HTMLInputElement
                     Target.checked && sendEvent({name:'filters', params:{
                       filter: title,
-                      filtred_by: filter.Name
+                      filtred_by: filter
                     }})
                   }}
                 />
-                <span className='text-sm'>{filter.Name}</span>
+                <span className='text-sm'>{filter}</span>
               </label>
             </li>
           ))}
