@@ -12,7 +12,8 @@
     "bundle": "deno eval 'import \"deco/scripts/apps/bundle.ts\"' deco-sites/shp",
     "clearLocalStorage": "deno eval 'localStorage.clear()'",
     "build": "deno run -A dev.ts build",
-    "preview": "deno run -A main.ts"
+    "preview": "deno run -A main.ts",
+    "play": "USE_LOCAL_STORAGE_ONLY=true deno task start"
   },
   "githooks": {},
   "exclude": [

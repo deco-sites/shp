@@ -5,14 +5,16 @@ export interface TimeRemaining {
   hours: string
   minutes: string
   seconds: string
+  milliseconds?: string
 }
 
-const useTimer = (finalDate?: Date) => {
+const useTimer =(finalDate?: Date) => {
   const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({
     days: '00',
     hours: '00',
     minutes: '00',
-    seconds: '00',
+    seconds: '00', 
+    milliseconds: '000'
   })
 
   useEffect(() => {
@@ -37,9 +39,13 @@ const useTimer = (finalDate?: Date) => {
           .toString()
           .padStart(2, '0')
 
-        setTimeRemaining({ days, hours, minutes, seconds })
+        const milliseconds = (difference % 1000)
+          .toString()
+          .padStart(3, '0')
+
+        setTimeRemaining({ days, hours, minutes, seconds, milliseconds })
       }
-    }, 1000)
+    }, 1)
 
     return () => {
       clearInterval(interval)

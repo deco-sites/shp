@@ -17,6 +17,7 @@ import * as $Cookies_UsanDecoCookieIsland from "./islands/Cookies/UsanDecoCookie
 import * as $DescriptionIsland from "./islands/DescriptionIsland.tsx";
 import * as $DetailsIsland from "./islands/DetailsIsland.tsx";
 import * as $EncontrePCGamerIdealIsland from "./islands/EncontrePCGamerIdealIsland.tsx";
+import * as $Especiais_CompreEGanheIsland from "./islands/Especiais/CompreEGanheIsland.tsx";
 import * as $GameContextIsland from "./islands/GameContextIsland.tsx";
 import * as $GamesIsland from "./islands/GamesIsland.tsx";
 import * as $HeaderIsland from "./islands/HeaderIsland.tsx";
@@ -68,6 +69,7 @@ const manifest = {
     "./islands/DescriptionIsland.tsx": $DescriptionIsland,
     "./islands/DetailsIsland.tsx": $DetailsIsland,
     "./islands/EncontrePCGamerIdealIsland.tsx": $EncontrePCGamerIdealIsland,
+    "./islands/Especiais/CompreEGanheIsland.tsx": $Especiais_CompreEGanheIsland,
     "./islands/GameContextIsland.tsx": $GameContextIsland,
     "./islands/GamesIsland.tsx": $GamesIsland,
     "./islands/HeaderIsland.tsx": $HeaderIsland,
