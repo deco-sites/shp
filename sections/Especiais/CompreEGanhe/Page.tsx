@@ -16,15 +16,22 @@ import { LoaderReturnType, SectionProps } from "deco/types.ts";
 import gamesCollections from 'deco-sites/shp/static/gamesCollection.json' with { type: "json" }
 import removeDot from "deco-sites/shp/FunctionsSHP/removeDOTFromFilters.ts";
 import { Product } from "apps/commerce/types.ts";
+import Contador from "deco-sites/shp/components/ComponentsSHP/Contador.tsx";
 
 export interface Props{
-  bannerUrl:string
-  /**@description Não Preencher */
-  descontoPix:number
+  bannerUrl:{
+    desktop:string
+    mobile:string
+    linkCta?:string
+  }
+  /** @description Datas para exibir o banner, Ex. 2020-10-05T18:30:00*/
+  dataFinal:string
   /**@description Filtro de Jogos */
   Jogos:boolean
   collectionId:string
   produtos: LoaderReturnType<Product[] | null>
+  /**@description Não Preencher */
+  descontoPix:number
 }
 
 const fetchFilters=async (queryString:string)=>await invoke['deco-sites/shp'].loaders.getFacetsQueryString({queryString})
@@ -62,11 +69,11 @@ interface FiltroObj{
   value:string
 }
 
-const selectedFiltersSignal=signal<Array<{fq:string|null, value:string}>>([])
+const selectedFiltersSignal=signal<Array<{fq:string, value:string}>>([])
 
-const LimparFiltros=({filters}:{filters:Array<{fq:string|null, value:string}>})=>{
+const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
   const [open,setOpen]=useState(true)
-  const [selectedFilters, setSelectedFilters]=useState<Array<{fq:string|null, value:string}>>([])
+  const [selectedFilters, setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
 
   useEffect(()=>{
     setSelectedFilters(filters)
@@ -137,11 +144,11 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string|null, value:string}>})=
   )
 }
 
-export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, produtos }:Props)=>{
+export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, produtos, dataFinal }:Props)=>{
   const [loading, setLoading]=useState(true)
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
-  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string|null, value:string}>>([])
+  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
   const [products, setProducts]=useState<Product[]>(produtos ?? [])
   const [brands,setBrands]=useState<any>([])
   const [sentEvent, setSentEvent]=useState(false)
@@ -185,14 +192,14 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
         filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
       })
 
-      const minInput=ulMob!.querySelector('input[name="min"]') as HTMLInputElement
-      const maxInput=ulMob!.querySelector('input[name="max"]') as HTMLInputElement
+      // const minInput=ulMob!.querySelector('input[name="min"]') as HTMLInputElement
+      // const maxInput=ulMob!.querySelector('input[name="max"]') as HTMLInputElement
 
-      if(minInput.value.length!==0 && maxInput.value.length!==0){
-        const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
-        const fq='P'
-        filtersSelected.push({fq , value})
-      }
+      // if(minInput.value.length!==0 && maxInput.value.length!==0){
+      //   const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
+      //   const fq='P'
+      //   filtersSelected.push({fq , value})
+      // }
 
       setSelectedFilters(filtersSelected)     
     })
@@ -313,7 +320,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     setSelectedFilters(selectedFiltersSignal.value)
   },[selectedFiltersSignal.value])
 
-  const handleFiltersChange=(selected:Array<{fq:string|null, value:string}>)=>{
+  const handleFiltersChange=(selecteds:Array<{fq:string|null, value:string}>)=>{
     //fq=null é filtragem de spec dos produtos
     //fq='productClusterIds' é fitragem de jogos,dá pra filtrar pela coleção dos produtos
     //fq='P' é filtragem de Preço ai tem q fazer novo request
@@ -321,16 +328,16 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
   useEffect(()=>{
     const filterValues=selectedFilters.map(filter=>filter.value)
-    // const filterFqs=selectedFilters.map(filter=>filter.fq)
+    const filterFqs=selectedFilters.map(filter=>filter.fq)
     
     Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
       const Input=input as HTMLInputElement
       (filterValues.includes(Input.value) 
-        // && filterFqs.includes(Input.getAttribute('data-fq')!)
+        && filterFqs.includes(Input.getAttribute('data-fq')!)
       )? (Input.checked=true) : (Input.checked=false)
     })
 
-    
+    console.log(selectedFilters)
 
     PCs.length && removeAll()
   },[selectedFilters])
@@ -393,12 +400,25 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     <>
       <div className='w-full text-secondary appearance-none'>
         <div className='flex flex-col'>
-          <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
+          <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block' preload loading='eager'/></a>
+          <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden' preload loading='eager'/></a>
+          {/* <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
             fetchPriority='high' preload 
-          />
+          /> */}
+        </div>
+        <div className='w-full bg-primary'>
+          <div className='flex flex-col re1:flex-row re1:px-[5%] re4:px-[15%] re1:py-4'>
+            <div className='re1:w-[50%] flex items-center justify-center re1:justify-start gap-4 py-4 re1:py-0 px-4 re1:px-0'>
+              <h1 className='font-extrabold text-xl re1:text-4xl'>Compre e Ganhe</h1>
+              <p className='font-medium text-xs re1:text-sm text-right'>Aproveite antes que o<br/>tempo acabe</p>
+            </div>
+            <div className='re1:w-[50%] bg-[#111] re1:bg-transparent px-4 re1:px-0'>
+              <Contador dataFinal={dataFinal} classes='flex items-center justify-center re1:justify-end w-full'/>
+            </div>
+          </div>
         </div>
         <div className='re1:px-[5%] re4:px-[15%]'>
-          <ul className='flex re1:hidden justify-start items-center gap-4 w-full mb-4 px-4 overflow-x-auto'>
+          <ul className='flex re1:hidden justify-start items-center gap-4 w-full my-4 px-4 overflow-x-auto'>
             {selectedFilters.map((filter)=>{
               if(filter.fq==='P'){
                 const nameDecoded=decodeURIComponent(filter.value)
@@ -439,8 +459,8 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
                 return(
                   <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
                     onClick={()=>{
-                      selectedFiltersSignal.value=selectedFilters.filter(obj=>!(obj.fq===filter.fq && obj.value===filter.value)
-                      )}
+                      selectedFiltersSignal.value=selectedFilters.filter(obj=>!(obj.fq===filter.fq && obj.value===filter.value))
+                    }
                     }
                   >
                     <p className='whitespace-nowrap text-xs'>{games[GameKey].Name + ' ' + fps}</p>
@@ -450,11 +470,11 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
               }else{
                 return (
                   <div className='flex gap-1 p-1 border border-secondary rounded-lg justify-between max-h-[80px]'
-                    onClick={()=>setSelectedFilters(prevFilters=>{
-                      // console.log('prevFilters', prevFilters)
-                      return prevFilters.filter(filterSelected=>filterSelected.value!==filter.value && filterSelected.fq!==filter.fq)
-                      }
-                    )}
+                    onClick={()=>
+                      setSelectedFilters(prevFilters=>
+                        prevFilters.filter(prevFilter=>!(prevFilter.fq===filter.fq && prevFilter.value===filter.value))
+                      )
+                    }
                   >
                     <p className='whitespace-nowrap text-xs'>{decodeURIComponent(filter.value).replaceAll('@dot@','.')}</p>
                     <span className='text-primary text-xs my-auto font-bold'>✕</span>
@@ -503,7 +523,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
                 }
               }}
             >
-              <div className='flex justify-center items-center w-full'>
+              <div className='flex justify-end re1:justify-center items-center w-full cursor-pointer'>
                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg" className='min-w-[16px] min-h-[14px]'>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M10.692 12.4778C11.1532 12.4778 11.527 12.104 11.527 11.6429V6.42777C11.527 5.93757 12.1198 5.69227 12.4662 6.03912L13.5552 7.12977C13.8856 7.46062 14.4216 7.46082 14.7522 7.13022C15.0785 6.80387 15.0831 6.27617 14.7625 5.94422L10.0164 1.03047C9.95766 0.969721 9.85706 1.01477 9.85706 1.09487V11.6429C9.85706 12.104 10.2309 12.4778 10.692 12.4778ZM12.527 11.6429C12.527 12.6563 11.7055 13.4778 10.692 13.4778C9.67861 13.4778 8.85706 12.6563 8.85706 11.6429V1.09487C8.85706 0.112222 10.053 -0.371028 10.7357 0.335772L15.4817 5.24947C16.1814 5.97382 16.1714 7.12522 15.4593 7.83732C14.738 8.55862 13.5684 8.55822 12.8476 7.83637L12.527 7.51527V11.6429Z" fill="#DD1F26"/>
                   <path fill-rule="evenodd" clip-rule="evenodd" d="M5.2315 1.00098C4.7821 1.00098 4.41775 1.36528 4.41775 1.81473V7.04963C4.41775 7.54198 3.8205 7.78628 3.47545 7.43513L2.40535 6.34618C2.084 6.01913 1.56595 6.01893 1.24435 6.34573C0.922609 6.67268 0.917935 7.20468 1.23425 7.53748L5.9049 12.4512C5.96265 12.5119 6.0452 12.455 6.0452 12.3839L6.04525 1.81473C6.04525 1.36528 5.6809 1.00098 5.2315 1.00098ZM3.41775 1.81473C3.41775 0.813026 4.2298 0.000976562 5.2315 0.000976562C6.2332 0.000976562 7.04525 0.813026 7.04525 1.81473L7.0452 12.3839C7.0452 13.3512 5.86745 13.8633 5.1801 13.1402L0.509465 8.22643C-0.17825 7.50293 -0.168591 6.35583 0.531604 5.64433C1.24515 4.91923 2.4056 4.91963 3.11865 5.64528L3.41775 5.94968V1.81473Z" fill="#DD1F26"/>

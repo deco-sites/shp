@@ -32,10 +32,10 @@ import * as $$$$$$15 from "./sections/DesignSystem.tsx";
 import * as $$$$$$16 from "./sections/Despacho24h.tsx";
 import * as $$$$$$17 from "./sections/EncontrePCGamerIdeal.tsx";
 import * as $$$$$$18 from "./sections/EncontreSelectGames.tsx";
-import * as $$$$$$19 from "./sections/Especiais/Compre e Ganhe/Filtro.tsx";
-import * as $$$$$$20 from "./sections/Especiais/Compre e Ganhe/FiltroMob.tsx";
-import * as $$$$$$21 from "./sections/Especiais/Compre e Ganhe/Page.tsx";
-import * as $$$$$$22 from "./sections/Especiais/Compre e Ganhe/PriceFilter.tsx";
+import * as $$$$$$19 from "./sections/Especiais/CompreEGanhe/Filtro.tsx";
+import * as $$$$$$20 from "./sections/Especiais/CompreEGanhe/FiltroMob.tsx";
+import * as $$$$$$21 from "./sections/Especiais/CompreEGanhe/Page.tsx";
+import * as $$$$$$22 from "./sections/Especiais/CompreEGanhe/PriceFilter.tsx";
 import * as $$$$$$23 from "./sections/Features.tsx";
 import * as $$$$$$24 from "./sections/Footer/Footer.tsx";
 import * as $$$$$$25 from "./sections/Footer/SignNewsletter.tsx";
@@ -120,11 +120,10 @@ const manifest = {
     "deco-sites/shp/sections/Despacho24h.tsx": $$$$$$16,
     "deco-sites/shp/sections/EncontrePCGamerIdeal.tsx": $$$$$$17,
     "deco-sites/shp/sections/EncontreSelectGames.tsx": $$$$$$18,
-    "deco-sites/shp/sections/Especiais/Compre e Ganhe/Filtro.tsx": $$$$$$19,
-    "deco-sites/shp/sections/Especiais/Compre e Ganhe/FiltroMob.tsx": $$$$$$20,
-    "deco-sites/shp/sections/Especiais/Compre e Ganhe/Page.tsx": $$$$$$21,
-    "deco-sites/shp/sections/Especiais/Compre e Ganhe/PriceFilter.tsx":
-      $$$$$$22,
+    "deco-sites/shp/sections/Especiais/CompreEGanhe/Filtro.tsx": $$$$$$19,
+    "deco-sites/shp/sections/Especiais/CompreEGanhe/FiltroMob.tsx": $$$$$$20,
+    "deco-sites/shp/sections/Especiais/CompreEGanhe/Page.tsx": $$$$$$21,
+    "deco-sites/shp/sections/Especiais/CompreEGanhe/PriceFilter.tsx": $$$$$$22,
     "deco-sites/shp/sections/Features.tsx": $$$$$$23,
     "deco-sites/shp/sections/Footer/Footer.tsx": $$$$$$24,
     "deco-sites/shp/sections/Footer/SignNewsletter.tsx": $$$$$$25,

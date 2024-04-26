@@ -33,6 +33,11 @@ const Filtro=({title, values}:Props)=>{
     event.key==='Escape' && (search.current && (search.current.value='', handleInput()))
   }
 
+  const finalFq=()=>{
+    if(title==='Jogos') return 'productClusterIds'
+    return title
+  }
+
   return(
     <div className='w-full flex flex-col bg-base-100 re1:bg-[#1e1e1e] border border-[#1e1e1e] re1:border-0'>
       <h5 className='px-3 py-5 flex justify-between cursor-pointer'
@@ -58,7 +63,7 @@ const Filtro=({title, values}:Props)=>{
           {values.map(filter=>(
             <li className='py-1 px-2'>
               <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                <input id='filter' type='checkbox' name={filter} value={filter} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]'
+                <input id='filter' type='checkbox' name={filter} value={filter} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={finalFq()}
                   onChange={(e)=>{ 
                     const Target=e.target as HTMLInputElement
                     Target.checked && sendEvent({name:'filters', params:{
