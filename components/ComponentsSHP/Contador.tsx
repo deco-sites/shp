@@ -16,7 +16,7 @@ const Contador=({dataFinal, classes}:Props)=>{
       <Image width={61} height={61} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
         loading='lazy' className='re1:mr-0 mr-2 w-[40px] re1:w-[61px] h-[40px] re1:h-[61px]'
       />
-      <p className="font-bold text-[20px] leading-3 w-[80%] re1:w-[30%] text-center re1:text-end flex gap-2">
+      <p className="font-bold text-[20px] leading-3 w-[80%] re1:w-[40%] text-center re1:text-end flex gap-2">
         <span>{days}D</span> <span>{hours}</span> : <span>{minutes}</span> : <span>{seconds}</span> : <span>{milliseconds}</span>
       </p>
     </div>

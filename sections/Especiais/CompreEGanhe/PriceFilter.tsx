@@ -21,9 +21,7 @@ interface SpecObj{
   Slug?:string
 }
 
-const PriceFilter=({filtro}:Props)=>{
-  if(typeof filtro==='undefined') return null
-  const {label, values}=filtro
+const PriceFilter=()=>{
   const [open,setOpen]=useState(true)
 
   const [red,setRed]=useState(false)
@@ -35,7 +33,7 @@ const PriceFilter=({filtro}:Props)=>{
       <h5 className='px-3 py-5 flex justify-between cursor-pointer'
         onClick={()=>setOpen(!open)}
       >
-        {label}
+        Faixa de Preços
         <Icon 
           id={open ? 'ChevronUp' : 'ChevronDown'}
           size={12}
@@ -44,20 +42,58 @@ const PriceFilter=({filtro}:Props)=>{
       </h5>
       <div className={`${open ? 'max-h-[340px]' : 'max-h-0'} trasition-[max-height] overflow-hidden duration-500 ease-in-out`}>
         <ul className={`flex flex-col gap-2 bg-[#141414] overflow-y-auto max-h-[300px]`}>
-          {values.map(filter=>(
-            <li className='py-1 px-2'>
-              <label className='flex justify-start gap-2 cursor-pointer items-center'>
-                <input onInput={(event)=>{
-                  const Input=event.target as HTMLInputElement
-                  if(Input.checked){
-                    Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
-                    Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
-                  }
-                }} id='filter' type='checkbox' name={filter.Name} value={filter.Value} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq={filter.Map}/>
-                <span className='line-clamp-1 text-sm'>{filter.Name}</span>
-              </label>
-            </li>
-          ))}
+          
+          <li className='py-1 px-2'>
+            <label className='flex justify-start gap-2 cursor-pointer items-center'>
+              <input onInput={(event)=>{
+                const Input=event.target as HTMLInputElement
+                if(Input.checked){
+                  Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
+                  Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
+                }
+              }} id='filter' type='checkbox' name='R$0 - R$2.000,00' value={'[0 TO 2000]'} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
+              <span className='line-clamp-1 text-sm'>R$0 - R$2.000,00</span>
+            </label>
+          </li>
+
+          <li className='py-1 px-2'>
+            <label className='flex justify-start gap-2 cursor-pointer items-center'>
+              <input onInput={(event)=>{
+                const Input=event.target as HTMLInputElement
+                if(Input.checked){
+                  Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
+                  Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
+                }
+              }} id='filter' type='checkbox' name='R$2.000,00 - R$3.500,00' value={encodeURI('[2000 TO 3500]')} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
+              <span className='line-clamp-1 text-sm'>R$2.000,00 - R$3.500,00</span>
+            </label>
+          </li>
+
+          <li className='py-1 px-2'>
+            <label className='flex justify-start gap-2 cursor-pointer items-center'>
+              <input onInput={(event)=>{
+                const Input=event.target as HTMLInputElement
+                if(Input.checked){
+                  Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
+                  Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
+                }
+              }} id='filter' type='checkbox' name='R$3.500,00 - R$5.000,00' value={encodeURI('[3500 TO 5000]')} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
+              <span className='line-clamp-1 text-sm'>R$3.500,00 - R$5.000,00</span>
+            </label>
+          </li>
+
+          <li className='py-1 px-2'>
+            <label className='flex justify-start gap-2 cursor-pointer items-center'>
+              <input onInput={(event)=>{
+                const Input=event.target as HTMLInputElement
+                if(Input.checked){
+                  Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
+                  Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
+                }
+              }} id='filter' type='checkbox' name='R$5.000,00 - R$10000,00' value={encodeURI('[5000 TO 10000]')} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
+              <span className='line-clamp-1 text-sm'>R$5.000,00 - R$10000,00</span>
+            </label>
+          </li>
 
           <li className='py-1 px-2'>
             <label className='flex justify-center re1:justify-start gap-2 cursor-pointer items-center'>

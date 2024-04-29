@@ -34,7 +34,7 @@ const Filtro=({title, values}:Props)=>{
   }
 
   const finalFq=()=>{
-    if(title==='Jogos') return 'productClusterIds'
+    if(title==='Jogos') return 'JOGOS'
     return title
   }
 

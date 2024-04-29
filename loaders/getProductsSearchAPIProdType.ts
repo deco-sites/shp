@@ -18,17 +18,23 @@ const loader=async ({queryString}:Props, _req:Request)=>{
     }else{
       return resp.json()
     }
-  }).catch(err=>console.error('Error: ',err))
+  }).catch(err=>console.error('Error: ',err)) ?? []
 
   const { url:baseUrl } = _req
 
-  const products = vtexProds.map((p:any) =>
-    toProduct(p, p.items[0], 0, {
-      baseUrl: baseUrl,
-      priceCurrency: "BRL", // config!.defaultPriceCurrency, // TODO fix currency
-    })
-  )
-  return products
+  try{
+    const products = vtexProds.map((p:any) =>
+      toProduct(p, p.items[0], 0, {
+        baseUrl: baseUrl,
+        priceCurrency: "BRL", // config!.defaultPriceCurrency, // TODO fix currency
+      })
+    )
+    return products
+  }catch(err){
+    console.error(err)
+  }
+
+  return []
 }
 
 export default loader
