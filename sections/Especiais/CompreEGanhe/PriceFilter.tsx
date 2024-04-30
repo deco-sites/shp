@@ -1,25 +1,6 @@
-import { useState, useEffect, useRef } from 'preact/hooks'
+import {memo} from 'preact/compat'
+import { useState, useRef } from 'preact/hooks'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
-
-interface Props{
-  filtro:FilterObj | undefined
-}
-
-interface FilterObj{
-  label:string
-  values:SpecObj[]
-}
-
-interface SpecObj{
-  Link:string
-  LinkEncoded:string
-  Map:string
-  Name:string
-  Position: number | null
-  Quantity: number | null
-  Value:string
-  Slug?:string
-}
 
 const PriceFilter=()=>{
   const [open,setOpen]=useState(true)
@@ -64,7 +45,7 @@ const PriceFilter=()=>{
                   Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
                   Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
                 }
-              }} id='filter' type='checkbox' name='R$2.000,00 - R$3.500,00' value={encodeURI('[2000 TO 3500]')} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
+              }} id='filter' type='checkbox' name='R$2.000,00 - R$3.500,00' value={'[2000 TO 3500]'} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
               <span className='line-clamp-1 text-sm'>R$2.000,00 - R$3.500,00</span>
             </label>
           </li>
@@ -77,7 +58,7 @@ const PriceFilter=()=>{
                   Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
                   Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
                 }
-              }} id='filter' type='checkbox' name='R$3.500,00 - R$5.000,00' value={encodeURI('[3500 TO 5000]')} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
+              }} id='filter' type='checkbox' name='R$3.500,00 - R$5.000,00' value={'[3500 TO 5000]'} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
               <span className='line-clamp-1 text-sm'>R$3.500,00 - R$5.000,00</span>
             </label>
           </li>
@@ -90,7 +71,7 @@ const PriceFilter=()=>{
                   Array.from(document.querySelectorAll('input[name="min"]')).forEach(input=>(input as HTMLInputElement).value='')
                   Array.from(document.querySelectorAll('input[name="max"]')).forEach(input=>(input as HTMLInputElement).value='')
                 }
-              }} id='filter' type='checkbox' name='R$5.000,00 - R$10000,00' value={encodeURI('[5000 TO 10000]')} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
+              }} id='filter' type='checkbox' name='R$5.000,00 - R$10000,00' value={'[5000 TO 10000]'} className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' data-fq='P'/>
               <span className='line-clamp-1 text-sm'>R$5.000,00 - R$10000,00</span>
             </label>
           </li>
@@ -147,4 +128,4 @@ const PriceFilter=()=>{
   )
 }
 
-export default PriceFilter
+export default memo(PriceFilter)

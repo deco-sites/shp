@@ -399,9 +399,7 @@ const CardPC=({NLI, placaVideo, processador, memoria, armazenamento, tipoArm,...
   )
 }
 
-const FinalCardPC=CardPC
-
-const Card=({product, frete, brinde, descontoPix}:Props)=>{
+const Card=({product, brinde, descontoPix}:Props)=>{
   const avaibility=product.offers!.offers[0].availability==='https://schema.org/InStock'
 
   if(!avaibility){return null}
@@ -456,7 +454,7 @@ const Card=({product, frete, brinde, descontoPix}:Props)=>{
       return null
     }
 
-    return <FinalCardPC 
+    return <CardPC 
       NLI={prodName.slice(prodName.indexOf('NLI'),prodName.length).split(' ')[0]}
       placaVideo={additionalProp.find(item=>item.name==='Placa de vídeo')?.value! ?? ''}
       processador={additionalProp.find(item=>item.name==='Processador')?.value! ?? ''}

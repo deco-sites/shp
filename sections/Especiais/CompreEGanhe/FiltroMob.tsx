@@ -84,10 +84,8 @@ const FiltroMob=({ filters, id }:Props)=>{
           <div className='flex flex-col py-5 items-center gap-10 text-secondary'>
             <span className='text-2xl font-bold px-4'>Filtros</span>
             <ul className='w-full'>
-              {/* <PriceFilter /> */}
-              {filters.map((filtro,index)=>
-                (<Filtro title={filtro.label} values={filtro.values} />)
-              )}
+              <PriceFilter />
+              {filters.map(filtro=><Filtro title={filtro.label} values={filtro.values} />)}
             </ul>
             <div className='px-4 w-full'>
               <button onClick={()=>{

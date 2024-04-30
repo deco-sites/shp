@@ -16,6 +16,7 @@ import { LoaderReturnType, SectionProps } from "deco/types.ts";
 import removeDot from "deco-sites/shp/FunctionsSHP/removeDOTFromFilters.ts";
 import { Product } from "apps/commerce/types.ts";
 import Contador from "deco-sites/shp/components/ComponentsSHP/Contador.tsx";
+import { useOffer } from 'deco-sites/shp/sdk/useOffer.ts'
 import gamesCollections from 'deco-sites/shp/static/gamesCollection.json' with { type: "json" }
 
 export interface Props{
@@ -226,31 +227,32 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
         filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
       })
 
-      // const minInput=ulMob!.querySelector('input[name="min"]') as HTMLInputElement
-      // const maxInput=ulMob!.querySelector('input[name="max"]') as HTMLInputElement
+      const minInput=ulMob!.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulMob!.querySelector('input[name="max"]') as HTMLInputElement
 
-      // if(minInput.value.length!==0 && maxInput.value.length!==0){
-      //   const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
-      //   const fq='P'
-      //   filtersSelected.push({fq , value})
-      // }
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=`[${minInput.value} TO ${maxInput.value}]`
+        const fq='P'
+        filtersSelected.push({fq , value})
+      }
 
       setSelectedFilters(filtersSelected)     
     })
 
-    // const btnPriceRange=ulDesk.querySelector('button#priceRange')!
-    // btnPriceRange.addEventListener('click',()=>{
-    //   const minInput=ulDesk.querySelector('input[name="min"]') as HTMLInputElement
-    //   const maxInput=ulDesk.querySelector('input[name="max"]') as HTMLInputElement
+    const btnPriceRange=ulDesk.querySelector('button#priceRange')!
 
-    //   if(minInput.value.length!==0 && maxInput.value.length!==0){
-    //     const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
-    //     const fq='P'
-    //     setSelectedFilters(prevSelectedFilters=>[...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq,value}])
-    //   }else{
-    //     alert('Você precisa preencher os dois campos de preço!')
-    //   }
-    // })
+    btnPriceRange.addEventListener('click',()=>{
+      const minInput=ulDesk.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulDesk.querySelector('input[name="max"]') as HTMLInputElement
+
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=`[${minInput.value} TO ${maxInput.value}]`
+        const fq='P'
+        setSelectedFilters(prevSelectedFilters=>[...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq,value}])
+      }else{
+        alert('Você precisa preencher os dois campos de preço!')
+      }
+    })
   }
 
   const checkCompreGanhe=async(products:Product[])=>{
@@ -293,17 +295,15 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
   }
 
   const handleFiltersChange=async(selecteds:SelectedObj[], order:string)=>{
-    //fq='P' é filtragem de Preço ai tem q fazer novo request
-
     if(selecteds.length){
-      const searchParams:SelectedObj[] =[]
+      const priceParams:SelectedObj[] =[]
 
       const gamesSpecs:SelectedObj[] =[]
   
       const groupedSpecs=selecteds.reduce<{[key:string]:string[]}>((acc,obj)=>{
         const {fq,value}=obj
         if(fq==='P'){
-          searchParams.push(obj)
+          priceParams.push(obj)
         }else if(fq==='JOGOS'){
           gamesSpecs.push(obj)
         }else{
@@ -316,7 +316,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
         return acc
       },{})
 
-      if(searchParams.length===0 && order==='selecione'){
+      if(order==='selecione'){
         // only pass specFilters
         const finalArr:Product[]=[]
   
@@ -335,9 +335,19 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
               const gameObj=gamesObjs.find(obj=>obj.name===game.value)
               if(gameObj){
                 for(const prop of product.additionalProperty ?? []){
-                  gameObj.value===prop.propertyID! && (vaiProArr=true, console.log(product.name))
+                  gameObj.value===prop.propertyID! && (vaiProArr=true)
                 }
               }
+            }
+          }
+
+          if(priceParams.length){
+            const {price}=useOffer(product.offers)
+
+            for(const priceParam of priceParams){
+              const [min, max]=priceParam.value.split(' TO ').map(num=>parseFloat(num.replace(/[^a-zA-Z0-9]/g,'')))
+
+              if((price!)>=min && (price!)<=max){vaiProArr=true}else{vaiProArr=false}
             }
           }
 
@@ -346,13 +356,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
         checkCompreGanhe(finalArr).then(r=>setFinalProds(r))
       }else{
-        // do request and pass specFilters
-        const arrQueryString=[`fq=productClusterIds:${collectionId}`]
-        
-        searchParams.forEach(obj=>{arrQueryString.push(`fq=${obj.fq}:${obj.value}`)})
-        order!=='selecione' && arrQueryString.push(`O=${order}`)
-
-        arrQueryString.push('_from=0', '_to=49')
+        const arrQueryString=[`fq=productClusterIds:${collectionId}`, '_from=0', '_to=49', `O=${order}`]
 
         const queryString = encodeURI(arrQueryString.join('&'))
 
@@ -378,6 +382,15 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
                   gameObj.value===prop.propertyID && (vaiProArr=true)
                 }
               }
+            }
+          }
+
+          if(priceParams.length){
+            const {price}=useOffer(product.offers)
+
+            for(const priceParam of priceParams){
+              const [min, max]=priceParam.value.split(' TO ').map(num=>parseFloat(num.replace(/[^a-zA-Z0-9]/g,'')))
+              if((price!)>=min && (price!)<=max){vaiProArr=true}else{vaiProArr=false}
             }
           }
 
@@ -483,6 +496,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
   useEffect(()=>{
     if(products.length){
+      console.log(products)
       if(!sentEvent){
         // mandar evento apenas uma vez quando puxar os prods pela primeira vez
         setSentEvent(true)
@@ -495,10 +509,6 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
       setLoading(false)
     }
   },[products])
-
-  // useEffect(()=>{
-  //   console.log(finalProds)
-  // },[finalProds])
 
   useEffect(()=>{
     createFiltersBasedInProducts(produtos ?? [])
@@ -665,9 +675,9 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
           </div>
 
           <div className='flex w-full justify-between'>
-            <ul id='filtros-desk' ref={listFiltersDesk} className='w-[20%] re1:flex flex-col hidden'>
+            <ul id='filtros-desk' ref={listFiltersDesk} className='w-[25%] re1:flex flex-col hidden'>
               <LimparFiltros filters={selectedFilters}/>
-              {/* <PriceFilter /> */}
+              <PriceFilter />
               {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
             </ul>
 
