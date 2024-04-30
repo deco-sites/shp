@@ -531,7 +531,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
               <p className='font-medium text-xs re1:text-sm text-right'>Aproveite antes que o<br/>tempo acabe</p>
             </div>
             <div className='re1:w-[50%] bg-[#111] re1:bg-transparent px-4 re1:px-0'>
-              {/* <Contador dataFinal={dataFinal} classes='flex items-center justify-center re1:justify-end w-full'/> */}
+              <Contador dataFinal={dataFinal} classes='flex items-center justify-center re1:justify-end w-full'/>
             </div>
           </div>
         </div>
