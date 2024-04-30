@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'preact/hooks'
+import { memo } from 'preact/compat'
+import { useState, useRef } from 'preact/hooks'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 
 interface Props{
@@ -111,4 +112,4 @@ const PriceFilter=({filtro}:Props)=>{
   )
 }
 
-export default PriceFilter
+export default memo(PriceFilter)
