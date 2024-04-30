@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Filtro from './Filtro.tsx'
 import FiltroMob from './FiltroMob.tsx'
-import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
+import Card from 'deco-sites/shp/components/ComponentsSHP/Especiais/CompreEGanheCard.tsx'
 import PriceFilter from './PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
@@ -13,10 +13,11 @@ import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 import { OrgSchemaToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 import { AppContext } from "deco-sites/shp/apps/site.ts";
 import { LoaderReturnType, SectionProps } from "deco/types.ts";
-import gamesCollections from 'deco-sites/shp/static/gamesCollection.json' with { type: "json" }
 import removeDot from "deco-sites/shp/FunctionsSHP/removeDOTFromFilters.ts";
 import { Product } from "apps/commerce/types.ts";
 import Contador from "deco-sites/shp/components/ComponentsSHP/Contador.tsx";
+import { useOffer } from 'deco-sites/shp/sdk/useOffer.ts'
+import gamesCollections from 'deco-sites/shp/static/gamesCollection.json' with { type: "json" }
 
 export interface Props{
   bannerUrl:{
@@ -24,6 +25,15 @@ export interface Props{
     mobile:string
     linkCta?:string
   }
+
+  /** @description Preencha com as informações do brinde para n ter q buscar na API */
+  brinde?:{
+    ImageUrl:string
+    ProductName:string
+  }
+
+  /** @description Adicione palavras chaves dos brindes q n devem aparecer. Ex: Kaspersky */
+  naoMostrar?:string[]
   /** @description Datas para exibir o banner, Ex. 2020-10-05T18:30:00*/
   dataFinal:string
   /**@description Filtro de Jogos */
@@ -32,14 +42,6 @@ export interface Props{
   produtos: LoaderReturnType<Product[] | null>
   /**@description Não Preencher */
   descontoPix:number
-}
-
-const fetchFilters=async (queryString:string)=>await invoke['deco-sites/shp'].loaders.getFacetsQueryString({queryString})
-
-const getBrands=async()=>{
-  const url=`https://api.shopinfo.com.br/Deco/getBrands.php`
-  const data=await fetch(url).then(r=>r.json()).catch(err=>console.error('Error: ',err))
-  return data
 }
 
 interface Game{
@@ -69,11 +71,21 @@ interface FiltroObj{
   value:string
 }
 
-const selectedFiltersSignal=signal<Array<{fq:string, value:string}>>([])
+interface SelectedObj{
+  fq:string
+  value:string
+}
 
-const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
+type FinalProd={
+  prod:Product
+  brinde?:any
+}
+
+const selectedFiltersSignal=signal<SelectedObj[]>([])
+
+const LimparFiltros=({filters}:{filters:SelectedObj[]})=>{
   const [open,setOpen]=useState(true)
-  const [selectedFilters, setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
+  const [selectedFilters, setSelectedFilters]=useState<SelectedObj[]>([])
 
   useEffect(()=>{
     setSelectedFilters(filters)
@@ -144,14 +156,37 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
   )
 }
 
-export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, produtos, dataFinal }:Props)=>{
+export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, produtos, dataFinal, naoMostrar, brinde }:Props)=>{
   const [loading, setLoading]=useState(true)
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
-  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
+  const [selectedFilters,setSelectedFilters]=useState<SelectedObj[]>([])
   const [products, setProducts]=useState<Product[]>(produtos ?? [])
-  const [brands,setBrands]=useState<any>([])
+  const [finalProds, setFinalProds]=useState<FinalProd[]>(products.map(product=>{return{prod:product, brinde:{}}}))
   const [sentEvent, setSentEvent]=useState(false)
+  
+  const excludesSpecsKeys=['Imagem do Fabricante', 'Kit Gamer', 'Cabos Inclusos', 'Garantia', 'Sistema Operacional', 'Windows', 'Recomendações', 'Monitor', 'Bloco Descrição', 'Review']
+
+  const gamesObjs = (()=>{
+    const acc:Array<{name:string, value:string}> =[]
+    const games:Record<string, Game> = {
+      ...gamesCollections
+    }
+  
+    for(const game in games){
+      acc.push({
+        name: games[game].Name + ' 60fps',
+        value: games[game]['60FPS']
+      })
+  
+      acc.push({
+        name: games[game].Name + ' 144fps',
+        value: games[game]['144FPS']
+      })
+    }
+
+    return acc
+  })()
 
   const {PCs, removeAll}=useCompareContext()
 
@@ -187,39 +222,234 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
     btnFilter && (btnFilter as HTMLButtonElement).addEventListener('click',()=>{
       const inputsChecked:HTMLInputElement[]=Array.from(ulMob!.querySelectorAll('input:checked'))
-      const filtersSelected:Array<{fq:string, value:string}> =[]
+      const filtersSelected:SelectedObj[] =[]
       inputsChecked.forEach(input=>{
         filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
       })
 
-      // const minInput=ulMob!.querySelector('input[name="min"]') as HTMLInputElement
-      // const maxInput=ulMob!.querySelector('input[name="max"]') as HTMLInputElement
+      const minInput=ulMob!.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulMob!.querySelector('input[name="max"]') as HTMLInputElement
 
-      // if(minInput.value.length!==0 && maxInput.value.length!==0){
-      //   const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
-      //   const fq='P'
-      //   filtersSelected.push({fq , value})
-      // }
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=`[${minInput.value} TO ${maxInput.value}]`
+        const fq='P'
+        filtersSelected.push({fq , value})
+      }
 
       setSelectedFilters(filtersSelected)     
     })
 
-    // const btnPriceRange=ulDesk.querySelector('button#priceRange')!
-    // btnPriceRange.addEventListener('click',()=>{
-    //   const minInput=ulDesk.querySelector('input[name="min"]') as HTMLInputElement
-    //   const maxInput=ulDesk.querySelector('input[name="max"]') as HTMLInputElement
+    const btnPriceRange=ulDesk.querySelector('button#priceRange')!
 
-    //   if(minInput.value.length!==0 && maxInput.value.length!==0){
-    //     const value=encodeURI(`[${minInput.value} TO ${maxInput.value}]`)
-    //     const fq='P'
-    //     setSelectedFilters(prevSelectedFilters=>[...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq,value}])
-    //   }else{
-    //     alert('Você precisa preencher os dois campos de preço!')
-    //   }
-    // })
+    btnPriceRange.addEventListener('click',()=>{
+      const minInput=ulDesk.querySelector('input[name="min"]') as HTMLInputElement
+      const maxInput=ulDesk.querySelector('input[name="max"]') as HTMLInputElement
+
+      if(minInput.value.length!==0 && maxInput.value.length!==0){
+        const value=`[${minInput.value} TO ${maxInput.value}]`
+        const fq='P'
+        setSelectedFilters(prevSelectedFilters=>[...prevSelectedFilters.filter(filter=>filter.fq!=='P'), {fq,value}])
+      }else{
+        alert('Você precisa preencher os dois campos de preço!')
+      }
+    })
   }
 
-  const orderFilters=[
+  const checkCompreGanhe=async(products:Product[])=>{
+    if(brinde){
+      return products.map(prod=>{
+        return {
+          prod,
+          brinde
+        }
+      })
+    }
+
+
+    let gifts:any=null
+    const giftsSkus=products.reduce((acc:string[],obj)=>{
+      const giftSkus=obj.offers?.offers[0].giftSkuIds
+
+      if(giftSkus){
+        console.log(obj.name)
+        giftSkus.forEach(sku=>!acc.includes(sku) && acc.push(sku))
+      }
+      return acc
+    },[])
+
+    const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
+
+    // console.log(objGifts, objGifts.filter(obj=>!naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
+
+    gifts=objGifts.filter(obj=>!naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase())))
+
+    return (products.map(product=>{
+      if(gifts){
+        // const brindeObj=gifts.find((obj:any)=> product.offers?.offers[0].giftSkuIds?.includes(obj.Id.toString()))
+        const brindeObj=gifts[0]
+        return {prod:product, brinde:brindeObj}
+      }else{
+        return {prod:product, brinde:undefined}
+      }
+    }))
+  }
+
+  const handleFiltersChange=async(selecteds:SelectedObj[], order:string)=>{
+    if(selecteds.length){
+      const priceParams:SelectedObj[] =[]
+
+      const gamesSpecs:SelectedObj[] =[]
+  
+      const groupedSpecs=selecteds.reduce<{[key:string]:string[]}>((acc,obj)=>{
+        const {fq,value}=obj
+        if(fq==='P'){
+          priceParams.push(obj)
+        }else if(fq==='JOGOS'){
+          gamesSpecs.push(obj)
+        }else{
+          if(acc[fq]){
+            acc[fq].push(value)
+          }else{
+            acc[fq]=[value]
+          }
+        }
+        return acc
+      },{})
+
+      if(order==='selecione'){
+        // only pass specFilters
+        const finalArr:Product[]=[]
+  
+        products.forEach(product=>{
+          let vaiProArr=false
+          for(const addProp of product.isVariantOf?.additionalProperty ?? []){
+            if(addProp.valueReference==='SPECIFICATION' && !excludesSpecsKeys.includes(addProp.name!)){
+              if(groupedSpecs[addProp.name!]){
+                groupedSpecs[addProp.name!].includes(addProp.value!) && (vaiProArr=true)
+              }
+            }
+          }
+
+          if(gamesSpecs.length){
+            for(const game of gamesSpecs){
+              const gameObj=gamesObjs.find(obj=>obj.name===game.value)
+              if(gameObj){
+                for(const prop of product.additionalProperty ?? []){
+                  gameObj.value===prop.propertyID! && (vaiProArr=true)
+                }
+              }
+            }
+          }
+
+          if(priceParams.length){
+            const {price}=useOffer(product.offers)
+
+            for(const priceParam of priceParams){
+              const [min, max]=priceParam.value.split(' TO ').map(num=>parseFloat(num.replace(/[^a-zA-Z0-9]/g,'')))
+
+              if((price!)>=min && (price!)<=max){vaiProArr=true}else{vaiProArr=false}
+            }
+          }
+
+          vaiProArr && finalArr.push(product)
+        })
+
+        checkCompreGanhe(finalArr).then(r=>setFinalProds(r))
+      }else{
+        const arrQueryString=[`fq=productClusterIds:${collectionId}`, '_from=0', '_to=49', `O=${order}`]
+
+        const queryString = encodeURI(arrQueryString.join('&'))
+
+        const data = await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({ queryString })
+
+        const finalArr:Product[]=[]
+  
+        data.forEach((product:Product)=>{
+          let vaiProArr=false
+          for(const addProp of product.isVariantOf?.additionalProperty ?? []){
+            if(addProp.valueReference==='SPECIFICATION' && !excludesSpecsKeys.includes(addProp.name!)){
+              if(groupedSpecs[addProp.name!]){
+                groupedSpecs[addProp.name!].includes(addProp.value!) && (vaiProArr=true)
+              }
+            }
+          }
+
+          if(gamesSpecs.length){
+            for(const game of gamesSpecs){
+              const gameObj=gamesObjs.find(obj=>obj.name===game.value)
+              if(gameObj){
+                for(const prop of product.additionalProperty ?? []){
+                  gameObj.value===prop.propertyID && (vaiProArr=true)
+                }
+              }
+            }
+          }
+
+          if(priceParams.length){
+            const {price}=useOffer(product.offers)
+
+            for(const priceParam of priceParams){
+              const [min, max]=priceParam.value.split(' TO ').map(num=>parseFloat(num.replace(/[^a-zA-Z0-9]/g,'')))
+              if((price!)>=min && (price!)<=max){vaiProArr=true}else{vaiProArr=false}
+            }
+          }
+
+          vaiProArr && finalArr.push(product)
+        })
+
+        checkCompreGanhe(finalArr).then(r=>setFinalProds(r))
+      }
+    }else if(order!=='selecione'){
+      const arrQueryString=[`fq=productClusterIds:${collectionId}`, '_from=0','_to=49', `O=${order}`]
+
+      const queryString = encodeURI(arrQueryString.join('&'))
+
+      const data = await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({ queryString })
+
+      checkCompreGanhe(data).then(r=>setFinalProds(r))
+    }else{
+      checkCompreGanhe(products).then(r=>setFinalProds(r))
+    }
+  }
+
+  const createFiltersBasedInProducts=(products:Product[])=>{
+    const productsFields:FiltroObj[]=[]
+
+    products.forEach((product:Product)=>{
+      const fields=[]
+      for(const addProp of product.isVariantOf?.additionalProperty ?? []){
+        if(addProp.valueReference==='SPECIFICATION' && !excludesSpecsKeys.includes(addProp.name!)){
+          fields.push({label: addProp.name!, value: addProp.value!})
+        }
+      }
+
+      if(Jogos){
+        for(const prop of product.additionalProperty ?? []){
+          const gameObj=gamesObjs.find(obj=>obj.value===prop.propertyID!)
+          if(gameObj){
+            fields.push({label: 'Jogos', value: gameObj.name})
+          }
+        }
+      }
+
+      fields.push({label:'Marcas', value: product.brand!.name!})
+
+      productsFields.push(...fields)
+    })
+
+    const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
+    const filtrosByLabel:FilterObj[]=fieldsFiltrados.reduce((acc, obj)=>{
+      const {label,value}=obj
+
+      !acc.some(filter=>filter.label===label) && acc.push({label, values:[]})
+      acc.find(filter=>filter.label===label)?.values.push(value)
+      return acc
+    },[] as FilterObj[])
+
+    setFilters(filtrosByLabel)
+  }
+
+  const orderFilters:Array<Record<string,string>> =[
     {'Menor Preço':'OrderByPriceASC'},
     {'Maior Preço':'OrderByPriceDESC'},
     {'Mais Vendidos':'OrderByTopSaleDESC'},
@@ -230,101 +460,12 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     {'Melhor Desconto':'OrderByBestDiscountDESC'} 
   ]
 
-  // useEffect(()=>{
-    // (async()=>{
-    //   const pageData=await fetchFilters('productClusterIds:'+collectionId)
-    //   const priceFilters=pageData!.PriceRanges.map((obj:SpecObj)=>{
-    //     const slugSplittado=obj.Slug!.split('-')
-    //     const finalValue=encodeURI(`[${slugSplittado[1]} TO ${slugSplittado[3]}]`)
-    //     obj.Value=finalValue
-    //     obj.Map='P'
-    //     return obj
-    //   })
-
-    //   let dataFilters:Record<string,SpecObj[]> ={'Marcas': pageData!.Brands, 'Faixa de Preço': priceFilters}
-
-    //   dataFilters={
-    //     ...dataFilters,
-    //     ...Object.entries(pageData!.SpecificationFilters).reduce((acc, [key,value])=> ({
-    //       ...acc,
-    //       [key]:removeDot(value as SpecObj[])
-    //     }),{})
-    //   }
-
-    //   if(Jogos){
-    //     const gamesFilters:SpecObj[]=[]
-    //     const games:Record<string, Game> = {
-    //       ...gamesCollections
-    //     }
-
-    //     for(const game in games){
-    //       const commonInfo={
-    //         Map:'productClusterIds',
-    //         Link:'',
-    //         LinkEncoded:'',
-    //         Position:null,
-    //         Quantity:null
-    //       }
-
-    //       gamesFilters.push({
-    //         ...commonInfo,
-    //         Name: games[game].Name + ' 60fps',
-    //         Value: games[game]['60FPS']
-    //       })
-
-    //       gamesFilters.push({
-    //         ...commonInfo,
-    //         Name: games[game].Name + ' 144fps',
-    //         Value: games[game]['144FPS']
-    //       })
-    //     }
-    //     dataFilters={'Jogos':gamesFilters, ...dataFilters}
-    //   }
-
-    //   const arrFilterObj:FilterObj[]=[]
-
-    //   for(const key in dataFilters){
-    //     arrFilterObj.push({label:key , values:dataFilters[key]})
-    //   }
-
-    //   setFilters(arrFilterObj)
-    // })()
-
-    // getBrands().then(r=>setBrands(r)).catch(err=>console.error('Error: ',err))
-  // },[])
-
   useEffect(()=>{filters.length && addFilterListeners()},[filters])
-
-  // const handleMoreProducts=async()=>{
-  //   setLoading(true)
-  //   const fqsFilter=selectedFilters.map(obj=>{
-  //     if(obj.fq==='b'){
-  //       const brandId=brands.find((brand:any)=>brand.name===obj.value)!.id
-  //       return `fq=B:${brandId}`
-  //     }else{
-  //       return `fq=${obj.fq}:${obj.value}`
-  //     }
-  //   })
-  //   const queryString=[`fq=C:/${idsDeCategoria}/`,...fqsFilter,`_from=${fromTo.from}&_to=${fromTo.to}`]
-  //   order!=='selecione' && queryString.push(`O=${order}`)
-  //   const data= await fetchProducts(queryString.join('&'))
-  //   if(data){
-  //     setFetchLength(data.products.length)
-  //     fromTo.to>19 ? setProducts((prevProducts: any)=>[...prevProducts, ...data.products]) : setProducts(data.products)
-  //     setProdsResources(data.productsResources?.split('/').pop() ?? '')
-  //     setLoading(false)
-  //   }
-  // }
 
   useEffect(()=>{
     setSelectedFilters(selectedFiltersSignal.value)
   },[selectedFiltersSignal.value])
 
-  const handleFiltersChange=(selecteds:Array<{fq:string|null, value:string}>)=>{
-    //fq=null é filtragem de spec dos produtos
-    //fq='productClusterIds' é fitragem de jogos,dá pra filtrar pela coleção dos produtos
-    //fq='P' é filtragem de Preço ai tem q fazer novo request
-  }
 
   useEffect(()=>{
     const filterValues=selectedFilters.map(filter=>filter.value)
@@ -337,7 +478,8 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
       )? (Input.checked=true) : (Input.checked=false)
     })
 
-    console.log(selectedFilters)
+    setLoading(true)
+    handleFiltersChange(selectedFilters, order).then(r=>{setLoading(false)})
 
     PCs.length && removeAll()
   },[selectedFilters])
@@ -345,40 +487,16 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
   useEffect(()=>{
     Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
 
+    setLoading(true)
+    handleFiltersChange(selectedFilters, order).then(r=>{setLoading(false)})
+
     PCs.length && removeAll()
   },[order])
 
-  const createFiltersBasedInProducts=(products:Product[])=>{
-    const excludesKeys=['Imagem do Fabricante', 'Kit Gamer', 'Cabos Inclusos', 'Garantia', 'Sistema Operacional', 'Windows', 'Recomendações', 'Monitor', 'Bloco Descrição']
-    
-    const productsFields:FiltroObj[]=[]
-      products.forEach((product:Product)=>{
-        const fields=[]
-        for(const addProp of product.isVariantOf?.additionalProperty ?? []){
-          if(addProp.valueReference==='SPECIFICATION' && !excludesKeys.includes(addProp.name!)){
-            fields.push({label: addProp.name!, value: addProp.value!})
-          }
-        }
-        productsFields.push(...fields)
-      })
-
-      console.log(productsFields)
-
-      const fieldsFiltrados=productsFields.filter((obj,index,self)=>self.findIndex(o=>o.label===obj.label && o.value===obj.value)===index)
-      const filtrosByLabel:FilterObj[]=fieldsFiltrados.reduce((acc, obj)=>{
-        const {label,value}=obj
-
-        !acc.some(filter=>filter.label===label) && acc.push({label, values:[]})
-        acc.find(filter=>filter.label===label)?.values.push(value)
-        return acc
-      },[] as FilterObj[])
-
-      setFilters(filtrosByLabel)
-  }
 
   useEffect(()=>{
-    console.log(products)
     if(products.length){
+      console.log(products)
       if(!sentEvent){
         // mandar evento apenas uma vez quando puxar os prods pela primeira vez
         setSentEvent(true)
@@ -413,7 +531,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
               <p className='font-medium text-xs re1:text-sm text-right'>Aproveite antes que o<br/>tempo acabe</p>
             </div>
             <div className='re1:w-[50%] bg-[#111] re1:bg-transparent px-4 re1:px-0'>
-              <Contador dataFinal={dataFinal} classes='flex items-center justify-center re1:justify-end w-full'/>
+              {/* <Contador dataFinal={dataFinal} classes='flex items-center justify-center re1:justify-end w-full'/> */}
             </div>
           </div>
         </div>
@@ -543,7 +661,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
               </div>
 
-              <ul className='hidden z-10 absolute w-full re1:w-[175px] bg-[#4C4C4C] top-10 text-sm'>
+              <ul className='hidden z-[2] absolute w-full re1:w-[175px] bg-[#4C4C4C] top-10 text-sm'>
                 {orderFilters.map(filter => (
                   <li 
                     className='p-[10px] bg-transparent text-white cursor-pointer hover:bg-[#666]'
@@ -557,20 +675,18 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
           </div>
 
           <div className='flex w-full justify-between'>
-            <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
+            <ul id='filtros-desk' ref={listFiltersDesk} className='w-[25%] re1:flex flex-col hidden'>
               <LimparFiltros filters={selectedFilters}/>
+              <PriceFilter />
               {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
-              {/* <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/> */}
             </ul>
 
-            <div className='flex flex-col items-center w-full re1:w-[75%] px-4 re1:px-0'>
+            <div className='flex flex-col gap-4 items-center w-full px-4 re1:pl-4 re1:pr-0'>
               {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
                 <>
-                  {products.length > 0 ? (
-                    <div className='grid grid-cols-2 re1:grid-cols-4 gap-x-4 gap-y-4'>
-                      {products.map((product:any)=><Card product={product} descontoPix={descontoPix}/>)}
-                    </div>
-                  ) : (
+                  {finalProds.length > 0 ? 
+                    (finalProds.map((product)=><Card product={product.prod} brinde={product.brinde} descontoPix={descontoPix}/>))
+                  : (
                     <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
                   )}
                 </>

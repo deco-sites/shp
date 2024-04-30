@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'preact/hooks'
+import {memo} from 'preact/compat'
+import { useState, useRef } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import { sendEvent } from "deco-sites/shp/sdk/analytics.tsx";
@@ -34,7 +35,7 @@ const Filtro=({title, values}:Props)=>{
   }
 
   const finalFq=()=>{
-    if(title==='Jogos') return 'productClusterIds'
+    if(title==='Jogos') return 'JOGOS'
     return title
   }
 
@@ -82,4 +83,4 @@ const Filtro=({title, values}:Props)=>{
   )
 }
 
-export default Filtro
+export default memo(Filtro)
