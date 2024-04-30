@@ -24,6 +24,13 @@ export interface Props{
     mobile:string
     linkCta?:string
   }
+
+  /** @description Preencha com as informações do brinde para n ter q buscar na API */
+  brinde?:{
+    ImageUrl:string
+    ProductName:string
+  }
+
   /** @description Adicione palavras chaves dos brindes q n devem aparecer. Ex: Kaspersky */
   naoMostrar?:string[]
   /** @description Datas para exibir o banner, Ex. 2020-10-05T18:30:00*/
@@ -64,7 +71,8 @@ interface FiltroObj{
 }
 
 interface SelectedObj{
-  fq:string, value:string
+  fq:string
+  value:string
 }
 
 type FinalProd={
@@ -72,11 +80,11 @@ type FinalProd={
   brinde?:any
 }
 
-const selectedFiltersSignal=signal<Array<{fq:string, value:string}>>([])
+const selectedFiltersSignal=signal<SelectedObj[]>([])
 
-const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
+const LimparFiltros=({filters}:{filters:SelectedObj[]})=>{
   const [open,setOpen]=useState(true)
-  const [selectedFilters, setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
+  const [selectedFilters, setSelectedFilters]=useState<SelectedObj[]>([])
 
   useEffect(()=>{
     setSelectedFilters(filters)
@@ -147,13 +155,13 @@ const LimparFiltros=({filters}:{filters:Array<{fq:string, value:string}>})=>{
   )
 }
 
-export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, produtos, dataFinal, naoMostrar }:Props)=>{
+export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, produtos, dataFinal, naoMostrar, brinde }:Props)=>{
   const [loading, setLoading]=useState(true)
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
-  const [selectedFilters,setSelectedFilters]=useState<Array<{fq:string, value:string}>>([])
+  const [selectedFilters,setSelectedFilters]=useState<SelectedObj[]>([])
   const [products, setProducts]=useState<Product[]>(produtos ?? [])
-  const [finalProds, setFinalProds]=useState<FinalProd[]>(products.map(product=>{return{prod:product, brinde:undefined}}))
+  const [finalProds, setFinalProds]=useState<FinalProd[]>(products.map(product=>{return{prod:product, brinde:{}}}))
   const [sentEvent, setSentEvent]=useState(false)
   
   const excludesSpecsKeys=['Imagem do Fabricante', 'Kit Gamer', 'Cabos Inclusos', 'Garantia', 'Sistema Operacional', 'Windows', 'Recomendações', 'Monitor', 'Bloco Descrição', 'Review']
@@ -213,7 +221,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
     btnFilter && (btnFilter as HTMLButtonElement).addEventListener('click',()=>{
       const inputsChecked:HTMLInputElement[]=Array.from(ulMob!.querySelectorAll('input:checked'))
-      const filtersSelected:Array<{fq:string, value:string}> =[]
+      const filtersSelected:SelectedObj[] =[]
       inputsChecked.forEach(input=>{
         filtersSelected.push({fq:input.getAttribute('data-fq')!, value:input.value})
       })
@@ -245,29 +253,23 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     // })
   }
 
-  const orderFilters=[
-    {'Menor Preço':'OrderByPriceASC'},
-    {'Maior Preço':'OrderByPriceDESC'},
-    {'Mais Vendidos':'OrderByTopSaleDESC'},
-    {'Melhores Avaliações':'OrderByReviewRateDESC'},
-    {'A - Z':'OrderByNameASC'},
-    {'Z - A':'OrderByNameDESC'},
-    {'Data de Lançamento':'OrderByReleaseDateDESC'},
-    {'Melhor Desconto':'OrderByBestDiscountDESC'} 
-  ]
-
-  useEffect(()=>{filters.length && addFilterListeners()},[filters])
-
-  useEffect(()=>{
-    setSelectedFilters(selectedFiltersSignal.value)
-  },[selectedFiltersSignal.value])
-
   const checkCompreGanhe=async(products:Product[])=>{
+    if(brinde){
+      return products.map(prod=>{
+        return {
+          prod,
+          brinde
+        }
+      })
+    }
+
+
     let gifts:any=null
     const giftsSkus=products.reduce((acc:string[],obj)=>{
       const giftSkus=obj.offers?.offers[0].giftSkuIds
 
       if(giftSkus){
+        console.log(obj.name)
         giftSkus.forEach(sku=>!acc.includes(sku) && acc.push(sku))
       }
       return acc
@@ -275,7 +277,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
     const objGifts = await Promise.all(giftsSkus.map(sku=>fetch(`https://api.shopinfo.com.br/Deco/getProdByInternalSkuId.php/?id=${sku}`).then(r=>r.json()).catch(err=>console.error(err))))
 
-    console.log(objGifts, objGifts.filter(obj=>!naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
+    // console.log(objGifts, objGifts.filter(obj=>!naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase()))))
 
     gifts=objGifts.filter(obj=>!naoMostrar?.some(item=>obj.ProductName.toUpperCase().includes(item.toUpperCase())))
 
@@ -290,13 +292,13 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     }))
   }
 
-  const handleFiltersChange=async(selecteds:Array<{fq:string, value:string}>, order:string)=>{
+  const handleFiltersChange=async(selecteds:SelectedObj[], order:string)=>{
     //fq='P' é filtragem de Preço ai tem q fazer novo request
 
     if(selecteds.length){
-      const searchParams:Array<{fq:string, value:string}> =[]
+      const searchParams:SelectedObj[] =[]
 
-      const gamesSpecs:Array<{fq:string, value:string}> =[]
+      const gamesSpecs:SelectedObj[] =[]
   
       const groupedSpecs=selecteds.reduce<{[key:string]:string[]}>((acc,obj)=>{
         const {fq,value}=obj
@@ -397,32 +399,6 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     }
   }
 
-  useEffect(()=>{
-    const filterValues=selectedFilters.map(filter=>filter.value)
-    const filterFqs=selectedFilters.map(filter=>filter.fq)
-    
-    Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
-      const Input=input as HTMLInputElement
-      (filterValues.includes(Input.value) 
-        && filterFqs.includes(Input.getAttribute('data-fq')!)
-      )? (Input.checked=true) : (Input.checked=false)
-    })
-
-    setLoading(true)
-    handleFiltersChange(selectedFilters, order).then(r=>{setLoading(false)})
-
-    PCs.length && removeAll()
-  },[selectedFilters])
-
-  useEffect(()=>{
-    Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
-
-    setLoading(true)
-    handleFiltersChange(selectedFilters, order).then(r=>{setLoading(false)})
-
-    PCs.length && removeAll()
-  },[order])
-
   const createFiltersBasedInProducts=(products:Product[])=>{
     const productsFields:FiltroObj[]=[]
 
@@ -460,8 +436,52 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     setFilters(filtrosByLabel)
   }
 
+  const orderFilters:Array<Record<string,string>> =[
+    {'Menor Preço':'OrderByPriceASC'},
+    {'Maior Preço':'OrderByPriceDESC'},
+    {'Mais Vendidos':'OrderByTopSaleDESC'},
+    {'Melhores Avaliações':'OrderByReviewRateDESC'},
+    {'A - Z':'OrderByNameASC'},
+    {'Z - A':'OrderByNameDESC'},
+    {'Data de Lançamento':'OrderByReleaseDateDESC'},
+    {'Melhor Desconto':'OrderByBestDiscountDESC'} 
+  ]
+
+  useEffect(()=>{filters.length && addFilterListeners()},[filters])
+
   useEffect(()=>{
-    console.log(products)
+    setSelectedFilters(selectedFiltersSignal.value)
+  },[selectedFiltersSignal.value])
+
+
+  useEffect(()=>{
+    const filterValues=selectedFilters.map(filter=>filter.value)
+    const filterFqs=selectedFilters.map(filter=>filter.fq)
+    
+    Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
+      const Input=input as HTMLInputElement
+      (filterValues.includes(Input.value) 
+        && filterFqs.includes(Input.getAttribute('data-fq')!)
+      )? (Input.checked=true) : (Input.checked=false)
+    })
+
+    setLoading(true)
+    handleFiltersChange(selectedFilters, order).then(r=>{setLoading(false)})
+
+    PCs.length && removeAll()
+  },[selectedFilters])
+
+  useEffect(()=>{
+    Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
+
+    setLoading(true)
+    handleFiltersChange(selectedFilters, order).then(r=>{setLoading(false)})
+
+    PCs.length && removeAll()
+  },[order])
+
+
+  useEffect(()=>{
     if(products.length){
       if(!sentEvent){
         // mandar evento apenas uma vez quando puxar os prods pela primeira vez
@@ -475,6 +495,10 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
       setLoading(false)
     }
   },[products])
+
+  // useEffect(()=>{
+  //   console.log(finalProds)
+  // },[finalProds])
 
   useEffect(()=>{
     createFiltersBasedInProducts(produtos ?? [])
@@ -497,7 +521,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
               <p className='font-medium text-xs re1:text-sm text-right'>Aproveite antes que o<br/>tempo acabe</p>
             </div>
             <div className='re1:w-[50%] bg-[#111] re1:bg-transparent px-4 re1:px-0'>
-              <Contador dataFinal={dataFinal} classes='flex items-center justify-center re1:justify-end w-full'/>
+              {/* <Contador dataFinal={dataFinal} classes='flex items-center justify-center re1:justify-end w-full'/> */}
             </div>
           </div>
         </div>
@@ -647,13 +671,11 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
               {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
             </ul>
 
-            <div className='flex flex-col items-center w-full px-4 re1:pl-2 re1:pr-0'>
+            <div className='flex flex-col gap-4 items-center w-full px-4 re1:pl-4 re1:pr-0'>
               {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
                 <>
                   {finalProds.length > 0 ? 
-                    (finalProds.map((product)=>{
-                      return <Card product={product.prod} frete={'SIM'} brinde={product.brinde} descontoPix={descontoPix}/>
-                    }))
+                    (finalProds.map((product)=><Card product={product.prod} brinde={product.brinde} descontoPix={descontoPix}/>))
                   : (
                     <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
                   )}
