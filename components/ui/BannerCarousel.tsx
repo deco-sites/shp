@@ -147,21 +147,19 @@ function Dots({ images, interval = 0 }: Props) {
 function BannerCarousel({ images, preload, interval }: Props) {
   const id = useId() + '-bannerCarousel'
   const [pause, setPause] = useState(false)
-  const finalImages=images
-  // Arrumar logica
-  // images?.filter(image=>image.ativo).filter(image=>{
-  //   const now=new Date()
-  //   if(image.automatico){
-  //     const hora=now.getHours()
-  //     const {comeca, termina}=image.automatico
-  //     return (hora >= comeca || hora<termina)
-  //   }else{
-  //     const initial=new Date(image.datas.inicial)
-  //     const final=new Date(image.datas.final)
+  const finalImages=images?.filter(image=>image.ativo).filter(image=>{
+    const now=new Date()
+    if(image.automatico){
+      const hora=now.getHours()
+      const {comeca, termina}=image.automatico
+      return (hora >= comeca || hora<termina)
+    }else{
+      const initial=new Date(image.datas.inicial)
+      const final=new Date(image.datas.final)
   
-  //     return (now>=initial && now<=final)
-  //   }
-  // })
+      return (now>=initial && now<=final)
+    }
+  })
 
   return (
     <div id={id} class='flex flex-col'>
