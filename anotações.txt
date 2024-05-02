@@ -1,6 +1,5 @@
 Precisa arrumar:
-  -Criar lógica para gerar filtros através dos produtos da coleção e filtra-los, também criar lógica para filtra-los, na pagina especial de Cmpre e Ganhe
-  -Criar filtro de jogos através da coleção dos produtos
+  -Slider da home e outros
 Bugs pra arrumar:
 Possiveis melhoras:
   -Otimizar pag de categoria
