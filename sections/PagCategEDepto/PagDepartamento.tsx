@@ -4,7 +4,7 @@ import IconeNavegacional from 'deco-sites/shp/sections/PagCategEDepto/iconeNaveg
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Filtro from 'deco-sites/shp/sections/PagCategEDepto/Filtro.tsx'
 import FiltroMob from 'deco-sites/shp/sections/PagCategEDepto/FiltroMob.tsx'
-import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardVtexProdType.tsx'
+import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/NewCardVtexProdType.tsx'
 import PriceFilter from 'deco-sites/shp/sections/PagCategEDepto/PriceFilter.tsx'
 import {invoke} from 'deco-sites/shp/runtime.ts'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
@@ -25,8 +25,8 @@ export interface Props{
   descText?:string
   seoText?:string
   iconesNavegacionais:Array<{
-    href:string,
-    categoryName:string,
+    href:string
+    categoryName:string
     imgUrl:string
   }>
   descontoPix:number
@@ -598,8 +598,8 @@ export const PagDepartamento=({bannerUrl, descText, idsDeCategoria, seoText, tit
           <div className='flex w-full justify-between'>
             <ul id='filtros-desk' ref={listFiltersDesk} className='w-[22%] re1:flex flex-col hidden'>
               <LimparFiltros filters={selectedFilters}/>
-              {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
               <PriceFilter filtro={filters.find(filter=>filter.label==='Faixa de Preço')}/>
+              {filters.map(filtro=>filtro.label!=='Faixa de Preço' && (<Filtro title={filtro.label} values={filtro.values} />))}
             </ul>
 
             <div className='flex flex-col items-center w-full re1:w-[75%] px-4 re1:px-0'>

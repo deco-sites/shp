@@ -496,7 +496,6 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
   useEffect(()=>{
     if(products.length){
-      console.log(products)
       if(!sentEvent){
         // mandar evento apenas uma vez quando puxar os prods pela primeira vez
         setSentEvent(true)
