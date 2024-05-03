@@ -173,10 +173,10 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
   const [selectedFilters,setSelectedFilters]=useState<SelectedObj[]>([])
-  const [products, setProducts]=useState<Product[]>(produtos ?? [])
-  const [finalProds, setFinalProds]=useState<FinalProd[]>(products.map(product=>{return{prod:product, brinde:{}}}))
-  const [sentEvent, setSentEvent]=useState(false)
+  const [products, setProducts]=useState<FinalProd[]>([])
+  const [finalProds, setFinalProds]=useState<FinalProd[]>(produtos?.map(product=>{return{prod:product, combo:undefined}}) ?? [])
   const [comboFilter, setComboFilter]=useState('todos')
+  const [alreadyChecked,setAlreadyChecked]=useState(false)
   
   const excludesSpecsKeys=['Imagem do Fabricante', 'Kit Gamer', 'Cabos Inclusos', 'Garantia', 'Sistema Operacional', 'Windows', 'Recomendações', 'Monitor', 'Bloco Descrição', 'Review']
 
@@ -313,7 +313,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     return finalProds
   }
 
-  const handleFiltersChange=async(selecteds:SelectedObj[], order:string)=>{
+  const handleFiltersChange=async(selecteds:SelectedObj[], order:string, comboSelected:string)=>{
     if(selecteds.length){
       const priceParams:SelectedObj[] =[]
 
@@ -337,11 +337,11 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
       if(order==='selecione'){
         // only pass specFilters
-        const finalArr:Product[]=[]
+        const finalArr:FinalProd[]=[]
   
         products.forEach(product=>{
           let vaiProArr=false
-          for(const addProp of product.isVariantOf?.additionalProperty ?? []){
+          for(const addProp of product.prod.isVariantOf?.additionalProperty ?? []){
             if(addProp.valueReference==='SPECIFICATION' && !excludesSpecsKeys.includes(addProp.name!)){
               if(groupedSpecs[addProp.name!]){
                 groupedSpecs[addProp.name!].includes(addProp.value!) && (vaiProArr=true)
@@ -353,7 +353,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
             for(const game of gamesSpecs){
               const gameObj=gamesObjs.find(obj=>obj.name===game.value)
               if(gameObj){
-                for(const prop of product.additionalProperty ?? []){
+                for(const prop of product.prod.additionalProperty ?? []){
                   gameObj.value===prop.propertyID! && (vaiProArr=true)
                 }
               }
@@ -361,7 +361,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
           }
 
           if(priceParams.length){
-            const {price}=useOffer(product.offers)
+            const {price}=useOffer(product.prod.offers)
 
             for(const priceParam of priceParams){
               const [min, max]=priceParam.value.split(' TO ').map(num=>parseFloat(num.replace(/[^a-zA-Z0-9]/g,'')))
@@ -373,7 +373,12 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
           vaiProArr && finalArr.push(product)
         })
 
-        checkCombos(finalArr).then(r=>setFinalProds(r))
+        if(comboSelected==='todos'){
+          setFinalProds(finalArr)
+        }else{
+          const FINAL=finalArr.filter(item=>item.combo?.id===comboSelected)
+          setFinalProds(FINAL)
+        }
       }else{
         const arrQueryString=[`fq=productClusterIds:${collectionId}`, '_from=0', '_to=49', `O=${order}`]
 
@@ -416,7 +421,14 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
           vaiProArr && finalArr.push(product)
         })
 
-        checkCombos(finalArr).then(r=>setFinalProds(r))
+        checkCombos(finalArr).then(r=>{
+          if(comboSelected==='todos'){
+            setFinalProds(r)
+          }else{
+            const FINAL=r.filter(item=>item.combo?.id===comboSelected)
+            setFinalProds(FINAL)
+          }
+        })
       }
     }else if(order!=='selecione'){
       const arrQueryString=[`fq=productClusterIds:${collectionId}`, '_from=0','_to=49', `O=${order}`]
@@ -425,9 +437,21 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
       const data = await invoke['deco-sites/shp'].loaders.getProductsSearchAPIProdType({ queryString })
 
-      checkCombos(data).then(r=>setFinalProds(r))
+      checkCombos(data).then(r=>{
+        if(comboSelected==='todos'){
+          setFinalProds(r)
+        }else{
+          const FINAL=r.filter(item=>item.combo?.id===comboSelected)
+          setFinalProds(FINAL)
+        }
+      })
     }else{
-      checkCombos(products).then(r=>setFinalProds(r))
+      if(comboSelected==='todos'){
+        setFinalProds(products)
+      }else{
+        const FINAL=products.filter(item=>item.combo?.id===comboSelected)
+        setFinalProds(FINAL)
+      }
     }
   }
 
@@ -468,6 +492,11 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     setFilters(filtrosByLabel)
   }
 
+  const handleClickCombo=(e:MouseEvent)=>{
+    const Target=e.target as HTMLLIElement
+    setComboFilter(Target.getAttribute('data-filter') ?? 'todos')
+  }
+
   const orderFilters:Array<Record<string,string>> =[
     {'Menor Preço':'OrderByPriceASC'},
     {'Maior Preço':'OrderByPriceDESC'},
@@ -479,6 +508,21 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     {'Melhor Desconto':'OrderByBestDiscountDESC'} 
   ]
 
+  useEffect(()=>{
+    if(alreadyChecked){
+      const ulCombo=ulComboDesk.current
+      if(ulCombo){
+        ulCombo.querySelector('li[data-selected]')?.removeAttribute('data-selected')
+
+        ulCombo.querySelector(`li[data-filter="${comboFilter}"]`)?.setAttribute('data-selected','true')
+      }
+
+      setLoading(true)
+      handleFiltersChange(selectedFilters, order, comboFilter)
+      .then(r=>{setLoading(false)})
+    }
+  },[comboFilter])
+
   useEffect(()=>{filters.length && addFilterListeners()},[filters])
 
   useEffect(()=>{
@@ -487,49 +531,48 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
 
   useEffect(()=>{
-    const filterValues=selectedFilters.map(filter=>filter.value)
-    const filterFqs=selectedFilters.map(filter=>filter.fq)
-    
-    Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
-      const Input=input as HTMLInputElement
-      (filterValues.includes(Input.value) 
-        && filterFqs.includes(Input.getAttribute('data-fq')!)
-      )? (Input.checked=true) : (Input.checked=false)
-    })
+    if(alreadyChecked){
+      const filterValues=selectedFilters.map(filter=>filter.value)
+      const filterFqs=selectedFilters.map(filter=>filter.fq)
+      
+      Array.from(document.querySelectorAll('input#filter')).forEach((input)=>{
+        const Input=input as HTMLInputElement
+        (filterValues.includes(Input.value) 
+          && filterFqs.includes(Input.getAttribute('data-fq')!)
+        )? (Input.checked=true) : (Input.checked=false)
+      })
 
-    setLoading(true)
-    handleFiltersChange(selectedFilters, order).then(r=>{setLoading(false)})
+      setLoading(true)
+      handleFiltersChange(selectedFilters, order, comboFilter)
+      .then(r=>{setLoading(false)})
 
-    PCs.length && removeAll()
+      PCs.length && removeAll()
+    }
   },[selectedFilters])
 
   useEffect(()=>{
-    Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
+    if(alreadyChecked){
+      Array.from(document.querySelectorAll(`select#order`)).forEach((input)=>(input as HTMLInputElement).value=order)
 
-    setLoading(true)
-    handleFiltersChange(selectedFilters, order).then(r=>{setLoading(false)})
+      setLoading(true)
+      handleFiltersChange(selectedFilters, order, comboFilter)
+      .then(r=>{setLoading(false)})
 
-    PCs.length && removeAll()
+      PCs.length && removeAll()
+    }
   },[order])
 
-
   useEffect(()=>{
-    if(products.length){
-      if(!sentEvent){
-        // mandar evento apenas uma vez quando puxar os prods pela primeira vez
-        setSentEvent(true)
-        sendEvent({name:'view_item_list', params:{
-          item_list_id: collectionId,
-          item_list_name: 'Compre e Ganhe',
-          items:OrgSchemaToAnalytics(products)
-        }})
-      }
-      setLoading(false)
-    }
-  },[products])
+    sendEvent({name:'view_item_list', params:{
+      item_list_id: collectionId,
+      item_list_name: 'Compre e Ganhe',
+      items:OrgSchemaToAnalytics(produtos ?? [])
+    }})
 
-  useEffect(()=>{
     createFiltersBasedInProducts(produtos ?? [])
+
+    setLoading(true)
+    checkCombos(produtos ?? []).then(r=>{console.log(r),setProducts(r), setFinalProds(r), setAlreadyChecked(true)}).then(__=>setLoading(false)) 
   },[])
 
   return(
@@ -538,15 +581,12 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
         <div className='flex flex-col'>
           <a href={bannerUrl.linkCta}><Image width={1968} height={458} src={bannerUrl.desktop} className='hidden re1:block' preload loading='eager'/></a>
           <a href={bannerUrl.linkCta}><Image width={420} height={300} src={bannerUrl.mobile} className='re1:hidden' preload loading='eager'/></a>
-          {/* <Image src={bannerUrl} width={1920} height={1080}  decoding='async' loading='eager'
-            fetchPriority='high' preload 
-          /> */}
         </div>
         <div className='w-full bg-primary'>
           <div className='flex flex-col re1:flex-row re1:px-[5%] re4:px-[15%] re1:py-4'>
             <div className='re1:w-[50%] flex items-center justify-center re1:justify-start gap-4 py-4 re1:py-0 px-4 re1:px-0'>
               <h1 className='font-extrabold text-xl re1:text-4xl'>Compre e Ganhe</h1>
-              <p className='font-medium text-xs re1:text-sm text-right'>Aproveite antes que o<br/>tempo acabe</p>
+              <p className='font-medium text-xs re1:text-sm text-left'>Aproveite antes que o<br/>tempo acabe</p>
             </div>
             <div className='re1:w-[50%] bg-[#111] re1:bg-transparent px-4 re1:px-0'>
               <Contador dataFinal={dataFinal} classes='flex items-center justify-center re1:justify-end w-full'/>
@@ -620,7 +660,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
             })}
           </ul>
           
-          <div className='flex justify-between items-center px-4 re1:px-0 my-5'>
+          <div className='flex justify-between items-center px-4 re1:px-0 my-5 relative'>
             <label className='w-[45%] re1:w-[25%]' ref={filterLabel}>
               <span className='font-bold hidden re1:flex items-center'>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -639,14 +679,14 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
               </span>
               <FiltroMob filters={filters} id='menu'/>
             </label>
-            <label className='hidden re1:flex'>
-              <ul ref={ulComboDesk}>
+            <label className='hidden re1:block absolute left-[21.5%]'>
+              <ul ref={ulComboDesk} className='flex gap-2 text-sm'>
                 {filtrosCombo?.map(filtro=>
-                  <li data-filter={filtro.value} data-selected={false}>
+                  <li data-filter={filtro.value} className='px-[32px] py-[8px] border border-primary rounded-lg cursor-pointer data-[selected]:bg-primary' onClick={handleClickCombo}>
                     {filtro.name}
                   </li>
                 )}
-                <li data-filter='todos' data-selected={true}>
+                <li data-filter='todos' data-selected className='px-[32px] py-[8px] border border-primary rounded-lg cursor-pointer data-[selected]:bg-primary' onClick={handleClickCombo}>
                   Ver Todos
                 </li>
               </ul>
@@ -704,6 +744,19 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
             </label>
           </div>
 
+          <div className='block re1:hidden w-full px-4'>
+            <ul ref={ulComboMob} className='flex gap-2 text-xs items-center justify-start overflow-auto'>
+              {filtrosCombo?.map(filtro=>
+                <li data-filter={filtro.value} className='px-[14px] py-[8px] border border-primary rounded-lg cursor-pointer data-[selected]:bg-primary whitespace-nowrap' onClick={handleClickCombo}>
+                  {filtro.name}
+                </li>
+              )}
+              <li data-filter='todos' data-selected className='px-[14px] py-[8px] border border-primary rounded-lg cursor-pointer data-[selected]:bg-primary whitespace-nowrap' onClick={handleClickCombo}>
+                Ver Todos
+              </li>
+            </ul>
+          </div>
+
           <div className='flex w-full justify-between'>
             <ul id='filtros-desk' ref={listFiltersDesk} className='w-[25%] re1:flex flex-col hidden'>
               <LimparFiltros filters={selectedFilters}/>
@@ -714,7 +767,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
             <div className='flex flex-col gap-4 items-center w-full px-4 re1:pl-4 re1:pr-0'>
               {loading ? (<div className='loading loading-spinner loading-lg text-primary my-20'/>) : (
                 <>
-                  {finalProds.length > 0 ? 
+                  {finalProds.filter(prod=>prod.combo!==undefined).length > 0 ? 
                     (finalProds.filter(prod=>prod.combo!==undefined).map((product)=><Card product={product.prod} combo={product.combo!} descontoPix={descontoPix}/>))
                   : (
                     <p className='text-2xl font-bold mx-auto mt-10'>Não há produtos com esta combinação de filtros!</p>
