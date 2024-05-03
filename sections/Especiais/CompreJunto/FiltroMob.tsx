@@ -1,5 +1,5 @@
+import { memo } from 'preact/compat'
 import { useRef, useState } from 'preact/hooks'
-import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Filtro from './Filtro.tsx'
 import PriceFilter from './PriceFilter.tsx'
 
@@ -12,16 +12,6 @@ interface Props{
 interface FilterObj{
   label:string
   values:string[]
-}
-
-interface SpecObj{
-  Link:string
-  LinkEncoded:string
-  Map:string
-  Name:string
-  Position: number | null
-  Quantity: number | null
-  Value:string
 }
 
 const FiltroMob=({ filters, id }:Props)=>{
@@ -102,4 +92,4 @@ const FiltroMob=({ filters, id }:Props)=>{
   )
 }
 
-export default FiltroMob
+export default memo(FiltroMob)

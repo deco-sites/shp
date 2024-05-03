@@ -13,7 +13,6 @@ import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 import { OrgSchemaToAnalytics } from "deco-sites/shp/FunctionsSHP/ProdsToItemAnalytics.ts";
 import { AppContext } from "deco-sites/shp/apps/site.ts";
 import { LoaderReturnType, SectionProps } from "deco/types.ts";
-import removeDot from "deco-sites/shp/FunctionsSHP/removeDOTFromFilters.ts";
 import { Product } from "apps/commerce/types.ts";
 import Contador from "deco-sites/shp/components/ComponentsSHP/Contador.tsx";
 import { useOffer } from 'deco-sites/shp/sdk/useOffer.ts'
@@ -168,7 +167,7 @@ const LimparFiltros=({filters}:{filters:SelectedObj[]})=>{
   )
 }
 
-export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, produtos, dataFinal, filtrosCombo}:Props)=>{
+export const PagCompreJunto=({ bannerUrl, collectionId, Jogos, descontoPix, produtos, dataFinal, filtrosCombo}:Props)=>{
   const [loading, setLoading]=useState(true)
   const [order,setOrder]=useState('selecione')
   const [filters,setFilters]=useState<FilterObj[]>([])
@@ -273,6 +272,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
   }
 
   const checkCombos=async(products:Product[])=>{
+    console.log('Checkando')
     const combos: objBuyTogether[] = []
     const finalCombos:ComboObj[]=[]
     const prodsWithCombos:Array<Product & {comboId?:string}> =[]
@@ -510,11 +510,15 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
 
   useEffect(()=>{
     if(alreadyChecked){
-      const ulCombo=ulComboDesk.current
-      if(ulCombo){
-        ulCombo.querySelector('li[data-selected]')?.removeAttribute('data-selected')
+      const ulComboD=ulComboDesk.current
+      const ulComboM=ulComboMob.current
 
-        ulCombo.querySelector(`li[data-filter="${comboFilter}"]`)?.setAttribute('data-selected','true')
+      if(ulComboD && ulComboM){
+        ulComboD.querySelector('li[data-selected]')?.removeAttribute('data-selected')
+        ulComboD.querySelector(`li[data-filter="${comboFilter}"]`)?.setAttribute('data-selected','true')
+
+        ulComboM.querySelector('li[data-selected]')?.removeAttribute('data-selected')
+        ulComboM.querySelector(`li[data-filter="${comboFilter}"]`)?.setAttribute('data-selected','true')
       }
 
       setLoading(true)
@@ -572,8 +576,10 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
     createFiltersBasedInProducts(produtos ?? [])
 
     setLoading(true)
-    checkCombos(produtos ?? []).then(r=>{console.log(r),setProducts(r), setFinalProds(r), setAlreadyChecked(true)}).then(__=>setLoading(false)) 
+    checkCombos(produtos ?? []).then(r=>{setProducts(r), setFinalProds(r), setAlreadyChecked(true)}).then(__=>setLoading(false)) 
   },[])
+
+  useEffect(()=>{console.log(finalProds)},[finalProds])
 
   return(
     <>
@@ -744,7 +750,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
             </label>
           </div>
 
-          <div className='block re1:hidden w-full px-4'>
+          <div className='block re1:hidden w-full p-4'>
             <ul ref={ulComboMob} className='flex gap-2 text-xs items-center justify-start overflow-auto'>
               {filtrosCombo?.map(filtro=>
                 <li data-filter={filtro.value} className='px-[14px] py-[8px] border border-primary rounded-lg cursor-pointer data-[selected]:bg-primary whitespace-nowrap' onClick={handleClickCombo}>
@@ -792,7 +798,7 @@ export const loader = (props: Omit<Props, 'descontoPix'>, _req: Request, ctx: Ap
 const finalSection=(props:SectionProps<typeof loader>)=>{
   return (
     <CompareContextProvider descontoPix={props.descontoPix}>
-      <PagDepartamento {...props}/>
+      <PagCompreJunto {...props}/>
     </CompareContextProvider>
   )
 }
