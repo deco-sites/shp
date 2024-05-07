@@ -16,6 +16,7 @@ export interface Props {
 }
 
 const MenuItemDesk = ({ open, subCategs, subCategsNoImg }: Props) => {
+
   return (
     <div
       className={`w-full h-48 bg-base-100 absolute gap-8 justify-normal px-[15%] items-center hover:flex ${open}`}

@@ -102,10 +102,7 @@ const HeaderSHP = ({descontoPix, gravata}:Props) => {
 
   
   const {cart}=useCart()
-  const {items, totalizers}=cart.value ?? { items: [] }
-  const currency = cart.value?.storePreferencesData.currencyCode ?? "BRL"
-  const total = totalizers?.find((item) => item.id === "Items")?.value || 0
-  const coupon = cart.value?.marketingData?.coupon ?? undefined
+  const {items}=cart.value ?? { items: [] }
   const totalItems=items.length
   
   useEffect(()=>{

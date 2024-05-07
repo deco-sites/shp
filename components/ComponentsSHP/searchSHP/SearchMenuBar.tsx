@@ -1,4 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
+import { memo } from 'preact/compat'
 import { useState, useEffect, useRef } from 'preact/hooks'
 import Image from 'deco-sites/std/components/Image.tsx'
 import { invoke } from 'deco-sites/shp/runtime.ts'
@@ -263,4 +264,4 @@ const SearchMenuBar=()=>{
   )
 }
 
-export default SearchMenuBar
+export default memo(SearchMenuBar)
