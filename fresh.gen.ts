@@ -31,6 +31,7 @@ import * as $PagDepartamentoIsland from "./islands/PagDepartamentoIsland.tsx";
 import * as $Pop_ups_CookieConsentIsland from "./islands/Pop-ups/CookieConsentIsland.tsx";
 import * as $Pop_ups_HelperButtonsIsland from "./islands/Pop-ups/HelperButtonsIsland.tsx";
 import * as $Pop_ups_PopComponentIsland from "./islands/Pop-ups/PopComponentIsland.tsx";
+import * as $Pop_ups_PopUpGeneralIsland from "./islands/Pop-ups/PopUpGeneralIsland.tsx";
 import * as $ProductCardIsland from "./islands/ProductCardIsland.tsx";
 import * as $ProductImageZoom from "./islands/ProductImageZoom.tsx";
 import * as $RecommendedProds from "./islands/RecommendedProds.tsx";
@@ -86,6 +87,7 @@ const manifest = {
     "./islands/Pop-ups/CookieConsentIsland.tsx": $Pop_ups_CookieConsentIsland,
     "./islands/Pop-ups/HelperButtonsIsland.tsx": $Pop_ups_HelperButtonsIsland,
     "./islands/Pop-ups/PopComponentIsland.tsx": $Pop_ups_PopComponentIsland,
+    "./islands/Pop-ups/PopUpGeneralIsland.tsx": $Pop_ups_PopUpGeneralIsland,
     "./islands/ProductCardIsland.tsx": $ProductCardIsland,
     "./islands/ProductImageZoom.tsx": $ProductImageZoom,
     "./islands/RecommendedProds.tsx": $RecommendedProds,

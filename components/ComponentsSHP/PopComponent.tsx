@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/hooks'
+import {JSX} from 'preact'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 
 interface Scroll{
@@ -43,8 +44,7 @@ const PopComponent=({ CTA, disparo, mobile, ...props}:Props)=>{
     setShow(false)
   }
   
-  // deno-lint-ignore no-explicit-any
-  const modalProps: Record<string, any> = {
+  const modalProps: Record<string, string|JSX.CSSProperties> = {
     className: `${!mobile ? 'hidden re1:block' : ''} z-50 fixed bottom-4 left-4 w-[400px]`,
     ...(CTA && { href: CTA }),
     style: props.type === 'Image' ? { backgroundImage: `url('${props.bannerLink}')`, borderRadius:'8px' } : {}
