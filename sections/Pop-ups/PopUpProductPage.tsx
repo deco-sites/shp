@@ -45,9 +45,13 @@ interface Imagem extends Pattern{
 export type Props=Conteudo|Imagem
 
 const PopUp=({ CTA, datas, disparo, page, minimo, maximo, mobile, ...props}:Props)=>{
-  if(page===null){
-    return null
-  }
+  if(page===null) return null
+
+  const now=new Date().getTime()
+  const inicio=new Date(datas.inicial).getTime()
+  const final=new Date(datas.final).getTime()
+
+  if(!(now>=inicio && now<=final)) return null
 
   const {product}=page
 
@@ -55,7 +59,7 @@ const PopUp=({ CTA, datas, disparo, page, minimo, maximo, mobile, ...props}:Prop
 
   if(!(price!>=minimo && price!<=maximo)) return null
 
-  return <PopComponent datas={datas} disparo={disparo} CTA={CTA} mobile={mobile} {...props}/>
+  return <PopComponent disparo={disparo} CTA={CTA} mobile={mobile} {...props}/>
 }
 
 export default PopUp

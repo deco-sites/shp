@@ -49,11 +49,16 @@ export const loader = (props: Props, _req: Request) => {
 }
 
 const PopUpGeneral=({ CTA, datas, disparo, paginas, requestedUrl, ...props}:SectionProps<typeof loader>)=>{
+  const now=new Date().getTime()
+  const inicio=new Date(datas.inicial).getTime()
+  const final=new Date(datas.final).getTime()
+
+  if(!(now>=inicio && now<=final)) return null
 
   const url=new URL(requestedUrl)
 
   return paginas.includes(url.pathname) ? 
-    <PopComponent datas={datas} disparo={disparo} CTA={CTA} {...props}/>
+    <PopComponent disparo={disparo} CTA={CTA} {...props}/>
   : null 
 }
 
