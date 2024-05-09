@@ -69,7 +69,7 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
       spaceBetween: 30,
       loop: true,
       autoplay:{
-        delay:5000,
+        delay:interval * 1000,
         pauseOnMouseEnter:true
       },
       pagination:{

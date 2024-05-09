@@ -165,7 +165,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
   const [finalProds, setFinalProds]=useState<FinalProd[]>(products.map(product=>{return{prod:product, brinde:{}}}))
   const [sentEvent, setSentEvent]=useState(false)
   
-  const excludesSpecsKeys=['Imagem do Fabricante', 'Kit Gamer', 'Cabos Inclusos', 'Garantia', 'Sistema Operacional', 'Windows', 'Recomendações', 'Monitor', 'Bloco Descrição', 'Review']
+  const excludesSpecsKeys=['Imagem do Fabricante', 'Kit Gamer', 'Cabos Inclusos', 'Garantia', 'Sistema Operacional', 'Windows', 'Recomendações', 'Monitor', 'Bloco Descrição', 'Review', 'Barras de FPS', 'data-fim-countdown', 'Background', 'Cadeira Gamer']
 
   const gamesObjs = (()=>{
     const acc:Array<{name:string, value:string}> =[]
@@ -256,6 +256,7 @@ export const PagDepartamento=({ bannerUrl, collectionId, Jogos, descontoPix, pro
   }
 
   const checkCompreGanhe=async(products:Product[])=>{
+    console.log(products)
     if(brinde){
       return products.map(prod=>{
         return {

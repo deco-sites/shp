@@ -2,10 +2,9 @@ import Image from "deco-sites/std/packs/image/components/Image.tsx"
 import Slider from 'deco-sites/fashion/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/fashion/components/ui/SliderJS.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
-import { useId, useEffect, useState } from 'preact/hooks'
-import {JSX} from 'preact'
-
-// PRECISO FAZER 2 SLIDES
+import { useRef, useEffect, useState } from 'preact/hooks'
+import Swiper from 'swiper'
+import { Pagination, Autoplay, Navigation } from 'swiper/modules'
 
 export interface Props {
   Categs: Array<{
@@ -16,40 +15,65 @@ export interface Props {
 }
 
 const Categories = ({ Categs=[] }: Props) => {
-  const id=useId()+'-newCategs'
+  const sliderRef=useRef<HTMLDivElement>(null)
   
-  // Se precisar dos bullets
-  // const generateAgroupmentItems=(agroupment:number)=>{
-  //   const finalPairs: JSX.Element[] = []
+  const nextRef=useRef<HTMLButtonElement>(null)
 
-  //   for (let i = 0; i < Categs.length; i+=agroupment) {
+  const prevRef=useRef<HTMLButtonElement>(null)
 
-  //     const group = 
-  //     <>
-  //       {Categs.slice(i,i+agroupment).map(Categ=>(
-  //         <a href={Categ.linkTo} className='flex flex-col w-full h-full text-center hover:scale-90 transition ease-in-out duration-300 min-w-[145px] max-w-[145px]'>
-  //           <Image className='m-auto w-[100px] re1:w-[145px]' src={Categ.categImg} alt={Categ.name} width={145} height={196} fetchPriority='high' loading='lazy' decoding='sync'/>
-  //           <span className='text-secondary text-[18px] font-bold mb-[10px]'>{Categ.name}</span>
-  //         </a>
-  //       ))}
-  //     </>
-  //     finalPairs.push(group)
-  //   }
+  const paginationRef=useRef<HTMLUListElement>(null)
 
-  //   return finalPairs.map((element, index) => (
-  //     <Slider.Item
-  //       index={index}
-  //       className='carousel-item items-center justify-between'
-  //     >{element}</Slider.Item>
-  //   ))
-  // }
+  useEffect(()=>{
+    if (!sliderRef.current || !paginationRef) return; // Garante que as refs estão prontas
+  
+    const swiperOptions:SwiperOptions = {
+      modules:[Pagination, Autoplay],
+      slidesPerView: 3,
+      slidesPerGroup: 3,
+      loop: true,
+      autoplay:{
+        delay:5000,
+        pauseOnMouseEnter:true
+      },
+      pagination:{
+        el:paginationRef.current,
+        type:'bullets',
+        clickable:true,
+        bulletActiveClass:'active-bullet !bg-primary',
+        bulletClass:'bullet',
+        renderBullet:(index,className)=>{
+          return `<li class='${className + ' bg-[#2d2d2d] rounded-full'}' style='width:12px;height:12px;' index='${index}'></li>`
+        }
+      },
+      breakpoints: {
+        480:{
+          slidesPerView: 5,
+          slidesPerGroup: 5,
+        },
+      }
+    }
+  
+    const swiper = new Swiper(sliderRef.current, swiperOptions);
+    
+    (nextRef.current as HTMLButtonElement).onclick = () => {
+      swiper.slideNext()
+    }
+
+    (prevRef.current as HTMLButtonElement).onclick = () => {
+      swiper.slidePrev()
+    }
+  
+    return () => {
+      swiper.destroy(true, true)
+    }
+  },[])
 
   return (
     <div className='my-5 px-[5%] re1:px-[15%]'>
       <p className='uppercase text-secondary text-left text-xl re1:text-4xl font-bold my-2'>
         Categorias
       </p>
-      <div className='flex flex-col' id={id}>
+      {/*<div className='flex flex-col'>
           <div className='flex re1:grid re1:grid-cols-[20px_1fr_20px] re1:justify-between re1:items-center'>
             <div className='hidden re1:flex justify-center items-center prev'>
               <Slider.PrevButton class='relative right-[20px] btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none'>
@@ -88,8 +112,47 @@ const Categories = ({ Categs=[] }: Props) => {
             </div>
         </div>
       
-        <SliderJS rootId={id} scroll='smooth' />
-      </div>
+        <SliderJS rootId={id} scroll='smooth' /> 
+      </div>*/}
+
+        <div className='flex items-center relative'>
+          <div className='swiper' ref={sliderRef}>
+            <div className='swiper-wrapper'>
+              {Categs?.map((Categ)=>(
+                <div className='swiper-slide !flex items-center justify-center'>
+                  <a href={Categ.linkTo} className='flex flex-col w-full h-full text-center hover:scale-90 transition ease-in-out duration-300 min-w-[145px] max-w-[145px]'>
+                    <Image className='m-auto w-[100px] re1:w-[145px]' src={Categ.categImg} alt={Categ.name} width={145} height={196} fetchPriority='high' loading='lazy' decoding='sync'/>
+                    <span className='text-secondary text-[18px] font-bold mb-[10px]'>{Categ.name}</span>
+                  </a>
+                </div>
+              ))}
+            </div>
+
+            <ul ref={paginationRef} className='flex gap-2 items-center justify-center mt-6'/>
+          </div>
+
+          <div class='hidden re1:flex items-center justify-center prev absolute left-[-40px] re4:left-[-20px] z-[2] mb-6'>
+            <button ref={prevRef} class='btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none !p-0'>
+              <Icon
+                class='text-primary'
+                size={25}
+                id='ChevronLeft'
+                strokeWidth={3}
+              />
+            </button>
+          </div>
+
+          <div class='hidden re1:flex items-center justify-center next absolute right-[-40px] re4:right-[-20px] z-[2] mb-6'>
+            <button ref={nextRef} class='btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent !border-none !p-0'>
+              <Icon
+                class='text-primary'
+                size={25}
+                id='ChevronRight'
+                strokeWidth={3}
+              />
+            </button>
+          </div>
+        </div>
     </div>
   )
 }
