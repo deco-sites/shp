@@ -40,6 +40,11 @@ function GlobalTags() {
       <link rel='preconnect' href='https://shopinfo.vtexcommercerstable.com.br'/>
 
       <link rel='preconnect' href='https://api.shopinfo.com.br'/>
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      />
     </Head>
   );
 }

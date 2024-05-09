@@ -52,38 +52,44 @@ const ProdCard=({...props}:CardProps)=>{
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
   return(
-    <a className='flex flex-col h-[370px] w-full bg-[#262626] rounded-lg border
-    border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
-      <div className='flex px-3 pt-3 h-auto w-auto'>
-        <span className='absolute h-[30px] w-[35px] flex items-center justify-center bg-success text-secondary text-[12px] p-1 font-bold rounded-lg'>-{diffPercent}%</span>
-        <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} alt={prodName} title={prodName}/>
+    <a className='flex flex-col w-full bg-[#262626] rounded-lg border relative p-3 border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
+      <div className='flex flex-col h-auto w-auto'>
+      <div className='flex flex-col re1:flex-row gap-2 re1:gap-0 items-start re1:items-center absolute re1:static mt-2 re1:mt-0'>
+          <div className='flex items-center justify-start mt-[-12%] re1:mt-0'>
+            {/* Trustvox */}
+            {/* {props.objTrust?.average ===0 ? null : */}
+              <div className='flex justify-center items-center absolute'>
+                <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
+                  <div style={{width:`${props.trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-18px]'/>
+                </div>
+                <span className='text-yellow-300 text-xs'>({props.objTrust?.count})</span>
+              </div>
+            {/* } */}
+          </div>
+          
+          <div className='flex flex-col re1:flex-row items-center justify-start re1:justify-end gap-2 re1:w-[85px] re1:ml-auto'>
+            {/* <div className='flex items-center justify-center bg-[#C44604] h-[25px] w-[35px] rounded-lg'>
+              <svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.5625 3.125H7.875L8.4375 4.25H1.125L0.5625 3.125ZM1.3125 5.375H8.625L9.1875 6.5H1.875L1.3125 5.375ZM13.5 11.375C14.1225 11.375 14.625 10.8725 14.625 10.25C14.625 9.6275 14.1225 9.125 13.5 9.125C12.8775 9.125 12.375 9.6275 12.375 10.25C12.375 10.8725 12.8775 11.375 13.5 11.375ZM14.625 4.625H12.75V6.5H16.095L14.625 4.625ZM6 11.375C6.6225 11.375 7.125 10.8725 7.125 10.25C7.125 9.6275 6.6225 9.125 6 9.125C5.3775 9.125 4.875 9.6275 4.875 10.25C4.875 10.8725 5.3775 11.375 6 11.375ZM15 3.5L17.25 6.5V10.25H15.75C15.75 11.495 14.745 12.5 13.5 12.5C12.255 12.5 11.25 11.495 11.25 10.25H8.25C8.25 11.495 7.2375 12.5 6 12.5C4.755 12.5 3.75 11.495 3.75 10.25H2.25V7.625H3.75V8.75H4.32C4.7325 8.2925 5.3325 8 6 8C6.6675 8 7.2675 8.2925 7.68 8.75H11.25V2H2.25C2.25 1.1675 2.9175 0.5 3.75 0.5H12.75V3.5H15Z" fill="white"/>
+              </svg>
+            </div> */}
+
+            <span className='flex items-center justify-center bg-success font-semibold text-xs rounded-lg h-[25px] w-[35px]'>-{diffPercent}%</span>
+          </div>
+        </div>
+        <Image className='m-auto mt-2 re1:mt-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} alt={prodName} title={prodName}/>
       </div>
-      <div className='flex flex-col-reverse justify-items-end ml-0 w-full h-[50%] pb-4'>
-        <p className='text-sm line-clamp-2 px-3 text-secondary'>
+      <div className='flex flex-col justify-between my-auto h-[150px] gap-2'>
+        <p title={prodName} className='text-xs line-clamp-2 leading-4'>
           {prodName}
         </p>
-        <div className='flex items-center justify-center my-[20px]'> 
-          <hr className='block border-t-base-100 w-full'/>
-          {/* Trustvox */}
-          {props.objTrust?.average ===0 ? null :
-            <div className='flex justify-center items-center absolute'>
-              <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
-                <div style={{width:`${props.trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
-              </div>
-              <span className='text-yellow-300 text-xs'>({props.objTrust?.count})</span>
-            </div>
-          }
-        </div>
-        <div className='flex flex-col px-3'>
-          {isAvailable ? (
-            <>
-              <span className='line-through text-[#b4b4b4] text-xs'>De: {precoDe.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-              <p className='text-xs'><span className='text-success text-xl font-bold'>{salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span> no pix</p>
-              <span className='text-xs text-[#b4b4b4]'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</span>
-            </>):(
-              <p className='text-xl text-primary font-bold'>Produto Esgotado</p>
-            )}
-        </div>
+        
+        {isAvailable ? (
+        <div className='mt-4 w-full'>
+          <p className='line-through text-[11px]'>De: {precoDe.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
+          <p className='text-lg font-bold text-success leading-3'>{salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} <span className='text-[11px] font-normal text-secondary'>no Pix</span></p>
+          <p className='text-[11px]'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</p>
+        </div>) : (<p className='text-xl text-primary font-bold'>Produto Esgotado</p>)}
       </div>
     </a>
   )
@@ -101,6 +107,8 @@ const PcCard=({...props}:CardPCProps)=>{
     name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista, linkProd, imgUrl, pix
   }
 
+  console.log(props.trustPercent)
+
   
   useEffect(()=>{
     if(!PCs.some((pc)=>pc.id===pcObj.id && pc.name===pcObj.name)){
@@ -111,20 +119,20 @@ const PcCard=({...props}:CardPCProps)=>{
   return(
     <a className='flex flex-col w-full bg-[#262626] rounded-lg border relative p-3 border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
       <div className='flex flex-col h-auto w-auto'>
-        <div className='flex items-center'>
+        <div className='flex flex-col re1:flex-row gap-2 re1:gap-0 items-start re1:items-center absolute re1:static mt-2 re1:mt-0'>
           <div className='flex items-center justify-start mt-[-12%] re1:mt-0'>
             {/* Trustvox */}
             {/* {props.objTrust?.average ===0 ? null : */}
               <div className='flex justify-center items-center absolute'>
                 <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
-                  <div style={{width:`${props.trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-16px]'/>
+                  <div style={{width:`${props.trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-18px]'/>
                 </div>
                 <span className='text-yellow-300 text-xs'>({props.objTrust?.count})</span>
               </div>
             {/* } */}
           </div>
           
-          <div className='flex items-center justify-start gap-2 w-[85px] ml-auto'>
+          <div className='flex flex-col re1:flex-row items-center justify-start gap-2 re1:w-[85px] re1:ml-auto'>
             <div className='flex items-center justify-center bg-[#C44604] h-[25px] w-[35px] rounded-lg'>
               <svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0.5625 3.125H7.875L8.4375 4.25H1.125L0.5625 3.125ZM1.3125 5.375H8.625L9.1875 6.5H1.875L1.3125 5.375ZM13.5 11.375C14.1225 11.375 14.625 10.8725 14.625 10.25C14.625 9.6275 14.1225 9.125 13.5 9.125C12.8775 9.125 12.375 9.6275 12.375 10.25C12.375 10.8725 12.8775 11.375 13.5 11.375ZM14.625 4.625H12.75V6.5H16.095L14.625 4.625ZM6 11.375C6.6225 11.375 7.125 10.8725 7.125 10.25C7.125 9.6275 6.6225 9.125 6 9.125C5.3775 9.125 4.875 9.6275 4.875 10.25C4.875 10.8725 5.3775 11.375 6 11.375ZM15 3.5L17.25 6.5V10.25H15.75C15.75 11.495 14.745 12.5 13.5 12.5C12.255 12.5 11.25 11.495 11.25 10.25H8.25C8.25 11.495 7.2375 12.5 6 12.5C4.755 12.5 3.75 11.495 3.75 10.25H2.25V7.625H3.75V8.75H4.32C4.7325 8.2925 5.3325 8 6 8C6.6675 8 7.2675 8.2925 7.68 8.75H11.25V2H2.25C2.25 1.1675 2.9175 0.5 3.75 0.5H12.75V3.5H15Z" fill="white"/>
@@ -134,10 +142,10 @@ const PcCard=({...props}:CardPCProps)=>{
             <span className='flex items-center justify-center bg-success font-semibold text-xs rounded-lg h-[25px] w-[35px]'>-{diffPercent}%</span>
           </div>
         </div>
-        <Image className='m-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} alt={prodName} title={prodName}/>
+        <Image className='m-auto mt-2 re1:mt-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} alt={prodName} title={prodName}/>
       </div>
       <div className='flex flex-col justify-between my-auto h-auto gap-2'>
-        <p className='text-xs line-clamp-2 leading-4'>
+        <p title={prodName} className='text-xs line-clamp-2 leading-4'>
           {prodName}
         </p>
 
@@ -229,16 +237,18 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
   const [objTrust, setObjTrust]=useState<ObjTrust>({'product_code':prodId, 'average':0, 'count':0, 'product_name':name})
   const [trustPercent, setTrustPercent]=useState(0)
     
-  // useEffect(()=>{
-  //   const handleTrust=async()=>{
-  //     const data=await invoke['deco-sites/shp'].loaders.getTrustvox({productId:refId, storeId:'79497'})
+  useEffect(()=>{
+    const handleTrust=async()=>{
+      const data=await invoke['deco-sites/shp'].loaders.getTrustvox({productId:refId, storeId:'79497'})
       
-  //     const {products_rates}:{products_rates:ObjTrust[]}=data
-  //     const obj:ObjTrust=products_rates[0]
-  //     obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({product_code:prodId, average:12, count:4.7, product_name:name})
-  //   }
-  //   handleTrust()
-  // },[])
+      const {products_rates}:{products_rates:ObjTrust[]}=data
+      const obj:ObjTrust=products_rates[0]
+      console.log(obj)
+      obj ? (setTrustPercent(obj.average*20),setObjTrust(obj)) : setObjTrust({product_code:prodId, average:0, count:0, product_name:name})
+    }
+    handleTrust()
+  },[])
+
 
   const handleClick=()=>{
     sendEvent({name:'select_item', params:{
@@ -249,7 +259,7 @@ const Card=({product, item_list_id=replaceListInfo, item_list_name=replaceListIn
   }
 
   if(PCGamer){
-    return <PcCard  armazenamento={(product.SSD || product.HD) ?? ''} imgUrl={image} prodName={name} memoria={product.Memória ?? ''} objTrust={{'product_code':prodId, 'average':0, 'count':0, 'product_name':name}} trustPercent={0}
+    return <PcCard  armazenamento={(product.SSD || product.HD) ?? ''} imgUrl={image} prodName={name} memoria={product.Memória ?? ''} objTrust={objTrust} trustPercent={trustPercent}
     placaVideo={product['Placa de vídeo'] ?? ''} linkProd={linkProduto} prodId={prodId} precoDe={priceDe} precoVista={priceVista} isAvailable={avaibility} seller={product.items[0].sellers[0].sellerId ?? '1'} groupId={refId ?? ''} 
     processador={product.Processador ?? ''} tipoArm={product.SSD ? 'SSD' : 'HD'} parcelas={maxInstallments}  valorParcela={valorParcela} pix={descontoPix} fonte={product.Fonte} GA4Func={handleClick}/>
   }else{
