@@ -1,15 +1,16 @@
-import { useId, useMemo } from 'preact/hooks'
+import { useId, useMemo, useRef } from 'preact/hooks'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
-import Slider from 'deco-sites/shp/components/ui/Slider.tsx'
-import SliderJS from 'deco-sites/shp/components/ui/SliderJS.tsx'
 import type { Product } from 'apps/commerce/types.ts'
 import type { LoaderReturnType, SectionProps } from 'deco/types.ts'
-import CompareContextProvider, {useCompareContext} from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
+import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import Image from 'deco-sites/std/components/Image.tsx'
 import useTimer from 'deco-sites/shp/FunctionsSHP/useTimer.ts'
 import { AppContext } from "deco-sites/shp/apps/site.ts";
 import {useEffect} from 'preact/hooks'
+import Swiper from 'swiper'
+import { Pagination, Autoplay } from 'swiper/modules'
+import { SwiperOptions } from 'swiper/types'
 
 export interface VitrineProps {
   produtos: LoaderReturnType<Product[] | null>
@@ -42,11 +43,75 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
   }
 
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
-  const {days, hours, minutes, seconds}=useTimer(finalDate)
+  const {days, hours, minutes, seconds, milliseconds}=useTimer(finalDate)
 
   if (!produtos || produtos.length === 0) {
     return <></>
   }
+
+  
+  const sliderRef=useRef<HTMLDivElement>(null)
+  
+  const nextRef=useRef<HTMLButtonElement>(null)
+
+  const prevRef=useRef<HTMLButtonElement>(null)
+
+  const paginationRef=useRef<HTMLUListElement>(null)
+
+  useEffect(() => {
+    if (!sliderRef.current || !paginationRef) return; // Garante que as refs estão prontas
+  
+    const swiperOptions:SwiperOptions = {
+      modules:[Pagination, Autoplay],
+      slidesPerView: 1.5,
+      slidesPerGroup: 1,
+      centeredSlides: true,
+      spaceBetween: 30,
+      loop: true,
+      autoplay:{
+        delay:5000,
+        pauseOnMouseEnter:true
+      },
+      pagination:{
+        el:paginationRef.current,
+        type:'bullets',
+        clickable:true,
+        bulletActiveClass:'active-bullet !bg-primary',
+        bulletClass:'bullet',
+        renderBullet:(index,className)=>{
+          return `<li class='${className + ' bg-[#2d2d2d] rounded-full'}' style='width:12px;height:12px;' index='${index}'></li>`
+        }
+      },
+      breakpoints: {
+        480:{
+          slidesPerView: 4,
+          slidesPerGroup: 4,
+          centeredSlides: false,
+          spaceBetween:10
+        },
+        1400: {
+          slidesPerView: 4,
+          slidesPerGroup: 4,
+          centeredSlides: false,
+          spaceBetween:0
+        },
+      }
+    }
+  
+    const swiper = new Swiper(sliderRef.current, swiperOptions);
+    
+    (nextRef.current as HTMLButtonElement).onclick = () => {
+      swiper.slideNext()
+    }
+
+    (prevRef.current as HTMLButtonElement).onclick = () => {
+      swiper.slidePrev()
+    }
+  
+    return () => {
+      swiper.destroy(true, true)
+    }
+  }, [])
 
   return (
     <CompareContextProvider descontoPix={useMemo(()=>descontoPix,[descontoPix])}>
@@ -73,85 +138,52 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
             <Image width={61} height={61} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
               loading='lazy' className='re1:mr-0 mr-2 w-[40px] re1:w-[61px] h-[40px] re1:h-[61px]'
             />
+
             <label>
-              <p className="flex flex-col text-secondary items-center">
-                <p className="text-[12px]">AS PROMOÇÕES EXPIRAM EM</p>
-                <span className="font-bold text-[20px] leading-3">{`${days}D ${hours}:${minutes}:${seconds}`}</span>
+              <p className='flex flex-col text-secondary items-center justify-center'>
+                <p className='text-[12px] re1:mr-1'>AS PROMOÇÕES EXPIRAM EM</p>
+                <span className='font-bold text-[20px] leading-3 w-[215px]'><span>{days}D</span> <span>{hours}</span> : <span>{minutes}</span> : <span>{seconds}</span> : <span>{milliseconds}</span></span>
               </p>
             </label>
           </div>
-          {/* Setinhas do lado do contador */}
-          {/* <div className='hidden re1:flex gap-1 ml-auto'>
-            <button
-              className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-secondary hover:border-secondary'
-              onClick={() =>
-                prev.current &&
-                prev.current.firstChild instanceof HTMLButtonElement &&
-                prev.current.firstChild.click()
-              }
-            >
+        </div>
+
+        <div className='flex items-center relative'>
+          <div className='swiper' ref={sliderRef}>
+            <div className='swiper-wrapper'>
+              {produtos.map(slide=> 
+                <div className='swiper-slide !flex items-center justify-center'>
+                  <Card
+                    product={slide} descontoPix={descontoPix}
+                  />
+                </div>
+              )}
+            </div>
+
+            <ul ref={paginationRef} className='flex gap-2 items-center justify-center mt-6'/>
+          </div>
+
+          <div class='hidden re1:flex items-center justify-center prev absolute left-[-40px] re4:left-[-20px] z-[2] mb-6'>
+            <button ref={prevRef} class='btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none !p-0'>
               <Icon
-                class='text-secondary'
-                size={20}
+                class='text-primary'
+                size={25}
                 id='ChevronLeft'
                 strokeWidth={3}
               />
             </button>
-            <button
-              className='btn btn-circle min-w-[30px] min-h-[30px] max-h-[30px] max-w-[30px] bg-transparent hover:bg-transparent border border-secondary hover:border-secondary'
-              onClick={() =>
-                next.current &&
-                next.current.firstChild instanceof HTMLButtonElement &&
-                next.current.firstChild.click()
-              }
-            >
+          </div>
+
+          <div class='hidden re1:flex items-center justify-center next absolute right-[-40px] re4:right-[-20px] z-[2] mb-6'>
+            <button ref={nextRef} class='btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent !border-none !p-0'>
               <Icon
-                class='text-secondary'
-                size={20}
+                class='text-primary'
+                size={25}
                 id='ChevronRight'
                 strokeWidth={3}
               />
             </button>
-          </div> */}
-        </div>
-
-        <div className='flex re1:grid grid-cols-[20px_1fr_20px] re1:justify-between re1:items-center' id={id}>
-            <div className='hidden re1:flex justify-center items-center prev'>
-              <Slider.PrevButton class='relative right-[20px] btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none'>
-                <Icon
-                  class='text-primary'
-                  size={25}
-                  id='ChevronLeft'
-                  strokeWidth={3}
-                />
-              </Slider.PrevButton>
-            </div>
-
-            <Slider className='carousel carousel-center gap-6 scrollbar-none'>
-              {produtos.map((slide, index) => 
-                <Slider.Item
-                  index={index}
-                  class='carousel-item items-center justify-between first:pl-6 last:pr-6'
-                >
-                  <Card
-                    product={slide} descontoPix={descontoPix}
-                  />
-                </Slider.Item>
-              )}
-            </Slider>
-
-            <div class='hidden re1:flex items-center justify-center next'>
-              <Slider.NextButton class='relative left-[20px] btn min-w-[25px] min-h-[20px] rounded-full disabled:grayscale !bg-transparent  !border-none'>
-                <Icon
-                  class='text-primary'
-                  size={25}
-                  id='ChevronRight'
-                  strokeWidth={3}
-                />
-              </Slider.NextButton>
-            </div>
-
-          <SliderJS rootId={id} interval={interval * 1000} scroll='smooth'/>
+          </div>
         </div>
       </div>
     </CompareContextProvider>

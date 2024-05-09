@@ -33,8 +33,8 @@
     "deco-sites/fashion/": "./",
     "$store/": "./",
     "deco-sites/std/": "https://denopkg.com/deco-sites/std@1.26.1/",
-    "$live/": "https://denopkg.com/deco-cx/deco@1.62.3/",
-    "deco/": "https://denopkg.com/deco-cx/deco@1.62.3/",
+    "$live/": "https://denopkg.com/deco-cx/deco@1.65.2/",
+    "deco/": "https://denopkg.com/deco-cx/deco@1.65.2/",
     "$fresh/": "https://deno.land/x/fresh@1.6.8/",
     "preact": "https://esm.sh/preact@10.19.6",
     "preact/": "https://esm.sh/preact@10.19.6/",
@@ -44,7 +44,8 @@
     "std/": "https://deno.land/std@0.190.0/",
     "partytown/": "https://denopkg.com/deco-cx/partytown@0.4.8/",
     "daisyui": "npm:daisyui@3.5.0",
-    "apps/": "https://denopkg.com/deco-cx/apps@0.36.26/"
+    "apps/": "https://denopkg.com/deco-cx/apps@0.38.9/",
+    "swiper": "npm:swiper"
   },
   "lint": {
     "rules": {
