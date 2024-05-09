@@ -128,7 +128,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
               <p className='font-bold text-secondary text-xl'>LOJA FÍSICA</p>
             </div>
             <div className='text-xs re1:text-sm text-secondary'>
-              <p>Rua Luzitana, 1407 - Centro - Campinas/SP</p>
+              <p>Av. Francisco Glicério, 1275 - Centro, Campinas - SP, 13012-000</p>
               <p>Seg a Sex das 9h às 17h30 - Sáb das 8h às 13h</p>
             </div>
           </a>
