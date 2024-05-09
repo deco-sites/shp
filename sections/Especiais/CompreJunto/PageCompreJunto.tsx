@@ -177,7 +177,7 @@ export const PagCompreJunto=({ bannerUrl, collectionId, Jogos, descontoPix, prod
   const [comboFilter, setComboFilter]=useState('todos')
   const [alreadyChecked,setAlreadyChecked]=useState(false)
   
-  const excludesSpecsKeys=['Imagem do Fabricante', 'Kit Gamer', 'Cabos Inclusos', 'Garantia', 'Sistema Operacional', 'Windows', 'Recomendações', 'Monitor', 'Bloco Descrição', 'Review']
+  const excludesSpecsKeys=['Imagem do Fabricante', 'Kit Gamer', 'Cabos Inclusos', 'Garantia', 'Sistema Operacional', 'Windows', 'Recomendações', 'Monitor', 'Bloco Descrição', 'Review', 'Barras de FPS', 'data-fim-countdown', 'Background', 'Cadeira Gamer']
 
   const gamesObjs = (()=>{
     const acc:Array<{name:string, value:string}> =[]
