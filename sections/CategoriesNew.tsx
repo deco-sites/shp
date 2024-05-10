@@ -1,10 +1,11 @@
-import Image from "deco-sites/std/packs/image/components/Image.tsx"
+import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 import Slider from 'deco-sites/fashion/components/ui/Slider.tsx'
 import SliderJS from 'deco-sites/fashion/components/ui/SliderJS.tsx'
 import Icon from 'deco-sites/shp/components/ui/Icon.tsx'
 import { useRef, useEffect, useState } from 'preact/hooks'
 import Swiper from 'swiper'
-import { Pagination, Autoplay, Navigation } from 'swiper/modules'
+import { Pagination, Autoplay } from 'swiper/modules'
+import RemakeItemsForSwiper from 'deco-sites/shp/FunctionsSHP/RemakeItemsForSwiper.ts'
 
 export interface Props {
   Categs: Array<{
@@ -21,29 +22,25 @@ const Categories = ({ Categs=[] }: Props) => {
 
   const prevRef=useRef<HTMLButtonElement>(null)
 
-  const paginationRef=useRef<HTMLUListElement>(null)
+  const [preparedCategs,setPreparedCategs]=useState<Props['Categs']>([])
 
   useEffect(()=>{
-    if (!sliderRef.current || !paginationRef) return; // Garante que as refs estão prontas
-  
+    const itemsPerSlide=globalThis.window.innerWidth<=769 ? 3 : 5
+
+    setPreparedCategs(RemakeItemsForSwiper(Categs,itemsPerSlide) as Props['Categs'])
+  },[])
+
+  useEffect(()=>{
+    if (!sliderRef.current || !preparedCategs.length) return; // Garante que as refs estão prontas
+
     const swiperOptions:SwiperOptions = {
-      modules:[Pagination, Autoplay],
+      modules:[Autoplay],
       slidesPerView: 3,
       slidesPerGroup: 3,
       loop: true,
       autoplay:{
         delay:5000,
         pauseOnMouseEnter:true
-      },
-      pagination:{
-        el:paginationRef.current,
-        type:'bullets',
-        clickable:true,
-        bulletActiveClass:'active-bullet !bg-primary',
-        bulletClass:'bullet',
-        renderBullet:(index,className)=>{
-          return `<li class='${className + ' bg-[#2d2d2d] rounded-full'}' style='width:12px;height:12px;' index='${index}'></li>`
-        }
       },
       breakpoints: {
         480:{
@@ -66,7 +63,7 @@ const Categories = ({ Categs=[] }: Props) => {
     return () => {
       swiper.destroy(true, true)
     }
-  },[])
+  },[preparedCategs])
 
   return (
     <div className='my-5 px-[5%] re1:px-[15%]'>
@@ -118,8 +115,17 @@ const Categories = ({ Categs=[] }: Props) => {
         <div className='flex items-center relative'>
           <div className='swiper' ref={sliderRef}>
             <div className='swiper-wrapper'>
-              {Categs?.map((Categ)=>(
+              {/* {Categs?.map((Categ)=>(
                 <div className='swiper-slide !flex items-center justify-center'>
+                  <a href={Categ.linkTo} className='flex flex-col w-full h-full text-center hover:scale-90 transition ease-in-out duration-300 min-w-[145px] max-w-[145px]'>
+                    <Image className='m-auto w-[100px] re1:w-[145px]' src={Categ.categImg} alt={Categ.name} width={145} height={196} fetchPriority='high' loading='lazy' decoding='sync'/>
+                    <span className='text-secondary text-[18px] font-bold mb-[10px]'>{Categ.name}</span>
+                  </a>
+                </div>
+              ))} */}
+
+              {preparedCategs.map((Categ, index) => (
+                <div className='swiper-slide !flex items-center justify-center' key={index}>
                   <a href={Categ.linkTo} className='flex flex-col w-full h-full text-center hover:scale-90 transition ease-in-out duration-300 min-w-[145px] max-w-[145px]'>
                     <Image className='m-auto w-[100px] re1:w-[145px]' src={Categ.categImg} alt={Categ.name} width={145} height={196} fetchPriority='high' loading='lazy' decoding='sync'/>
                     <span className='text-secondary text-[18px] font-bold mb-[10px]'>{Categ.name}</span>
@@ -127,8 +133,6 @@ const Categories = ({ Categs=[] }: Props) => {
                 </div>
               ))}
             </div>
-
-            <ul ref={paginationRef} className='flex gap-2 items-center justify-center mt-6'/>
           </div>
 
           <div class='hidden re1:flex items-center justify-center prev absolute left-[-40px] re4:left-[-20px] z-[2] mb-6'>
