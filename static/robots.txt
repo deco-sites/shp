@@ -1,5 +1,13 @@
 User-agent: *
-Allow: /
+Disallow: /login/*
+Disallow: /account*
 Disallow: /checkout/*
-Sitemap: https://shp.deco.site/sitemap/deco.xml
-Host: https://shp.deco.site
+Disallow: /_secure*
+
+Disallow: *map=*
+Disallow: *filter.category*
+Disallow: *?filter.brand=*
+Disallow: *?filter.productClusterIds=*
+Disallow: *?filter.c=*
+Disallow: *filter.*
+Disallow: /proxy*
