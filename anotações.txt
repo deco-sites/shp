@@ -1,5 +1,4 @@
 Precisa arrumar:
-  -Slider da home e outros
 Bugs pra arrumar:
 Possiveis melhoras:
   -Otimizar pag de categoria

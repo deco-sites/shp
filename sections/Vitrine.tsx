@@ -35,15 +35,32 @@ export const loader = (props: VitrineProps, _req: Request, ctx: AppContext & {de
   }
 }
 
+const Contador=({dataFinal}:{dataFinal:Date|undefined})=>{
+  const {days, hours, minutes, seconds, milliseconds}=useTimer(dataFinal)
+
+  return (
+    <div className="bg-transparent border-secondary rounded-lg flex justify-center re1:justify-end p-1 items-center w-full re1:w-[54%] re3:w-[48%] re4:w-[38%] re5:w-[28%]">
+      <Image width={61} height={61} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
+        loading='lazy' className='re1:mr-0 mr-2 w-[40px] re1:w-[61px] h-[40px] re1:h-[61px]'
+      />
+
+      <label>
+        <p className='flex flex-col text-secondary items-center justify-center'>
+          <p className='text-[12px] re1:mr-1'>AS PROMOÇÕES EXPIRAM EM</p>
+          <span className='font-bold text-[20px] leading-3 w-[215px]'><span>{days}D</span> <span>{hours}</span> : <span>{minutes}</span> : <span>{seconds}</span> : <span>{milliseconds}</span></span>
+        </p>
+      </label>
+    </div>
+  )
+}
+
 const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, differentId='0', CTA }: SectionProps<typeof loader>) => {
-  const id =`${useId()}-${differentId}-vitrine`
 
   if (!produtos || produtos.length === 0) {
     return null
   }
 
   const finalDate = finalDaOferta ? new Date(finalDaOferta) : undefined
-  const {days, hours, minutes, seconds, milliseconds}=useTimer(finalDate)
 
   if (!produtos || produtos.length === 0) {
     return <></>
@@ -134,18 +151,7 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
               </svg>
             </a>
           </div>
-          <div className="bg-transparent border-secondary rounded-lg flex justify-center re1:justify-end p-1 items-center w-full re1:w-[54%] re3:w-[48%] re4:w-[38%] re5:w-[28%]">
-            <Image width={61} height={61} src="https://shopinfo.vteximg.com.br/arquivos/relogio.gif"
-              loading='lazy' className='re1:mr-0 mr-2 w-[40px] re1:w-[61px] h-[40px] re1:h-[61px]'
-            />
-
-            <label>
-              <p className='flex flex-col text-secondary items-center justify-center'>
-                <p className='text-[12px] re1:mr-1'>AS PROMOÇÕES EXPIRAM EM</p>
-                <span className='font-bold text-[20px] leading-3 w-[215px]'><span>{days}D</span> <span>{hours}</span> : <span>{minutes}</span> : <span>{seconds}</span> : <span>{milliseconds}</span></span>
-              </p>
-            </label>
-          </div>
+          <Contador dataFinal={finalDate}/>
         </div>
 
         <div className='flex items-center relative'>
