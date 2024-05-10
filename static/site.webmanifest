@@ -2,7 +2,7 @@
     "name": "Shopinfo",
     "short_name": "Shopinfo",
     "theme_color": "#dd1f26",
-    "background_color": "#ffffff",
+    "background_color": "#111",
     "display": "browser",
     "scope": "/",
     "start_url": "/"

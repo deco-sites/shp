@@ -1,4 +1,4 @@
-import { useId, useMemo, useRef } from 'preact/hooks'
+import { useState, useMemo, useRef } from 'preact/hooks'
 import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
 import type { Product } from 'apps/commerce/types.ts'
 import type { LoaderReturnType, SectionProps } from 'deco/types.ts'
@@ -11,6 +11,7 @@ import {useEffect} from 'preact/hooks'
 import Swiper from 'swiper'
 import { Pagination, Autoplay } from 'swiper/modules'
 import { SwiperOptions } from 'swiper/types'
+import RemakeItemsForSwiper from "deco-sites/shp/FunctionsSHP/RemakeItemsForSwiper.ts";
 
 export interface VitrineProps {
   produtos: LoaderReturnType<Product[] | null>
@@ -73,10 +74,16 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
 
   const prevRef=useRef<HTMLButtonElement>(null)
 
-  const paginationRef=useRef<HTMLUListElement>(null)
+  const [finalProds, setFinalProds]=useState<Product[]>([])
+
+  useEffect(()=>{
+    const itemsPerSlide=globalThis.window.innerWidth<=769 ? 1 : 4
+
+    setFinalProds(RemakeItemsForSwiper(produtos,itemsPerSlide) as Product[])
+  },[])
 
   useEffect(() => {
-    if (!sliderRef.current || !paginationRef) return; // Garante que as refs estão prontas
+    if (!sliderRef.current || !finalProds.length) return; // Garante que as refs estão prontas
   
     const swiperOptions:SwiperOptions = {
       modules:[Pagination, Autoplay],
@@ -88,16 +95,6 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
       autoplay:{
         delay:interval * 1000,
         pauseOnMouseEnter:true
-      },
-      pagination:{
-        el:paginationRef.current,
-        type:'bullets',
-        clickable:true,
-        bulletActiveClass:'active-bullet !bg-primary',
-        bulletClass:'bullet',
-        renderBullet:(index,className)=>{
-          return `<li class='${className + ' bg-[#2d2d2d] rounded-full'}' style='width:12px;height:12px;' index='${index}'></li>`
-        }
       },
       breakpoints: {
         480:{
@@ -128,7 +125,8 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
     return () => {
       swiper.destroy(true, true)
     }
-  }, [])
+  }, [finalProds])
+
 
   return (
     <CompareContextProvider descontoPix={useMemo(()=>descontoPix,[descontoPix])}>
@@ -157,7 +155,7 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
         <div className='flex items-center relative'>
           <div className='swiper' ref={sliderRef}>
             <div className='swiper-wrapper'>
-              {produtos.map(slide=> 
+              {finalProds.map(slide=> 
                 <div className='swiper-slide !flex items-center justify-center'>
                   <Card
                     product={slide} descontoPix={descontoPix}
@@ -165,8 +163,6 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
                 </div>
               )}
             </div>
-
-            <ul ref={paginationRef} className='flex gap-2 items-center justify-center mt-6'/>
           </div>
 
           <div class='hidden re1:flex items-center justify-center prev absolute left-[-40px] re4:left-[-20px] z-[2] mb-6'>
