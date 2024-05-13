@@ -9,9 +9,18 @@ interface Carregamento{
   type:"carregamento"
   segundos:number
 }
+interface CTA{
+  type:"CTA"
+  link:string
+}
+
+interface ClickAndCopy{
+  type:"copy"
+  conteudo:string
+}
 
 interface Pattern{
-  CTA?:string
+  funcionabilidade?:CTA|ClickAndCopy
   /** @description Datas para exibir o banner, Ex. 2020-10-05T18:30:00*/
   datas:{
     inicial:string
@@ -38,14 +47,14 @@ interface Imagem extends Pattern{
 
 export type Props=Conteudo|Imagem
 
-const PopUp=({ CTA, datas, disparo, mobile, ...props}:Props)=>{
+const PopUp=({ funcionabilidade, datas, disparo, mobile, ...props}:Props)=>{
   const now=new Date().getTime()
   const inicio=new Date(datas.inicial).getTime()
   const final=new Date(datas.final).getTime()
 
   if(!(now>=inicio && now<=final)) return null
 
-  return <PopComponent CTA={CTA} disparo={disparo} mobile={mobile} {...props}/>
+  return <PopComponent funcionabilidade={funcionabilidade} disparo={disparo} mobile={mobile} {...props}/>
 }
 
 export default PopUp
