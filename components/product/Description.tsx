@@ -51,7 +51,6 @@ const Description=({page}:Props)=>{
               if((element as HTMLElement).style.backgroundImage!=='url("")') classes.push('re1:h-[51vh]')
               if((element as HTMLElement).innerText!== '') element.classList.add(...classes)
             })
-            
     
             Array.from(descriptionDiv.current.querySelectorAll('.row'))
             .forEach((element,index)=>{
