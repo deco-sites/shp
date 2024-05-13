@@ -12,9 +12,18 @@ interface Carregamento{
   type:"carregamento"
   segundos:number
 }
+interface CTA{
+  type:"CTA"
+  link:string
+}
+
+interface ClickAndCopy{
+  type:"copy"
+  conteudo:string
+}
 
 interface Pattern{
-  CTA?:string
+  funcionabilidade?:CTA|ClickAndCopy
   /** @description Datas para exibir o banner, Ex. 2020-10-05T18:30:00*/
   datas:{
     inicial:string
@@ -44,7 +53,7 @@ interface Imagem extends Pattern{
 
 export type Props=Conteudo|Imagem
 
-const PopUp=({ CTA, datas, disparo, page, minimo, maximo, mobile, ...props}:Props)=>{
+const PopUp=({ funcionabilidade, datas, disparo, page, minimo, maximo, mobile, ...props}:Props)=>{
   if(page===null) return null
 
   const now=new Date().getTime()
@@ -59,7 +68,7 @@ const PopUp=({ CTA, datas, disparo, page, minimo, maximo, mobile, ...props}:Prop
 
   if(!(price!>=minimo && price!<=maximo)) return null
 
-  return <PopComponent disparo={disparo} CTA={CTA} mobile={mobile} {...props}/>
+  return <PopComponent disparo={disparo} funcionabilidade={funcionabilidade} mobile={mobile} {...props}/>
 }
 
 export default PopUp

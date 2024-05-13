@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'preact/hooks'
-import {JSX} from 'preact'
+// deno-lint-ignore-file no-explicit-any
+import { useEffect, useState } from 'preact/hooks'
 import Image from 'deco-sites/std/packs/image/components/Image.tsx'
 
 interface Scroll{
@@ -11,9 +11,18 @@ interface Carregamento{
   type:"carregamento"
   segundos:number
 }
+interface CTA{
+  type:"CTA"
+  link:string
+}
+
+interface ClickAndCopy{
+  type:"copy"
+  conteudo:string
+}
 
 interface Pattern{
-  CTA?:string
+  funcionabilidade?:CTA|ClickAndCopy
   disparo:Scroll|Carregamento
   mobile:boolean
 }
@@ -35,7 +44,7 @@ interface Imagem extends Pattern{
 
 export type Props=Conteudo|Imagem
 
-const PopComponent=({ CTA, disparo, mobile, ...props}:Props)=>{
+const PopComponent=({ funcionabilidade, disparo, mobile, ...props}:Props)=>{
   const [show,setShow]=useState(false)
 
   const close=(e:MouseEvent)=>{
@@ -44,9 +53,18 @@ const PopComponent=({ CTA, disparo, mobile, ...props}:Props)=>{
     setShow(false)
   }
   
-  const modalProps: Record<string, string|JSX.CSSProperties> = {
-    className: `${!mobile ? 'hidden re1:block' : ''} z-50 fixed bottom-4 left-4 w-[400px]`,
-    ...(CTA && { href: CTA }),
+  const modalProps:any = {
+    className: `${!mobile ? 'hidden re1:block' : ''} z-50 fixed bottom-4 left-4 w-[400px] ${funcionabilidade ? (funcionabilidade.type==='CTA' ? 'cursor-pointer' : 'cursor-copy') : ''}`,
+    ...(funcionabilidade && funcionabilidade.type==='CTA' && { href: funcionabilidade.link }),
+    ...(funcionabilidade && funcionabilidade.type==='copy' && { title:'Copie para a área de transferência!', onclick:async()=>{
+      const textToCopy = funcionabilidade.conteudo
+      try{
+        await navigator.clipboard.writeText(textToCopy)
+        alert('Texto copiado: ' + textToCopy)
+      }catch (err) {
+        console.error('Falha ao copiar texto: ', err)
+      }
+    } }),
     style: props.type === 'Image' ? { backgroundImage: `url('${props.bannerLink}')`, borderRadius:'8px' } : {}
   }
 

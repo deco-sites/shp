@@ -11,9 +11,18 @@ interface Carregamento{
   type:"carregamento"
   segundos:number
 }
+interface CTA{
+  type:"CTA"
+  link:string
+}
+
+interface ClickAndCopy{
+  type:"copy"
+  conteudo:string
+}
 
 interface Pattern{
-  CTA?:string
+  funcionabilidade?:CTA|ClickAndCopy
   /** @description Datas para exibir o banner, Ex. 2020-10-05T18:30:00*/
   datas:{
     inicial:string
@@ -42,7 +51,7 @@ interface Imagem extends Pattern{
 
 export type Props=Conteudo|Imagem
 
-const PopUpGeneral=({ CTA, datas, disparo, paginas, ...props}:Props)=>{
+const PopUpGeneral=({ funcionabilidade, datas, disparo, paginas, ...props}:Props)=>{
   const [show, setShow]=useState(false)
   const now=new Date().getTime()
   const inicio=new Date(datas.inicial).getTime()
@@ -55,7 +64,7 @@ const PopUpGeneral=({ CTA, datas, disparo, paginas, ...props}:Props)=>{
     !paginas.some(page=>pathname.includes(page)) && setShow(true)
   },[])
 
-  return show ? <PopComponent disparo={disparo} CTA={CTA} {...props}/> : null
+  return show ? <PopComponent disparo={disparo} funcionabilidade={funcionabilidade} {...props}/> : null
 }
 
 export default PopUpGeneral

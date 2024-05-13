@@ -2,3 +2,4 @@ Precisa arrumar:
 Bugs pra arrumar:
 Possiveis melhoras:
   -Otimizar pag de categoria
+  -Tentar usar Lazy Components nos Cards
