@@ -204,13 +204,13 @@ const Specification=({page}:Props)=>{
                     case 'Gabinete':
                       width=32
                       height=44
-                      iconImg='https:/shopinfo.vteximg.com.br/arquivos/icone-gabinete-gamer.png'
+                      iconImg='https://shopinfo.vteximg.com.br/arquivos/icone-gabinete-gamer.png'
                       break;
 
                     default:
                       width=0
                       height=0
-                      iconImg='https:/shopinfo.vteximg.com.br/arquivos/menu-icons.png'
+                      iconImg='https://shopinfo.vteximg.com.br/arquivos/menu-icons.png'
                       break;
                   }
 
