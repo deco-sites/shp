@@ -1,10 +1,8 @@
-import { memo } from 'preact/compat'
 import {  useEffect, useRef, useState } from 'preact/hooks'
-import type { Product, ProductDetailsPage } from 'apps/commerce/types.ts'
+import type { ProductDetailsPage } from 'apps/commerce/types.ts'
 import Image from 'deco-sites/std/components/Image.tsx'
 import { sendEvent } from 'deco-sites/shp/sdk/analytics.tsx'
 import SpecPeca from "deco-sites/shp/components/product/SpecPeca.tsx";
-import { FalseLiteral } from "https://deno.land/x/ts_morph@21.0.1/mod.ts";
 
 export interface Props {
   page: ProductDetailsPage
@@ -38,48 +36,48 @@ const Specification=({page}:Props)=>{
           p.remove()
         })
         const specsText = specs.map((e, index)=>{
-            if (e.innerHTML.includes('\u003Cbr\u003E')) {
-                const arry = e.innerHTML.split('\u003Cbr\u003E')
-                arry.shift()
-                return arry
-            } else {
-                if (e.innerText.includes(':')) {
-                    if (index !== 0) {
-                        return e.innerText
-                    }
-                }
+          if (e.innerHTML.includes('\u003Cbr\u003E')) {
+            const arry = e.innerHTML.split('\u003Cbr\u003E')
+            arry.shift()
+            return arry
+          } else {
+            if (e.innerText.includes(':')) {
+              if (index !== 0) {
+                return e.innerText
+              }
             }
+          }
   
-            return ''
+          return ''
         }).filter(e=>e!=='' && e)
   
         const specsObj:string[] & Array<string[]> = []
         specsText.forEach((element)=>{
-            if (typeof (element) !== 'string') {
-                element!.forEach((arr)=>{
-                    let[key,value]:string[] = arr.split(':')
-  
-                    if (!((key === undefined || value === undefined) ||  (/^\s*$/.test(key) || /^\s*$/.test(value)) || !(/[A-Za-z]/.test(key) || /[A-Za-z]/.test(value)) || (key.includes('\u003C') || value.includes('\u003C')))) {
-                      if (key.split('')[0] === '-') {
-                            const arrKey = key.split('')
-                            arrKey.shift()
-                            key = arrKey.join('')
-                        }
-                        specsObj.push([key, value])
-                    }
-                })
-            } else {
-                let[key,value] = element.split(':')
-  
-                if (!((key === undefined || value === undefined) || (/^\s*$/.test(key) || /^\s*$/.test(value)) || !(/[A-Za-z]/.test(key) || /[A-Za-z]/.test(value)) || (key.includes('\u003C') || value.includes('\u003C')))) {
-                    if (key.split('')[0] === '-') {
-                        const arrKey = key.split('')
-                        arrKey.shift()
-                        key = arrKey.join('')
-                    }
-                    specsObj.push([key, value])
+          if (typeof (element) !== 'string') {
+            element!.forEach((arr)=>{
+              let[key,value]:string[] = arr.split(':')
+
+              if (!((key === undefined || value === undefined) ||  (/^\s*$/.test(key) || /^\s*$/.test(value)) || !(/[A-Za-z]/.test(key) || /[A-Za-z]/.test(value)) || (key.includes('\u003C') || value.includes('\u003C')))) {
+                if (key.split('')[0] === '-') {
+                  const arrKey = key.split('')
+                  arrKey.shift()
+                  key = arrKey.join('')
                 }
+                specsObj.push([key, value])
+              }
+            })
+          } else {
+            let[key,value] = element.split(':')
+
+            if (!((key === undefined || value === undefined) || (/^\s*$/.test(key) || /^\s*$/.test(value)) || !(/[A-Za-z]/.test(key) || /[A-Za-z]/.test(value)) || (key.includes('\u003C') || value.includes('\u003C')))) {
+              if (key.split('')[0] === '-') {
+                const arrKey = key.split('')
+                arrKey.shift()
+                key = arrKey.join('')
+              }
+              specsObj.push([key, value])
             }
+          }
         })
   
         const table1 = document.createElement('table')
@@ -106,9 +104,9 @@ const Specification=({page}:Props)=>{
           `
           tr.classList.add('re1:even:bg-[#151515]','text-sm','h-[40px]')
           if (isOdd) {
-              index > (specsObj.length / 2) - 1 ? tbody2.append(tr) : tbody1.append(tr)
+            index > (specsObj.length / 2) - 1 ? tbody2.append(tr) : tbody1.append(tr)
           } else {
-              index > middleIndex ? tbody2.append(tr) : tbody1.append(tr)
+            index > middleIndex ? tbody2.append(tr) : tbody1.append(tr)
           }
         
         })
@@ -140,7 +138,6 @@ const Specification=({page}:Props)=>{
   useEffect(()=>{
     openMenu && sendEvent({name:'select_content', params:{content_type:'specification'}})
   },[openMenu])
-
 
   return (
     <div className={`w-full re1:px-[10%] border-b border-b-neutral ${specVazio ? 'hidden' : ''}`}>
@@ -207,7 +204,7 @@ const Specification=({page}:Props)=>{
                     case 'Gabinete':
                       width=32
                       height=44
-                      iconImg='https:/shopinfo.vteximg.com.br/arquivos/menu-icons.png'
+                      iconImg='https:/shopinfo.vteximg.com.br/arquivos/icone-gabinete-gamer.png'
                       break;
 
                     default:

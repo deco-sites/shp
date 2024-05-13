@@ -53,11 +53,11 @@ const SpecPeca=({ ...props }:PecaProps)=>{
     <>
       <div onClick={openModal}
         className='cursor-pointer flex flex-col items-center justify-center w-auto re1:w-[212px] 
-        h-48 re1:h-[175px] border border-[#1e1e1e] re1:rounded-lg hover:border-primary hover:bg-[#dd1f1624]' 
+        h-48 re1:h-[175px] border border-[#1e1e1e] re1:rounded-lg hover:border-primary hover:bg-[#dd1f1624]' title={props.pecaName}
       >
         <Image src={props.linkIcon} loading='lazy' decoding='sync' fetchPriority='low' width={props.IconW} height={props.IconH}/>
         <p className='text-xs re1:text-sm text-neutral my-4'>{props.pecaCateg}</p>
-        <p className='text-sm re1:text-base text-secondary max-w-[160px] text-center'>{props.pecaName}</p>
+        <p className='text-sm re1:text-base text-secondary max-w-[160px] text-center line-clamp-2'>{props.pecaName}</p>
       </div>
       <dialog id={props.modalId.toString()} ref={modal} className='bg-base-100/40 min-h-full min-w-[100vw] fixed p-0 top-0'>
         <form method='dialog' className='p-10 re1:p-12 h-screen re1:h-[70vh] w-4/5 re1:w-2/5 bg-[#303030] ml-auto re1:m-auto re1:mt-[15vh] rounded-lg overflow-y-scroll'>
