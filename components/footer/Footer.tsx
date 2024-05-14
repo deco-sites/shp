@@ -198,7 +198,7 @@ const Footer = ({ atendimento = [], Institucional=[], AjudaESuporte=[], PaginaDo
               />
             </a>
             <p className='text-xs re1:max-w-[1000px]'>
-              © Shopinfo - Tecnologia em Informática. Todos os direitos reservados. SHP BRASIL - EIRELI | CNPJ: 03.482.370/0001-09 Rua Luzitana, 1407, Centro - Campinas/SP - CEP: 13015-122 | Proibida reprodução total ou parcial. A Shopinfo não é responsável por erros descritivos. As fotos contidas nesta página são meramente ilustrativas do produto e podem variar de acordo com o fornecedor/lote do fabricante. Preços e Estoque sujeitos a alteração sem aviso prévio.
+              © Shopinfo - Tecnologia em Informática. Todos os direitos reservados. SHP BRASIL - EIRELI | CNPJ: 03.482.370/0001-09 | Av. Francisco Glicério, 1275 - Centro, Campinas - SP, 13012-000 | Proibida reprodução total ou parcial. A Shopinfo não é responsável por erros descritivos. As fotos contidas nesta página são meramente ilustrativas do produto e podem variar de acordo com o fornecedor/lote do fabricante. Preços e Estoque sujeitos a alteração sem aviso prévio.
             </p>
           </div>
       </footer>
