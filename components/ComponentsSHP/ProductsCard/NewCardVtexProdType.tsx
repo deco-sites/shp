@@ -106,9 +106,6 @@ const PcCard=({...props}:CardPCProps)=>{
     placaVideo, processador, memoria, armazenamento:arm, tipoArm, flagPercent:diffPercent, fonte, seller:props.seller, groupId:props.groupId,
     name:prodName, id:prodId, parcelas, valorParcela, precoDe, precoVista, linkProd, imgUrl, pix
   }
-
-  console.log(props.trustPercent)
-
   
   useEffect(()=>{
     if(!PCs.some((pc)=>pc.id===pcObj.id && pc.name===pcObj.name)){

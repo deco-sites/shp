@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef } from 'preact/hooks'
-import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/CardOrgSchemaProdType.tsx'
+import Card from 'deco-sites/shp/components/ComponentsSHP/ProductsCard/NewCardOrgSchemaType.tsx'
 import type { Product } from 'apps/commerce/types.ts'
 import type { LoaderReturnType, SectionProps } from 'deco/types.ts'
 import CompareContextProvider from 'deco-sites/shp/contexts/Compare/CompareContext.tsx'
@@ -12,6 +12,7 @@ import Swiper from 'swiper'
 import { Pagination, Autoplay } from 'swiper/modules'
 import { SwiperOptions } from 'swiper/types'
 import RemakeItemsForSwiper from "deco-sites/shp/FunctionsSHP/RemakeItemsForSwiper.ts";
+import Loading from "deco-sites/shp/components/ui/Loading.tsx";
 
 export interface VitrineProps {
   produtos: LoaderReturnType<Product[] | null>
@@ -75,15 +76,21 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
   const prevRef=useRef<HTMLButtonElement>(null)
 
   const [finalProds, setFinalProds]=useState<Product[]>([])
+  const [loading, setLoading]=useState(true)
 
   useEffect(()=>{
     const itemsPerSlide=globalThis.window.innerWidth<=769 ? 1 : 4
 
     setFinalProds(RemakeItemsForSwiper(produtos,itemsPerSlide) as Product[])
+    setLoading(false)
   },[])
 
-  useEffect(() => {
-    if (!sliderRef.current || !finalProds.length) return; // Garante que as refs estão prontas
+  // useEffect(() => {
+    
+  // }, [finalProds])
+
+  useEffect(()=>{
+    if (!sliderRef.current || !finalProds.length || loading) return; // Garante que as refs estão prontas
   
     const swiperOptions:SwiperOptions = {
       modules:[Pagination, Autoplay],
@@ -107,28 +114,34 @@ const Vitrine = ({ produtos, titulo, finalDaOferta, interval=0, descontoPix, dif
           slidesPerView: 4,
           slidesPerGroup: 4,
           centeredSlides: false,
-          spaceBetween:0
+          spaceBetween:20
         },
       }
     }
-  
-    const swiper = new Swiper(sliderRef.current, swiperOptions);
     
-    (nextRef.current as HTMLButtonElement).onclick = () => {
-      swiper.slideNext()
-    }
-
-    (prevRef.current as HTMLButtonElement).onclick = () => {
-      swiper.slidePrev()
-    }
   
-    return () => {
-      swiper.destroy(true, true)
-    }
-  }, [finalProds])
+      const swiper = new Swiper(sliderRef.current, swiperOptions);
+    
+      (nextRef.current as HTMLButtonElement).onclick = () => {
+        swiper.slideNext()
+      }
+
+      (prevRef.current as HTMLButtonElement).onclick = () => {
+        swiper.slidePrev()
+      }
+    
+      return () => {
+        swiper.destroy(true, true)
+      }
+  },[loading])
 
 
-  return (
+  return loading ? (
+    <div className='w-full mx-auto re1:px-[15%] gap-4 my-16 flex flex-col items-center justify-center h-[400px]'>
+      <div className='loading loading-spinner w-24 text-primary'/>
+      <p className='text-xl text-secondary'>Carregando produtos...</p>
+    </div>
+  ):(
     <CompareContextProvider descontoPix={useMemo(()=>descontoPix,[descontoPix])}>
       <div className='w-full mx-auto re1:px-[15%] my-16'>
         <div className='flex flex-col re1:flex-row mx-auto w-full gap-2 justify-center items-center mb-5 re1:px-0 px-6'>
