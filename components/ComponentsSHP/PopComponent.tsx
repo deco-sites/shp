@@ -50,6 +50,7 @@ const PopComponent=({ funcionabilidade, disparo, mobile, ...props}:Props)=>{
   const close=(e:MouseEvent)=>{
     // cancela o redirecionamento do href caso tenha
     e.preventDefault()
+    e.stopPropagation()
     setShow(false)
   }
   
