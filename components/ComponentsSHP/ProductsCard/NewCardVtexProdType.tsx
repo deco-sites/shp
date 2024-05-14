@@ -52,19 +52,19 @@ const ProdCard=({...props}:CardProps)=>{
   const diffPercent=Math.ceil(-1*(((100*salePricePix)/precoDe)-100))
 
   return(
-    <a className='flex flex-col w-full bg-[#262626] rounded-lg border relative p-3 border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
+    <a className='flex flex-col w-full max-w-[280px] text-secondary bg-[#262626] rounded-lg border relative p-3 border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
       <div className='flex flex-col h-auto w-auto'>
       <div className='flex flex-col re1:flex-row gap-2 re1:gap-0 items-start re1:items-center absolute re1:static mt-2 re1:mt-0'>
           <div className='flex items-center justify-start mt-[-12%] re1:mt-0'>
             {/* Trustvox */}
-            {/* {props.objTrust?.average ===0 ? null : */}
+            {props.objTrust.average ===0 ? null :
               <div className='flex justify-center items-center absolute'>
                 <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
                   <div style={{width:`${props.trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-18px]'/>
                 </div>
                 <span className='text-yellow-300 text-xs'>({props.objTrust?.count})</span>
               </div>
-            {/* } */}
+            }
           </div>
           
           <div className='flex flex-col re1:flex-row items-center justify-start re1:justify-end gap-2 re1:w-[85px] re1:ml-auto'>
@@ -79,14 +79,14 @@ const ProdCard=({...props}:CardProps)=>{
         </div>
         <Image className='m-auto mt-2 re1:mt-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} alt={prodName} title={prodName}/>
       </div>
-      <div className='flex flex-col justify-between my-auto h-[150px] gap-2'>
-        <p title={prodName} className='text-xs line-clamp-2 leading-4'>
+      <div className='flex flex-col justify-between my-auto h-[240px] gap-2'>
+        <p title={prodName} className='text-xs leading-4'>
           {prodName}
         </p>
-        
+
         {isAvailable ? (
         <div className='mt-4 w-full'>
-          <p className='line-through text-[11px]'>De: {precoDe.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
+          <p className='hidden re1:block line-through text-[11px]'>De: {precoDe.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
           <p className='text-lg font-bold text-success leading-3'>{salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} <span className='text-[11px] font-normal text-secondary'>no Pix</span></p>
           <p className='text-[11px]'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</p>
         </div>) : (<p className='text-xl text-primary font-bold'>Produto Esgotado</p>)}
@@ -117,19 +117,19 @@ const PcCard=({...props}:CardPCProps)=>{
   },[PCs])
 
   return(
-    <a className='flex flex-col w-full bg-[#262626] rounded-lg border relative p-3 border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
+    <a className='flex flex-col w-full max-w-[280px] text-secondary bg-[#262626] rounded-lg border relative p-3 border-transparent hover:re1:border-primary hover:re1:shadow-[0_0_20px_0] hover:re1:shadow-primary' href={linkProd} onClick={props.GA4Func}>
       <div className='flex flex-col h-auto w-auto'>
         <div className='flex flex-col re1:flex-row gap-2 re1:gap-0 items-start re1:items-center absolute re1:static mt-2 re1:mt-0'>
           <div className='flex items-center justify-start mt-[-12%] re1:mt-0'>
             {/* Trustvox */}
-            {/* {props.objTrust?.average ===0 ? null : */}
+            {props.objTrust.average ===0 ? null :
               <div className='flex justify-center items-center absolute'>
                 <div className='w-[60px] text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat'>
                   <div style={{width:`${props.trustPercent}%`}} className=' text-left h-[13px] inline-block bg-[url(https://shopinfo.vteximg.com.br/arquivos/trustvox-sprite.png)] bg-no-repeat bg-[0_-18px]'/>
                 </div>
                 <span className='text-yellow-300 text-xs'>({props.objTrust?.count})</span>
               </div>
-            {/* } */}
+            } 
           </div>
           
           <div className='flex flex-col re1:flex-row items-center justify-start gap-2 re1:w-[85px] re1:ml-auto'>
@@ -144,12 +144,12 @@ const PcCard=({...props}:CardPCProps)=>{
         </div>
         <Image className='m-auto mt-2 re1:mt-auto' src={imgUrl} width={185} height={185} decoding='sync' loading='lazy' fetchPriority='low' preload={false} alt={prodName} title={prodName}/>
       </div>
-      <div className='flex flex-col justify-between my-auto h-auto gap-2'>
+      <div className='flex flex-col justify-between my-auto h-[240px] gap-2'>
         <p title={prodName} className='text-xs line-clamp-2 leading-4'>
           {prodName}
         </p>
 
-        <div className='w-full flex-col justify-start gap-2 font-bold'>
+        <div className='w-full flex flex-col justify-start gap-2 font-bold'>
           <label className='flex items-center gap-1' title={placaVideo}>
             <svg width="16" height="11" viewBox="0 0 16 11" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M2.28571 0H1.14286V1.65H0.571429C0.255859 1.65 0 1.89627 0 2.2V3.3C0 3.60374 0.255859 3.85 0.571429 3.85H1.14286V4.95H0.571429C0.255859 4.95 0 5.19626 0 5.5V8.8C0 9.10374 0.255859 9.35 0.571429 9.35H1.14286V9.9V11H2.28571H10.2857C10.9169 11 11.4286 10.5075 11.4286 9.9V8.8H14.8571C15.4883 8.8 16 8.30753 16 7.7V3.85C16 2.33119 14.7208 1.1 13.1429 1.1H4C3.3568 1.1 2.76325 1.30457 2.28571 1.6498V0ZM2.28571 3.85V7.7H10.2857H11.4286H14.8571V3.85C14.8571 2.93873 14.0896 2.2 13.1429 2.2H4C3.05323 2.2 2.28571 2.93873 2.28571 3.85ZM10.2857 8.8H2.28571V9.9H10.2857V8.8ZM5.71429 6.6C6.66106 6.6 7.42857 5.86127 7.42857 4.95C7.42857 4.03873 6.66106 3.3 5.71429 3.3C4.76751 3.3 4 4.03873 4 4.95C4 5.86127 4.76751 6.6 5.71429 6.6ZM13.1429 4.95C13.1429 5.86127 12.3753 6.6 11.4286 6.6C10.4818 6.6 9.71429 5.86127 9.71429 4.95C9.71429 4.03873 10.4818 3.3 11.4286 3.3C12.3753 3.3 13.1429 4.03873 13.1429 4.95Z" fill="#DD1F26"/>
@@ -191,10 +191,12 @@ const PcCard=({...props}:CardPCProps)=>{
           </label>
         </div>
         {isAvailable ? (
-        <>
-          <span className='text-lg font-bold text-success leading-3 mt-4'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</span>
-          <p className='text-[11px] text-[#b4b4b4]'>ou por {salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} no Pix</p>
-        </>) : (<p className='text-xl text-primary font-bold'>Produto Esgotado</p>)}
+        <div className='mt-4 w-full'>
+          <p className='hidden re1:block line-through text-[11px]'>De: {precoDe.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p>
+          <p className='text-lg font-bold text-success leading-3'>{salePricePix.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} <span className='text-[11px] font-normal text-secondary'>no Pix</span></p>
+          <p className='text-[11px]'>{parcelas}x {valorParcela.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} sem juros</p>
+        </div>
+      ) : (<p className='text-xl text-primary font-bold'>Produto Esgotado</p>)}
         <label className='flex gap-2 text-sm items-center'>
           <input ref={compareInput} type='checkbox' name='compare' id='COMPARE-PC' className='checkbox checkbox-primary checkbox-xs rounded-none [--chkfg:transparent]' onChange={(event)=>{
               const Target=event.target as HTMLInputElement
