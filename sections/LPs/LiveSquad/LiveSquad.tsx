@@ -11,37 +11,34 @@ const LiveSquad=()=>{
           <Source
             media='(max-width: 767px)'
             fetchPriority='high'
-            src='https://shopinfo.vteximg.com.br/arquivos/mobile-lpliveabril-banner1.jpg'
+            src='https://shopinfo.vteximg.com.br/arquivos/LP-Mobile-da-live-Maio_01.jpg'
             width={350}
             height={248}
           />
           <Source
             media='(min-width: 768px)'
             fetchPriority='high'
-            src='https://shopinfo.vteximg.com.br/arquivos/desktop-lpliveabril-banner1.jpg'
+            src='https://shopinfo.vteximg.com.br/arquivos/LP-da-live-Maio_01.jpg'
             width={1920}
             height={468}
           />
 
-        <Image width={1920} height={468} loading='eager' src='https://shopinfo.vteximg.com.br/arquivos/desktop-lpliveabril-banner1.jpg' className='w-full'/>
+        <Image width={1920} height={468} loading='eager' src='https://shopinfo.vteximg.com.br/arquivos/LP-da-live-Maio_01.jpg' className='w-full'/>
 
         </Picture>
       </div>
       <div className='bg-[#f9375a] w-full'>
         <FormRD />
       </div>
-      <div className='bg-[url(https://shopinfo.vteximg.com.br/arquivos/mobile-lpliveabril-banner2.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/desktop-lpliveabril-banner2.jpg)] bg-center bg-cover w-full h-screen
-        flex flex-col justify-between py-4'
-      >
-        <div className='grid justify-center items-center grid-cols-[1fr_1fr] re1:max-w-[40%] re1:ml-auto re1:mr-20'>
-          <Image width={226} height={326} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/lp-live-04abr.png' className='w-[65%] m-auto'/>
-          <Image width={226} height={326} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/lp-live-11abr.png' className='w-[65%] m-auto'/>
-          <Image width={226} height={326} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/lp-live-18abr.png' className='w-[65%] m-auto'/>
-          <Image width={226} height={326} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/lp-live-25abr.png' className='w-[65%] m-auto'/>
-        </div>
-        <div className='text-white mx-auto font-bold items-center'>
-          <p className='text-lg uppercase'>Apresentação</p>
-          <p className='text-6xl'>Nádia</p>
+      <div className='bg-[url(https://shopinfo.vteximg.com.br/arquivos/LP-Mobile-da-live-Maio_04.jpg)] re1:bg-[url(https://shopinfo.vteximg.com.br/arquivos/LPdesktop-da-live-Maio_02.jpg)] bg-center bg-cover w-full h-max py-4'>
+        <div className='flex flex-col justify-center items-center gap-3 mx-auto relative'>
+          <Image width={200} height={300} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/Programa%C3%A7%C3%A3o.png' className='w-[50%] re1:w-[30%] m-auto mb-[5%]'/>
+          <Image width={300} height={300} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/Live 02-05.png' className='w-[50%] re1:w-[30%] m-auto mb-[5%]'/>
+          <Image width={300} height={300} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/Live 09-05.png' className='w-[50%] re1:w-[30%] m-auto mb-[5%]'/>
+          <Image width={200} height={200} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/Live 16-05.png' className='w-[70em] mr-[30%] absolute re1:mt-[10%] mt-[15%]'/>
+          <Image width={300} height={300} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/Live 24-05.png' className='w-[50%] re1:w-[30%] m-auto mt-[10%] mb-[5%]'/>
+          <Image width={300} height={300} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/Live 29-05.png' className='w-[50%] re1:w-[30%] m-auto mb-[5%]'/>
+          <Image width={200} height={300} loading='lazy' src='https://shopinfo.vteximg.com.br/arquivos/Apresentando Nádia.png' className='w-[50%] re1:w-[30%] m-auto'/>
         </div>
       </div>
     </div>
