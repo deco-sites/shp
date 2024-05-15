@@ -5,7 +5,7 @@ const NotFound=()=>(
     <div class='flex flex-col items-center justify-center gap-6'>
       <span class='font-medium text-2xl'>Página não encontrada</span>
       <a href='/'>
-        <Button>Voltar à página inicial</Button>
+        <Button class='bg-primary text-secondary'>Voltar à página inicial</Button>
       </a>
     </div>
   </div>
